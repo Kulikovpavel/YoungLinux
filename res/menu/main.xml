@@ -2,9 +2,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="etlau.coursera.pythoncourse.MainActivity" >
-    
+
+    <item android:id="@+id/action_next"
+        android:title="@string/action_next"
+        android:orderInCategory="101"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/action_prev"
+        android:title="@string/action_prev"
+        android:orderInCategory="102"
+        app:showAsAction="never" />
+
     <item android:id="@+id/action_homepage"
         android:title="@string/action_homepage"
-        android:orderInCategory="100"
+        android:orderInCategory="103"
         app:showAsAction="never" />
+
 </menu>

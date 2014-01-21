@@ -5,6 +5,8 @@
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
-    <string name="action_homepage">Сайт - источник</string>
+    <string name="action_homepage">Лаборатория юного линуксоида, сайт - источник</string>
+    <string name="action_next">Далее</string>
+    <string name="action_prev">Назад</string>
 
 </resources>

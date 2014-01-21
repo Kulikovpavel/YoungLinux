@@ -45,7 +45,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
                 // Specify a SpinnerAdapter to populate the dropdown list.
                 new ArrayAdapter<String>(
                         actionBar.getThemedContext(),
-                        android.R.layout.simple_list_item_1,
+                        android.R.layout.simple_spinner_dropdown_item,
                         android.R.id.text1,
                         getResources().getStringArray(R.array.titles)),
                 this);
@@ -85,7 +85,16 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         if (id == R.id.action_homepage) {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://younglinux.info"));
             startActivity(browserIntent);
+        } else if (id == R.id.action_next) {
+            ActionBar actionBar = getSupportActionBar();
+            int maxElem = actionBar.getNavigationItemCount();
+            int current = actionBar.getSelectedNavigationIndex();
+            if (current+1 < maxElem) actionBar.setSelectedNavigationItem(current + 1);
+        } else {
+            ActionBar actionBar = getSupportActionBar();
+            actionBar.setSelectedNavigationItem(actionBar.getSelectedNavigationIndex() - 1);
         }
+
         return super.onOptionsItemSelected(item);
     }
 
