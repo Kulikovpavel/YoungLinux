@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Урок 22. Проверочная работа</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-382" class="section-2">
+  <h1 class="book-heading">Урок 22. Проверочная работа</h1>
+  <p class="right">Особенности языка С. Учебное пособие</p>
+<p>Выполнение всех задания данного урока предполагает период времени выполнения более чем 1,5 часа. Поэтому если есть ограничения по времени, то оценка работы может выполняться по количеству набранных баллов. Приблизительные баллы указаны в скобках после каждого задания.</p>
+<ol>
+<li>Напишите программу, предназначенную для наглядной демонстрации различий между такими типами данных как <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #993333;">char</span><span style="color: #339933;">,</span> <span style="color: #993333;">short</span><span style="color: #339933;">,</span> <span style="color: #993333;">int</span><span style="color: #339933;">,</span> <span style="color: #993333;">unsigned</span></code></span>. (7)</li>
+<li>Значение какого из ниже представленных массивов совпадает со строкой "Zeitgeist"? Почему? (1)<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">arrA<span style="color: #009900;">&#91;</span><span style="color: #0000dd;">9</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #009900;">&#123;</span><span style="color: #ff0000;">'Z'</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">'e'</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">'i'</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">'t'</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">'g'</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">'e'</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">'i'</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">'s'</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">'t'</span><span style="color: #009900;">&#125;</span><span style="color: #339933;">;</span>
+arrB<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #009900;">&#123;</span><span style="color: #ff0000;">'Z'</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">'e'</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">'i'</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">'t'</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">'g'</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">'e'</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">'i'</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">'s'</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">'t'</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #009900;">&#125;</span><span style="color: #339933;">;</span></pre></div>
+</li>
+<li>Если массив arr содержит строку, то будут ли различаться значения, которые вернут функции <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #993333;">sizeof</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> и <span class="geshifilter"><code class="c geshifilter-c">strlen<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>? (2)</li>
+<li>Напишите код, в котором одной переменной присваивается введенное пользователем число, а второй переменной модуль этого числа. После этого значение второй переменной выводится на экран. Используйте условное выражение, а не инструкцию <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">if</span></code></span>. (4)</li>
+<li>Переделайте условное выражение из 4-го задания в макрос. (2)</li>
+<li>Объявлены и определены целочисленные переменные: <span class="geshifilter"><code class="c geshifilter-c">a <span style="color: #339933;">=</span> <span style="color: #0000dd;">10</span><span style="color: #339933;">,</span> b <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">,</span> c <span style="color: #339933;">=</span> <span style="color: #339933;">-</span><span style="color: #0000dd;">3</span></code></span>. Определите их значения после выполнения следующих двух выражений, а также значения самих выражений: (2)<br />
+<span class="geshifilter"><code class="c geshifilter-c">a<span style="color: #339933;">--</span> <span style="color: #339933;">+</span> <span style="color: #339933;">++</span>b<span style="color: #339933;">;</span> <span style="color: #339933;">--</span>c <span style="color: #339933;">+</span> b<span style="color: #339933;">--;</span></code></span> </li>
+<li>Запрограммируйте вывод на экран символов так, как показано на рисунке. Используйте циклы <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">for</span></code></span>, а также если необходимо функцию <span class="geshifilter"><code class="c geshifilter-c">strcat<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>. (12)<br />
+<img src="../../../img/c/cycle.png" width="654" height="97" alt="Таблица умножения из символов" />
+</li>
+<li>Напишите программу, которая определяет в процентном соотношении количество гласных и согласных букв в текстовом файле. Имя файла передается в программу через командную строку. (10)</li>
+<li>Может ли одна ячейка памяти иметь несколько имен переменных? Может ли адрес определенной ячейки памяти содержаться во множестве переменных? Ответ поясните. (4)</li>
+<li>Как изменить приведенную ниже программу так, чтобы среди параметров функции <span class="geshifilter"><code class="c geshifilter-c">sum<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> не было указателя, а функция возвращала значение, оставляя тем самым возможность изменить значение любой внешней переменной? (3)<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+&nbsp;
+<span style="color: #993333;">void</span> sum <span style="color: #009900;">&#40;</span><span style="color: #993333;">float</span> <span style="color: #339933;">*</span>base<span style="color: #339933;">,</span> <span style="color: #993333;">float</span> add<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">float</span> a<span style="color: #339933;">=</span>100<span style="color: #339933;">,</span> b<span style="color: #339933;">;</span>
+&nbsp;
+	scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%f&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>b<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	sum<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span>a<span style="color: #339933;">,</span> b<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%.4f<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> a<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">void</span> sum <span style="color: #009900;">&#40;</span><span style="color: #993333;">float</span> <span style="color: #339933;">*</span>base<span style="color: #339933;">,</span> <span style="color: #993333;">float</span> add<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #339933;">*</span>base <span style="color: #339933;">=</span> <span style="color: #339933;">*</span>base <span style="color: #339933;">+</span> add<span style="color: #339933;">/</span><span style="color: #0000dd;">2</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div>
+</li>
+<li>Напишите программу, в которой массив заполняется случайными буквами английского алфавита; значения элементов массива в символьном представлении выводятся на экран. (4)</li>
+<li>Напишите функцию, которая принимает указатели на два массива. Функция должна заполнять один массив 25-ю случайными четными числами, а другой — 25 нечетными. Продемонстрируйте ее работу. (6)</li>
+<li>Пользователь вводит две строки, каждая строка состоит из двух слов, разделенных пробелом. Требуется сравнить строки лексикографически, начиная со второго слова (т.е. после пробела). Напишите программу, выполняющую описанную задачу. (6)</li>
+<li>Пользователь вводит адреса сайтов и их ТИЦ. Данные о каждом сайте сохраняются в элементе динамической структуры. По команде пользователя данные записываются в файл, при этом память, выделенная под динамическую структуру, высвобождается. Далее пользователь может снова начать вводить информацию о сайтах, либо завершить выполнение программы. (25)</li>
+</ol>
+  </div>
+    </div>
+  </body>
+</html>

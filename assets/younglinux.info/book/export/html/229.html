@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Упражнения</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+                <div class="section-2">
+          
+    <div id="node-229" class="section-3">
+  <h1 class="book-heading">Упражнения</h1>
+  <p class="right">Introduction to Linux. A Hands on Guide —<br />
+Введение в Linux. Руководство по работе</p>
+<p>Эти упражнения представляют дополнительные примеры того, как объединять команды. Основная цель - попытаться использовать клавишу Enter как можно меньше.</p>
+<p>Все упражнения выполняются под обычным пользовательским ID, так что появляются некоторые ошибки. Когда вы их видите, не забывайте прочитать man-страницы!</p>
+<ul>
+<li>Используйте команду <strong>cut</strong> на вывод длинного списка каталога, чтобы отобразить только права доступа к файлам. Затем отправьте в конвейере этот вывод на <strong>sort</strong> и <strong>uniq</strong>, чтобы отфильтровать все повторяющиеся строки. Потом с помощью <strong>wc</strong> посчитайте различные типы разрешений в этом каталоге.</li>
+<li>Отправьте вывод <strong>date</strong> в файл. Добавьте выход <strong>ls</strong> в этот же файл. Отправьте этот файл на ваш локальный почтовый ящик (не указывайте ничего вроде «@домен», достаточно просто имени пользователя). В случае успеха при использовании Bash вы увидите новое почтовое уведомление.</li>
+<li>Отобразите список устройств в <span class="mono">/dev</span>, которые в настоящее время используются вашим UID. Организуйте конвейер через <strong>less</strong>, чтобы посмотреть их должным образом.</li>
+<li>Выполните следующие команды под непривилегированным пользователем. Определите стандартный ввод, вывод и ошибку для каждой команды.
+<p>Теперь проверьте ваши результаты выдачи команд снова, теперь перенаправляя стандартный вывод в файл <span class="mono">/var/tmp/output</span> и стандартную ошибку в файл <span class="mono">/var/tmp/error</span>.</p>
+<ul>
+<li><span class="mono">cat nonexistentfile </span></li>
+<li><span class="mono">file /sbin/ifconfig </span></li>
+<li><span class="mono">grep root /etc/passwd /etc/nofiles > grepresults </span></li>
+<li><span class="mono">/etc/init.d/sshd start > /var/tmp/output </span></li>
+<li><span class="mono">/etc/init.d/crond start > /var/tmp/output 2>&amp;1</span></li>
+</ul>
+</li>
+</ul>
+<ul>
+<li>Как много процессов у вас сейчас работает?</li>
+<li>Сколько скрытых файлов в вашем домашнем каталоге?</li>
+<li>Используйте locate, чтобы найти документацию по ядру.</li>
+<li>Узнайте, какой файл содержит следующую запись:</li>
+</ul>
+<pre>
+root:x:0:0:root:/root:/bin/bash
+</pre><p>
+А эту:</p>
+<pre>
+system:		root
+</pre><ul>
+<li>Посмотрите, что произойдет после выполнения этой команды:</li>
+</ul>
+<p><span class="mono">> time; date >> time; cat &lt; time</span></p>
+<ul>
+<li>Какие команды вы бы использовали, чтобы проверить, какие сценарии в <span class="mono">/etc/init.d</span> запускают данный процесс?</li>
+</ul>
+  </div>
+    </div></div>
+  </body>
+</html>

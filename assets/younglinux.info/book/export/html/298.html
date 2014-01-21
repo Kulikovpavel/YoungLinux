@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Сумма и произведение цифр числа</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-298" class="section-2">
+  <h1 class="book-heading">Сумма и произведение цифр числа</h1>
+  <p><strong>Задача</strong><br />
+Дано число. Найти сумму и произведение его цифр.</p>
+<p><strong>Переменные</strong><br />
+<span class="mono">n</span> – число;<br />
+<span class="mono">suma</span> – сумма цифр;<br />
+<span class="mono">mult</span> – произведение цифр.</p>
+<p><strong>Алгоритм</strong>	</p>
+<ol>
+<li><span class="mono">suma</span> присвоить ноль.</li>
+<li><span class="mono">mult</span> присвоить единицу (при умножении на ноль результат будет нулевым).</li>
+<li>Пока <span class="mono">n</span> больше нуля
+<ol>
+<li>найти остаток от деления <span class="mono">n</span> на 10 (т.е. последнюю цифру числа), добавить его к сумме и увеличить произведение;</li>
+<li>избавиться от последнего разряда числа <span class="mono">n</span> путем деления нацело на число 10.</li>
+</ol>
+</li>
+</ol>
+<p><strong>Код программы</strong><br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">n = <span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'Enter number: '</span><span style="color: black;">&#41;</span>
+n = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span>n<span style="color: black;">&#41;</span>
+suma = 0
+mult = 1
+<span style="color: #ff7700;font-weight:bold;">while</span> n <span style="color: #66cc66;">&gt;</span> 0:
+    suma = suma + n <span style="color: #66cc66;">%</span> 10
+    mult = mult <span style="color: #66cc66;">*</span> <span style="color: black;">&#40;</span>n <span style="color: #66cc66;">%</span> 10<span style="color: black;">&#41;</span>
+    n = n // 10
+<span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'Sum of digits ='</span>, suma<span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'Multiplication of digits ='</span>, mult<span style="color: black;">&#41;</span></pre></div></p>
+  </div>
+    </div>
+  </body>
+</html>

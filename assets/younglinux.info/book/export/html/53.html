@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Программирование событий в Tkinter.  Урок 8</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-53" class="section-2">
+  <h1 class="book-heading">Программирование событий в Tkinter.  Урок 8</h1>
+  <div style="text-align:center;">
+<h4>Методическая разработка урока<br />
+Элективный курс: Модуль tkinter. Создание графического интерфейса пользователя с помощью языка программирования Python<br />
+Уровень: Программирование для начинающих</h4>
+</div>
+<p>Обычно, чтобы графическое приложение что-то сделало, должно случиться какое-нибудь событие, т. е. воздействие на GUI из вне.</p>
+<h2>Типы событий</h2>
+<p>Можно выделить три основных типа событий: производимые мышью, нажатиями клавиш на клавиатуре, а также события, возникающие в результате изменения других графических объектов.</p>
+<div style="text-align:center;"><img src="../../../img/tkinter/events.png" width="761" height="349" alt="Типы событий в программировании" /></div>
+<h2>Способ записи</h2>
+<p>При вызове метода bind событие передается в качестве первого аргумента.</p>
+<div style="text-align:center;"><img src="../../../img/tkinter/event.png" width="287" height="79" alt="Привязка события в методе bind (Tkinter)" /></div>
+<p>Название события заключается в кавычки, а также в знаки &lt; и >. Событие описывается с помощью зарезервированных последовательностей ключевых слов.</p>
+<h2>События, производимые мышью</h2>
+<ul>
+<li>&lt;Button-1&gt; - щелчок левой кнопкой мыши</li>
+<li>&lt;Button-2&gt; - щелчок средней кнопкой мыши</li>
+<li>&lt;Button-3&gt; - щелчок правой кнопкой мыши</li>
+<li>&lt;Double-Button-1&gt; - двойной клик левой кнопкой мыши</li>
+<li>&lt;Motion&gt; - движение мыши</li>
+<li>и т. д.</li>
+</ul>
+<p><strong>Пример:</strong> </p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+<span style="color: #ff7700;font-weight:bold;">def</span> b1<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     root.<span style="color: black;">title</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Левая кнопка мыши&quot;</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">def</span> b3<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     root.<span style="color: black;">title</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Правая кнопка мыши&quot;</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">def</span> move<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     root.<span style="color: black;">title</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Движение мышью&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+root.<span style="color: black;">minsize</span><span style="color: black;">&#40;</span>width = <span style="color: #ff4500;">500</span>, height=<span style="color: #ff4500;">400</span><span style="color: black;">&#41;</span>
+&nbsp;
+root.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'&lt;Button-1&gt;'</span>,b1<span style="color: black;">&#41;</span>
+root.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'&lt;Button-3&gt;'</span>,b3<span style="color: black;">&#41;</span>
+root.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'&lt;Motion&gt;'</span>,move<span style="color: black;">&#41;</span>
+&nbsp;
+root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>В этой программе меняется надпись в заголовке главного окна в зависимости от того двигается мышь, щелкают левой или правой кнопкой мыши.</p>
+<h2>События, производимые с помощью клавиатуры</h2>
+<ul>
+<li>Буквенные клавиши можно записывать без угловых скобок (например, 'L').</li>
+<li>Для неалфавитных клавиш существуют специальные зарезервированные слова<br />
+ * &lt;Return&gt; - нажатие клавиши Enter;<br />
+ * &lt;space&gt;- пробел;<br />
+ * и т. д.</li>
+<li>Сочетания клавиш пишутся через тире. Например:<br />
+ * &lt;Control-Shift&gt; - одновременное нажатие клавиш Ctrl и Shift.</li>
+</ul>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">def</span> exit_<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     root.<span style="color: black;">destroy</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">def</span> caption<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     t = ent.<span style="color: black;">get</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+     lbl.<span style="color: black;">configure</span><span style="color: black;">&#40;</span>text = t<span style="color: black;">&#41;</span>
+&nbsp;
+root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+ent = Entry<span style="color: black;">&#40;</span>root, width = <span style="color: #ff4500;">40</span><span style="color: black;">&#41;</span>
+lbl = Label<span style="color: black;">&#40;</span>root, width = <span style="color: #ff4500;">80</span><span style="color: black;">&#41;</span>
+&nbsp;
+ent.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+lbl.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+ent.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'&lt;Return&gt;'</span>,caption<span style="color: black;">&#41;</span>
+root.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'&lt;Control-z&gt;'</span>,exit_<span style="color: black;">&#41;</span>
+&nbsp;
+root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>При нажатии клавиши Enter в пределах текстовой строки (ent) вызывается функция caption, которая помещает символы из текстовой строки (ent) в метку (lbl). Нажатие комбинации клавиш Ctrl + z приводит к закрытию главного окна.</p>
+<h2>практическая работа</h2>
+<ol>
+<li>Напишите следующую программу. На главном окне находится несколько флажков и текстовое поле. При щелчке левой кнопкой мыши в пределах текстового поля в нем должны отображаться значения включенных флажки (появляться сообщение о том, какие флажки включены), при щелчке правой кнопкой мыши — значения выключенных флажков.</li>
+<li>Напишите скрипт, генерирующий в окне два текстовых поля и рамку. Размер рамки можно менять с помощью вводимых значений в текстовые поля (определяют длину и ширину) и нажатии клавиши пробел на клавиатуре.</li>
+</ol>
+  </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Перевод чисел из десятичной системы счисления в двоичную</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-66" class="section-2">
+  <h1 class="book-heading">Перевод чисел из десятичной системы счисления в двоичную</h1>
+  <p>Один из алгоритмов получения двоичного числа из десятичного можно описать следующим образом:</p>
+<ol>
+<li>Исходное десятичное число делится на два (основание двоичной системы счисления).</li>
+<li>В одну переменную записывается частное в виде целого числа, в другую – остаток в виде строки (если остатка нет, то записывается ноль).</li>
+<li>Если частное не было равно нулю, то оно снова делится на два. Переменная, связанная со старым частным связывается с новым (прежнее частное теряется). Новый остаток с помощью операции конкатенации добавляется в начало строковой переменной, где хранятся остатки. </li>
+<li>П. 3 продолжает повторяться до тех пор, пока частное не станет равно нулю.</li>
+<li>Остатки от деления, записанные в обратном порядке, представляют собой двоичное представление заданного десятичного числа.</li>
+</ol>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">x = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Введите натуральное число: &quot;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+n = <span style="color: #483d8b;">&quot;&quot;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">while</span> x <span style="color: #66cc66;">&gt;</span> 0:
+    y = <span style="color: #008000;">str</span><span style="color: black;">&#40;</span>x <span style="color: #66cc66;">%</span> 2<span style="color: black;">&#41;</span>
+    n = y + n
+    x = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span>x / 2<span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>n<span style="color: black;">&#41;</span></pre></div></p>
+  </div>
+    </div>
+  </body>
+</html>

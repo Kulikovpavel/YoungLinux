@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>C1. Базовые функции</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+                <div class="section-2">
+          
+    <div id="node-329" class="section-3">
+  <h1 class="book-heading">C1. Базовые функции</h1>
+  <p class="right">Introduction to Linux. A Hands on Guide —<br />
+Введение в Linux. Руководство по работе</p>
+<p>Следующие функции являются стандартными для каждой оболочки. Обратите внимание, что команды <strong>stop, suspend, jobs, bg</strong> и <strong>fg</strong> доступны только в системах, которые поддерживают соответствующее управление.</p>
+<p><strong>Таблица C.1. Базовые функции shell</strong></p>
+<table>
+<tr>
+<th>Команда</th>
+<th>Значение</th>
+</tr>
+<tr>
+<td>></td>
+<td>Перенаправление вывода</td>
+</tr>
+<tr>
+<td>>></td>
+<td>Добавление в файл</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>Перенаправление ввода</td>
+</tr>
+<tr>
+<td>&lt;&lt;</td>
+<td>"Здесь" документ (перенаправление ввода)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>|</td>
+<td>Канальный вывод</td>
+</tr>
+<tr>
+<td>&amp;</td>
+<td>Запустить процесс в фоновом режиме</td>
+</tr>
+<tr>
+<td>;</td>
+<td>Разделение команд</td>
+</tr>
+<tr>
+<td>*</td>
+<td>Соответствует любому(ым) символу(ам) в имени файла</td>
+</tr>
+<tr>
+<td>?</td>
+<td>Соответствует одному символу в имени файла</td>
+</tr>
+<tr>
+<td>[ ]</td>
+<td>Соответствует любому символу, заключенному в скобки</td>
+</tr>
+<tr>
+<td>( )</td>
+<td>Выполнить в дочерней оболочке</td>
+</tr>
+<tr>
+<td>` `</td>
+<td>Заменить вывод заключенной в кавычки командой</td>
+</tr>
+<tr>
+<td>" "</td>
+<td>Частичное цитирование (допустимы переменные и командные расширения)</td>
+</tr>
+<tr>
+<td>' '</td>
+<td>Полное цитирование (нет расширений)</td>
+</tr>
+<tr>
+<td>\</td>
+<td>Цитировать следующий символ</td>
+</tr>
+<tr>
+<td>$var</td>
+<td>Использовать значение переменной</td>
+</tr>
+<tr>
+<td>$$</td>
+<td>id процесса</td>
+</tr>
+<tr>
+<td>$0</td>
+<td>Имя команды</td>
+</tr>
+<tr>
+<td>$n</td>
+<td>n-ый аргумент (n от 0 до 9)</td>
+</tr>
+<tr>
+<td>$*</td>
+<td>Все аргументы как простое слово</td>
+</tr>
+<tr>
+<td>#</td>
+<td>Начать комментарий</td>
+</tr>
+<tr>
+<td>bg</td>
+<td>Фоновое исполнение</td>
+</tr>
+<tr>
+<td>break</td>
+<td>Прервать цикл</td>
+</tr>
+<tr>
+<td>cd</td>
+<td>Изменить директорию</td>
+</tr>
+<tr>
+<td>continue</td>
+<td>Прервать очередной цикл программы</td>
+</tr>
+<tr>
+<td>echo</td>
+<td>Отобразить вывод</td>
+</tr>
+<tr>
+<td>eval</td>
+<td>Оценить аргументы</td>
+</tr>
+<tr>
+<td>exec</td>
+<td>Выполнить новую оболочку</td>
+</tr>
+<tr>
+<td>fg</td>
+<td>Выполнить на переднем плане</td>
+</tr>
+<tr>
+<td>jobs</td>
+<td>Показать активные задания</td>
+</tr>
+<tr>
+<td>kill</td>
+<td>Прервать запущенные задания</td>
+</tr>
+<tr>
+<td>newgrp</td>
+<td>Изменения в новой группе</td>
+</tr>
+<tr>
+<td>shift</td>
+<td>Сдвиг позиционных параметров</td>
+</tr>
+<tr>
+<td>stop</td>
+<td>Приостановить фоновое задание</td>
+</tr>
+<tr>
+<td>suspend</td>
+<td>Приостановить  задание</td>
+</tr>
+<tr>
+<td>time</td>
+<td>Время команды</td>
+</tr>
+<tr>
+<td>umask</td>
+<td>Установить или посмотреть разрешения на файлы</td>
+</tr>
+<tr>
+<td>unset</td>
+<td>Удалить переменную или определения функций</td>
+</tr>
+<tr>
+<td>wait</td>
+<td>Ожидать пока выполняется фоновое задание</td>
+</tr>
+</table>
+  </div>
+    </div></div>
+  </body>
+</html>

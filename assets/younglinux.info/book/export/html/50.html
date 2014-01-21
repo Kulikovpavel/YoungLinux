@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Виджеты (графические объекты) и их свойства. Часть 1. Урок 2</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-50" class="section-2">
+  <h1 class="book-heading">Виджеты (графические объекты) и их свойства. Часть 1. Урок 2</h1>
+  <p>На этом уроке рассмотрим часть графических объектов (виджет), содержащихся в библиотеке Tkinter: кнопки, поля для ввода, метки, флажки, переключатели и списки. Следует понимать, что графический интерфейс пользователя достаточно стандартен, и поэтому любые подобные библиотеки-модули (в том числе и Tkinter) содержат приблизительно одинаковые виджеты.</p>
+<p>Каждый класс виджет имеет определенные свойства, значения которых можно задавать при их создании, а также программировать их изменение при действии пользователя и в результате выполнения программы.</p>
+<h2>Кнопки</h2>
+<p>Объект-кнопка создается вызовом класса Button модуля tkinter. При этом обязательным аргументом является лишь родительский виджет (например, окно верхнего уровня). Другие свойства могут указываться при создании кнопки или задаваться (изменяться) позже. Синтаксис:</p>
+<div style="text-align:center;"><strong>переменная = Button (родит_виджет, [свойство=значение, … ….]) </strong></div>
+<p>У кнопки много свойств, в примере ниже указаны лишь некоторые из них.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+&nbsp;
+root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+but = Button<span style="color: black;">&#40;</span>root,
+          text=<span style="color: #483d8b;">&quot;Это кнопка&quot;</span>, <span style="color: #808080; font-style: italic;">#надпись на кнопке</span>
+          width=<span style="color: #ff4500;">30</span>,height=<span style="color: #ff4500;">5</span>, <span style="color: #808080; font-style: italic;">#ширина и высота</span>
+          bg=<span style="color: #483d8b;">&quot;white&quot;</span>,fg=<span style="color: #483d8b;">&quot;blue&quot;</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;">#цвет фона и надписи</span>
+&nbsp;
+but.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div> </p>
+<p>bg и fg – это сокращения от background (фон) и foreground (передний план). Ширина и высота измеряются в знакоместах (количество символов).</p>
+<h2>Метки</h2>
+<p>Метки (или надписи) — это достаточно простые виджеты, содержащие строку (или несколько строк) текста и служащие в основном для информирования пользователя.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">lab = Label<span style="color: black;">&#40;</span>root, text=<span style="color: #483d8b;">&quot;Это метка! <span style="color: #000099; font-weight: bold;">\n</span> Из двух строк.&quot;</span>, font=<span style="color: #483d8b;">&quot;Arial 18&quot;</span><span style="color: black;">&#41;</span></pre></div></p>
+<h2>Однострочное текстовое поле</h2>
+<p>Такое поле создается вызовом класса Entry модуля tkinter. В него пользователь может ввести только одну строку текста.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">ent = Entry<span style="color: black;">&#40;</span>root,width=<span style="color: #ff4500;">20</span>,bd=<span style="color: #ff4500;">3</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>bd – это сокращение от borderwidth (ширина границы).</p>
+<h2>Многострочное текстовое поле</h2>
+<p>Text предназначен для предоставления пользователю возможности ввода не одной строки текста, а существенно больше. </p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">tex = Text<span style="color: black;">&#40;</span>root,width=<span style="color: #ff4500;">40</span>,
+          font=<span style="color: #483d8b;">&quot;Verdana 12&quot;</span>,
+          wrap=WORD<span style="color: black;">&#41;</span> </pre></div></p>
+<p>Последнее свойство (wrap) в зависимости от своего значения позволяет переносить текст, вводимый пользователем либо по символам, либо по словам, либо вообще не переносить, пока пользователь не нажмет Enter.</p>
+<h2>Радиокнопки (переключатели)</h2>
+<p>Объект-радиокнопка никогда не используется по одному. Их используют группами, при этом в одной группе может быть «включена» лишь одна кнопка. </p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">var=IntVar<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+var.<span style="color: #008000;">set</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">1</span><span style="color: black;">&#41;</span>
+rad0 = Radiobutton<span style="color: black;">&#40;</span>root,text=<span style="color: #483d8b;">&quot;Первая&quot;</span>,
+          variable=var,value=<span style="color: #ff4500;">0</span><span style="color: black;">&#41;</span>
+rad1 = Radiobutton<span style="color: black;">&#40;</span>root,text=<span style="color: #483d8b;">&quot;Вторая&quot;</span>,
+          variable=var,value=<span style="color: #ff4500;">1</span><span style="color: black;">&#41;</span>
+rad2 = Radiobutton<span style="color: black;">&#40;</span>root,text=<span style="color: #483d8b;">&quot;Третья&quot;</span>,
+          variable=var,value=<span style="color: #ff4500;">2</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>Одна группа определяет значение одной переменной, т. е. если в примере будет выбрана радиокнопка rad2, то значение переменной будет var будет 2. Изначально также требуется установить значение переменной (выражение var.set(1) задает значение переменной var равное 1).</p>
+<h2>Флажки</h2>
+<p>Объект checkbutton предназначен для выбора не взаимоисключающих пунктов в окне (в группе можно активировать один, два или более флажков или не один). В отличие от радиокнопок, значение каждого флажка привязывается к своей переменной, значение которой определяется опциями onvalue (включено) и offvalue (выключено) в описании флажка.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">c1 = IntVar<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+c2 = IntVar<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+che1 = Checkbutton<span style="color: black;">&#40;</span>root,text=<span style="color: #483d8b;">&quot;Первый флажок&quot;</span>,
+          variable=c1,onvalue=<span style="color: #ff4500;">1</span>,offvalue=<span style="color: #ff4500;">0</span><span style="color: black;">&#41;</span>
+che2 = Checkbutton<span style="color: black;">&#40;</span>root,text=<span style="color: #483d8b;">&quot;Второй флажок&quot;</span>,
+          variable=c2,onvalue=<span style="color: #ff4500;">2</span>,offvalue=<span style="color: #ff4500;">0</span><span style="color: black;">&#41;</span> </pre></div></p>
+<h2>Списки</h2>
+<p>Вызов класса Listbox создает объект, в котором пользователь может выбрать один или несколько пунктов в зависимости от значения опции selectmode. В примере ниже значение SINGLE позволяет выбирать лишь один пункт из списка.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">r = <span style="color: black;">&#91;</span><span style="color: #483d8b;">'Linux'</span>,<span style="color: #483d8b;">'Python'</span>,<span style="color: #483d8b;">'Tk'</span>,<span style="color: #483d8b;">'Tkinter'</span><span style="color: black;">&#93;</span>
+lis = Listbox<span style="color: black;">&#40;</span>root,selectmode=SINGLE,height=4<span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">for</span> i <span style="color: #ff7700;font-weight:bold;">in</span> r:
+     lis.<span style="color: black;">insert</span><span style="color: black;">&#40;</span>END,i<span style="color: black;">&#41;</span> </pre></div></p>
+<p>Изначально список (Listbox) пуст. С помощью цикла for в него добавляются пункты из списка (тип данных) r. Добавление происходит с помощью специального метода класса Listbox — insert. Данный метод принимает два параметра: куда добавить и что добавить. </p>
+<p>Большинство методов различных виджет мы рассмотрим по ходу изучения данного курса.</p>
+<h2>Практическая работа</h2>
+<p>Создайте два скрипта на языке программирования Python и с использованием модуля Tkinter генерирующие шаблоны представленные ниже.</p>
+<div style="text-align:center;"><img src="../../../img/tkinter/tkinter2.1.gif" width="259" height="261" alt="Создание графического интерфейса: текстовые поля и кнопка" /></div>
+<div style="text-align:center;"><img src="../../../img/tkinter/tkinter2.2.gif" width="172" height="300" alt="Создание графического интерфейса: радиокнопки и флажки" /></div>
+  </div>
+    </div>
+  </body>
+</html>

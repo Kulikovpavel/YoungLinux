@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Урок 10. Псевдослучайные числа</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-370" class="section-2">
+  <h1 class="book-heading">Урок 10. Псевдослучайные числа</h1>
+  <p class="right">Особенности языка С. Учебное пособие</p>
+<h3>Функции rand() и srand()</h3>
+<p>В языках программирования обычно предусмотрены функции, позволяющие генерировать случайные числа в определенном по умолчанию диапазоне. На самом деле генерируются не случайные, а так называемые псевдослучайные числа; они выглядят случайно, но вычисляются по вполне конкретной формуле. Но для простоты далее мы все равно будем называть их случайными.</p>
+<p>В языке программирования <span class="blue">C</span> получить случайное число можно с помощью функции <span class="geshifilter"><code class="c geshifilter-c">rand<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>, которая входит в стандартную библиотеку языка. Эта функция не принимает никакие параметры.</p>
+<p><span class="blue">Задание<br />
+Напишите программу, в которой целочисленной переменной присваивается результат выполнения функции <span class="geshifilter"><code class="c geshifilter-c">rand<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>. Выведите значение переменной на экран.</span> </p>
+<p>Функция <span class="geshifilter"><code class="c geshifilter-c">rand<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> возвращает целое число от 0 до значения присвоенного константе <span class="monoi">RAND_MAX</span>. Значение <span class="monoi">RAND_MAX</span> зависит от системы и определено в заголовочном файле stdlib.h. Так, например, оно может быть равно 32767 (двухбайтовое целое) или 2147483647 (четырехбайтовое целое). </p>
+<p><span class="blue">Задание<br />
+Определите значение <span class="monoi">RAND_MAX</span> в вашей системе. Для этого не забудьте подключить к файлу исходного кода заголовочный файл stdlib.h.</span></p>
+<p>Код ниже выводит на экран 50 случайных чисел:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+<span style="color: #339933;">#include &lt;stdlib.h&gt;</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+     <span style="color: #993333;">char</span> i<span style="color: #339933;">;</span>
+&nbsp;
+     <span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i <span style="color: #339933;">=</span> <span style="color: #0000dd;">1</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;=</span> <span style="color: #0000dd;">50</span><span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+          <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%15d&quot;</span><span style="color: #339933;">,</span> rand<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+          <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>i <span style="color: #339933;">%</span> 5 <span style="color: #339933;">==</span> 0<span style="color: #009900;">&#41;</span> <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+     <span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<p>В теле цикла осуществляется переход на новую строку после каждых выведенных на экран пяти чисел. Для этого используется выражение, в котором находится остаток от деления <span class="monoi">i</span> на 5, результат сравнивается с 0. Чтобы после первого числа не происходил переход на новую строку, <span class="monoi">i</span> сначала присваивается единица, а не ноль (т.к. 0 делится на 5 без остатка).</p>
+<p><span class="blue">Задание<br />
+Спишите код, приведенный выше. Выполните программу несколько раз, при этом обратите внимание, разные ли результаты вы получаете от выполнения к выполнению.</span></p>
+<p>Вы должны были заметить, что при каждом запуске программы числа остаются одинаковыми. Даже если вы перекомпилируете программу, результат не изменится. Данный эффект связан с тем, что начальное (инициализирующее) число, которое подставляется в формулу вычисления первого и последующих псевдослучайных чисел, для каждой системы всегда одно и то же. Однако это начальное число можно изменить с помощью функции <span class="geshifilter"><code class="c geshifilter-c">srand<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>, которой в качестве параметра передается любое целое число. Понятно, что если вы зададите конкретный аргумент для функции, например, <span class="geshifilter"><code class="c geshifilter-c">srand<span style="color: #009900;">&#40;</span><span style="color: #0000dd;">1000</span><span style="color: #009900;">&#41;</span></code></span>, то от вызова к вызову программы числа будут также одни и те же. Хотя и не те, что были бы без <span class="geshifilter"><code class="c geshifilter-c">srand<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>. Поэтому появляется проблема, как сделать так, чтобы аргумент для <span class="geshifilter"><code class="c geshifilter-c">srand<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> был тоже случайным? Получается замкнутый круг.</p>
+<p><span class="blue">Задание<br />
+Переделайте программу, выводящую на экран 50 случайных чисел так, чтобы сначала у пользователя запрашивалось любое целое число с помощью <span class="geshifilter"><code class="c geshifilter-c">scanf<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>, которое передавалось бы в функцию <span class="geshifilter"><code class="c geshifilter-c">srand<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>.</span></p>
+<p>Пользователь программы сам может задавать инициализирующее значение. Но чаще всего это не является полноценным выходом из ситуации. Поэтому инициализирующее значение привязывают к какому-либо процессу, протекающему в операционной системе, например, к часам. Время (учитывая не только время суток, но и дату) никогда не бывает одинаковым. Значит значение для <span class="geshifilter"><code class="c geshifilter-c">srand<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>, преобразованное в целое из системного времени, будет различным.</p>
+<p>Текущее время можно узнать с помощью функции <span class="geshifilter"><code class="c geshifilter-c">time<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>, прототип которой описан в файле time.h. Передав <span class="geshifilter"><code class="c geshifilter-c">time<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> в качестве параметра NULL, мы получим целое число, которое можно передать в <span class="geshifilter"><code class="c geshifilter-c">srand<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>:<br />
+<span class="geshifilter"><code class="c geshifilter-c">srand<span style="color: #009900;">&#40;</span>time<span style="color: #009900;">&#40;</span>NULL<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></code></span></p>
+<p><span class="blue">Задание<br />
+Переделайте вашу программу так, чтобы инициализирующее значение зависело от системного времени.</span></p>
+<h3>Получение целых случайных чисел в заданных диапазонах</h3>
+<p>Функция <span class="geshifilter"><code class="c geshifilter-c">rand<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> выдает случайное число от 0 до значения RAND_MAX. Что делать, если требуется получать случайные числа в иных диапазонах, например, от 100 до 999?</p>
+<p>Сначала рассмотрим более простую ситуацию: получить случайные числа от 0 до 5. Если любое целое число попытаться разделить на 5 нацело, то можно получить как 0 (когда число делится на 5 без остатка), так и 1, 2, 3, 4. Например, <span class="geshifilter"><code class="c geshifilter-c">rand<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> вернула число 283. Применяя к этому числу операцию нахождения остатка от деления на 5, получим 3. Т.е. выражение <span class="geshifilter"><code class="c geshifilter-c">rand<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">%</span> <span style="color: #0000dd;">5</span></code></span> дает любое число в диапазоне [0, 5).</p>
+<p>Однако, что если надо, чтобы число 5 так же входило в диапазон, т.е. диапазон имеет вид [0, 5]? Логично предположить, что следует найти остаток от деления на 6. При этом более грамотным будет следующее рассуждение: надо находить остаток от деления на размер диапазона. В данном случае он равен шести значениям: 0, 1, 2, 3, 4, 5. Чтобы найти размер диапазона надо из допустимого максимума вычесть допустимый минимум и прибавить единицу: max - min + 1. Будьте внимательны: если, например, требуется, чтобы указанный в задаче максимум не входил в диапазон, то единицу прибавлять не надо или надо вычитать единицу из максимума.</p>
+<p><span class="blue">Задание<br />
+Напишите программу, выдающую 50 случайных чисел от 0 до 99 включительно.</span></p>
+<p>Итак, мы знаем формулу получения длины диапазона: max - min + 1. Если требуется получить число от 6 до 10 включительно, то длина диапазона будет равна 10 - 6 + 1 = 5. Выражение <span class="geshifilter"><code class="c geshifilter-c">rand<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">%</span> <span style="color: #0000dd;">5</span></code></span> даст любое число от 0 до 4 включительно. Но нам надо от 6 до 10. В таком случае достаточно к полученному случайному остатку прибавить 6, т.е. минимум. Другими словами, надо выполнить сдвиг. Действительно для приведенного примера:</p>
+<ul>
+<li>если остаток был равен 0, то добавляя 6, получаем 6;</li>
+<li>остаток 1, добавляем 6, получаем 7;</li>
+<li>…</li>
+<li>остаток 4, прибавляем 6, получаем 10;</li>
+<li>остатка больше 4 не может быть.</li>
+</ul>
+<p>В таком случае формула для получения случайного числа в диапазоне [a, b] выглядит так:</p>
+<pre>rand() % длина_диапазона + сдвиг</pre><p>,<br />
+где <span class="monoi">длина_диапазона</span> вычисляется как b - a + 1, сдвиг является значением <span class="monoi">a</span>. </p>
+<p>В эту формулу также вписываются случаи, когда необходимо получить случайное число от 0 до N, т.е. они являются ее частными случаями.</p>
+<p><span class="blue">Задание<br />
+Выведите на экран ряд случайных чисел, принадлежащих диапазону от 100 до 299 включительно.</span></p>
+<p>С таким же успехом можно получать случайные отрицательные числа. Действительно, если диапазон задан как [-35, -1], то его длина будет равна -1 - (-35) + 1 = 35, что соответствует действительности; выражение получения случайного числа будет выглядеть так:<br />
+<span class="geshifilter"><code class="c geshifilter-c">rand<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">%</span> <span style="color: #0000dd;">35</span> <span style="color: #339933;">-</span> <span style="color: #0000dd;">35</span> </code></span></p>
+<p>Так, если остаток от деления составил 0, то мы получим -35, а если 34, то -1. Остальные остатки дадут значения в промежутке от -35 до -1.</p>
+<p><span class="blue">Задание<br />
+Выведите на экран ряд случайных чисел, принадлежащих диапазону от -128 до 127 включительно.</span></p>
+<h3>Получение вещественных случайных чисел</h3>
+<p>Ситуация с вещественными числами выглядит несколько по-иному. Во-первых, мы не можем получить остаток от деления, если делимое или делитель дробное число. Во вторых при вычислении длины диапазона нельзя прибавлять единицу.</p>
+<p>Поясним вторую причину. Допустим диапазон задан как [2.50, 5.30]. Он состоит не из определенного количества чисел (как в случае целых), а из неопределенного (можно сказать, бесконечного) числа значений, т.к. вещественные числа можно представлять с различной степенью точности. Позже выполняя округление все равно будет шанс получить максимальную границу диапазона, поэтому для вычисления длины диапазона достаточно из максимума вычесть минимум.</p>
+<p>Если разделить случайное число, преобразованное к вещественному типу, которое выдала функция <span class="geshifilter"><code class="c geshifilter-c">rand<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>, на значение константы <span class="monoi">RAND_MAX</span>, то получится вещественное случайное число от 0 до 1. Теперь, если это число умножить на длину диапазона, то получится число, лежащее в диапазоне от 0 до значения длины диапазона. Далее если прибавить к нему смещение к минимальной границе, то число благополучно впишется в требуемый диапазон. Таким образом формула для получения случайного вещественного числа выглядит так:<br />
+<span class="geshifilter"><code class="c geshifilter-c"><span style="color: #009900;">&#40;</span><span style="color: #993333;">float</span><span style="color: #009900;">&#41;</span> rand<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">/</span> RAND_MAX <span style="color: #339933;">*</span> <span style="color: #009900;">&#40;</span>max <span style="color: #339933;">-</span> min<span style="color: #009900;">&#41;</span> <span style="color: #339933;">+</span> min</code></span></p>
+<p><span class="blue">Задание<br />
+Заполните массив случайными числами в диапазоне от 0.51 до 1.00. Выведите значение элементов массива на экран.</span></p>
+<h3>Равновероятные случайные числа</h3>
+<p>Функция <span class="geshifilter"><code class="c geshifilter-c">rand<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> генерирует любое случайное число от 0 до <span class="monoi">RAND_MAX</span> с равной долей вероятности. Другими словами, у числа 100 есть такой же шанс выпасть, как и у числа 25876.</p>
+<p>Чтобы доказать это, достаточно написать программу, подсчитывающую количество выпадений каждого из значений. Если выборка (количество "испытуемых") будет достаточно большой, а диапазон (разброс значений) маленьким, то мы должны увидеть, что процент выпадений того или иного значения приблизительно такой же как у других.<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+<span style="color: #339933;">#include &lt;time.h&gt;</span>
+&nbsp;
+<span style="color: #339933;">#define N 500</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+  <span style="color: #993333;">int</span> i<span style="color: #339933;">;</span>
+  <span style="color: #993333;">int</span> arr<span style="color: #009900;">&#91;</span>5<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #009900;">&#123;</span>0<span style="color: #009900;">&#125;</span><span style="color: #339933;">;</span>
+&nbsp;
+  srand<span style="color: #009900;">&#40;</span>time<span style="color: #009900;">&#40;</span>NULL<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+  <span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> N<span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span>   
+    <span style="color: #b1b100;">switch</span> <span style="color: #009900;">&#40;</span>rand<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">%</span> 5<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+      <span style="color: #b1b100;">case</span> 0<span style="color: #339933;">:</span> arr<span style="color: #009900;">&#91;</span>0<span style="color: #009900;">&#93;</span><span style="color: #339933;">++;</span> <span style="color: #000000; font-weight: bold;">break</span><span style="color: #339933;">;</span>
+      <span style="color: #b1b100;">case</span> 1<span style="color: #339933;">:</span> arr<span style="color: #009900;">&#91;</span>1<span style="color: #009900;">&#93;</span><span style="color: #339933;">++;</span> <span style="color: #000000; font-weight: bold;">break</span><span style="color: #339933;">;</span>
+      <span style="color: #b1b100;">case</span> 2<span style="color: #339933;">:</span> arr<span style="color: #009900;">&#91;</span>2<span style="color: #009900;">&#93;</span><span style="color: #339933;">++;</span> <span style="color: #000000; font-weight: bold;">break</span><span style="color: #339933;">;</span>
+      <span style="color: #b1b100;">case</span> 3<span style="color: #339933;">:</span> arr<span style="color: #009900;">&#91;</span>3<span style="color: #009900;">&#93;</span><span style="color: #339933;">++;</span> <span style="color: #000000; font-weight: bold;">break</span><span style="color: #339933;">;</span>
+      <span style="color: #b1b100;">case</span> 4<span style="color: #339933;">:</span> arr<span style="color: #009900;">&#91;</span>4<span style="color: #009900;">&#93;</span><span style="color: #339933;">++;</span> <span style="color: #000000; font-weight: bold;">break</span><span style="color: #339933;">;</span>
+    <span style="color: #009900;">&#125;</span>
+&nbsp;
+  <span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> <span style="color: #0000dd;">5</span><span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span> 
+    <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d - %.2f%%<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> i<span style="color: #339933;">,</span> <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span><span style="color: #993333;">float</span><span style="color: #009900;">&#41;</span> arr<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">/</span> N<span style="color: #009900;">&#41;</span> <span style="color: #339933;">*</span> 100<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<p>В приведенной программе массив из пяти элементов сначала заполняется нулями. Случайные числа генерируются от 0 до 4 включительно. Если выпадает число 0, то увеличивается значение первого элемента массива, если число 1, то второго, и т.д. В конце на экран выводится процент выпадения каждого из чисел.</p>
+<p><span class="blue">Задание<br />
+Спишите данную программу. Посмотрите на результат ее выполнения при различных значениях N: 10, 50, 500, 5000, 50000. Объясните увиденное.</span></p>
+  </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Ряд Фибоначчи и вычисление факториала</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-393" class="section-2">
+  <h1 class="book-heading">Ряд Фибоначчи и вычисление факториала</h1>
+  <p class="right">Решение задач на языке программирования C</p>
+<p>Напишите программу, в которой помимо функции main() были бы еще две функции: в одной вычислялся факториал переданного числа, в другой — находился n-ый элемент ряда Фибоначчи (n — параметр функции). Вызовите эти функции с разными аргументами.</p>
+<p><div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+&nbsp;
+<span style="color: #993333;">unsigned</span> fibonachi <span style="color: #009900;">&#40;</span><span style="color: #993333;">unsigned</span> num<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #993333;">unsigned</span> <span style="color: #993333;">long</span> factorial <span style="color: #009900;">&#40;</span><span style="color: #993333;">unsigned</span> n<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+     <span style="color: #993333;">unsigned</span> <span style="color: #993333;">long</span> result<span style="color: #339933;">;</span>
+&nbsp;
+     result <span style="color: #339933;">=</span> fibonachi<span style="color: #009900;">&#40;</span>10<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+     <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Значение 10-го элемента ряда Фибоначчи равно %lu<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> result<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+     result <span style="color: #339933;">=</span> fibonachi<span style="color: #009900;">&#40;</span>25<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+     <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Значение 25-го элемента ряда Фибоначчи равно %lu<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> result<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+     result <span style="color: #339933;">=</span> factorial<span style="color: #009900;">&#40;</span>5<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+     <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;5! = %lu<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> result<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+     result <span style="color: #339933;">=</span> factorial<span style="color: #009900;">&#40;</span>12<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+     <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;12! = %lu<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> result<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">unsigned</span> fibonachi <span style="color: #009900;">&#40;</span><span style="color: #993333;">unsigned</span> num<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">unsigned</span> i<span style="color: #339933;">=</span>1<span style="color: #339933;">,</span> a<span style="color: #339933;">=</span>0<span style="color: #339933;">,</span> b<span style="color: #339933;">=</span>1<span style="color: #339933;">,</span> s<span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span>i<span style="color: #339933;">++</span> <span style="color: #339933;">&lt;</span> num<span style="color: #339933;">-</span>1<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		s <span style="color: #339933;">=</span> a<span style="color: #339933;">;</span>
+		a <span style="color: #339933;">=</span> b<span style="color: #339933;">;</span>
+		b <span style="color: #339933;">=</span> s<span style="color: #339933;">+</span>a<span style="color: #339933;">;</span>
+	<span style="color: #009900;">&#125;</span>
+	<span style="color: #b1b100;">return</span> b<span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">unsigned</span> <span style="color: #993333;">long</span> factorial <span style="color: #009900;">&#40;</span><span style="color: #993333;">unsigned</span> n<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">unsigned</span> <span style="color: #993333;">long</span> fact<span style="color: #339933;">=</span><span style="color: #0000dd;">1</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span>n <span style="color: #339933;">&gt;</span> 0<span style="color: #009900;">&#41;</span> fact <span style="color: #339933;">=</span> fact <span style="color: #339933;">*</span> n<span style="color: #339933;">--;</span>
+&nbsp;
+	<span style="color: #b1b100;">return</span> fact<span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+  </div>
+    </div>
+  </body>
+</html>

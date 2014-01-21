@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Строки документации исходного кода на Python. Урок 9</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-44" class="section-2">
+  <h1 class="book-heading">Строки документации исходного кода на Python. Урок 9</h1>
+  <div style="text-align:center;">
+<h4>Методическая разработка урока<br />
+Элективный курс: Введение в объектно-ориентированное программирование на Python<br />
+Уровень: Программирование для начинающих<br />
+Версия интерпретатора python: 3.-.-</h4>
+</div>
+<h2>__doc__ - строки документации</h2>
+<p>На прошлом уроке мы рассмотрели случай импорта программного кода одного файла в другой. Таким образом, например, один программист может использовать разработки другого. К тому же, существует множество стандартных модулей и библиотек, входящих в установочный пакет интерпретатора python, а также огромное количество модулей сторонних разработчиков. Понятно, что чтобы использовать чужую разработку надо знать, что она делает. Для этого вовсе необязательно анализировать исходный код, поскольку есть инструменты для его документирования, которыми приличные программисты должны регулярно пользоваться. Когда кому-то потребуется узнать, что делает тот или иной скрипт, достаточно будет выполнить специальную команду, которая выдаст описание модуля. </p>
+<p>Документировать исходный код на языке программирования Python можно по разному. Иногда бывает достаточно простых комментариев. Еще один способ — это создание <strong>строк документации</strong>. Они представляют собой текст, заключенный в кавычки (тройные, тройные одинарные, обычные). Такой текст может располагаться после заголовков классов, функций (методов), а также в начале файла (модуля). Пример:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #483d8b;">&quot;&quot;&quot; Строка документации в начале файла.
+     А это ее продолжение с новой строки. &quot;&quot;&quot;</span>
+<span style="color: #ff7700;font-weight:bold;">class</span> … :
+     <span style="color: #483d8b;">''</span><span style="color: #483d8b;">' Это строка документирования класса. 
+          Причем она заключена в тройные одинарные кавычки...
+          или одинарные тройные 0_о '</span><span style="color: #483d8b;">''</span>
+     .....
+     .....
+     <span style="color: #ff7700;font-weight:bold;">def</span> … :
+          <span style="color: #483d8b;">&quot;&quot;&quot; Это документирование модуля.
+               Пишите коменты на инглише. &quot;&quot;&quot;</span></pre></div></p>
+<p>Для получения доступа к такой документации предусмотрена специальный метод <strong>__doc__</strong>. Когда интерпретатор Python обрабатывает исходный код класса или функции и обнаруживает там строки документирования, то делает их значением атрибута <strong>__doc__</strong> данного объекта. </p>
+<p>Чтобы посмотреть как это выглядит, рассмотрим реальный пример. В языке программирования Python строки, списки, числа являются по-сути такими же классами как и пользовательские (создаваемые для специализированного проекта). Данные классы автоматически загружаются (интерпретируются), когда запускается программа-интерпретатор python, поэтому не требуется дополнительный импорт модулей, содержащих их описание. Однако сути это не меняет, и получить доступ к их строкам документации можно также как и к пользовательскому классу (функции, модулю), а именно <strong>имяОбъекта.__doc__</strong>. Пример:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #008000;">str</span>.__doc__<span style="color: black;">&#41;</span>
+<span style="color: #008000;">str</span><span style="color: black;">&#40;</span><span style="color: #dc143c;">string</span><span style="color: black;">&#91;</span>, encoding<span style="color: black;">&#91;</span>, errors<span style="color: black;">&#93;</span><span style="color: black;">&#93;</span><span style="color: black;">&#41;</span> -<span style="color: #66cc66;">&gt;</span> <span style="color: #008000;">str</span>
+&nbsp;
+Create a <span style="color: #dc143c;">new</span> <span style="color: #dc143c;">string</span> <span style="color: #008000;">object</span> <span style="color: #ff7700;font-weight:bold;">from</span> the given encoded <span style="color: #dc143c;">string</span>.
+<span style="color: black;">encoding</span> defaults to the current default <span style="color: #dc143c;">string</span> encoding.
+<span style="color: black;">errors</span> can be <span style="color: #483d8b;">'strict'</span>, <span style="color: #483d8b;">'replace'</span> <span style="color: #ff7700;font-weight:bold;">or</span> <span style="color: #483d8b;">'ignore'</span> <span style="color: #ff7700;font-weight:bold;">and</span> defaults to <span style="color: #483d8b;">'strict'</span>.</pre></div> </p>
+<p>Таким образом, мы получили данные о классе <strong>str</strong> (описывает атрибуты строк). Однако мы не получили никаких сведений о методах данного класса. Да и вообще: какие методы есть у строк? Тут может помочь встроенная функция <strong>dir</strong>, которая выводит список переменных (атрибутов) переданного ей аргумента. </p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #008000;">dir</span><span style="color: black;">&#40;</span><span style="color: #008000;">str</span><span style="color: black;">&#41;</span>
+<span style="color: black;">&#91;</span><span style="color: #483d8b;">'__add__'</span>, <span style="color: #483d8b;">'__class__'</span>, <span style="color: #483d8b;">'__contains__'</span>, <span style="color: #483d8b;">'__delattr__'</span>, <span style="color: #483d8b;">'__doc__'</span>, <span style="color: #483d8b;">'__eq__'</span>, <span style="color: #483d8b;">'__format__'</span>, <span style="color: #483d8b;">'__ge__'</span>, <span style="color: #483d8b;">'__getattribute__'</span>, <span style="color: #483d8b;">'__getitem__'</span>, <span style="color: #483d8b;">'__getnewargs__'</span>, <span style="color: #483d8b;">'__gt__'</span>, <span style="color: #483d8b;">'__hash__'</span>, <span style="color: #483d8b;">'__init__'</span>, <span style="color: #483d8b;">'__iter__'</span>, <span style="color: #483d8b;">'__le__'</span>, <span style="color: #483d8b;">'__len__'</span>, <span style="color: #483d8b;">'__lt__'</span>, <span style="color: #483d8b;">'__mod__'</span>, <span style="color: #483d8b;">'__mul__'</span>, <span style="color: #483d8b;">'__ne__'</span>, <span style="color: #483d8b;">'__new__'</span>, <span style="color: #483d8b;">'__reduce__'</span>, <span style="color: #483d8b;">'__reduce_ex__'</span>, <span style="color: #483d8b;">'__repr__'</span>, <span style="color: #483d8b;">'__rmod__'</span>, <span style="color: #483d8b;">'__rmul__'</span>, <span style="color: #483d8b;">'__setattr__'</span>, <span style="color: #483d8b;">'__sizeof__'</span>, <span style="color: #483d8b;">'__str__'</span>, <span style="color: #483d8b;">'__subclasshook__'</span>, <span style="color: #483d8b;">'_formatter_field_name_split'</span>, <span style="color: #483d8b;">'_formatter_parser'</span>, <span style="color: #483d8b;">'capitalize'</span>, <span style="color: #483d8b;">'center'</span>, <span style="color: #483d8b;">'count'</span>, <span style="color: #483d8b;">'encode'</span>, <span style="color: #483d8b;">'endswith'</span>, <span style="color: #483d8b;">'expandtabs'</span>, <span style="color: #483d8b;">'find'</span>, <span style="color: #483d8b;">'format'</span>, <span style="color: #483d8b;">'index'</span>, <span style="color: #483d8b;">'isalnum'</span>, <span style="color: #483d8b;">'isalpha'</span>, <span style="color: #483d8b;">'isdecimal'</span>, <span style="color: #483d8b;">'isdigit'</span>, <span style="color: #483d8b;">'isidentifier'</span>, <span style="color: #483d8b;">'islower'</span>, <span style="color: #483d8b;">'isnumeric'</span>, <span style="color: #483d8b;">'isprintable'</span>, <span style="color: #483d8b;">'isspace'</span>, <span style="color: #483d8b;">'istitle'</span>, <span style="color: #483d8b;">'isupper'</span>, <span style="color: #483d8b;">'join'</span>, <span style="color: #483d8b;">'ljust'</span>, <span style="color: #483d8b;">'lower'</span>, <span style="color: #483d8b;">'lstrip'</span>, <span style="color: #483d8b;">'maketrans'</span>, <span style="color: #483d8b;">'partition'</span>, <span style="color: #483d8b;">'replace'</span>, <span style="color: #483d8b;">'rfind'</span>, <span style="color: #483d8b;">'rindex'</span>, <span style="color: #483d8b;">'rjust'</span>, <span style="color: #483d8b;">'rpartition'</span>, <span style="color: #483d8b;">'rsplit'</span>, <span style="color: #483d8b;">'rstrip'</span>, <span style="color: #483d8b;">'split'</span>, <span style="color: #483d8b;">'splitlines'</span>, <span style="color: #483d8b;">'startswith'</span>, <span style="color: #483d8b;">'strip'</span>, <span style="color: #483d8b;">'swapcase'</span>, <span style="color: #483d8b;">'title'</span>, <span style="color: #483d8b;">'translate'</span>, <span style="color: #483d8b;">'upper'</span>, <span style="color: #483d8b;">'zfill'</span><span style="color: black;">&#93;</span></pre></div> </p>
+<p>Допустим, нас интересует функция метод <strong>find</strong>, но мы точно не знаем, делает ли он то, что нам нужно. Выяснить это можно так:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #008000;">str</span>.<span style="color: black;">find</span>.__doc__<span style="color: black;">&#41;</span>
+S.<span style="color: black;">find</span><span style="color: black;">&#40;</span>sub<span style="color: black;">&#91;</span>, start<span style="color: black;">&#91;</span>, end<span style="color: black;">&#93;</span><span style="color: black;">&#93;</span><span style="color: black;">&#41;</span> -<span style="color: #66cc66;">&gt;</span> <span style="color: #008000;">int</span>
+&nbsp;
+Return the lowest index <span style="color: #ff7700;font-weight:bold;">in</span> S where substring sub <span style="color: #ff7700;font-weight:bold;">is</span> found, such that sub <span style="color: #ff7700;font-weight:bold;">is</span> contained within s<span style="color: black;">&#91;</span>start:end<span style="color: black;">&#93;</span>. <span style="color: black;">Optional</span> arguments start <span style="color: #ff7700;font-weight:bold;">and</span> end are interpreted <span style="color: #ff7700;font-weight:bold;">as</span> <span style="color: #ff7700;font-weight:bold;">in</span> <span style="color: #008000;">slice</span> notation.
+&nbsp;
+<span style="color: black;">Return</span> -<span style="color: #ff4500;">1</span> on failure. </pre></div></p>
+<p>Становятся известны следующие подробности. Оказывается функция find класса str просто возвращает первый индекс подстроки переданной ей в качестве аргумента, если та встречается в строке. По желанию можно указать откуда и докуда искать в исходной строке. Не в тему, но чтобы было понятно:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> a = <span style="color: #483d8b;">&quot;hello new worlds&quot;</span> <span style="color: #808080; font-style: italic;"># создаем строку</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> a.<span style="color: black;">find</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;new&quot;</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># ищем индекс первого элемента подстроки</span>
+<span style="color: #ff4500;">6</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> a.<span style="color: black;">find</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;l&quot;</span>,<span style="color: #ff4500;">7</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># ищем индекс символа, начиная с 8-го элемента</span>
+<span style="color: #ff4500;">13</span></pre></div></p>
+<h2>Форматирование строк документирования</h2>
+<p>Обратите внимание, когда мы вызывали метод __doc__ для объектов, то использовали встроенную функцию print. Зачем? Ведь в интерактивном режиме вывод работает и без print. Однако если при вызове метода __doc__ не использовать функцию print, то вывод не отформатируется, а будет выглядеть как в исходном коде:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #008000;">str</span>.__doc__
+<span style="color: #483d8b;">&quot;str(string[, encoding[, errors]]) -&gt; str<span style="color: #000099; font-weight: bold;">\n</span><span style="color: #000099; font-weight: bold;">\n</span>Create a new string object from the given encoded string.<span style="color: #000099; font-weight: bold;">\n</span>encoding defaults to the current default string encoding.<span style="color: #000099; font-weight: bold;">\n</span>errors can be 'strict', 'replace' or 'ignore' and defaults to 'strict'.&quot;</span></pre></div> </p>
+<p>Обратите внимание на сочетание символов <strong>\n</strong>. Оно обозначает переход на новую строку. Вообще оформление строк документации должно соответствовать определенному стандарту. </p>
+<h2>Функция help</h2>
+<p>Еще более интересный способ получить информацию о модуле или его частях — это использование встроенной функции <strong>help</strong>. Она выводит текстовый отчет о переданном ей в качестве аргумента объекте. Этот отчет включает не только строки документации, но и структуру запрошенной части кода. т.е. применив функцию <strong>help</strong> по отношению к объектам мы получим еще и информацию о внутренних функциях и классах.</p>
+<h2>Практическая работа</h2>
+<ol>
+<li>Напишите строки документации к программе, созданной на 7 уроке (вычисление площади оклеивания) . Поместите следующую информацию:
+<ul>
+<li>Модуль. Для чего предназначена данная программа.</li>
+<li>Классы. Для чего предназначены, какие аргументы передаются методу __init__.</li>
+<li>Методы (кроме __init__). Назначение, описание входных и выходных данных.</li>
+</ul>
+</li>
+<li>Используя метод __doc__, вызовите в интерактивном режиме строки документации для различных объектов модуля. Предварительно необходимо импортировать модуль (чтобы импортировать его без проблем, поместите файл в каталог установки python).</li>
+<li>Примените функцию help для данного модуля. Например, если имя модуля rooms, то вызов справки по нему будет выглядеть так: help (rooms).</li>
+</ol>
+<h2>Пример документированного исходного кода</h2>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #483d8b;">&quot;It is the program for definition of quantity of wall-paper&quot;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">class</span> Win_Door:
+     <span style="color: #483d8b;">&quot;&quot;&quot;
+Class Win_Door calculates the area of a rectangular.
+Method __init__ accepts two parameters: length and width.
+     &quot;&quot;&quot;</span>
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,x,y<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">square</span> = x <span style="color: #66cc66;">*</span> y
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">class</span> Room:
+     <span style="color: #483d8b;">&quot;&quot;&quot;
+Class Room is intended for definition of the pasted over area of a room.
+Method __init__ accepts three arguments (length, width and height).
+     &quot;&quot;&quot;</span>
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,x,y,z<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">square</span> = 2 <span style="color: #66cc66;">*</span> z <span style="color: #66cc66;">*</span> <span style="color: black;">&#40;</span>x + y<span style="color: black;">&#41;</span>
+     <span style="color: #ff7700;font-weight:bold;">def</span> win_door<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>, d,e, f,g, m=<span style="color: #ff4500;">1</span>,n=<span style="color: #ff4500;">1</span><span style="color: black;">&#41;</span>:
+          <span style="color: #483d8b;">&quot;&quot;&quot;
+The first pair parameters - the sizes of a window,
+the second pair - the sizes of a door,
+the fifth and sixth parameters - quantity of windows and doors accordingly
+          &quot;&quot;&quot;</span>
+          <span style="color: #008000;">self</span>.<span style="color: black;">window</span> = Win_Door<span style="color: black;">&#40;</span>d,e<span style="color: black;">&#41;</span>
+          <span style="color: #008000;">self</span>.<span style="color: black;">door</span> = Win_Door<span style="color: black;">&#40;</span>f,g<span style="color: black;">&#41;</span>
+          <span style="color: #008000;">self</span>.<span style="color: black;">numb_w</span> = m
+          <span style="color: #008000;">self</span>.<span style="color: black;">numb_d</span> = n
+     <span style="color: #ff7700;font-weight:bold;">def</span> wallpapers<span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          <span style="color: #483d8b;">&quot;&quot;&quot;
+This method calculates the pasted over area
+          &quot;&quot;&quot;</span>
+          <span style="color: #008000;">self</span>.<span style="color: black;">wallpapers</span> = <span style="color: #008000;">self</span>.<span style="color: black;">square</span> - \
+               <span style="color: #008000;">self</span>.<span style="color: black;">window</span>.<span style="color: black;">square</span> <span style="color: #66cc66;">*</span> <span style="color: #008000;">self</span>.<span style="color: black;">numb_w</span> \
+               - <span style="color: #008000;">self</span>.<span style="color: black;">door</span>.<span style="color: black;">square</span> <span style="color: #66cc66;">*</span> <span style="color: #008000;">self</span>.<span style="color: black;">numb_d</span>
+     <span style="color: #ff7700;font-weight:bold;">def</span> printer<span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          <span style="color: #483d8b;">&quot;&quot;&quot;
+Displays the information
+          &quot;&quot;&quot;</span>
+          <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Площадь стен комнаты равна &quot;</span>\
+          ,<span style="color: #008000;">str</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>.<span style="color: black;">square</span><span style="color: black;">&#41;</span>,<span style="color: #483d8b;">&quot; кв.м&quot;</span><span style="color: black;">&#41;</span>
+          <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Оклеиваемая площадь равна: &quot;</span>, \
+               <span style="color: #008000;">str</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>.<span style="color: black;">wallpapers</span><span style="color: black;">&#41;</span>, <span style="color: #483d8b;">&quot; кв.м&quot;</span><span style="color: black;">&#41;</span></pre></div></p>
+  </div>
+    </div>
+  </body>
+</html>

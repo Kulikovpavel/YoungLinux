@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Строки как последовательности  символов. Урок 9 </title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-29" class="section-2">
+  <h1 class="book-heading">Строки как последовательности  символов. Урок 9 </h1>
+  <p class="right">Основы программирования на Python</p>
+<p>Строки уже упоминались в уроке о типах данных; рассмотрим их более подробно.</p>
+<p><em>Строка</em> — это сложный тип данных, представляющий собой последовательность символов.</p>
+<p>Строки в языке программирования Python могут заключаться как в одиночные, так и двойные кавычки. Однако, начало и конец строки должны обрамляться одинаковым типом кавычек.</p>
+<p>Существует специальная функция <strong>len()</strong>, позволяющая измерить длину строки. Результатом выполнения данной функции является число, показывающее количество символов в строке. </p>
+<p>Также для строк существуют операции <em>конкатенации</em> (+) и <em>дублирования</em> (*).<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #008000;">len</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'It is a long string'</span><span style="color: black;">&#41;</span>
+<span style="color: #ff4500;">19</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #483d8b;">'!!!'</span> + <span style="color: #483d8b;">' Hello World '</span> + <span style="color: #483d8b;">'!!!'</span>
+<span style="color: #483d8b;">'!!! Hello World !!!'</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #483d8b;">'-'</span> <span style="color: #66cc66;">*</span> <span style="color: #ff4500;">20</span>
+<span style="color: #483d8b;">'--------------------'</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span></pre></div></p>
+<p>В последовательностях важен порядок символов, у каждого символа в строке есть уникальный порядковый номер — <em>индекс</em>. Можно обращаться к конкретному символу в строке и извлекать его с помощью <em>оператора индексирования</em>, который представляет собой квадратные скобки с номером символа в них.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #483d8b;">'morning, afternoon, night'</span><span style="color: black;">&#91;</span><span style="color: #ff4500;">1</span><span style="color: black;">&#93;</span>
+<span style="color: #483d8b;">'o'</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> tday = <span style="color: #483d8b;">'morning, afternoon, night'</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> tday<span style="color: black;">&#91;</span><span style="color: #ff4500;">4</span><span style="color: black;">&#93;</span>
+<span style="color: #483d8b;">'i'</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> </pre></div></p>
+<p>В примере, выражение 'morning, afternoon, night'[1] привело к извлечению второго символа. Дело в том, что индексация начинается не с единицы, а с нуля. Поэтому, когда требуется извлечь первый символ, то оператор индексирования должен выглядеть так: [0]. Также позволительно извлекать символы, начиная отсчет с конца. В этом случае отсчет начинается с -1 (последний символ).<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> tday_ru = <span style="color: #483d8b;">'утро, день, ночь'</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> tday_ru<span style="color: black;">&#91;</span><span style="color: #ff4500;">0</span><span style="color: black;">&#93;</span>
+<span style="color: #483d8b;">'у'</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> tday_ru<span style="color: black;">&#91;</span>-<span style="color: #ff4500;">1</span><span style="color: black;">&#93;</span>
+<span style="color: #483d8b;">'ь'</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> tday_ru<span style="color: black;">&#91;</span>-<span style="color: #ff4500;">3</span><span style="color: black;">&#93;</span>
+<span style="color: #483d8b;">'о'</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> </pre></div></p>
+<p>Очевидно, что удобнее работать не с самими строками, а с переменными, которые на них ссылаются. Результат выполнения выражения индексирования можно присвоить другой переменной.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> a = <span style="color: #483d8b;">&quot;very big string&quot;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> a<span style="color: black;">&#91;</span><span style="color: #ff4500;">6</span><span style="color: black;">&#93;</span>
+<span style="color: #483d8b;">'i'</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> b = a<span style="color: black;">&#91;</span><span style="color: #ff4500;">0</span><span style="color: black;">&#93;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> b
+<span style="color: #483d8b;">'v'</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> </pre></div></p>
+<p>Можно извлекать из строки не один символ, а несколько, т.е. получать срез (<em>подстроку</em>). Оператор извлечения среза из строки выглядит так: [X:Y]. X – это индекс начала среза, а Y – его окончания; причем символ с номером Y в срез уже не входит. Если отсутствует первый индекс, то срез берется от начала до второго индекса; при отсутствии второго индекса, срез берется от первого индекса до конца строки.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> tday = <span style="color: #483d8b;">'morning, afternoon, night'</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> tday<span style="color: black;">&#91;</span><span style="color: #ff4500;">0</span>:<span style="color: #ff4500;">7</span><span style="color: black;">&#93;</span>
+<span style="color: #483d8b;">'morning'</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> tday<span style="color: black;">&#91;</span><span style="color: #ff4500;">9</span>:-<span style="color: #ff4500;">7</span><span style="color: black;">&#93;</span>
+<span style="color: #483d8b;">'afternoon'</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> tday<span style="color: black;">&#91;</span>-<span style="color: #ff4500;">5</span>:<span style="color: black;">&#93;</span>
+<span style="color: #483d8b;">'night'</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> </pre></div></p>
+<p>Кроме того, можно извлекать символы не подряд, а через определенное количество символов. В таком случае оператор индексирования выглядит так: [X:Y:Z]; Z – это шаг, через который осуществляется выбор элементов.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> str4 = <span style="color: #483d8b;">&quot;Full Ball Fill Pack Ring&quot;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> str4<span style="color: black;">&#91;</span>::<span style="color: #ff4500;">5</span><span style="color: black;">&#93;</span>
+<span style="color: #483d8b;">'FBFPR'</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> str4<span style="color: black;">&#91;</span><span style="color: #ff4500;">0</span>:<span style="color: #ff4500;">15</span>:<span style="color: #ff4500;">2</span><span style="color: black;">&#93;</span>
+<span style="color: #483d8b;">'Fl alFl '</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> </pre></div></p>
+<h3>Практическая работа</h3>
+<ol>
+<li>Свяжите переменную с любой строкой, состоящей не менее чем из 8 символов. Извлеките из строки первый символ, затем последний, третий с начала и третий с конца. Измерьте длину вашей строки.</li>
+<li>Присвойте произвольную строку длиной 10-15 символов переменной и извлеките из нее следующие срезы:<br />
+- первые восемь символов;<br />
+- четыре символа из центра строки;<br />
+- символы с индексами кратными трем.</li>
+</ol>
+  </div>
+    </div>
+  </body>
+</html>

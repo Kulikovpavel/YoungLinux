@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>K&amp;R (73). Замена управляющих символов обычными и наоборот </title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-388" class="section-2">
+  <h1 class="book-heading">K&amp;R (73). Замена управляющих символов обычными и наоборот </h1>
+  <p class="right">Решение задач на языке программирования C</p>
+<p>Ответ к упражнению 3.2.</p>
+<h4>Замена управляющих последовательностей обычными символами</h4>
+<p><div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+<span style="color: #339933;">#define MAX 1000</span>
+&nbsp;
+<span style="color: #993333;">void</span> escape <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> s<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #993333;">char</span> s1<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">char</span> str<span style="color: #009900;">&#91;</span>MAX<span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> str1<span style="color: #009900;">&#91;</span>MAX<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">,</span> c<span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> <span style="color: #009900;">&#40;</span>c <span style="color: #339933;">=</span> getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> EOF<span style="color: #339933;">;</span> <span style="color: #339933;">++</span>i<span style="color: #009900;">&#41;</span>
+		str<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> c<span style="color: #339933;">;</span>
+&nbsp;
+	escape <span style="color: #009900;">&#40;</span>str1<span style="color: #339933;">,</span> str<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> str1<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>	
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">void</span> escape <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> to<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #993333;">char</span> from<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">,</span> k<span style="color: #339933;">;</span>
+&nbsp;
+	i <span style="color: #339933;">=</span> k <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span>from<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">!=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		<span style="color: #b1b100;">switch</span> <span style="color: #009900;">&#40;</span>from<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		<span style="color: #b1b100;">case</span> <span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\n</span>'</span><span style="color: #339933;">:</span>
+			to<span style="color: #009900;">&#91;</span>k<span style="color: #339933;">++</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\\</span>'</span><span style="color: #339933;">;</span>
+			to<span style="color: #009900;">&#91;</span>k<span style="color: #339933;">++</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'n'</span><span style="color: #339933;">;</span>
+			<span style="color: #000000; font-weight: bold;">break</span><span style="color: #339933;">;</span>
+		<span style="color: #b1b100;">case</span> <span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\t</span>'</span><span style="color: #339933;">:</span>
+			to<span style="color: #009900;">&#91;</span>k<span style="color: #339933;">++</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\\</span>'</span><span style="color: #339933;">;</span>
+			to<span style="color: #009900;">&#91;</span>k<span style="color: #339933;">++</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'t'</span><span style="color: #339933;">;</span>
+			<span style="color: #000000; font-weight: bold;">break</span><span style="color: #339933;">;</span>
+		<span style="color: #b1b100;">default</span><span style="color: #339933;">:</span>
+			to<span style="color: #009900;">&#91;</span>k<span style="color: #339933;">++</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> from<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+			<span style="color: #000000; font-weight: bold;">break</span><span style="color: #339933;">;</span>
+		<span style="color: #009900;">&#125;</span>
+		<span style="color: #339933;">++</span>i<span style="color: #339933;">;</span>
+	<span style="color: #009900;">&#125;</span>
+	to<span style="color: #009900;">&#91;</span>k<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<p>Примечание. Используется постфиксная форма инкремента (k++). В этом случае k сначала используется и только потом увеличивается на единицу.<br />
+При выводе измененной строки появляются странные "артефакты" в конце.</p>
+<h4>Замена пар символов "\n" и "\t" управляющими последовательностями</h4>
+<p><div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+<span style="color: #339933;">#define MAX 1000</span>
+&nbsp;
+<span style="color: #993333;">void</span> escape <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> s<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #993333;">char</span> s1<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">char</span> str<span style="color: #009900;">&#91;</span>MAX<span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> str1<span style="color: #009900;">&#91;</span>MAX<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">,</span> c<span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> <span style="color: #009900;">&#40;</span>c <span style="color: #339933;">=</span> getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> EOF<span style="color: #339933;">;</span> <span style="color: #339933;">++</span>i<span style="color: #009900;">&#41;</span>
+		str<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> c<span style="color: #339933;">;</span>
+&nbsp;
+	escape <span style="color: #009900;">&#40;</span>str1<span style="color: #339933;">,</span> str<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> str1<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>	
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">void</span> escape <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> to<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #993333;">char</span> from<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">,</span> k<span style="color: #339933;">;</span>
+&nbsp;
+	i <span style="color: #339933;">=</span> k <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span>from<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">!=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>from<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">==</span> <span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\\</span>'</span> <span style="color: #339933;">&amp;&amp;</span> from<span style="color: #009900;">&#91;</span>i<span style="color: #339933;">+</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">==</span> <span style="color: #ff0000;">'n'</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+			to<span style="color: #009900;">&#91;</span>k<span style="color: #339933;">++</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\n</span>'</span><span style="color: #339933;">;</span>
+			i <span style="color: #339933;">+=</span> <span style="color: #0000dd;">2</span><span style="color: #339933;">;</span>
+		<span style="color: #009900;">&#125;</span>
+		<span style="color: #b1b100;">else</span> <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>from<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">==</span> <span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\\</span>'</span> <span style="color: #339933;">&amp;&amp;</span> from<span style="color: #009900;">&#91;</span>i<span style="color: #339933;">+</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">==</span> <span style="color: #ff0000;">'t'</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+			to<span style="color: #009900;">&#91;</span>k<span style="color: #339933;">++</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\t</span>'</span><span style="color: #339933;">;</span>
+			i <span style="color: #339933;">+=</span> <span style="color: #0000dd;">2</span><span style="color: #339933;">;</span>
+		<span style="color: #009900;">&#125;</span>
+		<span style="color: #b1b100;">else</span>
+			to<span style="color: #009900;">&#91;</span>k<span style="color: #339933;">++</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> from<span style="color: #009900;">&#91;</span>i<span style="color: #339933;">++</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+	<span style="color: #009900;">&#125;</span>
+	to<span style="color: #009900;">&#91;</span>k<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+  </div>
+    </div>
+  </body>
+</html>

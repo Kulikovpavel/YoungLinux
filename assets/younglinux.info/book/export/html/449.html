@@ -1,0 +1,89 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>KTurtle. Примеры кода с YouTube</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-449" class="section-2">
+  <h1 class="book-heading">KTurtle. Примеры кода с YouTube</h1>
+  <h4>Звезда</h4>
+<div style="text-align:center;"><iframe width="420" height="315" src="../../../../www.youtube.com/embed/ohgPmdZgUmE%3Frel=0.html" frameborder="0" allowfullscreen></iframe></div>
+<p>Таким способом рисования звезды можно получить только звезду с нечетным количеством лучей.</p>
+<p>Формула определения угла поворота: 180 (разворот в противоположную сторону) минус 360 градусов деленные на удвоенное значение количества лучей.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">сброс
+&nbsp;
+иди <span style="color: #ff4500;">70</span>,<span style="color: #ff4500;">120</span>
+повтори <span style="color: #ff4500;">9</span> <span style="color: black;">&#123;</span>
+	вперёд <span style="color: #ff4500;">100</span>
+	направо <span style="color: #ff4500;">160</span>
+<span style="color: black;">&#125;</span>
+напиши <span style="color: #ff4500;">360</span>/<span style="color: #ff4500;">18</span>
+&nbsp;
+иди <span style="color: #ff4500;">200</span>, <span style="color: #ff4500;">120</span>
+повтори <span style="color: #ff4500;">5</span> <span style="color: black;">&#123;</span>
+	вперёд <span style="color: #ff4500;">100</span>
+	направо <span style="color: #ff4500;">180</span>-<span style="color: #ff4500;">36</span>
+<span style="color: black;">&#125;</span>
+напиши <span style="color: #ff4500;">360</span>/<span style="color: #ff4500;">10</span>
+&nbsp;
+иди <span style="color: #ff4500;">330</span>, <span style="color: #ff4500;">120</span>
+повтори <span style="color: #ff4500;">7</span> <span style="color: black;">&#123;</span> <span style="color: #808080; font-style: italic;"># </span>
+	вперёд <span style="color: #ff4500;">100</span>
+	направо <span style="color: #ff4500;">180</span>-<span style="color: #ff4500;">360</span>/<span style="color: #ff4500;">14</span>
+<span style="color: black;">&#125;</span>
+напиши <span style="color: #ff4500;">360</span>/<span style="color: #ff4500;">14</span>
+&nbsp;
+&nbsp;
+иди <span style="color: #ff4500;">50</span>, <span style="color: #ff4500;">200</span>
+$n = спроси <span style="color: #483d8b;">&quot;Количество лучей (нечетное)&quot;</span>
+напиши <span style="color: #483d8b;">&quot;Количество лучей: &quot;</span> + $n 
+иди <span style="color: #ff4500;">200</span>, <span style="color: #ff4500;">340</span>
+повтори $n <span style="color: black;">&#123;</span> 
+	вперёд <span style="color: #ff4500;">100</span>
+	направо <span style="color: #ff4500;">180</span>-<span style="color: #ff4500;">360</span>/<span style="color: black;">&#40;</span>$n<span style="color: #66cc66;">*</span><span style="color: #ff4500;">2</span><span style="color: black;">&#41;</span>
+<span style="color: black;">&#125;</span></pre></div></p>
+<h4>"Неправильная звезда"</h4>
+<div style="text-align:center;"><iframe width="420" height="315" src="../../../../www.youtube.com/embed/GUIausNBTDw%3Frel=0.html" frameborder="0" allowfullscreen></iframe></div>
+<p>Суть в том, что через определенное число повторов $x становится больше числа, из которого его вычитают. В результате первые пары линий образуют угол во внутрь, а последние наружу.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">сброс
+&nbsp;
+иди <span style="color: #ff4500;">150</span>, <span style="color: #ff4500;">200</span>
+&nbsp;
+$x = <span style="color: #ff4500;">1</span>
+&nbsp;
+повтори <span style="color: #ff4500;">44</span> <span style="color: black;">&#123;</span> 
+	вперёд <span style="color: #ff4500;">100</span>
+	направо <span style="color: #ff4500;">120</span>
+	вперёд <span style="color: #ff4500;">100</span>
+        направо <span style="color: #ff4500;">18</span> - $x
+	$x = $x + <span style="color: #ff4500;">1</span>
+<span style="color: black;">&#125;</span></pre></div></p>
+<h4>Повторение фигур</h4>
+<div style="text-align:center;"><iframe width="560" height="315" src="../../../../www.youtube.com/embed/z0xqWb42X1o%3Frel=0.html" frameborder="0" allowfullscreen></iframe></div>
+<p>Особенность: в результате получается большой многоугольник, соответствующий маленькому.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">сброс
+&nbsp;
+$l = <span style="color: #ff4500;">3</span> <span style="color: #808080; font-style: italic;"># стороны</span>
+$line = <span style="color: #ff4500;">40</span> <span style="color: #808080; font-style: italic;"># длина стороны</span>
+для $a = <span style="color: #ff4500;">1</span> до <span style="color: #ff4500;">10</span> <span style="color: black;">&#123;</span>
+	повтори $l/<span style="color: #ff4500;">2</span> <span style="color: black;">&#123;</span>
+		повтори $a <span style="color: black;">&#123;</span>
+			повтори $l <span style="color: black;">&#123;</span>
+				вперёд $line
+				налево <span style="color: #ff4500;">360</span>/$l
+			<span style="color: black;">&#125;</span>
+      вперёд $line
+    <span style="color: black;">&#125;</span>
+		налево <span style="color: #ff4500;">360</span>/$l
+  <span style="color: black;">&#125;</span>
+<span style="color: black;">&#125;</span></pre></div></p>
+  </div>
+    </div>
+  </body>
+</html>

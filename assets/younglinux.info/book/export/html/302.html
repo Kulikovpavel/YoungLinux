@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Использование rsync</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+                <div class="section-2">
+          
+    <div id="node-302" class="section-3">
+  <h1 class="book-heading">Использование rsync</h1>
+  <p class="right">Introduction to Linux. A Hands on Guide —<br />
+Введение в Linux. Руководство по работе</p>
+<h3>Введение</h3>
+<p>Программа <strong>rsync</strong> представляет собой быстрый и гибкий инструмент для удаленного резервного копирования. Она часто встречается на UNIX и UNIX-подобных системах, легко настраивается и используется в сценариях. Хотя <em>r</em> в <strong>rsync</strong> означает "удаленный", вы не должны понимать это слишком буквально. Ваше "удаленное" устройство может быть просто устройством USB или другим разделом жесткого диска, вам не обязательно иметь две отдельные машины.</p>
+<h3>Пример: применение rsync к устройству USB</h3>
+<p>Как уже говорилось в <a href="http://younglinux.info/#">Разделе 3.1.2.3 "Точки монтирования"</a>, мы сначала должны смонтировать устройство. Возможно, это должно быть сделано под <em>root</em>'ом:</p>
+<pre>
+root@theserver# <strong>mkdir /mnt/usbstore</strong>
+
+root@theserver# <strong>mount -t vfat /dev/sda1 /mnt/usbstore</strong>
+</pre><p class="note"><img src="../../../img/linuxintro/note.gif" alt="" /><strong>    Удобство для пользователя</strong><br />
+Все больше и больше дистрибутивов предоставляют доступ к съемным устройствам для непривилегированных пользователей и монтируют USB-устройства, CD-диски и другие съемные устройства автоматически.</p>
+<p>Заметим, что такая директива требует USB поддержку, которая устанавливается на вашей системе. Проверьте с <strong>dmesg</strong>, что <span class="mono">/dev/sda1</span> действительно является устройством для монтирования.</p>
+<p>Затем вы можете непосредственно начать создавать резервную копию, например, каталога <span class="mono">/home/karl</span>:</p>
+<pre>
+karl@theserver:~> <strong>rsync -avz /home/karl/ /mnt/usbstore</strong>
+</pre><p>
+Как обычно, за дополнительной информацией обращайтесь к man-страницам.</p>
+  </div>
+    </div></div>
+  </body>
+</html>

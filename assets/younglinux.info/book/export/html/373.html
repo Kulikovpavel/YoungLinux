@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Урок 13. Особенности работы со строками</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-373" class="section-2">
+  <h1 class="book-heading">Урок 13. Особенности работы со строками</h1>
+  <p class="right">Особенности языка С. Учебное пособие</p>
+<h3>Неформатированные ввод из стандартного потока и вывод в стандартный поток</h3>
+<p>С помощью функции <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> можно легко вывести на экран строку, содержащую пробелы:<br />
+<span class="geshifilter"><code class="c geshifilter-c">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;Hello world&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></code></span></p>
+<p>С другой стороны, ввести строку произвольной длины, содержащую пробелы в неизвестных местах, исключительно с помощью функции <span class="geshifilter"><code class="c geshifilter-c">scanf<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> невозможно. Для <span class="geshifilter"><code class="c geshifilter-c">scanf<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> любой символ пустого пространства является сигналом завершения ввода очередных данных, если только не производится считывание символа.</p>
+<p>На помощь может прийти функция <span class="geshifilter"><code class="c geshifilter-c">getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>, осуществляющая посимвольный ввод данных:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">	<span style="color: #993333;">int</span> i<span style="color: #339933;">;</span>
+	<span style="color: #993333;">char</span> str<span style="color: #009900;">&#91;</span>20<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> <span style="color: #009900;">&#40;</span>str<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> <span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\n</span>'</span><span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	str<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>%s<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> str<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>В заголовке цикла <span class="geshifilter"><code class="c geshifilter-c">getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> возвращает символ, далее записываемый в очередную ячейку массива. После этого элемент массива сравнивается с символом '\n'. Если они равны, то цикл завершается. После цикла символ '\n' в массиве "затирается" символом '\0'. В условии цикла должна быть также предусмотрена проверка на выход за пределы массива; чтобы не усложнять пример, опущена.</p>
+<p>Однако в языке программирования <span class="blue">C</span> работать со строками можно проще. С помощью функций стандартной библиотеки <span class="geshifilter"><code class="c geshifilter-c">gets<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> и <span class="geshifilter"><code class="c geshifilter-c">puts<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> получают строку из стандартного потока и выводят в стандартный поток. Буква s в конце слов gets и puts является сокращением от слова string (строка).</p>
+<p>В качестве параметров обе функции принимают указатель на массив символов (либо имя массива, либо указатель).</p>
+<p>Функция <span class="geshifilter"><code class="c geshifilter-c">gets<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> помещает полученные с ввода символы в указанный в качестве аргумента массив. При этом символ перехода на новую строку, который завершает ее работу, игнорируется.<br />
+Функция <span class="geshifilter"><code class="c geshifilter-c">puts<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> выводит строку на экран и при этом сама добавляет символ перехода на новую строку. Простейший пример использования этих функций выглядит так:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">	<span style="color: #993333;">char</span> str<span style="color: #009900;">&#91;</span>20<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+&nbsp;
+	gets<span style="color: #009900;">&#40;</span>str<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	puts<span style="color: #009900;">&#40;</span>str<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>Итак, если вы работаете со строками, а не другими типами данных, при этом нет необходимости выполнять их посимвольную обработку, то удобнее пользоваться функциями <span class="geshifilter"><code class="c geshifilter-c">puts<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> и <span class="geshifilter"><code class="c geshifilter-c">gets<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>. В таком случае даже не надо подключать заголовочный файл stdio.h.</p>
+<h3>Массив символов и указатель на строку</h3>
+<p>Как мы знаем, строка представляет собой массив символов, последний элемент которого является нулевым символом по таблице ASCII, обозначаемым '\0'. При работе со строками также как с численными массивами можно использовать указатели. Мы можем объявить в программе массив символов, записать туда строку, потом присвоить указателю адрес на первый или любой другой элемент этого массива и работать со строкой через указатель:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">	<span style="color: #993333;">char</span> name<span style="color: #009900;">&#91;</span>30<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+	<span style="color: #993333;">char</span> <span style="color: #339933;">*</span>nP<span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Введите имя и фамилию: &quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	gets<span style="color: #009900;">&#40;</span>name<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Имя: &quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span>nP <span style="color: #339933;">=</span> name<span style="color: #339933;">;</span> <span style="color: #339933;">*</span>nP <span style="color: #339933;">!=</span> <span style="color: #ff0000;">' '</span><span style="color: #339933;">;</span> nP<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span>
+		putchar<span style="color: #009900;">&#40;</span><span style="color: #339933;">*</span>nP<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>Фамилия: &quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	puts<span style="color: #009900;">&#40;</span>nP<span style="color: #339933;">+</span>1<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>В заголовке цикла указателю сначала присваивается адрес первого элемента массива, его значение увеличивается до тех пор, пока не встретится пробел. В итоге указатель указывает на пробел и мы можем получить с его помощью вторую часть строки.</p>
+<p>Иногда в программах можно видеть такое объявление и определение переменной-указателя:<br />
+<span class="geshifilter"><code class="c geshifilter-c">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #993333;">char</span> <span style="color: #339933;">*</span>strP <span style="color: #339933;">=</span> <span style="color: #ff0000;">&quot;Hello World!&quot;</span><span style="color: #339933;">;</span></code></span></p>
+<p>Строку, которая была присвоена не массиву, а указателю, также можно получить, обратившись по указателю:<br />
+<span class="geshifilter"><code class="c geshifilter-c">&nbsp; &nbsp; &nbsp; &nbsp; puts<span style="color: #009900;">&#40;</span>strP<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></code></span></p>
+<p>Но давайте посмотрим, что же все-таки происходит, и чем такая строка, присвоенная указателю, отличается от строки, присвоенной массиву.</p>
+<p>Когда в программе определяются данные и объявляются переменные, то под них отводится память. При этом данные, которые не были присвоены переменным, поменять в процессе выполнения программы уже нельзя. </p>
+<p>Что происходит в примере? В программе вводится строковый объект, который по сути является строковой константой (литералом). Ссылка на первый элемент этой строки присваивается указателю. Мы можем менять значение указателя сколько угодно, переходить к любому из элементов константного массива символов или даже начать ссылаться на совершенно другую строку. Но вот поменять значение элементов строки не можем. Это можно доказать таким кодом:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">	<span style="color: #993333;">char</span> <span style="color: #339933;">*</span>strP<span style="color: #339933;">;</span>
+	strP <span style="color: #339933;">=</span> <span style="color: #ff0000;">&quot;This is a literal&quot;</span><span style="color: #339933;">;</span>  <span style="color: #666666; font-style: italic;">// работает, но строку нельзя изменить</span>
+&nbsp;
+	puts<span style="color: #009900;">&#40;</span>strP<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> 
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%c<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span>strP<span style="color: #009900;">&#91;</span>3<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	strP<span style="color: #009900;">&#91;</span><span style="color: #0000dd;">3</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'z'</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// не получится</span></pre></div></p>
+<p>В последней строке кода возникнет ошибка, т.к. совершается попытка изменить строку-константу.<br />
+Тем более нельзя делать так:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">	<span style="color: #993333;">char</span> <span style="color: #339933;">*</span>strP<span style="color: #339933;">;</span>
+	scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s&quot;</span><span style="color: #339933;">,</span>strP<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// ошибка сегментирования</span></pre></div></p>
+<p>В данном случае память не была выделена под массив символов, который мы пытаемся считать функцией <span class="geshifilter"><code class="c geshifilter-c">scanf<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>; память была выделена только под указатель. Поэтому записать строку просто некуда. Другое дело, если память была выделена с помощью объявления массива, после чего указателю был присвоен адрес на этот массив:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">	<span style="color: #993333;">char</span> str<span style="color: #009900;">&#91;</span>12<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+	<span style="color: #993333;">char</span> <span style="color: #339933;">*</span>strP<span style="color: #339933;">;</span> 
+	strP <span style="color: #339933;">=</span> str<span style="color: #339933;">;</span> 	
+	gets<span style="color: #009900;">&#40;</span>strP<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// память резервируется под массив ранее</span>
+	puts<span style="color: #009900;">&#40;</span>strP<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>Поэтому если вам требуется в программе неизменяемый массив символов, то можете определить его через указатель.</p>
+<h3>Передача строки в функцию</h3>
+<p>Передача строки в функцию ничем не отличается от передачи туда массива чисел:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #993333;">void</span> change <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> <span style="color: #339933;">*</span>s<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span><span style="color: #339933;">;*</span>s <span style="color: #339933;">!=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #339933;">;</span> s<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span>
+		<span style="color: #009900;">&#40;</span><span style="color: #339933;">*</span>s<span style="color: #009900;">&#41;</span><span style="color: #339933;">++;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<p>В этом примере функция <span class="geshifilter"><code class="c geshifilter-c">change<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> принимает в качестве параметра указатель на символ. В теле функции значение указателя инкрементируется, указывая на следующий символ массива. В теле цикла инкрементируется значение, которое находится по адресу, который содержит указатель.</p>
+<p><span class="blue"><strong>Задание</strong><br />
+Объявите в программе три массива символов. Данные для двух из них получите с помощью вызовов функции <span class="geshifilter"><code class="c geshifilter-c">gets<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>. Третий массив должен содержать результат конкатенации (соединения) двух введенных строк. Напишите функцию, которая выполняет конкатенацию строк. </span></p>
+<h3>Массив строк и массив указателей</h3>
+<p>Рассмотрим более сложный пример. Допустим, у нас есть набор строк. Требуется выполнить  сортировку строк по возрастанию по признаку длины: сначала вывести самые короткие строки, затем более длинные.</p>
+<p>Набор строк можно представить как двумерный массив, т.е. массив, состоящий из одномерных массивов, где каждый одномерный массив — это строка символов:<br />
+<span class="geshifilter"><code class="c geshifilter-c">&nbsp; &nbsp; &nbsp; &nbsp; <span style="color: #993333;">char</span> str<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#91;</span><span style="color: #0000dd;">10</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #009900;">&#123;</span><span style="color: #ff0000;">&quot;Hello&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;World&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;!!!&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;&amp;&amp;&amp;&quot;</span><span style="color: #009900;">&#125;</span><span style="color: #339933;">;</span></code></span></p>
+<p>Представьте себе, что значит выполнить сортировку строк. Это значит, надо поменять местами содержимое множества ячеек памяти. Это достаточно трудоемкая для компьютера работа, особенно если строк очень много. Однако можно поступить по-иному. Достаточно создать массив указателей, каждый элемент которого будет указывать на соответствующую ему строку первого массива. Далее выполнить сортировку указателей, что несомненно быстрее. Конечно, сам массив строк отсортирован не будет, однако благодаря указателям у нас будет хранится отсортированный "срез" массива:<br />
+<img src="../../../img/c/sort_strings.png" width="657" height="583" alt="Сортировка массива строк с помощью указателей" /><br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+<span style="color: #339933;">#include &lt;string.h&gt;</span>
+&nbsp;
+<span style="color: #339933;">#define N 6</span>
+&nbsp;
+<span style="color: #993333;">void</span> sortlen<span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> <span style="color: #339933;">*</span>s<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">char</span> strings<span style="color: #009900;">&#91;</span>N<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#91;</span>30<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+	<span style="color: #993333;">char</span> <span style="color: #339933;">*</span>strP<span style="color: #009900;">&#91;</span>N<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span>i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i<span style="color: #339933;">&lt;</span>N<span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		gets<span style="color: #009900;">&#40;</span>strings<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		strP<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #339933;">&amp;</span>strings<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#91;</span>0<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+	<span style="color: #009900;">&#125;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>	
+	sortlen<span style="color: #009900;">&#40;</span>strP<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span>i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i<span style="color: #339933;">&lt;</span>N<span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span>strP<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">void</span> sortlen<span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> <span style="color: #339933;">**</span>s<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span> <span style="color: #666666; font-style: italic;">// **s == *s[] - как бы массив указателей</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">,</span> j<span style="color: #339933;">;</span>
+	<span style="color: #993333;">char</span> <span style="color: #339933;">*</span>str<span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i<span style="color: #339933;">&lt;</span>N<span style="color: #339933;">-</span><span style="color: #0000dd;">1</span><span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span>
+		<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>j<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> j <span style="color: #339933;">&lt;</span> N<span style="color: #339933;">-</span>i<span style="color: #339933;">-</span><span style="color: #0000dd;">1</span><span style="color: #339933;">;</span> j<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+			<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>strlen<span style="color: #009900;">&#40;</span>s<span style="color: #009900;">&#91;</span>j<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">&gt;</span> strlen<span style="color: #009900;">&#40;</span>s<span style="color: #009900;">&#91;</span>j<span style="color: #339933;">+</span>1<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+				str <span style="color: #339933;">=</span> s<span style="color: #009900;">&#91;</span>j<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+				s<span style="color: #009900;">&#91;</span>j<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> s<span style="color: #009900;">&#91;</span>j<span style="color: #339933;">+</span>1<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+				s<span style="color: #009900;">&#91;</span>j<span style="color: #339933;">+</span>1<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> str<span style="color: #339933;">;</span>
+			<span style="color: #009900;">&#125;</span>	
+		<span style="color: #009900;">&#125;</span>			
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<p>Примечания к программе:</p>
+<ul>
+<li>На самом деле параметром функции <span class="geshifilter"><code class="c geshifilter-c">sortlen<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> является указатель на указатель. Хотя для понимания проще сказать, что параметром является массив указателей на символы. Мы передаем в функцию указатель на первый элемент массива <span class="monoi">strP</span>, который сам является указателем. Если бы в функции мы инкрементировали переменную <span class="monoi">s</span>, то переходили бы к следующему элементу-указателю массива <span class="monoi">strP</span>.</li>
+<li>Сортировка выполняется методом пузырька: если длина строки, на которую ссылается следующий указатель массива strP, меньше длины строки под текущим указателем, то значения указателей меняются.</li>
+<li>Выражение strP[i] = &amp;strings[i][0] означает, что элементу массива указателей присваивается ссылка на первый символ каждой строки.</li>
+</ul>
+<p><span class="blue"><strong>Задание</strong><br />
+Напишите программу, которая сортирует строки по алфавиту. Для упрощения задачи пусть сортировка выполняется только по первым буквам строк (если первые буквы слов одинаковы, то вторые и последующие символы проверять не надо).</span></p>
+  </div>
+    </div>
+  </body>
+</html>

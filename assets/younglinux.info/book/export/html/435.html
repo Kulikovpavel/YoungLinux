@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Доклад к проекту &quot;Электронный учебник по языку программирования Python&quot;</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-435" class="section-2">
+  <h1 class="book-heading">Доклад к проекту &quot;Электронный учебник по языку программирования Python&quot;</h1>
+  <p>Целью нашей работы было создание электронного учебника по языку программирования Python, который в настоящее время активно развивается и набирает популярность. Однако русскоязычной документации по этому языку не так уж и много. </p>
+<p>	Питон создал в 1991 году голандец Гвидо Ван Россум и назвал так в честь комедийного сериала.</p>
+<p><strong>Следует отметить следующие особенности этого языка: </strong></p>
+<ol>
+<li>Во-первых – ясный синтаксис. В других языках для  указания программного блока (например , цикла или функции) используют больше специальных символов или ключевых слов, поэтому код получается более громоздким. В Питоне же их меньше. Зато очень важны отступы: они то и выполняют роль, скажем так, "указателя" на тот или иной программный блок. В результате программный код, написанный на языке Питон, получается более компактным и легко читаемым. Эту особенность можно увидеть, если сравнить цикл while на Паскале и Питоне: [слайд] в последнем случае код получается более компактный, однако наличие отступов в теле цикла является обязательным.<br />
+<img src="../../../img/projects/python4.jpg" alt="Сравнение кода на Pascal и Python" />
+</li>
+<li>Python – это универсальный язык высокого уровня, поддерживающий большинство стилей программирования: структурное, объектно-ориентированное, функциональное программирование и другие.</li>
+<li>Следующей особенностью Python можно отметить его модульность: он имеет большое количество модулей расширения практически по всем отраслям: средства обработки текстов и изображений, технологии Интернет, механизмы доступа к базам данных, пакеты для научных вычислений и т.п. </li>
+<li>Также Питон имеет варианты под все самые распространенные операционные системы. И программы написанные в одной операционной системе, будут работать в другой, если установлен интерпретатор Питона.</li>
+<li>Интерпретатор распространяется свободно на основании лицензии подобной GNU General Public Licence, под которой распространяется большинство свободного программного обеспечения.</li>
+</ol>
+<p>	Официальный сайт Питона – http://python.org/. Есть несколько русскоязычных ресурсов по Python`у: самый большой из них http://python.ru/. Помимо прочего, там собрана вся русскоязычная документация. Однако ее не так уж и много, а та что есть больше подходит для профессиональных программистов. Поэтому мы решили создать небольшой электронный учебник для начинающих программистов. Кстати, Питон может быть хорош для начинающих из-за своего легкого синтаксиса.</p>
+<p>	Содержание учебника в основном формировалось нами на переработке двух книг: Чаплыгин А. Н. Учимся программировать вместе с Питоном и Россум, Г. и др. Язык программирования Python.</p>
+<p>	Содержание учебника формировалось из основных понятий, характерных для большинства языков программирования. Например, таких как типы данных, условия, циклы, функции. А также из специфических для самого Питона. Например, модули, последовательности и словари, а также некоторые возможные области применения Питона. Во втором варианте учебника мы также сделали раздел посвящённый основным парадигмам программирования (структурному, функциональному и объектно-ориентированному).[демонстрация второго варианта учебника]</p>
+<p>	Нами был создан небольшой электронный учебник по Питону, с помощью средств самого языка. Графический интерфейс был создан с помощью библиотеки Tkinter, которая входит в стандартную поставку. </p>
+<p>	В учебнике есть меню из кнопок, текстовые поля с полосами прокрутки для текста и примеров программ, а также так называемый холст для рисунков. Холст – это экземпляр объекта canvas. Изображения на нем (например, линии, прямоугольники) были получены с помощью соответствующих методов. Существует два варианта учебника: в одном – графика и примеры программ располагаются во внешних виджетах по отношению к основному тексту [демонстрация первого варианта учебника]; в другом – внутри [демонстрация второго варианта учебника]. Tkinter содержит методы позволяющие одни текстовые поля и холсты вставлять в другие. </p>
+<p>	Конструирование графического интерфейса в Питоне является невизуальным, поэтому используются так называемые менеджеры расположения. В Tkinter есть три менеджера расположения: pack (простой упаковщик), place (произвольное расположение) и grid (сетка). В учебнике были использованы методы pack и place. [слайд]<br />
+<img src="../../../img/projects/python6.jpg" alt="Менеджеры компоновки Tkinter" /></p>
+<p>	[Перезагрузка системы]<br />
+	Учебник работает как в операционной системе Windows, так и Linux. Однако в любой системе должны быть заранее установленны интерпретатор Питона и модуль Tkinter. Для того, чтобы открыть учебник в Windows достаточно два раза кликнуть файл, а в Linux его можно открыть из консоли передав команде python в качестве параметра имя файла.</p>
+<p>	Как вы можете заметить, в Linux учебник выгладит немного по-другому. Это связано с тем, что здесь в системе присутствуют другие шрифты; и большинства шрифтов, которые есть в Windows, нет. Это единственная проблема, с которой мы столкнулись при переносе учебника из одной операционной системы в другую, однако она достаточно существенная. К тому же, мы проверяли учебник в разных дистрибутивах Линукс и везде он выглядел по своему.  На данный момент проблема решается, можно сказать, механически – просто открывается исходный код изменяются параметры связанные со шрифтами. Хотя это сделать и достаточно просто, мы пришли к выводу, что лучше сделать отдельные функции, содержащие метоты для форматирования текста в той или иной операционной системе, а пользователю просто позволить выбирать ту или иную схему в зависимости от системы. </p>
+<p><strong>Применение Python</strong><br />
+	Первое, что можно рассмотреть, как возможную область применения Питона – это построение таблиц значений функций.</p>
+<p>	Большинство учебников по математике имеют приложения с таблицами значений различных функций. Раньше такие таблицы создавались вручную. Сейчас это делают с помощью компьютера. С помощью Питона можно быстро запрограммировать создание таких таблиц: достаточно использовать лишь цикл и символ табуляции (отступа).[пример таблицы степеней двойки] Также можно построить двумерную таблицу, если использовать вложенный цикл. Для примера можно взять таблицу умножения. В принципе сюда можно подставить любую формулу.<br />
+<img src="../../../img/projects/python7.jpg" alt="Построение одномерных и двумерных таблиц с помощью Python" /><br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">x=0
+<span style="color: #ff7700;font-weight:bold;">while</span> x<span style="color: #66cc66;">&lt;</span>=10:
+        <span style="color: #ff7700;font-weight:bold;">print</span> x, <span style="color: #483d8b;">&quot;<span style="color: #000099; font-weight: bold;">\t</span>&quot;</span>, 2<span style="color: #66cc66;">**</span>x
+        x=x+1   
+&nbsp;
+<span style="color: #008000;">raw_input</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div><br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">i = 1
+<span style="color: #ff7700;font-weight:bold;">while</span> i <span style="color: #66cc66;">&lt;</span>= 10:
+	j = 1
+	<span style="color: #ff7700;font-weight:bold;">while</span> j <span style="color: #66cc66;">&lt;</span>= 10:
+		<span style="color: #ff7700;font-weight:bold;">print</span> i <span style="color: #66cc66;">*</span> j, <span style="color: #483d8b;">&quot;<span style="color: #000099; font-weight: bold;">\t</span>&quot;</span>,
+		j = j + 1
+	<span style="color: #ff7700;font-weight:bold;">print</span>
+	i = i + 1    
+&nbsp;
+<span style="color: #008000;">raw_input</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>	Также Питон можно использовать для написания программ для научных вычислений. Напрмер, анализа выборки.</p>
+<p>	Часто требуется проанализировать какой-то ряд значений и определить количество значений,  попавших  в определенный диапазон. [слайд]<br />
+<img src="../../../img/projects/python8.jpg" alt="Анализ выборки с помощью Python" /></p>
+<p>	Можно создать функцию, которая будет просматривать список значений и считать количество значений, попадающих в один определенный диапазон.[слайд] И затем вызывать эту функцию, подставляя разные аргументы.[слайд]<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">def</span> inBucket<span style="color: black;">&#40;</span><span style="color: #008000;">list</span>,low,high<span style="color: black;">&#41;</span>:
+        count = 0
+        <span style="color: #ff7700;font-weight:bold;">for</span> num <span style="color: #ff7700;font-weight:bold;">in</span> <span style="color: #008000;">list</span>:
+                <span style="color: #ff7700;font-weight:bold;">if</span> low<span style="color: #66cc66;">&lt;</span>= num <span style="color: #66cc66;">&lt;</span> high:
+                        count += 1
+        <span style="color: #ff7700;font-weight:bold;">print</span> count
+&nbsp;
+&nbsp;
+a = <span style="color: black;">&#91;</span>54, 53, 43, 39, 56, 49, 36, 34, \
+     38, 56, 43, 60, 51, 45, 43, 41, 48, 58, 39, 36<span style="color: black;">&#93;</span>
+inBucket <span style="color: black;">&#40;</span>a, 50, 60<span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #008000;">raw_input</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>	Можно усовершенствовать программу, так, чтобы она запрашивала у пользователя сам список значений [работа с программой], нижнюю границу первого диапазона, верхнюю – последнего и количество требуемых диапазонов. В итоге, программа будет выдавать сколько значений попало в каждый диапазон.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">def</span> inBucket<span style="color: black;">&#40;</span><span style="color: #008000;">list</span>,low,high<span style="color: black;">&#41;</span>:
+        count = 0
+        <span style="color: #ff7700;font-weight:bold;">for</span> num <span style="color: #ff7700;font-weight:bold;">in</span> <span style="color: #008000;">list</span>:
+                <span style="color: #ff7700;font-weight:bold;">if</span> low<span style="color: #66cc66;">&lt;</span>= num <span style="color: #66cc66;">&lt;</span> high:
+                        count += 1
+        <span style="color: #ff7700;font-weight:bold;">print</span> count
+&nbsp;
+a = <span style="color: #008000;">input</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;input list: &quot;</span> <span style="color: black;">&#41;</span>
+low = <span style="color: #008000;">input</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;input low: &quot;</span><span style="color: black;">&#41;</span>
+high = <span style="color: #008000;">input</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;input high: &quot;</span><span style="color: black;">&#41;</span>
+numBuckets = <span style="color: #008000;">input</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;input numBuckets: &quot;</span><span style="color: black;">&#41;</span>
+bucketWidth = <span style="color: black;">&#40;</span>high-low<span style="color: black;">&#41;</span>/numBuckets
+&nbsp;
+buckets=<span style="color: black;">&#91;</span>0<span style="color: black;">&#93;</span><span style="color: #66cc66;">*</span> numBuckets
+&nbsp;
+high = low
+<span style="color: #ff7700;font-weight:bold;">for</span> i <span style="color: #ff7700;font-weight:bold;">in</span> <span style="color: #008000;">range</span> <span style="color: black;">&#40;</span>numBuckets<span style="color: black;">&#41;</span>:
+    low = high
+    high = bucketWidth + high
+    <span style="color: #ff7700;font-weight:bold;">print</span> low, <span style="color: #483d8b;">&quot;to&quot;</span>, high
+    buckets<span style="color: black;">&#91;</span>i<span style="color: black;">&#93;</span>=inBucket<span style="color: black;">&#40;</span>a,low,high<span style="color: black;">&#41;</span>
+&nbsp;
+buckets
+&nbsp;
+<span style="color: #008000;">raw_input</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>	Но еще более оригинальный способ решения похожей задачи – это использование одного из типов данных Питона – словаря.  Используя его, можно потом строить гистограммы букв в строке, т.е. вычислять сколько раз каждая буква появляется в строке.  Такие гистограммы могут пригодиться для расшифровки кодов, или для компрессии текстовых файлов. Так как различные буквы появляются с различными частотами, мы можем сжать файл, используя короткие коды для распространенных букв и длинные коды для букв, которые появляются менее часто.<br />
+<img src="../../../img/projects/python9.jpg" alt="Подсчет количества букв в строке с помощью словаря" /></p>
+<p>	 [работа с программой] Начинаем с пустого словаря. Для каждой буквы в строке мы находим текущий счетчик и увеличиваем его на единицу. В конце словарь содержит пары: буквы и их частоты.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">a=<span style="color: #008000;">raw_input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Input string: &quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+letterCounts = <span style="color: black;">&#123;</span><span style="color: black;">&#125;</span>
+<span style="color: #ff7700;font-weight:bold;">for</span> letter <span style="color: #ff7700;font-weight:bold;">in</span> a:
+	letterCounts<span style="color: black;">&#91;</span>letter<span style="color: black;">&#93;</span>=letterCounts.<span style="color: black;">get</span> <span style="color: black;">&#40;</span>letter, 0<span style="color: black;">&#41;</span> + 1
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> letterCounts
+&nbsp;
+<span style="color: #008000;">raw_input</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>В итоге можно сказать, что Питон – это идеальный язык для быстрого написания различных приложений, при этом код получается более компактный.</p>
+<table id="attachments" class="sticky-enabled">
+ <thead><tr><th>Прикрепленный файл</th><th>Размер</th> </tr></thead>
+<tbody>
+ <tr class="odd"><td><a href="http://younglinux.info/sites/default/files/report.odp">Презентация к докладу</a></td><td>83.59 кб</td> </tr>
+</tbody>
+</table>
+  </div>
+    </div>
+  </body>
+</html>

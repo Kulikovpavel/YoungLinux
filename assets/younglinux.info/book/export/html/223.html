@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Урок 8. Диалоги с черепахой</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-223" class="section-2">
+  <h1 class="book-heading">Урок 8. Диалоги с черепахой</h1>
+  <p class="right">Тема: Язык программирования Logo </p>
+<h2>Принимаем сообщения</h2>
+<p>	Ранее мы уже видели, как робот-черепаха может выводить текст на холст с помощью команды <span class="mono">напиши</span>. Однако это не единственная возможность вывода символьной информации. С помощью языка программирования Лого можно запрограммировать черепаху так, что она будет посылать сообщения с помощью специальных диалоговых окон. </p>
+<p>	Вот одно из таких окон, с написанной на нем любой фразой-сообщением и одной кнопкой ОК.</p>
+<div style="text-align:center;"><img src="../../../img/kturtle/ask1.png" width="423" height="146" alt="Диалоговое окно с сообщением в KTurtle" /></div>
+<p>Такое окно получается в результате выполнения вот такой команды:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">сообщение <span style="color: #483d8b;">&quot;Эй. Я черепаха. Это сообщение из вашей программы&quot;</span></pre></div></p>
+<p>	Команда <span class="mono">сообщение</span> выводит окно, а фраза в кавычках – это то, что будет написано в этом окне. Фраза может быть абсолютно любой. Вместо нее даже может стоять переменная. Например, так:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">$привет = <span style="color: #483d8b;">&quot;Здравствуйте, ребята!&quot;</span>
+сообщение $привет</pre></div>	</p>
+<p>	В результате получится окно с фразой "Здравствуйте, ребята!". Можно поступить еще интересней и передать команде сообщение несколько аргументов.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">$привет = <span style="color: #483d8b;">&quot;Здравствуйте, ребята!&quot;</span>
+$задание = <span style="color: #483d8b;">&quot;Сидите и слушайте.&quot;</span>
+сообщение $привет + <span style="color: #483d8b;">&quot; &quot;</span> + $задание</pre></div></p>
+<p>	Здесь команде <span class="mono">сообщение</span> передается три аргумента: две переменные и одна строка (в кавычках). Строка состоит из одного пробела. Он нужен для того, чтобы отделить первую фразу от второй. С помощью знаков + фразы соединяются между собой. В результате окно сообщения будет содержать фразу "Здравствуйте, ребята! Сидите и слушайте."</p>
+<h3>Задание</h3>
+<p>	Напишите программу по следующему алгоритму:</p>
+<ol>
+<li>Сброс всех параметров.</li>
+<li>Сообщение об установке цвета холста.</li>
+<li>Команда установки цвета холста в светло-зеленый цвет.</li>
+<li>Сообщение о предстоящем выводе на экран линии.</li>
+<li>Вывод на экран темно синей линии.</li>
+<li>Сообщение о том, что сейчас экран будет очищен.</li>
+<li>Сброс всех параметров.</li>
+</ol>
+<h2>Отвечаем на вопросы</h2>
+<p>	Писать сообщения – это часть того, что можно делать с диалоговыми окнами. На самом деле, на языке Logo можно выводить окна с вопросами. В таких окнах есть сообщение и поле, куда человек пишет свой ответ, а также две кнопки: ОК и Отмена. Вот как это может выглядеть:</p>
+<div style="text-align:center;"><img src="../../../img/kturtle/ask2.png" width="360" height="135" alt="Диалоговое окно с вопросом. Язык программирования Logo" /></div>
+<p>	Кнопка ОК активируется ("загорается"), когда в пустое поле будет что-нибудь написано. Чтобы получить такое окно, надо выполнить такую команду: </p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">спроси <span style="color: #483d8b;">&quot;Что вы хотите?&quot;</span></pre></div></p>
+<p>	Именно благодаря команде <span class="mono">спроси</span> получается такое сложно диалоговое окно. То, что идет после кавычек – это сообщение о том, что требуется ввести в пустое поле ввода. Если после этого нажать кнопку ОК, то введенная в поле информация окажется в памяти компьютера. Если нажать Отмена, то ничего нигде не сохранится. </p>
+<p>	Предположим, что мы что-то ввели в поле и нажали ОК. Где же в памяти компьютера сохранилось, то, что мы ввели, и как черепахе узнать это значение? Все просто – надо использовать переменные. Приведенное выше выражение на самом деле должно быть примерно таким:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">$желание = спроси <span style="color: #483d8b;">&quot;Что вы хотите?&quot;</span></pre></div></p>
+<p>	Теперь то, что ввел человек в диалоговом окне, будет сохранено в памяти и связано с переменной <span class="monoi">$желание</span>. Когда потребуется, чтобы черепаха что-нибудь сделала с этими данными, мы можем передавать командам нашу переменную. Например, чтобы вывести загаданное желание на холст достаточно дать такую команду:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">напиши $желание</pre></div></p>
+<p>	С помощью Лого-черепахи можно запрашивать у пользователя не только словесные фразы, но и числа. Рассмотрим такую программу:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">сброс 
+сообщение <span style="color: #483d8b;">&quot;Установите цвет холста в кодировке RGB.&quot;</span>
+$к = спроси <span style="color: #483d8b;">&quot;Красный&quot;</span>
+$з = спроси <span style="color: #483d8b;">&quot;Зеленый&quot;</span>
+$с = спроси <span style="color: #483d8b;">&quot;Синий&quot;</span>
+цвет_холста $к, $з, $с</pre></div></p>
+<p>	Человек получает сообщение о том, что ему сейчас предстоит установить цвет. Далее появляются окна, где он должен ввести числа от 0 до 255 (а потому что RGB). То, что вводит пользователь, запоминается в переменных <span class="monoi">$к, $з, $с</span>. Поскольку команде <span class="mono">цвет_холста</span> надо передавать три числа через запятую, то мы это и делаем. Просто вместо переменных при выполнении будут подставлены числа, которые ввел пользователь.</p>
+<h3>Задание</h3>
+<p>	Вспомните прошлый урок про конструкцию "<strong>Если – иначе</strong>". Напишите такую программу:</p>
+<ol>
+<li>Сброс параметров.</li>
+<li>Спросить у пользователя, сколько ему лет.</li>
+<li>Если пользователю больше 18, то сообщить ему, что он уже совершеннолетний по Российскому законодательству.</li>
+<li>Иначе, вывести сообщение, где будет указано, сколько лет ему осталось до 18.</li>
+</ol>
+<p>Примерный ответ к заданию:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">сброс
+$возраст = спроси <span style="color: #483d8b;">&quot;Сколько тебе лет?&quot;</span>
+если $возраст <span style="color: #66cc66;">&gt;</span>= <span style="color: #ff4500;">18</span> <span style="color: black;">&#123;</span>
+	сообщение <span style="color: #483d8b;">&quot;Ты уже совершеннолетний&quot;</span>
+<span style="color: black;">&#125;</span>
+иначе <span style="color: black;">&#123;</span>
+	$осталось = <span style="color: #ff4500;">18</span> - $возраст
+	сообщение <span style="color: #483d8b;">&quot;До совершеннолетия осталось &quot;</span> + $осталось
+<span style="color: black;">&#125;</span></pre></div></p>
+<p>Напишите еще одну программу:</p>
+<ol>
+<li>Сброс параметров</li>
+<li>Попросите пользователя решить пример 2*2. </li>
+<li>Если пример решен правильно, то на холсте должен появиться большой синий квадрат.</li>
+<li>Во всех остальных случаях на холсте должно выводиться то, что ввел пользователь, а затем перечеркиваться красной линией.</li>
+</ol>
+<p>Примерный ответ к заданию:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">сброс
+$y = спроси <span style="color: #483d8b;">&quot;Сколько будет 2 * 2?&quot;</span>
+если $y == <span style="color: #ff4500;">4</span> <span style="color: black;">&#123;</span>
+	цвет_пера <span style="color: #ff4500;">0</span>, <span style="color: #ff4500;">0</span>, <span style="color: #ff4500;">220</span>
+	иди <span style="color: #ff4500;">100</span>, <span style="color: #ff4500;">100</span>
+	назад <span style="color: #ff4500;">200</span>
+	налево <span style="color: #ff4500;">90</span>
+	назад <span style="color: #ff4500;">200</span>
+	налево <span style="color: #ff4500;">90</span>
+	назад <span style="color: #ff4500;">200</span>
+	налево <span style="color: #ff4500;">90</span>
+	назад <span style="color: #ff4500;">200</span>
+	налево <span style="color: #ff4500;">90</span>
+<span style="color: black;">&#125;</span>
+иначе <span style="color: black;">&#123;</span>
+	размер_шрифта <span style="color: #ff4500;">20</span>
+	напиши $y
+	иди <span style="color: #ff4500;">190</span>, <span style="color: #ff4500;">220</span>
+	направление -<span style="color: #ff4500;">90</span>
+	цвет_пера <span style="color: #ff4500;">255</span>, <span style="color: #ff4500;">0</span>, <span style="color: #ff4500;">0</span>
+	назад <span style="color: #ff4500;">100</span>
+<span style="color: black;">&#125;</span></pre></div></p>
+  </div>
+    </div>
+  </body>
+</html>

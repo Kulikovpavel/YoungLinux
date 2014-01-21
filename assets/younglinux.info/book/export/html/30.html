@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Списки — изменяемые последовательности. Урок 10</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-30" class="section-2">
+  <h1 class="book-heading">Списки — изменяемые последовательности. Урок 10</h1>
+  <p class="right">Основы программирования на Python</p>
+<p>Списки в языке программирования Python, как и строки, являются упорядоченными последовательностями. Однако, в отличии от строк, списки состоят не из символов, а из различных объектов (значений, данных), и заключаются не в кавычки, а в квадратные скобки [ ]. Объекты отделяются друг от друга с помощью запятой.</p>
+<p>Списки могут состоять из различных объектов: чисел, строк и даже других списков. В последнем случае, списки называют вложенными.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: black;">&#91;</span><span style="color: #ff4500;">23</span>, <span style="color: #ff4500;">656</span>, -<span style="color: #ff4500;">20</span>, <span style="color: #ff4500;">67</span>, -<span style="color: #ff4500;">45</span><span style="color: black;">&#93;</span>   <span style="color: #808080; font-style: italic;"># список целых чисел</span>
+<span style="color: black;">&#91;</span><span style="color: #ff4500;">4.15</span>, <span style="color: #ff4500;">5.93</span>, <span style="color: #ff4500;">6.45</span>, <span style="color: #ff4500;">9.3</span>, <span style="color: #ff4500;">10.0</span>, <span style="color: #ff4500;">11.6</span><span style="color: black;">&#93;</span>   <span style="color: #808080; font-style: italic;"># список из дробных чисел</span>
+<span style="color: black;">&#91;</span><span style="color: #483d8b;">&quot;Katy&quot;</span>, <span style="color: #483d8b;">&quot;Sergei&quot;</span>, <span style="color: #483d8b;">&quot;Oleg&quot;</span>, <span style="color: #483d8b;">&quot;Dasha&quot;</span><span style="color: black;">&#93;</span>   <span style="color: #808080; font-style: italic;"># список из строк</span>
+<span style="color: black;">&#91;</span><span style="color: #483d8b;">&quot;Москва&quot;</span>, <span style="color: #483d8b;">&quot;Титова&quot;</span>, <span style="color: #ff4500;">12</span>, <span style="color: #ff4500;">148</span><span style="color: black;">&#93;</span>   <span style="color: #808080; font-style: italic;"># смешанный список</span>
+<span style="color: black;">&#91;</span><span style="color: black;">&#91;</span><span style="color: #ff4500;">0</span>, <span style="color: #ff4500;">0</span>, <span style="color: #ff4500;">0</span><span style="color: black;">&#93;</span>, <span style="color: black;">&#91;</span><span style="color: #ff4500;">0</span>, <span style="color: #ff4500;">0</span>, <span style="color: #ff4500;">1</span><span style="color: black;">&#93;</span>, <span style="color: black;">&#91;</span><span style="color: #ff4500;">0</span>, <span style="color: #ff4500;">1</span>, <span style="color: #ff4500;">0</span><span style="color: black;">&#93;</span><span style="color: black;">&#93;</span>   <span style="color: #808080; font-style: italic;"># список, состоящий из списков</span></pre></div></p>
+<p>Как и над строками над списками можно выполнять операции соединения и повторения:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: black;">&#91;</span><span style="color: #ff4500;">45</span>, -<span style="color: #ff4500;">12</span>, <span style="color: #483d8b;">'april'</span><span style="color: black;">&#93;</span> + <span style="color: black;">&#91;</span><span style="color: #ff4500;">21</span>, <span style="color: #ff4500;">48.5</span>, <span style="color: #ff4500;">33</span><span style="color: black;">&#93;</span>
+<span style="color: black;">&#91;</span><span style="color: #ff4500;">45</span>, -<span style="color: #ff4500;">12</span>, <span style="color: #483d8b;">'april'</span>, <span style="color: #ff4500;">21</span>, <span style="color: #ff4500;">48.5</span>, <span style="color: #ff4500;">33</span><span style="color: black;">&#93;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: black;">&#91;</span><span style="color: black;">&#91;</span><span style="color: #ff4500;">0</span>,<span style="color: #ff4500;">0</span><span style="color: black;">&#93;</span>,<span style="color: black;">&#91;</span><span style="color: #ff4500;">0</span>,<span style="color: #ff4500;">1</span><span style="color: black;">&#93;</span>,<span style="color: black;">&#91;</span><span style="color: #ff4500;">1</span>,<span style="color: #ff4500;">1</span><span style="color: black;">&#93;</span><span style="color: black;">&#93;</span> <span style="color: #66cc66;">*</span> <span style="color: #ff4500;">2</span>
+<span style="color: black;">&#91;</span><span style="color: black;">&#91;</span><span style="color: #ff4500;">0</span>, <span style="color: #ff4500;">0</span><span style="color: black;">&#93;</span>, <span style="color: black;">&#91;</span><span style="color: #ff4500;">0</span>, <span style="color: #ff4500;">1</span><span style="color: black;">&#93;</span>, <span style="color: black;">&#91;</span><span style="color: #ff4500;">1</span>, <span style="color: #ff4500;">1</span><span style="color: black;">&#93;</span>, <span style="color: black;">&#91;</span><span style="color: #ff4500;">0</span>, <span style="color: #ff4500;">0</span><span style="color: black;">&#93;</span>, <span style="color: black;">&#91;</span><span style="color: #ff4500;">0</span>, <span style="color: #ff4500;">1</span><span style="color: black;">&#93;</span>, <span style="color: black;">&#91;</span><span style="color: #ff4500;">1</span>, <span style="color: #ff4500;">1</span><span style="color: black;">&#93;</span><span style="color: black;">&#93;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> </pre></div></p>
+<p>По аналогии с символами строк, можно получать доступ к объектам списка по их индексам, извлекать срезы, измерять длину списка:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> li = <span style="color: black;">&#91;</span><span style="color: #483d8b;">'a'</span>,<span style="color: #483d8b;">'b'</span>,<span style="color: #483d8b;">'c'</span>,<span style="color: #483d8b;">'d'</span>,<span style="color: #483d8b;">'e'</span>,<span style="color: #483d8b;">'f'</span><span style="color: black;">&#93;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #008000;">len</span><span style="color: black;">&#40;</span>li<span style="color: black;">&#41;</span>
+<span style="color: #ff4500;">6</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> li<span style="color: black;">&#91;</span><span style="color: #ff4500;">0</span><span style="color: black;">&#93;</span>
+<span style="color: #483d8b;">'a'</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> li<span style="color: black;">&#91;</span><span style="color: #ff4500;">4</span><span style="color: black;">&#93;</span>
+<span style="color: #483d8b;">'e'</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> li<span style="color: black;">&#91;</span><span style="color: #ff4500;">0</span>:<span style="color: #ff4500;">3</span><span style="color: black;">&#93;</span>
+<span style="color: black;">&#91;</span><span style="color: #483d8b;">'a'</span>, <span style="color: #483d8b;">'b'</span>, <span style="color: #483d8b;">'c'</span><span style="color: black;">&#93;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> li<span style="color: black;">&#91;</span><span style="color: #ff4500;">3</span>:<span style="color: black;">&#93;</span>
+<span style="color: black;">&#91;</span><span style="color: #483d8b;">'d'</span>, <span style="color: #483d8b;">'e'</span>, <span style="color: #483d8b;">'f'</span><span style="color: black;">&#93;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> </pre></div></p>
+<p>В отличии от строк, <em>списки — это изменяемые последовательности</em>. Если представить строку как объект в памяти, то когда над ней выполняются операции конкатенации и повторения, то это строка не меняется, а в результате операции создается другая строка в другом месте памяти. В строку нельзя добавить новый символ или удалить существующий, не создав при этом новой строки. Со списком дело обстоит иначе. При выполнении операций другие списки могут не создаваться, а изменяться непосредственно оригинал. Из списков можно удалять элементы, добавлять новые. При этом следует помнить, многое зависит от того, как вы распоряжаетесь переменными. Бывают ситуации, когда списки все-таки копируются. Например, результат операции присваивается другой переменной. </p>
+<p>Символ в строке изменить нельзя, элемент списка — можно:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> mystr = <span style="color: #483d8b;">'abrakadabra'</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> mylist = <span style="color: black;">&#91;</span><span style="color: #483d8b;">'ab'</span>,<span style="color: #483d8b;">'ra'</span>,<span style="color: #483d8b;">'ka'</span>,<span style="color: #483d8b;">'da'</span>,<span style="color: #483d8b;">'bra'</span><span style="color: black;">&#93;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> mystr<span style="color: black;">&#91;</span><span style="color: #ff4500;">3</span><span style="color: black;">&#93;</span> = <span style="color: #483d8b;">'0'</span>
+Traceback <span style="color: black;">&#40;</span>most recent call last<span style="color: black;">&#41;</span>:
+  File <span style="color: #483d8b;">&quot;&lt;pyshell#11&gt;&quot;</span>, line 1, <span style="color: #ff7700;font-weight:bold;">in</span> <span style="color: #66cc66;">&lt;</span>module<span style="color: #66cc66;">&gt;</span>
+    mystr<span style="color: black;">&#91;</span><span style="color: #ff4500;">3</span><span style="color: black;">&#93;</span> = <span style="color: #483d8b;">'0'</span>
+<span style="color: #008000;">TypeError</span>: <span style="color: #483d8b;">'str'</span> <span style="color: #008000;">object</span> does <span style="color: #ff7700;font-weight:bold;">not</span> support item assignment
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> mylist<span style="color: black;">&#91;</span><span style="color: #ff4500;">1</span><span style="color: black;">&#93;</span> = <span style="color: #483d8b;">'ro'</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> mylist
+<span style="color: black;">&#91;</span><span style="color: #483d8b;">'ab'</span>, <span style="color: #483d8b;">'ro'</span>, <span style="color: #483d8b;">'ka'</span>, <span style="color: #483d8b;">'da'</span>, <span style="color: #483d8b;">'bra'</span><span style="color: black;">&#93;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> </pre></div></p>
+<p>В списке можно заменить целый срез:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> mylist<span style="color: black;">&#91;</span><span style="color: #ff4500;">0</span>:<span style="color: #ff4500;">2</span><span style="color: black;">&#93;</span> = <span style="color: black;">&#91;</span><span style="color: #ff4500;">10</span>,<span style="color: #ff4500;">20</span><span style="color: black;">&#93;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> mylist
+<span style="color: black;">&#91;</span><span style="color: #ff4500;">10</span>, <span style="color: #ff4500;">20</span>, <span style="color: #483d8b;">'ka'</span>, <span style="color: #483d8b;">'da'</span>, <span style="color: #483d8b;">'bra'</span><span style="color: black;">&#93;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> </pre></div></p>
+<p>Более сложная ситуация:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> alist = mylist<span style="color: black;">&#91;</span><span style="color: #ff4500;">0</span>:<span style="color: #ff4500;">2</span><span style="color: black;">&#93;</span> + <span style="color: black;">&#91;</span><span style="color: #ff4500;">100</span>,<span style="color: #483d8b;">'it is '</span>,<span style="color: #ff4500;">200</span><span style="color: black;">&#93;</span> + mylist<span style="color: black;">&#91;</span><span style="color: #ff4500;">2</span>:<span style="color: black;">&#93;</span> <span style="color: #808080; font-style: italic;"># новый список</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> a2list = mylist <span style="color: #808080; font-style: italic;"># создается вторая ссылка-переменная на первый список</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> alist
+<span style="color: black;">&#91;</span><span style="color: #ff4500;">10</span>, <span style="color: #ff4500;">20</span>, <span style="color: #ff4500;">100</span>, <span style="color: #483d8b;">'it is '</span>, <span style="color: #ff4500;">200</span>, <span style="color: #483d8b;">'ka'</span>, <span style="color: #483d8b;">'da'</span>, <span style="color: #483d8b;">'bra'</span><span style="color: black;">&#93;</span> 
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> a2list
+<span style="color: black;">&#91;</span><span style="color: #ff4500;">10</span>, <span style="color: #ff4500;">20</span>, <span style="color: #483d8b;">'ka'</span>, <span style="color: #483d8b;">'da'</span>, <span style="color: #483d8b;">'bra'</span><span style="color: black;">&#93;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> a2list<span style="color: black;">&#91;</span><span style="color: #ff4500;">0</span><span style="color: black;">&#93;</span> = <span style="color: #483d8b;">'!!!'</span> <span style="color: #808080; font-style: italic;"># изменяем список</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> a2list
+<span style="color: black;">&#91;</span><span style="color: #483d8b;">'!!!'</span>, <span style="color: #ff4500;">20</span>, <span style="color: #483d8b;">'ka'</span>, <span style="color: #483d8b;">'da'</span>, <span style="color: #483d8b;">'bra'</span><span style="color: black;">&#93;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> mylist <span style="color: #808080; font-style: italic;"># обе переменные связаны с одним списком</span>
+<span style="color: black;">&#91;</span><span style="color: #483d8b;">'!!!'</span>, <span style="color: #ff4500;">20</span>, <span style="color: #483d8b;">'ka'</span>, <span style="color: #483d8b;">'da'</span>, <span style="color: #483d8b;">'bra'</span><span style="color: black;">&#93;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> </pre></div></p>
+<h3>Практическая работа</h3>
+<ol>
+<li>Создайте два любых списка и свяжите их с переменными.</li>
+<li>Извлеките из первого списка второй элемент.</li>
+<li>Измените во втором списке последний объект. Выведите список на экран. </li>
+<li>Соедините оба списка в один, присвоив результат новой переменной. Выведите получившийся список на экран.</li>
+<li>"Снимите" срез из соединенного списка так, чтобы туда попали некоторые части обоих первых списков. Срез свяжите с очередной новой переменной. Выведите значение этой переменной.</li>
+<li>Добавьте в список-срез два новых элемента и снова выведите его.</li>
+</ol>
+<h4>Пример выполнения практической работы</h4>
+<div style="text-align:center;"><img src="../../../img/python/list/python4.gif" width="560" height="553" alt="Работа со списками в Python" /></div>
+  </div>
+    </div>
+  </body>
+</html>

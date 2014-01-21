@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Сортировка методом пузырька</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-70" class="section-2">
+  <h1 class="book-heading">Сортировка методом пузырька</h1>
+  <h2>Описание алгоритма</h2>
+<ol>
+<li>Проход по неупорядоченному множеству (например, списку). При этом, если последующий элемент меньше предыдущего, то они меняются местами. В итоге, самый «тяжелый» элемент оказывается в конце множества. Пример: дано: 4, 7, 3, 6, 1 меняем: 7 и 3, затем 7 и 6, затем 7 и 1 результат: 4, 3, 6, 1, 7 </li>
+<li>Проход по множеству, исключая последний элемент, т.к. он уже отсортирован. При проходе обмен меньшего последующего на больший предыдущий.</li>
+<li>Количество проходов по множеству равно количеству элементов минус 1. Последний проход не нужен, т.к. остается один элемент, и его значение меньше остальных. Он «всплыл» в результате предыдущих проходов.</li>
+</ol>
+<h2>Исходный код на Python</h2>
+<h3><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">li = <span style="color: black;">&#91;</span>5,2,7,4,0,9,8,6<span style="color: black;">&#93;</span> 
+n = 1 
+<span style="color: #ff7700;font-weight:bold;">while</span> n <span style="color: #66cc66;">&lt;</span> <span style="color: #008000;">len</span><span style="color: black;">&#40;</span>li<span style="color: black;">&#41;</span>:
+     <span style="color: #ff7700;font-weight:bold;">for</span> i <span style="color: #ff7700;font-weight:bold;">in</span> <span style="color: #008000;">range</span><span style="color: black;">&#40;</span><span style="color: #008000;">len</span><span style="color: black;">&#40;</span>li<span style="color: black;">&#41;</span>-n<span style="color: black;">&#41;</span>:
+          <span style="color: #ff7700;font-weight:bold;">if</span> li<span style="color: black;">&#91;</span>i<span style="color: black;">&#93;</span> <span style="color: #66cc66;">&gt;</span> li<span style="color: black;">&#91;</span>i+<span style="color: #ff4500;">1</span><span style="color: black;">&#93;</span>:
+               li<span style="color: black;">&#91;</span>i<span style="color: black;">&#93;</span>,li<span style="color: black;">&#91;</span>i+<span style="color: #ff4500;">1</span><span style="color: black;">&#93;</span> = li<span style="color: black;">&#91;</span>i+<span style="color: #ff4500;">1</span><span style="color: black;">&#93;</span>,li<span style="color: black;">&#91;</span>i<span style="color: black;">&#93;</span>
+     n += <span style="color: #ff4500;">1</span></pre></div></h3>
+<p>Переменная <strong>n</strong> здесь служит для того, чтобы прервать проходы по списку, как только ее значение приблизится к размеру длины строки. Также цикл <strong>for</strong> благодаря <strong>n</strong> сокращается при каждом последующем проходе по <strong>while</strong>. Это оптимизирует алгоритм: последние элементы не просматриваются. Элементы меняются местами лишь в случае, если предыдущий элемент больше последующего.</p>
+  </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Параметры и аргументы функций. Локальные и глобальные переменные. Урок 14</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-34" class="section-2">
+  <h1 class="book-heading">Параметры и аргументы функций. Локальные и глобальные переменные. Урок 14</h1>
+  <p class="right">Основы программирования на Python</p>
+<h3>Параметры и аргументы функций</h3>
+<p>Часто функция используется для обработки данных, полученных из внешней для нее среды (из основной ветки программы). Данные передаются функции при ее вызове в скобках и называются <em>аргументами</em>. Однако, чтобы функция могла "взять" передаваемые ей данные, необходимо при ее создании описать <em>параметры</em> (в скобках после имени функции), представляющие собой переменные. </p>
+<div style="text-align:center;"> <img src="../../../img/python/argum/func.gif" width="600" height="418" alt="Аргументы и параметры: передача данных в функцию" /></div>
+<p>Когда функция вызывается, конкретные аргументы подставляются вместо параметров-переменных. Почти всегда количество аргументов и параметров должно совпадать (хотя можно запрограммировать переменное количество принимаемых аргументов). В качестве аргументов могут выступать как непосредственно значения, так и переменные, ссылающиеся на них.</p>
+<h3>Локальные и глобальные переменные</h3>
+<p>Если записать в IDLE приведенную ниже функцию, и затем попробовать вывести значения переменных, то обнаружится, что некоторые из них почему-то не существуют:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #ff7700;font-weight:bold;">def</span> mathem<span style="color: black;">&#40;</span>a,b<span style="color: black;">&#41;</span>:
+	a = a/2
+	b = b+10
+	<span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span>a+b<span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> num1 = <span style="color: #ff4500;">100</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> num2 = <span style="color: #ff4500;">12</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> mathem<span style="color: black;">&#40;</span>num1,num2<span style="color: black;">&#41;</span>
+<span style="color: #ff4500;">72.0</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> num1
+<span style="color: #ff4500;">100</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> num2
+<span style="color: #ff4500;">12</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> a
+Traceback <span style="color: black;">&#40;</span>most recent call last<span style="color: black;">&#41;</span>:
+  File <span style="color: #483d8b;">&quot;&lt;pyshell#10&gt;&quot;</span>, line 1, <span style="color: #ff7700;font-weight:bold;">in</span> <span style="color: #66cc66;">&lt;</span>module<span style="color: #66cc66;">&gt;</span>
+    a
+<span style="color: #008000;">NameError</span>: name <span style="color: #483d8b;">'a'</span> <span style="color: #ff7700;font-weight:bold;">is</span> <span style="color: #ff7700;font-weight:bold;">not</span> defined
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> b
+Traceback <span style="color: black;">&#40;</span>most recent call last<span style="color: black;">&#41;</span>:
+  File <span style="color: #483d8b;">&quot;&lt;pyshell#11&gt;&quot;</span>, line 1, <span style="color: #ff7700;font-weight:bold;">in</span> <span style="color: #66cc66;">&lt;</span>module<span style="color: #66cc66;">&gt;</span>
+    b
+<span style="color: #008000;">NameError</span>: name <span style="color: #483d8b;">'b'</span> <span style="color: #ff7700;font-weight:bold;">is</span> <span style="color: #ff7700;font-weight:bold;">not</span> defined
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> </pre></div></p>
+<p>Переменные num1 и num2 не изменили своих первоначальных значений. Дело в том, что в функцию передаются копии значений. Прежние значения из основной ветки программы остались по прежнему связанны с их переменными.</p>
+<p>А вот переменных a и b оказывается нет и в помине (ошибка "name 'b' is not defined" переводится как "переменная b не определена"). Эти переменные существуют лишь в момент выполнения функции и называются <em>локальными</em>. В противовес им, переменные num1 и num2 видны не только во внешней ветке, но и внутри функции:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #ff7700;font-weight:bold;">def</span> mathem2<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>:
+	<span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span>num1+num2<span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> mathem2<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+<span style="color: #ff4500;">112</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> </pre></div></p>
+<p>Переменные, определенные в основной ветке программы, являются <em>глобальными</em>.</p>
+<h3>Практическая работа</h3>
+<p>1. Создайте функцию:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">def</span> func1<span style="color: black;">&#40;</span>num<span style="color: black;">&#41;</span>:
+	n = num <span style="color: #66cc66;">*</span> 5
+ 	<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>n<span style="color: black;">&#41;</span></pre></div><br />
+Вызовите ее, передав в качестве аргумента значение глобальной переменной, затем любое число и, наконец, любую строку.</p>
+<p>2. Выполните с помощью интерпретатора Python скрипт, предварительно исправив код функции так, чтобы она возвращала значение переменной n:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #ff7700;font-weight:bold;">def</span> func<span style="color: black;">&#40;</span>n<span style="color: black;">&#41;</span>:
+	<span style="color: #ff7700;font-weight:bold;">if</span> n <span style="color: #66cc66;">&lt;</span> <span style="color: #ff4500;">3</span>:
+		n = n<span style="color: #66cc66;">*</span><span style="color: #ff4500;">10</span>
+&nbsp;
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> a = <span style="color: #ff4500;">2</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> b = func<span style="color: black;">&#40;</span>a<span style="color: black;">&#41;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> a
+<span style="color: #ff4500;">2</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> b <span style="color: #808080; font-style: italic;"># Почему с переменной не связано никакого значения? </span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> </pre></div></p>
+  </div>
+    </div>
+  </body>
+</html>

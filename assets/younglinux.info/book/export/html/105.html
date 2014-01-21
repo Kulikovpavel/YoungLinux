@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Сенсор Mouse. Урок 5</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-105" class="section-2">
+  <h1 class="book-heading">Сенсор Mouse. Урок 5</h1>
+  <div style="text-align:center;">
+<h4>Уроки по Blender Game Engine</h4>
+</div>
+<div style="text-align:center;"><img src="../../../img/bge/mouse.gif" width="574" height="304" alt="Сенсор Mouse в Blender Game Engine" /></div>
+<h2>Отображение курсора мыши в режиме игры</h2>
+<p>Среди множества сенсоров в BGE есть и сенсор <strong>Mouse</strong> (мышь), улавливающий различные манипуляции мыши (щелчки кнопками мыши, движение, прокручивание колеса и др.). Однако, при запуске режима игры (P) мы не видим курсор мыши. Чтобы отобразить курсор нужно прописать небольшой скрипт. Для этого разделите 3D-окно на две части, одну из них поменяйте на окно <strong>Text Editor</strong>. Далее раскройте меню <strong>Text</strong> и выберите пункт <strong>New</strong>. По умолчанию первый скрипт будет называться <strong>Text.001</strong>, лучше ему дать более осмысленное имя (например, <strong>mouse</strong>). Затем в окне следует ввести следующие строки:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">import</span> Rasterizer 
+Rasterizer.<span style="color: black;">showMouse</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">1</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>В первой строке импортируется модуль, а во второй – вызывается функция showMouse, позволяющая отобразить курсор мыши в режиме игры.</p>
+<div style="text-align:center;"><img src="../../../img/bge/text_editor.gif" width="546" height="353" alt="Скрипт для отображения курсора мыши в режиме игры в BGE" /></div>
+<p>	Однако, это еще не все. Нужно привязать данный скрипт к какому-либо объекту на сцене (допустим камере). Для того, чтобы курсор отображался всегда, следует добавить активатор <strong>Always</strong> и связанный с ним контроллер <strong>Python</strong>, где в качестве <strong>Script</strong> указывается имя того скрипта, который был создан ранее (в нашем случае, это <strong>mouse</strong>). Активатор в данном случае не требуется. После этого в режиме игры курсор будет виден. </p>
+<div style="text-align:center;"><img src="../../../img/bge/camerascript.gif" width="549" height="139" alt="Отображение курсора мыши в режиме игры в BGE: панель Logic" /></div>
+<h2>Управление 3D-объектами с помощью мыши в Blender Game Engine</h2>
+<div style="text-align:center;"><img src="../../../img/bge/mousesphere.gif" width="811" height="548" alt="Движение 3D-объекта с помощью мыши в BGE: панель Logic" /></div>
+<p>	Пусть на сцене будет плоскость и Rigid-сфера на ней. Сфера будет управляться с помощью мыши следующим образом:</p>
+<ol>
+<li>Если сфера находится на плоскости (а не в «воздухе»), то щелчок левой кнопкой мыши по ней должен «сообщать» силу, приводящую ее в движение вверх.</li>
+<li>Прокрутка колеса мыши вверх и вниз должна «сообщать» сфере вращающий момент (Torque) по оси Z по часовой и против часовой стрелки.</li>
+</ol>
+<p>Разберем, как это сделать. Добавив сенсор <strong>Mouse->Left button</strong> и связав его с активатором <strong>Motion</strong>, мы заставим сферу лететь вверх при нажатии левой кнопкой мыши в любом месте 3D-окна (в режиме игры). Тут две проблемы: во-первых, сфера взлетает от щелчка в любом месте экрана, а во-вторых, она летит даже тогда, когда уже находится не на плоскости. Проблемы решаются с помощью добавления еще двух сенсоров к уже существующим контроллеру и активатору. Один должен быть <strong>Mouse -> Mouse over</strong>, второй – <strong>Touch</strong>.<br />
+За прокрутку колеса отвечают сенсоры <strong>Mouse -> Wheel up </strong>(вверх) и <strong>Mouse -> Wheel down</strong> (вниз). Каждому следует добавить свой контроллер и активатор. </p>
+<h2>Практическая работа</h2>
+<ol>
+<li>Расположите на сцене три любых объекта на плоскости. Установите для них тип Rigid body. При щелчке левой кнопкой мыши по каждому отдельному объекту он должен отскакивать в какую-нибудь сторону, а при щелчке правой кнопкой мыши в любом месте 3D-окна все объекты должны взлетать вверх.</li>
+<li>На новой сцене расположите сферу (Rigid body) и плоскость под ней. Пусть любое движение мыши (Movement) заставляет объект крутиться по оси X или Y, а щелчок левой кнопкой мыши «сообщает» силу движения вперед в выбранном направлении. Отметьте, есть ли разница в скорости между двумя случаями: 1) сначала сфера крутится, а затем получает толчок вперед, 2) сфера сразу толкается вперед. </li>
+</ol>
+  </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Анализ выборки</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-62" class="section-2">
+  <h1 class="book-heading">Анализ выборки</h1>
+  <h2>Описание задачи</h2>
+<p>Часто требуется проанализировать какой-то ряд значений и определить количество значений,  попавших  в каждый определенный диапазон. Например, дан список, содержащий 1000 значений натуральных чисел в диапазоне от 1 до 100. Требуется подсчитать, сколько значений попало в диапазоны от 1 до 20, от 21 до 30, от 31 до 40 и т.д. Полученный таким образом результат можно использовать для построения графиков и диаграмм частот встречаемости значений.</p>
+<h2>Пример исходного кода на Python</h2>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #808080; font-style: italic;">#анализируемый список (можно подставить другой)</span>
+a = <span style="color: black;">&#91;</span>3,5,7,3,8,1,8,0,7,3,2,4,6,8,5,4,3,3,6,5,7,8,9,5,3,2,3<span style="color: black;">&#93;</span>
+&nbsp;
+bottom = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;нижняя граница: &quot;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+top = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;верхняя граница: &quot;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+interval = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;интервал: &quot;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #808080; font-style: italic;">#количество интервалов</span>
+num_interval = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: black;">&#40;</span>top - bottom<span style="color: black;">&#41;</span> / interval<span style="color: black;">&#41;</span>
+&nbsp;
+top = bottom <span style="color: #808080; font-style: italic;">#опускаем верхнюю границу до нижней</span>
+<span style="color: #ff7700;font-weight:bold;">for</span> i <span style="color: #ff7700;font-weight:bold;">in</span> <span style="color: #008000;">range</span><span style="color: black;">&#40;</span>num_interval<span style="color: black;">&#41;</span>: <span style="color: #808080; font-style: italic;">#выполняется подсчет значений для каждого интервала</span>
+    bottom = top <span style="color: #808080; font-style: italic;">#сдвиг нижней границы к верхней</span>
+    top = top + interval <span style="color: #808080; font-style: italic;">#сдвиг верхней границы на величину интервала</span>
+    <span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;От&quot;</span>,bottom,<span style="color: #483d8b;">&quot;до&quot;</span>,top<span style="color: black;">&#41;</span>
+    calculator = <span style="color: #ff4500;">0</span> <span style="color: #808080; font-style: italic;">#счетчик для подсчета количества значений в текущем интервале</span>
+    <span style="color: #ff7700;font-weight:bold;">for</span> j <span style="color: #ff7700;font-weight:bold;">in</span> a: <span style="color: #808080; font-style: italic;">#проверяется каждый элемент в списка ...</span>
+        <span style="color: #ff7700;font-weight:bold;">if</span> bottom <span style="color: #66cc66;">&lt;</span>= j <span style="color: #66cc66;">&lt;</span> top: <span style="color: #808080; font-style: italic;">#на вхождение в текущий интервал, в случае успеха ...</span>
+            calculator += <span style="color: #ff4500;">1</span> <span style="color: #808080; font-style: italic;">#увеличение значения счетчика</span>
+    <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>calculator,<span style="color: #483d8b;">&quot;значений <span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: black;">&#41;</span></pre></div></p>
+  </div>
+    </div>
+  </body>
+</html>

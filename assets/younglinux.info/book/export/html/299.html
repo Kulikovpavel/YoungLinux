@@ -1,0 +1,494 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Глава 9. Основные методы резервного копирования</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-299" class="section-2">
+  <h1 class="book-heading">Глава 9. Основные методы резервного копирования</h1>
+  <h4>Аннотация</h4>
+<p>Аварии рано или поздно случаются. В этой главе мы обсудим, как сохранить данные в безопасном месте с помощью других компьютеров, дискет, компакт-дисков и лент. Мы также рассмотрим наиболее популярные команды для сжатия и архивирования.</p>
+<p>По завершении этой главы вы будете знать, как:</p>
+<ul>
+<li>Создавать и распаковывать файловые архивы, а также получать о них сведения</li>
+<li>Обходиться дискетой и создавать загрузочный диск для вашей системы</li>
+<li>Записывать CD-диски</li>
+<li>Создавать обновляемые резервные копии</li>
+<li>Создавать Java-архивы</li>
+<li>Находить документацию по использованию других устройств и программ резервного копирования</li>
+<li>Как шифровать ваши данные</li>
+</ul>
+  <div id="node-300" class="section-3">
+  <h1 class="book-heading">Введение</h1>
+  <p class="right">Introduction to Linux. A Hands on Guide —<br />
+Введение в Linux. Руководство по работе</p>
+<p>Хотя Linux является одной из самых безопасных операционных систем существующих на данный момент, и даже если он проектировался, чтобы быть еще более надежным, данные могут быть потеряны. К потере данных чаще всего приводят ошибки пользователей, но иногда причиной является неисправность системы, такая как сбой питания или выход из строя диска, так что неплохо всегда иметь дополнительные копии личных и/или важных данных.</p>
+<h3>Подготовка данных</h3>
+<h4>Архивирование с помощью tar</h4>
+<p>В большинстве случаев, сначала принято собирать все данные для резервного копирования в один архивный файл, который затем сжимают. Сам процесс архивирования представляет собой объединение всех перечисленных файлов и устранение бесполезных  пустот. В Linux для этого часто используют команду <strong>tar</strong>. Эта команда была первоначально создана для архивирования данных на ленты, но она также может создавать архивы, известные как тарболы (tarballs).</p>
+<p>У <strong>tar</strong> есть множество опций, наиболее важные из них приведены ниже:</p>
+<p><span class="mono">-v</span>: подробный вывод<br />
+<span class="mono">-t</span>: тест, показывающий содержимое архива<br />
+<span class="mono">-x</span>: извлечение архива<br />
+<span class="mono">-c</span>: создание архива<br />
+<span class="mono">-f archivedevice</span>: использование <span class="mono">archivedevice</span> в качестве источника/назначения для архива, устройство по умолчанию — первый накопитель на магнитной ленте (обычно <span class="mono">/dev/st0</span> или что-то подобное)<br />
+<span class="mono">-j</span>: фильтр через <strong>bzip2</strong>, см. Раздел "Обновление бэкапов с помощью tar"</p>
+<p>Перед опциями <strong>tar</strong> обычно пропускают штрих-префикс, что видно в примерах ниже.</p>
+<p class="note"><img src="../../../img/linuxintro/note.gif" alt="" /><strong>  Использование GNU tar для совместимости.</strong><br />
+Архивы, созданные с помощью проприетарной версии <strong>tar</strong> в одной системе, могут быть несовместимы с <strong>tar</strong> на другой проприетарной системе. Это может доставить головную боль, например, если архив может быть восстановлен только в системе, которая больше не существует. Используйте GNU-версию <strong>tar</strong> на всех системах, чтобы ваш системный администратор не рыдал. Linux всегда использует GNU tar. При работе на других машинах UNIX, введите <strong>tar <span class="mono">–help</span></strong>, чтобы выяснить, какую версию вы используете. Свяжитесь с системным администратором, если вы не заметите слова GNU.</p>
+<p>В приведенном ниже примере архив создается и распаковывается.</p>
+<pre>
+gaby:~> <strong>ls images/</strong>
+me+tux.jpg  nimf.jpg
+
+gaby:~> <strong>tar cvf images-in-a-dir.tar images/</strong>
+images/
+images/nimf.jpg
+images/me+tux.jpg
+
+gaby:~> <strong>cd images</strong>
+
+gaby:~/images> <strong>tar cvf images-without-a-dir.tar *.jpg</strong>
+me+tux.jpg
+nimf.jpg
+
+gaby:~/images> <strong>cd</strong>
+
+gaby:~> <strong>ls */*.tar</strong>
+images/images-without-a-dir.tar
+
+gaby:~> <strong>ls *.tar</strong>
+images-in-a-dir.tar 
+
+gaby:~> <strong>tar xvf images-in-a-dir.tar</strong> 
+images/
+images/nimf.jpg
+images/me+tux.jpg
+
+gaby:~> <strong>tar tvf images/images-without-dir.tar</strong> 
+-rw-r--r-- gaby/gaby  42888 1999-06-30 20:52:25 me+tux.jpg
+-rw-r--r-- gaby/gaby   7578 2000-01-26 12:58:46 nimf.jpg
+
+gaby:~> <strong>tar xvf images/images-without-a-dir.tar</strong> 
+me+tux.jpg
+nimf.jpg
+
+gaby:~> <strong>ls *.jpg</strong>
+me+tux.jpg  nimf.jpg
+</pre><p>
+Этот пример также иллюстрирует разницу между заархивированными каталогом и группой файлов. Желательно сжимать только каталоги, так как файлы могут не распаковаться вместе (архив может быть на другой системе, и вы можете не знать, какие файлы уже существовали, а какие те, которые из архива).</p>
+<p>Если магнитный накопитель подключен к вашей машине и настроен системным администратором, имена файлов, оканчивающиеся на .tar заменяются именем устройства, например:</p>
+<p><span class="mono"><strong>tar</strong> cvf /dev/tape mail/</span></p>
+<p>Каталог почты и все файлы, которые он содержит, сжимаются в файл, который записывается сразу на носитель. Содержание листинга отображается, потому что мы использовали соответствующую опцию.</p>
+<h4>Обновление бэкапов с помощью tar</h4>
+<p>Программа <strong>tar</strong> поддерживает создание дополняющихся резервных копий, с помощью опции <span class="mono">-N</span>. С помощью этой опции можно указать дату, и <strong>tar</strong> будет проверять время изменения всех указанных файлов от этой даты. Если файлы  будут изменены позже, они будут включены в бэкап. В приведенном ниже примере используется метка на предыдущий архив как значение даты. Сначала создается начальный архив и метка указывает на этот архивный файл. Затем создается новый файл, который принимает новую резервную копию, содержащую только этот новый файл:</p>
+<pre>
+jimmy:~> <strong>tar cvpf /var/tmp/javaproggies.tar java/*.java</strong>
+java/btw.java
+java/error.java
+java/hello.java
+java/income2.java
+java/income.java
+java/inputdevice.java
+java/input.java
+java/master.java
+java/method1.java
+java/mood.java
+java/moodywaitress.java
+java/test3.java
+java/TestOne.java
+java/TestTwo.java
+java/Vehicle.java
+
+jimmy:~> <strong>ls -l /var/tmp/javaproggies.tar</strong>
+-rw-rw-r-- 1 jimmy   jimmy   10240 Jan 21 11:58 /var/tmp/javaproggies.tar
+
+jimmy:~> <strong>touch java/newprog.java</strong>
+
+jimmy:~> <strong>tar -N /var/tmp/javaproggies.tar \
+-cvp /var/tmp/incremental1-javaproggies.tar java/*.java 2> /dev/null</strong>
+java/newprog.java
+
+jimmy:~> <strong>cd /var/tmp/</strong>
+
+jimmy:~> <strong>tar xvf incremental1-javaproggies.tar</strong>
+java/newprog.java
+</pre><p>
+Стандартные ошибки перенаправляются в <span class="mono">/dev/null</span>. Если вы не сделаете этого, <strong>tar</strong> будет выводить сообщение для каждого неизмеренного файла, сообщая вам, что он не будет сбрасываться.</p>
+<p>У такого способа работы есть неудобство, т.к. просматриваются метки на файлы. Скажем, вы загрузили архив в каталог, содержащий ваши бэкапы, и этот архив содержит файлы, которые были созданы два года назад. При сверке меток этих файлов с метками на начальный архив, новые файлы действительно окажутся старым для <strong>tar</strong> и не будут добавлены в резервную копию с помощью опции <span class="mono">-N</span>.</p>
+<p>Лучшим выбором будет опция <span class="mono">-g</span>, которая создаст список файлов для резервного копирования. При обновлении резервной копии, файлы сверяются с этим списком. Вот как это работает:</p>
+<pre>
+jimmy:~> <strong>tar cvpf work-20030121.tar -g snapshot-20030121 work/</strong>
+work/
+work/file1
+work/file2
+work/file3
+
+jimmy:~> <strong>file snapshot-20030121</strong>
+snapshot-20030121: ASCII text
+</pre><p>
+На следующий день, пользователь <em>jimmy</em> немного поработал с <span class="mono">file3</span> и создал <span class="mono">file4</span>. В конце дня он создает новый бэкап:</p>
+<pre>
+jimmy:~> <strong>tar cvpf work-20030122.tar -g snapshot-20030121 work/</strong>
+work/
+work/file3
+work/file4
+</pre><p>
+Это очень простые примеры, но вы также можете использовать этот вид команды в работе хрона (см. <a href="http://younglinux.info/#">Раздел "Cron и crontab"</a>), который указывает, например, снимок файла для еженедельного резервного копирования и один для ежедневного резервного копирования. Снимки файлов должны быть заменены, в случае, когда создается полная резервная копия.</p>
+<p>Более подробную информацию можно найти в документации к <strong>tar</strong>.</p>
+<p class="note"><img src="../../../img/linuxintro/tip.gif" alt="" /><strong>  Важно знать.</strong><br />
+Как вы могли, вероятно, заметить, <strong>tar</strong> хорошо работает, когда речь идет о простом каталоге с набором лежащих вместе файлов. Однако есть инструменты, которые легче в управлении, когда вам нужен архив целых разделов, дисков или больших проектов. Мы же рассказываем про tar потому, что это очень популярный инструмент для распространения архивов. Довольно часто бывает ситуация, когда вам необходимо установить программное обеспечение, входящее в так называемый "сжатый тарбол". См. <a href="http://younglinux.info/#">Раздел "Использование rsync"</a>, чтобы узнать более простой способ выполнять регулярное резервное копирование.</p>
+<h4>Сжатие и распаковка с помощью gzip и bzip2</h4>
+<p>Данные, в том числе архивы, могут быть сжаты с использованием инструментов zip. Команда <strong>gzip</strong> добавит суффикс <span class="mono">.gz</span> к имени файла и удаляет исходный файл.</p>
+<pre>
+jimmy:~> <strong>ls -la | grep tar</strong>
+-rw-rw-r-- 1 jimmy  jimmy    61440 Jun  6 14:08 images-without-dir.tar
+
+jimmy:~> <strong>gzip images-without-dir.tar</strong> 
+
+jimmy:~> <strong>ls -la images-without-dir.tar.gz </strong>
+-rw-rw-r-- 1 jimmy  jimmy    50562 Jun  6 14:08 images-without-dir.tar.gz
+</pre><p>
+Распаковываются сжатые файлы с помощью опции <span class="mono">-d</span>.</p>
+<p><strong>bzip2</strong> работает аналогично, но использует улучшенный алгоритм сжатия, поэтому файлы получаются меньшего размера. За дополнительной информацией обратитесь к info-страницам <strong>bzip2</strong>.</p>
+<p>Пакеты софта для Linux часто распространяются как сжатые архивы. После распаковки такого архива разумно найти <span class="mono">README</span> и прочитать его. Он обычно содержат руководство для установки пакета.</p>
+<p>Команда GNU tar понимает сжатые файлы. Используйте команду</p>
+<p><span class="mono"><strong>tar</strong> zxvf file.tar.gz</span> </p>
+<p>для распаковки файлов <span class="mono">tar.gz</span> или <span class="mono">.tgz</span>. Используйте</p>
+<p><span class="mono"><strong>tar</strong> jxvf file.tar.bz2</span></p>
+<p>для распаковки tar-архивов, которые были сжаты c помощью <strong>bzip2</strong>.</p>
+<h4>Архивы Java</h4>
+<p>Проект GNU предоставляет также <strong>jar</strong> для создания Java-архивов. Это приложение Java, которая объединяет несколько файлов в один архивный файл JAR. Хотя он поддерживает обычное архивирование и сжатие, основанное на ZIP и ZLIB форматах сжатия, <strong>jar</strong> в основном предназначен для облегчения упаковки кода Java, апплетов и/или приложений в один файл. Скомбинированные в одном архиве, компоненты приложения Java, могут быть скачаны гораздо быстрее.</p>
+<p>В отличие от <strong>tar, jar</strong> сжимает по умолчанию, независимо от других инструментов - потому что это в основном java-версия zip. Кроме того, <strong>jar</strong> позволяет на отдельные записи в архиве ставить подпись автора, что дает возможность проверять происхождение.<br />
+Синтаксис практически идентичен команде <strong>tar</strong>. Чтобы найти различия обратитесь к info-страницам <strong>jar</strong>.</p>
+<p class="note"><img src="../../../img/linuxintro/note.gif" alt="" /><strong>  tar, jar и символические ссылки.</strong><br />
+То, на что следует обратить внимание в упомянутой документации, <strong>jar</strong> следует по символьным ссылкам. Данные, к которым эти ссылки указывают, будут включены в архив. По умолчанию <strong>tar</strong> делает резервную копию самой символьной ссылки, но это поведение можно изменить с помощью опции <span class="mono">-h</span> для <strong>tar</strong>.</p>
+<h4>Транспортировка данных</h4>
+<p>Сохранение копии ваших данных на другом компьютере является наиболее надежным способом создания резервных копий. См. <a href="http://younglinux.info/#">Главу 10, Сеть</a> для дополнительной информации по <strong>scp, ftp</strong> и др.</p>
+<p>В следующем разделе мы обсудим иные устройства для резервного копирования.</p>
+  </div>
+<div id="node-301" class="section-3">
+  <h1 class="book-heading">Перемещение данных на устройство резервного копирования</h1>
+  <p class="right">Introduction to Linux. A Hands on Guide —<br />
+Введение в Linux. Руководство по работе</p>
+<h3>Создание копии на дискете</h3>
+<h4>Форматирование дискеты</h4>
+<p>На большинстве систем Linux, пользователи имеют доступ к дисководу. Название устройства может варьировать в зависимости от размера и количества гибких дисков. На некоторых системах, вероятно, это будет ссылка <span class="mono">/dev/floppy</span>, указывающая на нужное устройство, возможно <span class="mono">/dev/fd0</span> (при автоматическом обнаружении дисковода гибких дисков) или <span class="mono">/dev/fd0H1440</span> (для дискет в 1,44 Мб).</p>
+<p><strong>fdformat</strong> представляет собой инструмент низкоуровневого форматирования дискеты. Команда принимает имя устройства в качестве опции. <strong>fdformat</strong> сообщит об ошибке, если дискета защищена от записи.</p>
+<pre>
+emma:~> <strong>fdformat /dev/fd0H1440</strong>
+Double-sided, 80 tracks, 18 sec/track. Total capacity 1440 kB.
+Formatting ... done
+Verifying ... done
+emma:~>
+</pre><p>Команда <strong>mformat</strong> (из пакета mtools) используется для создания DOS-совместимых дискет, которые затем могут быть доступны через <strong>mcopy, mdir</strong> и другие m-команды.</p>
+<p>Кроме того, доступны графические инструменты.</p>
+<p><strong>Рисунок 9.1. Форматирование дискеты</strong></p>
+<div style="text-align:center;"><img src="../../../img/linuxintro/formatfloppy.png" width="380" height="218" alt="Форматирование дискеты в Linux" /></div>
+<p>После того как дискета отформатирована, она может быть примонтирована к файловой системе и доступна как обычный, хотя маленький, каталог, обычно через <span class="mono">/mnt/floppy</span>.</p>
+<p>Если вам это нужно, установите утилиту <strong>mkbootdisk</strong>, которая создает дискету, с которой может загрузиться текущая система.</p>
+<h4>Использование команды dd для сбрасывания данных</h4>
+<p>Команда <strong>dd</strong> может использоваться для перемещения данных на диск, или обратно на дискету, в зависимости от заданных устройств ввода и вывода. Например:</p>
+<pre>
+gaby:~> <strong>dd if=images-without-dir.tar.gz of=/dev/fd0H1440</strong>
+98+1 records in
+98+1 records out
+
+gaby~> <strong>dd if=/dev/fd0H1440 of=/var/tmp/images.tar.gz</strong>
+2880+0 records in
+2880+0 records out
+
+gaby:~> <strong>ls /var/tmp/images*</strong>
+/var/tmp/images.tar.gz
+</pre><p>
+Заметьте, что сброс производится на демонтированное устройство. Дискеты, созданные с помощью этого метода не монтируются к файловой системе, это способ для создания загрузочных или спасательных дисков. Для получения дополнительной информации о возможностях <strong>dd</strong> читайте man-страницы.</p>
+<p>Этот инструмент является частью пакета GNU <em>coreutils</em>.</p>
+<p class="note"><img src="../../../img/linuxintro/note.gif" alt="" /><strong>   Сбрасывание дисков.</strong><br />
+Команда <strong>dd</strong> также может быть использована для создания "сырого" дампа всего жесткого диска.</p>
+<h3>Создание копии на CD</h3>
+<p>На некоторых системах пользователи могут использовать записывающие CD-устройства. Сначала ваши данные должны быть отформатированы. Используйте команду <strong>mkisofs</strong>, чтобы сделать это в каталоге, содержащем файлы, для которых вы хотите сделать резервную копию. Проверьте командой <strong>df</strong>, что на диске достаточно свободное места, так как новый файл будет примерно такого же размера, как вся текущая директория:</p>
+<pre>
+[rose@blob recordables] <strong>df -h .</strong>
+Filesystem            Size  Used Avail Use% Mounted on
+/dev/hde5              19G   15G  3.2G  82% /home
+
+[rose@blob recordables] <strong>du -h -s .</strong>
+325M    .
+
+[rose@blob recordables] <strong>mkisofs -J -r -o cd.iso .</strong>
+&lt;--snap-->
+making a lot of conversions
+&lt;--/snap-->
+98.95% done, estimate finish Fri Apr  5 13:54:25 2002
+Total translation table size: 0
+Total rockridge attributes bytes: 35971
+Total directory bytes: 94208
+Path table size(bytes): 452
+Max brk space used 37e84
+166768 extents written (325 Mb)
+</pre><p>
+Опции <span class="mono">-J</span> и <span class="mono">-r</span>  используются для монтирования CD-ROM на различных системах, см. man-страницы. После этого, компакт-диск можно создать с помощью инструмента <strong>cdrecord</strong> с соответствующими опциями:</p>
+<pre>
+[rose@blob recordables] <strong>cdrecord -dev 0,0,0 -speed=8 cd.iso</strong>
+Cdrecord 1.10 (i686-pc-linux-gnu) (C) 1995-2001 Joerg Schilling
+scsidev: '0,0,0'
+scsibus: 0 target: 0 lun: 0
+Linux sg driver version: 3.1.20
+Using libscg version 'schily-0.5'
+Device type    : Removable CD-ROM
+Version        : 0
+Response Format: 1
+Vendor_info    : 'HP      '
+Identification : 'CD-Writer+ 8100 '
+Revision       : '1.0g'
+Device seems to be: Generic mmc CD-RW.
+Using generic SCSI-3/mmc CD-R driver (mmc_cdr).
+Driver flags   : SWABAUDIO
+Starting to write CD/DVD at speed 4 in write mode for single session.
+Last chance to quit, starting real write in 0 seconds. 
+Operation starts.
+</pre><p>
+В зависимости от скорости вашего CD-дисковода, у вас появится время, чтобы перекусить. Когда задание будет выполнено, вы получите подтверждающее сообщение:</p>
+<pre>
+Track 01: Total bytes read/written: 341540864/341540864 
+          (166768 sectors).
+</pre><p>Существуют некоторые графические инструменты, облегчающие создание дисков. Одним из популярных является <strong>xcdroast</strong>, который находится в свободном доступе на сайте <noindex>http://www.xcdroast.org</noindex> и включен во многие системы и в каталог GNU. Менеджеры рабочего стола KDE и Gnome имеют собственные средства для создания компакт-дисков.</p>
+<h3>Бэкапы на/с jazz дисков, USB-устройств и других съемных носителей</h3>
+<p>Эти устройства обычно монтируются к файловой системе. После процедуры монтирования они доступны как обычные каталоги, так что вы можете использовать стандартные команды для работы с файлами. </p>
+<p>В примере, приведенном ниже, подготавливается копирование изображений с камеры на жесткий диск:</p>
+<pre>
+robin:~> <strong>mount /mnt/camera</strong>
+
+robin:~> <strong>mount | grep camera</strong>
+/dev/sda1 on /mnt/camera type vfat (rw,nosuid,nodev)
+</pre><p>
+Если у камеры есть только USB-устройство хранения, которое вы когда-нибудь подключали к вашей системе, это безопасно. Но имейте в виду, что USB-устройства присваиваются записям в <span class="mono">/dev</span>, как только они подключены к системе. Таким образом, если вы сначала подключите USB-устройство к системе, оно окажется на <span class="mono">/dev/sda</span> входе, и если вы подключите камеру после этого, ей будет назначен в <span class="mono">/dev/sdb</span> - при условии, что у вас нет каких-либо SCSI-дисков, которые также монтируются на <span class="mono">/dev/sd*</span>. На новых системах, где ядро 2.6, автоопределение системы под названием HAL (Hardware Abstraction Layer) гарантирует, что пользователи не должны иметь дело с этим бременем. Если вы хотите проверить, где устройство, введите <strong>dmesg</strong> после его вставки.</p>
+<p>Теперь можно копировать файлы:</p>
+<pre>
+robin:~> <strong>cp -R /mnt/camera/* images/</strong>
+
+robin:~> <strong>umount /mnt/camera</strong>
+</pre><p>
+Кроме того, джаз-диск может быть смонтирован в <span class="mono">/mnt/jazz</span>.<br />
+Чтобы это произошло, соответствующие строки должны быть добавлены в <span class="mono">/etc/modules.conf</span> и <span class="mono">/etc/fstab</span>. Обратитесь к специальным HOWTO аппаратного обеспечения для получения дополнительной информации. В системах с ядром 2.6.x или выше, вы также можете посмотреть man-страницы <strong>modprobe</strong> и <span class="mono">modprobe.conf</span>.</p>
+<h3>Резервирование данных с помощью ленточных устройств</h3>
+<p>Это делается с помощью <strong>tar</strong> (см. ранее). Инструмент <strong>mt</strong> используется для контроля магнитного ленточного устройства, подобно <span class="mono">/dev/st0</span>. Целые книги были написаны о резервном копировании на ленту, поэтому обратитесь к <a href="http://younglinux.info/#">Приложению B, Сравнение команд DOS и Linux</a>. Имейте в виду, что базы данных могут потребовать другие процедуры резервного копирования из-за своей архитектуры.</p>
+<p>Соответствующие команды резервного копирования обычно помещают в один из каталогов cron с тем, чтобы они выполнялись регулярно.</p>
+<h3>Инструменты вашего дистрибутива</h3>
+<p>Большинство дистрибутивов Linux предлагают свои собственные инструменты для облегчения жизни. Вот краткий перечень:</p>
+<ul>
+<li>SuSE: YaST теперь включает расширенные модули для резервного копирования и восстановления.</li>
+<li>RedHat: инструмент File Roller обеспечивает визуальное управление сжатыми архивами. Похоже, они предпочитают X-CD-Roast для перемещения бэкапов на внешние устройства.</li>
+<li>Mandrake: X-CD-Roast.</li>
+<li>Большинство дистрибутивов поставляются с утилитами BSD <strong>dump</strong> и <strong>restore</strong> для создания резервных копий файловых систем <em>ext2</em> и <em>ext3</em>. Этот инструмент может записывать на различные устройства и буквально сбрасывать файл(ы) или файловую систему бит за битом на указанное устройство. Подобно <strong>dd</strong>, это позволяет создавать бэкапы для специальных типов файлов, подобных тем, что находятся в <span class="mono">/dev<span>.</span></span></li>
+</ul>
+  </div>
+<div id="node-302" class="section-3">
+  <h1 class="book-heading">Использование rsync</h1>
+  <p class="right">Introduction to Linux. A Hands on Guide —<br />
+Введение в Linux. Руководство по работе</p>
+<h3>Введение</h3>
+<p>Программа <strong>rsync</strong> представляет собой быстрый и гибкий инструмент для удаленного резервного копирования. Она часто встречается на UNIX и UNIX-подобных системах, легко настраивается и используется в сценариях. Хотя <em>r</em> в <strong>rsync</strong> означает "удаленный", вы не должны понимать это слишком буквально. Ваше "удаленное" устройство может быть просто устройством USB или другим разделом жесткого диска, вам не обязательно иметь две отдельные машины.</p>
+<h3>Пример: применение rsync к устройству USB</h3>
+<p>Как уже говорилось в <a href="http://younglinux.info/#">Разделе 3.1.2.3 "Точки монтирования"</a>, мы сначала должны смонтировать устройство. Возможно, это должно быть сделано под <em>root</em>'ом:</p>
+<pre>
+root@theserver# <strong>mkdir /mnt/usbstore</strong>
+
+root@theserver# <strong>mount -t vfat /dev/sda1 /mnt/usbstore</strong>
+</pre><p class="note"><img src="../../../img/linuxintro/note.gif" alt="" /><strong>    Удобство для пользователя</strong><br />
+Все больше и больше дистрибутивов предоставляют доступ к съемным устройствам для непривилегированных пользователей и монтируют USB-устройства, CD-диски и другие съемные устройства автоматически.</p>
+<p>Заметим, что такая директива требует USB поддержку, которая устанавливается на вашей системе. Проверьте с <strong>dmesg</strong>, что <span class="mono">/dev/sda1</span> действительно является устройством для монтирования.</p>
+<p>Затем вы можете непосредственно начать создавать резервную копию, например, каталога <span class="mono">/home/karl</span>:</p>
+<pre>
+karl@theserver:~> <strong>rsync -avz /home/karl/ /mnt/usbstore</strong>
+</pre><p>
+Как обычно, за дополнительной информацией обращайтесь к man-страницам.</p>
+  </div>
+<div id="node-306" class="section-3">
+  <h1 class="book-heading">Шифрование</h1>
+  <p class="right">Introduction to Linux. A Hands on Guide —<br />
+Введение в Linux. Руководство по работе</p>
+<h3>Общие замечания</h3>
+<h4>Почему вам следует шифровать данные?</h4>
+<p>Шифрование - это синоним секретности. Совместно с резервным копированием, шифрование может быть очень полезно, например, если вам нужно оставить зарезервированные данные в месте, где вы не можете контролировать доступ, допустим, на сервере вашего провайдера.</p>
+<p>Кроме того, шифрование может быть также применено к электронной почте: обычно, почта не шифруется и часто пересылается в открытом виде по местной сети или Интернет. Если ваше сообщение содержит конфиденциальную информацию, лучше его зашифровать.</p>
+<h4>GNU Privacy Guard </h4>
+<p>В операционных системах Linux вы найдете GnuPG, GNU Privacy Guard, который представляет собой набор программ, совместимых с инструментами PGP (Pretty Good Privacy), который имеется в продаже.</p>
+<p>В этом руководстве мы обсудим только очень простое использование инструментов шифрования и покажем, что вам следует делать, чтобы генерировать ключ шифрования и использовать его для шифрования данных, после чего вы сможет безопасно хранить их в общественном месте. Более сложные способы использования можно найти на man-страницах различных команд.</p>
+<h3>Генерирование ключа</h3>
+<p>Перед началом шифрования данных, необходимо создать пару ключей. Пара состоит из закрытого и открытого ключа. Вы можете отправить открытый ключ  корреспондентам, которые могут использовать его для шифрования данных для вас, которые вы будете расшифровывать вашим закрытым ключом. Вы всегда должны хранить закрытый ключ, никогда не делиться им с кем-то еще, иначе другие будут иметь возможность расшифровать данные, предназначенные только для вас. Просто чтобы была уверенность, что ничего не случится, закрытый ключ защищается паролем. Пара ключей создается с помощью следующей команды:</p>
+<pre>
+willy@ubuntu:~$ <strong>gpg --gen-key</strong>
+gpg (GnuPG) 1.4.2.2; Copyright (C) 2005 Free Software Foundation, Inc.
+This program comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to redistribute it
+under certain conditions.  See the file COPYING for details.
+
+gpg: directory `/home/willy.gnupg' created
+gpg: new configuration file `/home/willy/.gnupg/gpg.conf' created
+gpg: WARNING: options in `/home/willy/.gnupg/gpg.conf' are not yet
+ active during this run
+gpg: keyring `/home/willy/.gnupg/secring.gpg' created
+gpg: keyring `/home/willy/.gnupg/pubring.gpg' created
+Please select what kind of key you want:
+    (1) DSA and Elgamal (default)
+    (2) DSA (sign only)
+    (5) RSA (sign only)
+Your selection? <strong>1</strong>
+DSA keypair will have 1024 bits.
+ELG-E keys may be between 1024 and 4096 bits long.
+What keysize do you want? (2048) <strong>4096</strong>
+Requested keysize is 4096 bits
+Please specify how long the key should be valid.
+         0 = key does not expire
+      <n>  = key expires in n days
+      <n>w = key expires in n weeks
+      <n>m = key expires in n month
+      <n>y = key expires in n years
+Key is valid for? (0) <strong>0</strong>
+Key does not expire at all
+Is this correct? (y/N) <strong>y</strong>
+
+You need a user ID to identify your key; the software constructs the
+user ID from the Real Name, Comment and Email Address in this form:
+    "Heinrich Heine (Der Dichter) <heinrichh@duesseldorf.de>"
+
+Real name: <strong>Willy De Wandel</strong>
+Email address: <strong>wdw@mvg.vl</strong>
+Comment: <strong>Willem</strong>
+You selected this USER-ID:
+    "Willy De Wandel (Willem) <wdw@mvg.vl>"
+
+Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? <strong>O</strong>
+You need a Passphrase to protect your secret key.
+					 
+Passphrase:
+</wdw@mvg.vl></heinrichh@duesseldorf.de></n></n></n></n></pre><p>
+Теперь введите свой пароль. Это может быть фраза любой длины и содержания, единственным условием является то, что вы должны быть в состоянии запомнить ее навсегда. Для проверки необходимо ввести ту же фразу еще раз.</p>
+<p>Теперь пара ключей генерируется программой, которая порождает случайные числа, и эта деятельность, среди прочих факторов, обеспечивается текущей активностью системы. Так что хорошей идеей будет запуск в это время каких-нибудь программ, перемещение курсора мыши или ввод некоторых случайных символов в окне терминала. Это повысит шансы генерирования числа, которое содержит множество различных цифр, и ключ будет труднее взломать.</p>
+<h3>О вашем ключе</h3>
+<p>Когда ваш ключ будет создан, вы получите сообщение об "отпечатках пальцев". Это последовательность из 40 шестнадцатеричных чисел, которая представляет собой достаточно длинную последовательность, ее почти невозможно создать  дважды на любом компьютере. Вы можете быть в достаточной степени уверены, что это уникальная последовательность. Краткая форма этого ключа состоит из вашего имени, потом следуют последние 8 шестнадцатеричных чисел.</p>
+<p>Вы можете получить информацию о вашем ключе следующим образом:</p>
+<pre>
+willy@ubuntu:~$ <strong>gpg --list-keys</strong>
+/home/willy/.gnupg/pubring.gpg
+------------------------------
+pub     1024D/BF5C3DBB 2006-08-08
+uid                    Willy De Wandel (Willem) <wdw@mvg.vl>
+sub     4096g/A3449CF7 2006-08-08
+</wdw@mvg.vl></pre><p>Для данного ключа <em>key ID</em> имеет значение "BF5C3DBB". Вы можете отправить ваши <em>key ID</em> и имя на сервер ключей, таким образом другие люди смогут получить эту информацию о вас и использовать ее для шифрования данных для вас. Кроме того, вы можете непосредственно отправить ваш открытый ключ людям, которым он нужен. Открытая часть ключа представляет собой длинный ряд цифр, которые вы можете увидеть при использовании опции <span class="mono">--export</span> команды <strong>gpg</strong>:</p>
+<p><span class="mono">gpg --export -a</span></p>
+<p>Однако, мы считаем, что в пределах данного руководства вам потребуется только ключ для шифрования и дешифрования данных для себя. Читайте man-страницы команды <strong>gpg</strong>, если хотите знать больше.</p>
+<h3>Шифрование данных</h3>
+<p>Теперь вы можете шифровать архивы <span class="mono">.tar</span> или сжатые архивы, перед сохранением их на резервном носителе или транспортировке на сервер, предназначенный для бэкапов. Используйте команду <strong>gpg</strong> вот так:<br />
+<span class="mono">gpg -e -r (part of) uid archive</span></p>
+<p>Опция <span class="mono">-e</span> говорит <strong>gpg</strong> шифровать данные, опция <span class="mono">-r</span> указывает, для кого выполняется шифрование. Имейте в виду, что только пользователи, чьи имена  следуют после опции <span class="mono">-r</span> будут в состоянии расшифровать данные. Например:</p>
+<pre>
+willy@ubuntu:~$ <strong>gpg -e -r Willy /var/tmp/home-willy-20060808.tar</strong>
+</pre><h3>Расшифровка файлов</h3>
+<p>Используя опцию <span class="mono">-d</span>, вы можете расшифровать файлы, которые были зашифрованы для вас. Данные будут прокручиваться на экране, но зашифрованная копия останется на диске. Таким образом, для файлов, которые имеют отличный от обычного текста формат, вы захотите сохранить расшифрованные данные, чтобы посмотреть их соответствующей программой. Это делается с помощью опции <span class="mono">-o</span> команды <strong>gpg</strong>:</p>
+<pre>
+willy@ubuntu:~$ <strong>gpg -d -o /var/tmp/home-willy-decrypt.tar /var/tmp/home-willy-20060808.tar.gpg</strong>
+
+You need a passphrase to unlock the secret key for
+user: "Willy De Wandel (Willem) <wdw@mvg.vl>"
+4096 ELG-E key, ID A3449CF7, created 2006-08-08 (main key ID BF5C3DBB)
+
+gpg: encrypted with 4096-bit ELG-E key, ID A3449CF7, created 2006-08-08
+        "Willy De Wandel (Willem) <wdw@mvg.vl>"
+</wdw@mvg.vl></wdw@mvg.vl></pre><p class="note"><img src="../../../img/linuxintro/warning.gif" alt="" /><strong>    Нет пароля = нет данных</strong><br />
+Если вы не сможете вспомнить свой пароль, данные будут потеряны. И даже системный администратор не сможет расшифровать данные. Именно поэтому копии важных ключей иногда хранят в запечатанном сейфе в банке.</p>
+  </div>
+<div id="node-307" class="section-3">
+  <h1 class="book-heading">Резюме</h1>
+  <p class="right">Introduction to Linux. A Hands on Guide —<br />
+Введение в Linux. Руководство по работе</p>
+<p>Здесь список команд, так или иначе связанных с созданием резервной копии файла:</p>
+<p><strong>Таблица 9.1. Новые команды из главы 9: Резервное копирование</strong></p>
+<table>
+<tr>
+<td width="150"><strong>Команда</strong></td>
+<td><strong>Значение</strong></td>
+</tr>
+<tr>
+<td><strong>bzip2</strong></td>
+<td>Блок-сортирующий компрессор файлов.</td>
+</tr>
+<tr>
+<td><strong>cdrecord</strong></td>
+<td>Запись владельцем CD с аудио и данными.</td>
+</tr>
+<tr>
+<td><strong>dd</strong></td>
+<td>Конвертация и копирование файла.</td>
+</tr>
+<tr>
+<td><strong>fdformat</strong></td>
+<td>Низкоуровневое форматирование дискеты.</td>
+</tr>
+<tr>
+<td><strong>gpg</strong></td>
+<td>Шифрование и дешифрование данных.</td>
+</tr>
+<tr>
+<td><strong>gzip</strong></td>
+<td>Сжатие или распаковка файлов.</td>
+</tr>
+<tr>
+<td><strong>mcopy</strong></td>
+<td>Копирование файлов MSDOS в/из UNIX.</td>
+</tr>
+<tr>
+<td><strong>mdir</strong></td>
+<td>Отображение каталога MSDOS.</td>
+</tr>
+<tr>
+<td><strong>mformat</strong></td>
+<td>Добавление файловой системы MSDOS к низкоуровнево-отформатированной дискете.</td>
+</tr>
+<tr>
+<td><strong>mkbootdisk</strong></td>
+<td>Создание загрузочной дискеты для текущей системы.</td>
+</tr>
+<tr>
+<td><strong>mount</strong></td>
+<td>Монтирование файловой системы (включение ее в текущую файловую систему, подключение к точке монтирования).</td>
+</tr>
+<tr>
+<td><strong>rsync</strong></td>
+<td>Синхронизация каталогов.</td>
+</tr>
+<tr>
+<td><strong>tar</strong></td>
+<td>Утилита архивирования на ленту, также используется для создания архивов на дисках.</td>
+</tr>
+<tr>
+<td><strong>umount</strong></td>
+<td>Размонтирование файловых систем.</td>
+</tr>
+</table>
+  </div>
+<div id="node-308" class="section-3">
+  <h1 class="book-heading">Упражнения</h1>
+  <p class="right">Introduction to Linux. A Hands on Guide —<br />
+Введение в Linux. Руководство по работе</p>
+<ul>
+<li>Создайте резервную копию вашей домашней директории в <span class="mono">/var/tmp</span>, используя команду <strong>tar</strong>. После чего сожмите файл с помощью <strong>gzip</strong> или <strong>bzip2</strong>. Делайте это так, чтобы получить архивный файл, который не создает беспорядок при распаковке.</li>
+<li>Отформатируйте дискету и запишите на нее некоторые файлы из вашей домашней директории.</li>
+<li>Отформатируйте дискету в формате DOS. Используйте <em>mtools</em>, чтобы размещать и удалять файлы на ней.</li>
+<li>Что происходит с неформатированной дискетой, когда вы хотите смонтировать ее с вашей файловой системой?</li>
+<li>Если у вас есть устройство хранения USB, попробуйте положить файл на него.</li>
+<li>Используя <strong>rsync</strong>, создайте копию вашего домашнего каталога на другой локальной или удаленной файловой системе.</li>
+<li>Оставляя файлы на сетевом сервере, лучше зашифровать их. Создайте архив <strong>tar</strong> своего домашнего каталога и зашифруйте его.</li>
+</ul>
+  </div>
+</div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>С++. Перегруженные функции и аргументы по умолчанию</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-417" class="section-2">
+  <h1 class="book-heading">С++. Перегруженные функции и аргументы по умолчанию</h1>
+  <p>В программе может потребоваться выполнить одни и теже действия (функцию), однако входные данные при этом могут быть разными. На помощь приходят два механизма:</p>
+<ul>
+<li>перегрузка функции,</li>
+<li>передача значений параметрам в прототипе функции (аргументы по умолчанию).</li>
+</ul>
+<p>В каких случаях следует использовать первый, а в каких второй?</p>
+<p>Перегрузка функций заключается в том, что в программе существуют несколько одноименных функций, которые различаются между собой количеством параметров и|или их типом. То, какая функция вызывается, определяется по переданным аргументам. Перегрузка функций - более гибкая и универсальная идея.</p>
+<p>При задании аргументов по умолчанию не приходится дублировать код (есть всего одна функция). Однако при этом нельзя передавать аргументы разного типа, использовать значение по умолчанию первого аргумента (стоящих впереди) и передать для второго (стоящих после).</p>
+<p>Понятно, что перегрузку функций и установку аргументов по умолчанию можно использовать совместно.</p>
+<p>Ниже приведены примеры, взятые их книги Р.Лафоре "Объектно-ориентированное программирование в C++".</p>
+<h4>Перегруженная функция (переменное число аргументов)</h4>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #808080; font-style: italic;">#include &lt;iostream&gt;</span>
+using namespace std<span style="color: #66cc66;">;</span>
+&nbsp;
+void repchar<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span><span style="color: #66cc66;">;</span>
+void repchar<span style="color: black;">&#40;</span>char<span style="color: black;">&#41;</span><span style="color: #66cc66;">;</span>
+void repchar<span style="color: black;">&#40;</span>char, <span style="color: #008000;">int</span><span style="color: black;">&#41;</span><span style="color: #66cc66;">;</span>
+&nbsp;
+<span style="color: #008000;">int</span> main<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> <span style="color: black;">&#123;</span>
+    repchar<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span><span style="color: #66cc66;">;</span>
+    repchar<span style="color: black;">&#40;</span><span style="color: #483d8b;">'='</span><span style="color: black;">&#41;</span><span style="color: #66cc66;">;</span>
+    repchar<span style="color: black;">&#40;</span><span style="color: #483d8b;">'+'</span>,30<span style="color: black;">&#41;</span><span style="color: #66cc66;">;</span>
+    <span style="color: #ff7700;font-weight:bold;">return</span> <span style="color: #ff4500;">0</span><span style="color: #66cc66;">;</span>
+<span style="color: black;">&#125;</span>
+&nbsp;
+void repchar<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> <span style="color: black;">&#123;</span>
+    <span style="color: #ff7700;font-weight:bold;">for</span> <span style="color: black;">&#40;</span><span style="color: #008000;">int</span> j=<span style="color: #ff4500;">0</span><span style="color: #66cc66;">;</span> j<span style="color: #66cc66;">&lt;</span><span style="color: #ff4500;">45</span><span style="color: #66cc66;">;</span> j++<span style="color: black;">&#41;</span>
+        cout <span style="color: #66cc66;">&lt;&lt;</span> <span style="color: #483d8b;">'*'</span><span style="color: #66cc66;">;</span>
+    cout <span style="color: #66cc66;">&lt;&lt;</span> endl<span style="color: #66cc66;">;</span>
+<span style="color: black;">&#125;</span>
+&nbsp;
+void repchar<span style="color: black;">&#40;</span>char ch<span style="color: black;">&#41;</span> <span style="color: black;">&#123;</span>
+    <span style="color: #ff7700;font-weight:bold;">for</span> <span style="color: black;">&#40;</span><span style="color: #008000;">int</span> j=<span style="color: #ff4500;">0</span><span style="color: #66cc66;">;</span> j<span style="color: #66cc66;">&lt;</span><span style="color: #ff4500;">45</span><span style="color: #66cc66;">;</span> j++<span style="color: black;">&#41;</span>
+        cout <span style="color: #66cc66;">&lt;&lt;</span> ch<span style="color: #66cc66;">;</span>
+    cout <span style="color: #66cc66;">&lt;&lt;</span> endl<span style="color: #66cc66;">;</span>
+<span style="color: black;">&#125;</span>
+&nbsp;
+void repchar<span style="color: black;">&#40;</span>char ch, <span style="color: #008000;">int</span> n<span style="color: black;">&#41;</span> <span style="color: black;">&#123;</span>
+    <span style="color: #ff7700;font-weight:bold;">for</span> <span style="color: black;">&#40;</span><span style="color: #008000;">int</span> j=<span style="color: #ff4500;">0</span><span style="color: #66cc66;">;</span> j<span style="color: #66cc66;">&lt;</span>n<span style="color: #66cc66;">;</span> j++<span style="color: black;">&#41;</span>
+        cout <span style="color: #66cc66;">&lt;&lt;</span> ch<span style="color: #66cc66;">;</span>
+    cout <span style="color: #66cc66;">&lt;&lt;</span> endl<span style="color: #66cc66;">;</span>
+<span style="color: black;">&#125;</span></pre></div></p>
+<p>Вывод:</p>
+<pre>
+*********************************************
+=============================================
+++++++++++++++++++++++++++++++
+</pre><h4>Перегруженная функция (различные типы аргументов)</h4>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #808080; font-style: italic;">#include &lt;iostream&gt;</span>
+using namespace std<span style="color: #66cc66;">;</span>
+&nbsp;
+<span style="color: #dc143c;">struct</span> Distance <span style="color: black;">&#123;</span>
+    <span style="color: #008000;">int</span> feet<span style="color: #66cc66;">;</span>
+    <span style="color: #008000;">float</span> inches<span style="color: #66cc66;">;</span>
+<span style="color: black;">&#125;</span><span style="color: #66cc66;">;</span>
+&nbsp;
+void engldisp<span style="color: black;">&#40;</span>Distance<span style="color: black;">&#41;</span><span style="color: #66cc66;">;</span>
+void engldisp<span style="color: black;">&#40;</span><span style="color: #008000;">float</span><span style="color: black;">&#41;</span><span style="color: #66cc66;">;</span>
+&nbsp;
+<span style="color: #008000;">int</span> main<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> <span style="color: black;">&#123;</span>
+    Distance d1<span style="color: #66cc66;">;</span>
+    <span style="color: #008000;">float</span> d2<span style="color: #66cc66;">;</span>
+    cout <span style="color: #66cc66;">&lt;&lt;</span> <span style="color: #483d8b;">&quot;Введите число футов: &quot;</span><span style="color: #66cc66;">;</span>
+    cin <span style="color: #66cc66;">&gt;&gt;</span> d1.<span style="color: black;">feet</span><span style="color: #66cc66;">;</span>
+    cout <span style="color: #66cc66;">&lt;&lt;</span> <span style="color: #483d8b;">&quot;Введите число дюймов: &quot;</span><span style="color: #66cc66;">;</span>
+    cin <span style="color: #66cc66;">&gt;&gt;</span> d1.<span style="color: black;">inches</span><span style="color: #66cc66;">;</span>
+    cout <span style="color: #66cc66;">&lt;&lt;</span> <span style="color: #483d8b;">&quot;Введите длину в дюймах: &quot;</span><span style="color: #66cc66;">;</span>
+    cin <span style="color: #66cc66;">&gt;&gt;</span> d2<span style="color: #66cc66;">;</span>
+    cout <span style="color: #66cc66;">&lt;&lt;</span> <span style="color: #483d8b;">&quot;d1 = &quot;</span><span style="color: #66cc66;">;</span>
+    engldisp<span style="color: black;">&#40;</span>d1<span style="color: black;">&#41;</span><span style="color: #66cc66;">;</span>
+    cout <span style="color: #66cc66;">&lt;&lt;</span> <span style="color: #483d8b;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>d2 = &quot;</span><span style="color: #66cc66;">;</span>
+    engldisp<span style="color: black;">&#40;</span>d2<span style="color: black;">&#41;</span><span style="color: #66cc66;">;</span>
+    cout <span style="color: #66cc66;">&lt;&lt;</span> endl<span style="color: #66cc66;">;</span>
+    <span style="color: #ff7700;font-weight:bold;">return</span> <span style="color: #ff4500;">0</span><span style="color: #66cc66;">;</span>
+<span style="color: black;">&#125;</span>
+&nbsp;
+void engldisp<span style="color: black;">&#40;</span>Distance dd<span style="color: black;">&#41;</span> <span style="color: black;">&#123;</span>
+    cout <span style="color: #66cc66;">&lt;&lt;</span> dd.<span style="color: black;">feet</span> <span style="color: #66cc66;">&lt;&lt;</span> <span style="color: #483d8b;">&quot;<span style="color: #000099; font-weight: bold;">\'</span>-&quot;</span> <span style="color: #66cc66;">&lt;&lt;</span> dd.<span style="color: black;">inches</span> <span style="color: #66cc66;">&lt;&lt;</span> <span style="color: #483d8b;">&quot;<span style="color: #000099; font-weight: bold;">\&quot;</span>&quot;</span><span style="color: #66cc66;">;</span>
+<span style="color: black;">&#125;</span>
+&nbsp;
+void engldisp<span style="color: black;">&#40;</span><span style="color: #008000;">float</span> dd<span style="color: black;">&#41;</span> <span style="color: black;">&#123;</span>
+    <span style="color: #008000;">int</span> feet = static_cast<span style="color: #66cc66;">&lt;</span>int<span style="color: #66cc66;">&gt;</span><span style="color: black;">&#40;</span>dd/12<span style="color: black;">&#41;</span><span style="color: #66cc66;">;</span>
+    <span style="color: #008000;">float</span> inches = dd - feet <span style="color: #66cc66;">*</span> <span style="color: #ff4500;">12</span><span style="color: #66cc66;">;</span>
+    cout <span style="color: #66cc66;">&lt;&lt;</span> feet <span style="color: #66cc66;">&lt;&lt;</span> <span style="color: #483d8b;">&quot;<span style="color: #000099; font-weight: bold;">\'</span>-&quot;</span> <span style="color: #66cc66;">&lt;&lt;</span> inches <span style="color: #66cc66;">&lt;&lt;</span> <span style="color: #483d8b;">&quot;<span style="color: #000099; font-weight: bold;">\&quot;</span>&quot;</span><span style="color: #66cc66;">;</span>
+<span style="color: black;">&#125;</span></pre></div></p>
+<pre>
+Введите число футов: 45
+Введите число дюймов: 32
+Введите длину в дюймах: 123
+d1 = 45'-32"
+d2 = 10'-3"
+</pre><h4>Установка аргументов по умолчанию</h4>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #808080; font-style: italic;">#include &lt;iostream&gt;</span>
+using namespace std<span style="color: #66cc66;">;</span>
+&nbsp;
+void repchar<span style="color: black;">&#40;</span>char=<span style="color: #483d8b;">'*'</span>, <span style="color: #008000;">int</span>=45<span style="color: black;">&#41;</span><span style="color: #66cc66;">;</span>
+&nbsp;
+<span style="color: #008000;">int</span> main<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> <span style="color: black;">&#123;</span>
+    repchar<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span><span style="color: #66cc66;">;</span>
+    repchar<span style="color: black;">&#40;</span><span style="color: #483d8b;">'='</span><span style="color: black;">&#41;</span><span style="color: #66cc66;">;</span>
+    repchar<span style="color: black;">&#40;</span><span style="color: #483d8b;">'+'</span>,30<span style="color: black;">&#41;</span><span style="color: #66cc66;">;</span>
+    <span style="color: #ff7700;font-weight:bold;">return</span> <span style="color: #ff4500;">0</span><span style="color: #66cc66;">;</span>
+<span style="color: black;">&#125;</span>
+&nbsp;
+void repchar<span style="color: black;">&#40;</span>char ch, <span style="color: #008000;">int</span> n<span style="color: black;">&#41;</span> <span style="color: black;">&#123;</span>
+    <span style="color: #ff7700;font-weight:bold;">for</span> <span style="color: black;">&#40;</span><span style="color: #008000;">int</span> j=<span style="color: #ff4500;">0</span><span style="color: #66cc66;">;</span> j<span style="color: #66cc66;">&lt;</span>n<span style="color: #66cc66;">;</span> j++<span style="color: black;">&#41;</span>
+        cout <span style="color: #66cc66;">&lt;&lt;</span> ch<span style="color: #66cc66;">;</span>
+    cout <span style="color: #66cc66;">&lt;&lt;</span> endl<span style="color: #66cc66;">;</span>
+<span style="color: black;">&#125;</span></pre></div></p>
+<p>Вывод:</p>
+<pre>
+*********************************************
+=============================================
+++++++++++++++++++++++++++++++
+</pre>  </div>
+    </div>
+  </body>
+</html>

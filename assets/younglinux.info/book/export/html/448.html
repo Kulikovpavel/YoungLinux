@@ -1,0 +1,85 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Как получить фигуры с заливкой</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-448" class="section-2">
+  <h1 class="book-heading">Как получить фигуры с заливкой</h1>
+  <p><img src="../../../img/kturtle/filling.png" alt="Фигуры с заливкой в KTurtle" style="float:right; margin-left:10px;" />В KTurtle нет команды, которая позволяла бы заливать замкнутую область, т.е. "рисовать" фигуру с заливкой. Чтобы все-таки получить такую фигуру можно придумать различные хитрости.</p>
+<p>Если сильно увеличить толщину пера и задать спрайту движение вперед или назад, то легко можно получить прямоугольник или квадрат. Иные, "залитые" таким образом, фигуры получить намного сложнее.</p>
+<p>Один из способов - это "нарисовать" прямоугольник, затем "зарисовать" лишние части белыми линиями. </p>
+<p>Так, например, в примере ниже залитый треугольник получается следующим образом:</p>
+<ol>
+<li>Рисуется прямоугольник (увеличивается толщина пера, чертится небольшая линия).</li>
+<li>Цвет пера меняется на белый и начинают рисоваться треугольники. Каждый следующий увеличивается так, чтобы описывать предыдущий. Внутри белых треугольников остается цветная область в виде треугольника.</li>
+</ol>
+<p>Аналогично треугольнику создается круг. Только здесь вместо треугольников, рисуются увеличивающиеся белые окружности.</p>
+<p>Проблема в том, что таким образом нельзя создать две близко расположенные фигуры. Белые "рамки" будут замазывать предыдущую.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">сброс
+направление <span style="color: #ff4500;">90</span>
+иди <span style="color: #ff4500;">175</span>, <span style="color: #ff4500;">185</span>
+толщина_пера <span style="color: #ff4500;">100</span>
+цвет_пера <span style="color: #ff4500;">75</span>,<span style="color: #ff4500;">155</span>,<span style="color: #ff4500;">50</span>
+вперёд <span style="color: #ff4500;">50</span>
+&nbsp;
+цвет_пера <span style="color: #ff4500;">255</span>,<span style="color: #ff4500;">255</span>,<span style="color: #ff4500;">255</span>
+толщина_пера <span style="color: #ff4500;">20</span>	
+$x = <span style="color: #ff4500;">130</span>
+$y = <span style="color: #ff4500;">240</span>
+$l = <span style="color: #ff4500;">140</span>
+повтори <span style="color: #ff4500;">5</span> <span style="color: black;">&#123;</span>
+  иди $x, $y
+  повтори <span style="color: #ff4500;">3</span> <span style="color: black;">&#123;</span>
+    вперёд $l
+    налево <span style="color: #ff4500;">120</span>
+  <span style="color: black;">&#125;</span>
+  $x = $x - <span style="color: #ff4500;">20</span>
+  $y = $y + <span style="color: #ff4500;">10</span>
+  $l = $l + <span style="color: #ff4500;">40</span>
+<span style="color: black;">&#125;</span>
+&nbsp;
+иди <span style="color: #ff4500;">195</span>,<span style="color: #ff4500;">310</span>
+толщина_пера <span style="color: #ff4500;">150</span>
+цвет_пера <span style="color: #ff4500;">0</span>,<span style="color: #ff4500;">125</span>,<span style="color: #ff4500;">255</span>
+вперёд <span style="color: #ff4500;">10</span>
+&nbsp;
+иди <span style="color: #ff4500;">325</span>,<span style="color: #ff4500;">75</span>
+толщина_пера <span style="color: #ff4500;">75</span>
+цвет_пера <span style="color: #ff4500;">255</span>,<span style="color: #ff4500;">225</span>,<span style="color: #ff4500;">50</span>
+вперёд <span style="color: #ff4500;">10</span>
+&nbsp;
+цвет_пера <span style="color: #ff4500;">255</span>,<span style="color: #ff4500;">255</span>,<span style="color: #ff4500;">255</span>
+толщина_пера <span style="color: #ff4500;">10</span>	
+$x = <span style="color: #ff4500;">330</span>
+$y = <span style="color: #ff4500;">115</span>
+$l = <span style="color: #ff4500;">6</span>
+повтори <span style="color: #ff4500;">5</span> <span style="color: black;">&#123;</span>
+  иди $x, $y
+  повтори <span style="color: #ff4500;">36</span> <span style="color: black;">&#123;</span>
+    вперёд $l
+    налево <span style="color: #ff4500;">10</span>
+  <span style="color: black;">&#125;</span>
+  $x = $x - <span style="color: #ff4500;">2</span>
+  $y = $y + <span style="color: #ff4500;">4</span>
+  $l = $l + <span style="color: #ff4500;">1</span>
+<span style="color: black;">&#125;</span></pre></div></p>
+<div style="text-align:center;">
+<iframe width="420" height="315" src="../../../../www.youtube.com/embed/TiQOEu9uljI%3Frel=0.html" frameborder="0" allowfullscreen></iframe>
+</div>
+<table id="attachments" class="sticky-enabled">
+ <thead><tr><th>Прикрепленный файл</th><th>Размер</th> </tr></thead>
+<tbody>
+ <tr class="odd"><td><a href="http://younglinux.info/sites/default/files/filling.turtle">filling.turtle</a></td><td>691 байт</td> </tr>
+</tbody>
+</table>
+  </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,402 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Заметки о QML, QT, C++</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+        
+    <div id="node-408" class="section-1">
+  <h1 class="book-heading">Заметки о QML, QT, C++</h1>
+    <div id="node-409" class="section-2">
+  <h1 class="book-heading">QML. Как сделать кнопку?</h1>
+  <p>Объект типа "Кнопка" должна обладать следующей функциональностью:</p>
+<ol>
+<li>Изменять свой вид при наведении курсора мыши.</li>
+<li>Восстанавливать исходное состояние при сведении курсора мыши.</li>
+<li>Изменять вид при нажатии на кнопку.</li>
+<li>Восстанавливать вид (2), когда кнопка отпущена.</li>
+<li>Вызывать какие-либо изменения.</li>
+</ol>
+<p>Напишем на QML такой интерфейс: две кнопки и белый прямоугольник, при щелчке на одной кнопке прямоугольник становится зеленым, по другой - голубым, при щелчке на самом прямоугольнике он снова становится белым.<br />
+<img src="../../../img/qt-qml/button.png" alt="Кнопки на QML" /></p>
+<p>Обычно кнопку делают из прямоугольника. Однако можно подозревать, что ее поведение можно реализовать и взяв за основу другой объект QML.</p>
+<p>Чтобы кнопка менялась при наведении и сведении мыши, в MouseArea следует установить значение свойства hoverEnabled в true, а также установить значения onEntered, onExited, например, так:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">hoverEnabled<span style="color: #339933;">:</span> <span style="color: #000000; font-weight: bold;">true</span>
+onEntered<span style="color: #339933;">:</span> parent.<span style="color: #202020;">border</span>.<span style="color: #202020;">color</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">&quot;gray&quot;</span>
+onExited<span style="color: #339933;">:</span> parent.<span style="color: #202020;">border</span>.<span style="color: #202020;">color</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">&quot;green&quot;</span></pre></div><br />
+(Для onExited указан цвет, который был задан для основного (1) состояния кнопки).</p>
+<p>Изменение кнопки при щелчке на ней задается следующим образом в свойстве color прямоугольника:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">color<span style="color: #339933;">:</span> button_green_mouse_area.<span style="color: #202020;">pressed</span> <span style="color: #339933;">?</span> <span style="color: #ff0000;">&quot;green&quot;</span> <span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;lightgreen&quot;</span></pre></div></p>
+<p>С помощью onClicked в MouseArea можно задать изменение свойства другого объекта:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">onClicked<span style="color: #339933;">:</span> rect_color_change.<span style="color: #202020;">color</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">&quot;lightgreen&quot;</span></pre></div></p>
+<p>Возникла сложность, не получается одновременно менять одно и тоже свойство прямоугольника. Если цвет заполнения меняется при нажатии, то при наведении получается менять только цвет рамки. Иначе изменение цвета при нажатии не срабатывает.</p>
+<p>Весь код интерфейса:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #666666; font-style: italic;">// import QtQuick 1.0 // to target S60 5th Edition or Maemo 5</span>
+import QtQuick 1.1
+&nbsp;
+Rectangle <span style="color: #009900;">&#123;</span>
+    width<span style="color: #339933;">:</span> <span style="color: #0000dd;">390</span>
+    height<span style="color: #339933;">:</span> <span style="color: #0000dd;">210</span>
+&nbsp;
+    Rectangle <span style="color: #009900;">&#123;</span>
+        id<span style="color: #339933;">:</span> button_green
+        x<span style="color: #339933;">:</span> <span style="color: #0000dd;">35</span>
+        y<span style="color: #339933;">:</span> <span style="color: #0000dd;">37</span>
+        width<span style="color: #339933;">:</span> <span style="color: #0000dd;">119</span>
+        height<span style="color: #339933;">:</span> <span style="color: #0000dd;">51</span>
+        color<span style="color: #339933;">:</span> button_green_mouse_area.<span style="color: #202020;">pressed</span> <span style="color: #339933;">?</span> <span style="color: #ff0000;">&quot;green&quot;</span> <span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;lightgreen&quot;</span>
+        radius<span style="color: #339933;">:</span> <span style="color: #0000dd;">7</span>
+        border.<span style="color: #202020;">width</span><span style="color: #339933;">:</span> <span style="color: #0000dd;">3</span>
+        border.<span style="color: #202020;">color</span><span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;green&quot;</span>
+        Text <span style="color: #009900;">&#123;</span>
+            id<span style="color: #339933;">:</span> button_green_label
+            x<span style="color: #339933;">:</span> <span style="color: #0000dd;">38</span>
+            y<span style="color: #339933;">:</span> <span style="color: #0000dd;">18</span>
+            text<span style="color: #339933;">:</span> qsTr<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Зеленый&quot;</span><span style="color: #009900;">&#41;</span>
+            anchors.<span style="color: #202020;">horizontalCenter</span><span style="color: #339933;">:</span> parent.<span style="color: #202020;">horizontalCenter</span>
+            anchors.<span style="color: #202020;">verticalCenter</span><span style="color: #339933;">:</span> parent.<span style="color: #202020;">verticalCenter</span>
+            font.<span style="color: #202020;">pixelSize</span><span style="color: #339933;">:</span> 16
+        <span style="color: #009900;">&#125;</span>
+        MouseArea <span style="color: #009900;">&#123;</span>
+            id<span style="color: #339933;">:</span> button_green_mouse_area
+            anchors.<span style="color: #202020;">fill</span><span style="color: #339933;">:</span> parent
+            hoverEnabled<span style="color: #339933;">:</span> <span style="color: #000000; font-weight: bold;">true</span>
+            onEntered<span style="color: #339933;">:</span> parent.<span style="color: #202020;">border</span>.<span style="color: #202020;">color</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">&quot;gray&quot;</span>
+            onExited<span style="color: #339933;">:</span> parent.<span style="color: #202020;">border</span>.<span style="color: #202020;">color</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">&quot;green&quot;</span>
+            onClicked<span style="color: #339933;">:</span> rect_color_change.<span style="color: #202020;">color</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">&quot;lightgreen&quot;</span>
+        <span style="color: #009900;">&#125;</span>
+    <span style="color: #009900;">&#125;</span>
+&nbsp;
+    Rectangle <span style="color: #009900;">&#123;</span>
+        id<span style="color: #339933;">:</span> button_blue
+        x<span style="color: #339933;">:</span> <span style="color: #0000dd;">35</span>
+        y<span style="color: #339933;">:</span> <span style="color: #0000dd;">118</span>
+        width<span style="color: #339933;">:</span> <span style="color: #0000dd;">119</span>
+        height<span style="color: #339933;">:</span> <span style="color: #0000dd;">51</span>
+        color<span style="color: #339933;">:</span> button_blue_mouse_area.<span style="color: #202020;">pressed</span> <span style="color: #339933;">?</span> <span style="color: #ff0000;">&quot;darkblue&quot;</span> <span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;lightblue&quot;</span>
+        radius<span style="color: #339933;">:</span> <span style="color: #0000dd;">7</span>
+        border.<span style="color: #202020;">width</span><span style="color: #339933;">:</span> <span style="color: #0000dd;">3</span>
+        border.<span style="color: #202020;">color</span><span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;darkblue&quot;</span>
+        Text <span style="color: #009900;">&#123;</span>
+            id<span style="color: #339933;">:</span> button_blue_label
+            x<span style="color: #339933;">:</span> <span style="color: #0000dd;">38</span>
+            y<span style="color: #339933;">:</span> <span style="color: #0000dd;">18</span>
+            text<span style="color: #339933;">:</span> qsTr<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Голубой&quot;</span><span style="color: #009900;">&#41;</span>
+            anchors.<span style="color: #202020;">horizontalCenter</span><span style="color: #339933;">:</span> parent.<span style="color: #202020;">horizontalCenter</span>
+            anchors.<span style="color: #202020;">verticalCenter</span><span style="color: #339933;">:</span> parent.<span style="color: #202020;">verticalCenter</span>
+            font.<span style="color: #202020;">pixelSize</span><span style="color: #339933;">:</span> 16
+        <span style="color: #009900;">&#125;</span>
+        MouseArea <span style="color: #009900;">&#123;</span>
+            id<span style="color: #339933;">:</span> button_blue_mouse_area
+            anchors.<span style="color: #202020;">fill</span><span style="color: #339933;">:</span> parent
+            hoverEnabled<span style="color: #339933;">:</span> <span style="color: #000000; font-weight: bold;">true</span>
+            onEntered<span style="color: #339933;">:</span> parent.<span style="color: #202020;">border</span>.<span style="color: #202020;">color</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">&quot;gray&quot;</span>
+            onExited<span style="color: #339933;">:</span> parent.<span style="color: #202020;">border</span>.<span style="color: #202020;">color</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">&quot;darkblue&quot;</span>
+            onClicked<span style="color: #339933;">:</span> rect_color_change.<span style="color: #202020;">color</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">&quot;lightblue&quot;</span>
+        <span style="color: #009900;">&#125;</span>
+    <span style="color: #009900;">&#125;</span>
+&nbsp;
+    Rectangle <span style="color: #009900;">&#123;</span>
+        id<span style="color: #339933;">:</span> rect_color_change
+        x<span style="color: #339933;">:</span> <span style="color: #0000dd;">186</span>
+        y<span style="color: #339933;">:</span> <span style="color: #0000dd;">30</span>
+        width<span style="color: #339933;">:</span> <span style="color: #0000dd;">167</span>
+        height<span style="color: #339933;">:</span> <span style="color: #0000dd;">148</span>
+        color<span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;#ffffff&quot;</span>
+        border.<span style="color: #202020;">width</span><span style="color: #339933;">:</span> <span style="color: #0000dd;">3</span>
+        border.<span style="color: #202020;">color</span><span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;#000000&quot;</span>
+        MouseArea <span style="color: #009900;">&#123;</span>
+            id<span style="color: #339933;">:</span> rect_color_change_mouse_area
+            anchors.<span style="color: #202020;">fill</span><span style="color: #339933;">:</span> parent
+            onEntered<span style="color: #339933;">:</span> rect_color_change.<span style="color: #202020;">color</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">&quot;white&quot;</span>
+        <span style="color: #009900;">&#125;</span>
+    <span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #009900;">&#125;</span></pre></div></p>
+  </div>
+<div id="node-412" class="section-2">
+  <h1 class="book-heading">QML. Анимация градиета</h1>
+  Пример взят <script type="text/javascript">document.write('<a href="http://antyadev.blogspot.com/2012/02/qml-creating-animated-button.html" target="_blank">')</script>отсюда<script type="text/javascript">document.write('</a>')</script>. Добавлен mouseExitAnim. Одним файлом *.qml код выглядит так:
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">import QtQuick 1.1
+&nbsp;
+Rectangle <span style="color: #009900;">&#123;</span>
+    property <span style="color: #993333;">string</span> rsGradientStop0<span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;#FF7C7C7C&quot;</span> <span style="color: #666666; font-style: italic;">// свойство для хранения цвета</span>
+    property <span style="color: #993333;">string</span> rsGradientStop1<span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;#FF4E4E4E&quot;</span>
+    id<span style="color: #339933;">:</span> greyButton
+    width<span style="color: #339933;">:</span> <span style="color: #0000dd;">85</span>
+    height<span style="color: #339933;">:</span> <span style="color: #0000dd;">23</span>
+    border.<span style="color: #202020;">color</span><span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;Wheat&quot;</span>
+    gradient<span style="color: #339933;">:</span> Gradient <span style="color: #009900;">&#123;</span> <span style="color: #666666; font-style: italic;">// добавление градиента</span>
+        GradientStop <span style="color: #009900;">&#123;</span>
+            id<span style="color: #339933;">:</span> gradientStop0
+            position<span style="color: #339933;">:</span> <span style="color: #0000dd;">0</span>
+            color<span style="color: #339933;">:</span> rsGradientStop0
+        <span style="color: #009900;">&#125;</span>
+        GradientStop <span style="color: #009900;">&#123;</span>
+            id<span style="color: #339933;">:</span> gradientStop1
+            position<span style="color: #339933;">:</span> <span style="color: #0000dd;">1</span>
+            color<span style="color: #339933;">:</span> rsGradientStop1
+        <span style="color: #009900;">&#125;</span>
+    <span style="color: #009900;">&#125;</span>
+    Text <span style="color: #009900;">&#123;</span>
+        id<span style="color: #339933;">:</span> text
+        color<span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;Wheat&quot;</span>
+        text<span style="color: #339933;">:</span> qsTr<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Ok&quot;</span><span style="color: #009900;">&#41;</span>
+        font.<span style="color: #202020;">underline</span><span style="color: #339933;">:</span> <span style="color: #000000; font-weight: bold;">false</span>
+        font.<span style="color: #202020;">bold</span><span style="color: #339933;">:</span> <span style="color: #000000; font-weight: bold;">false</span>
+        font.<span style="color: #202020;">pixelSize</span><span style="color: #339933;">:</span> <span style="color: #0000dd;">12</span>
+        anchors.<span style="color: #202020;">centerIn</span><span style="color: #339933;">:</span> parent
+    <span style="color: #009900;">&#125;</span>
+    ParallelAnimation <span style="color: #009900;">&#123;</span>
+        id<span style="color: #339933;">:</span> mouseEnterAnim
+        PropertyAnimation <span style="color: #009900;">&#123;</span>
+            target<span style="color: #339933;">:</span> gradientStop0 <span style="color: #666666; font-style: italic;">// id градиента</span>
+            properties<span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;color&quot;</span>
+            to<span style="color: #339933;">:</span> rsGradientStop1
+            duration<span style="color: #339933;">:</span> <span style="color: #0000dd;">300</span>
+        <span style="color: #009900;">&#125;</span>
+        PropertyAnimation <span style="color: #009900;">&#123;</span>
+            target<span style="color: #339933;">:</span> gradientStop1
+            properties<span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;color&quot;</span>
+            to<span style="color: #339933;">:</span> rsGradientStop0
+            duration<span style="color: #339933;">:</span> <span style="color: #0000dd;">300</span>
+        <span style="color: #009900;">&#125;</span>
+    <span style="color: #009900;">&#125;</span>
+    ParallelAnimation <span style="color: #009900;">&#123;</span>
+        id<span style="color: #339933;">:</span> mouseExitAnim
+        PropertyAnimation <span style="color: #009900;">&#123;</span>
+            target<span style="color: #339933;">:</span> gradientStop0
+            properties<span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;color&quot;</span>
+            to<span style="color: #339933;">:</span> rsGradientStop0
+            duration<span style="color: #339933;">:</span> <span style="color: #0000dd;">300</span>
+        <span style="color: #009900;">&#125;</span>
+        PropertyAnimation <span style="color: #009900;">&#123;</span>
+            target<span style="color: #339933;">:</span> gradientStop1
+            properties<span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;color&quot;</span>
+            to<span style="color: #339933;">:</span> rsGradientStop1
+            duration<span style="color: #339933;">:</span> 300
+        <span style="color: #009900;">&#125;</span>
+    <span style="color: #009900;">&#125;</span>
+    MouseArea <span style="color: #009900;">&#123;</span>
+        id<span style="color: #339933;">:</span> mouse
+        anchors.<span style="color: #202020;">fill</span><span style="color: #339933;">:</span> greyButton
+        hoverEnabled<span style="color: #339933;">:</span> <span style="color: #000000; font-weight: bold;">true</span>
+        onEntered<span style="color: #339933;">:</span> mouseEnterAnim.<span style="color: #202020;">start</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span>
+        onExited<span style="color: #339933;">:</span> mouseExitAnim.<span style="color: #202020;">start</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span>
+    <span style="color: #009900;">&#125;</span>
+<span style="color: #009900;">&#125;</span></pre></div>
+
+Другими словами, у объекта GradientStop при событии анимируется изменение свойства color к определенному значению.  </div>
+<div id="node-413" class="section-2">
+  <h1 class="book-heading">QML. Поворот градиента</h1>
+  <p>По умолчанию делается только горизонтальный градиент. Чтобы получить под другим углом, надо повернуть всю фигуру (прямоугольник), т.к. свойство rotation отсутствует у Gradient.</p>
+<p>Круг можно получить установив у квадрата radius в 50.</p>
+<p>Если требуется вертикальный градиент для прямоугольника, то тогда при его создании следует поменять значения местами для требуемых ширины и высоты. После поворота на 90<sup>0</sup> высота станет шириной.</p>
+<p>Выходит, что получить градиетную заливку по диагонали и сохранить при этом прямоугольник не наклоненным, невозможно. Для круга такое возможно.</p>
+<p><img src="../../../img/qt-qml/gradient-rotation.png" width="400" height="406" alt="Поворот градиента в QML" /></p>
+<p><div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #666666; font-style: italic;">// import QtQuick 1.0 // to target S60 5th Edition or Maemo 5</span>
+import QtQuick 1.1
+&nbsp;
+Rectangle <span style="color: #009900;">&#123;</span>
+    width<span style="color: #339933;">:</span><span style="color: #0000dd;">500</span>
+    height<span style="color: #339933;">:</span><span style="color: #0000dd;">250</span>
+    gradient<span style="color: #339933;">:</span> Gradient <span style="color: #009900;">&#123;</span>
+        GradientStop <span style="color: #009900;">&#123;</span>
+            position<span style="color: #339933;">:</span> <span style="color: #0000dd;">0</span>
+            color<span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;#584d43&quot;</span>
+        <span style="color: #009900;">&#125;</span>
+&nbsp;
+        GradientStop <span style="color: #009900;">&#123;</span>
+            position<span style="color: #339933;">:</span> <span style="color:#800080;">0.250</span>
+            color<span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;#ecd2b9&quot;</span>
+        <span style="color: #009900;">&#125;</span>
+&nbsp;
+        GradientStop <span style="color: #009900;">&#123;</span>
+            position<span style="color: #339933;">:</span> <span style="color:#800080;">0.500</span>
+            color<span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;#584d43&quot;</span>
+        <span style="color: #009900;">&#125;</span>
+&nbsp;
+        GradientStop <span style="color: #009900;">&#123;</span>
+            position<span style="color: #339933;">:</span> <span style="color:#800080;">0.750</span>
+            color<span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;#ecd2b9&quot;</span>
+        <span style="color: #009900;">&#125;</span>
+&nbsp;
+        GradientStop <span style="color: #009900;">&#123;</span>
+            position<span style="color: #339933;">:</span> <span style="color: #0000dd;">1</span>
+            color<span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;#584d43&quot;</span>
+        <span style="color: #009900;">&#125;</span>
+    <span style="color: #009900;">&#125;</span>
+&nbsp;
+    Rectangle <span style="color: #009900;">&#123;</span>
+        x<span style="color: #339933;">:</span> <span style="color: #0000dd;">61</span>
+        y<span style="color: #339933;">:</span> <span style="color: #0000dd;">75</span>
+        width<span style="color: #339933;">:</span> <span style="color: #0000dd;">150</span>
+        height<span style="color: #339933;">:</span> <span style="color: #0000dd;">100</span>
+        radius<span style="color: #339933;">:</span> <span style="color: #0000dd;">0</span>
+        rotation<span style="color: #339933;">:</span> <span style="color: #0000dd;">45</span>
+        gradient<span style="color: #339933;">:</span> Gradient <span style="color: #009900;">&#123;</span>
+            GradientStop <span style="color: #009900;">&#123;</span>
+                position<span style="color: #339933;">:</span> <span style="color: #0000dd;">0</span>
+                color<span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;#251a38&quot;</span>
+            <span style="color: #009900;">&#125;</span>
+            GradientStop <span style="color: #009900;">&#123;</span>
+                position<span style="color: #339933;">:</span> <span style="color:#800080;">0.500</span>
+                color<span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;#ffffff&quot;</span>
+            <span style="color: #009900;">&#125;</span>
+            GradientStop <span style="color: #009900;">&#123;</span>
+                position<span style="color: #339933;">:</span> <span style="color: #0000dd;">1</span>
+                color<span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;#251a38&quot;</span>
+            <span style="color: #009900;">&#125;</span>
+        <span style="color: #009900;">&#125;</span>
+    <span style="color: #009900;">&#125;</span>
+&nbsp;
+    Rectangle <span style="color: #009900;">&#123;</span>
+        x<span style="color: #339933;">:</span> <span style="color: #0000dd;">344</span>
+        y<span style="color: #339933;">:</span> <span style="color: #0000dd;">75</span>
+        width<span style="color: #339933;">:</span> <span style="color: #0000dd;">100</span>
+        height<span style="color: #339933;">:</span> <span style="color: #0000dd;">100</span>
+        radius<span style="color: #339933;">:</span> <span style="color: #0000dd;">50</span>
+        rotation<span style="color: #339933;">:</span> <span style="color: #0000dd;">45</span>
+        gradient<span style="color: #339933;">:</span> Gradient <span style="color: #009900;">&#123;</span>
+            GradientStop <span style="color: #009900;">&#123;</span>
+                position<span style="color: #339933;">:</span> <span style="color: #0000dd;">0</span>
+                color<span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;#251a38&quot;</span>
+            <span style="color: #009900;">&#125;</span>
+            GradientStop <span style="color: #009900;">&#123;</span>
+                position<span style="color: #339933;">:</span> <span style="color:#800080;">0.500</span>
+                color<span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;#ffffff&quot;</span>
+            <span style="color: #009900;">&#125;</span>
+            GradientStop <span style="color: #009900;">&#123;</span>
+                position<span style="color: #339933;">:</span> <span style="color: #0000dd;">1</span>
+                color<span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;#251a38&quot;</span>
+            <span style="color: #009900;">&#125;</span>
+        <span style="color: #009900;">&#125;</span>
+    <span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #009900;">&#125;</span></pre></div></p>
+  </div>
+<div id="node-417" class="section-2">
+  <h1 class="book-heading">С++. Перегруженные функции и аргументы по умолчанию</h1>
+  <p>В программе может потребоваться выполнить одни и теже действия (функцию), однако входные данные при этом могут быть разными. На помощь приходят два механизма:</p>
+<ul>
+<li>перегрузка функции,</li>
+<li>передача значений параметрам в прототипе функции (аргументы по умолчанию).</li>
+</ul>
+<p>В каких случаях следует использовать первый, а в каких второй?</p>
+<p>Перегрузка функций заключается в том, что в программе существуют несколько одноименных функций, которые различаются между собой количеством параметров и|или их типом. То, какая функция вызывается, определяется по переданным аргументам. Перегрузка функций - более гибкая и универсальная идея.</p>
+<p>При задании аргументов по умолчанию не приходится дублировать код (есть всего одна функция). Однако при этом нельзя передавать аргументы разного типа, использовать значение по умолчанию первого аргумента (стоящих впереди) и передать для второго (стоящих после).</p>
+<p>Понятно, что перегрузку функций и установку аргументов по умолчанию можно использовать совместно.</p>
+<p>Ниже приведены примеры, взятые их книги Р.Лафоре "Объектно-ориентированное программирование в C++".</p>
+<h4>Перегруженная функция (переменное число аргументов)</h4>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #808080; font-style: italic;">#include &lt;iostream&gt;</span>
+using namespace std<span style="color: #66cc66;">;</span>
+&nbsp;
+void repchar<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span><span style="color: #66cc66;">;</span>
+void repchar<span style="color: black;">&#40;</span>char<span style="color: black;">&#41;</span><span style="color: #66cc66;">;</span>
+void repchar<span style="color: black;">&#40;</span>char, <span style="color: #008000;">int</span><span style="color: black;">&#41;</span><span style="color: #66cc66;">;</span>
+&nbsp;
+<span style="color: #008000;">int</span> main<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> <span style="color: black;">&#123;</span>
+    repchar<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span><span style="color: #66cc66;">;</span>
+    repchar<span style="color: black;">&#40;</span><span style="color: #483d8b;">'='</span><span style="color: black;">&#41;</span><span style="color: #66cc66;">;</span>
+    repchar<span style="color: black;">&#40;</span><span style="color: #483d8b;">'+'</span>,30<span style="color: black;">&#41;</span><span style="color: #66cc66;">;</span>
+    <span style="color: #ff7700;font-weight:bold;">return</span> <span style="color: #ff4500;">0</span><span style="color: #66cc66;">;</span>
+<span style="color: black;">&#125;</span>
+&nbsp;
+void repchar<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> <span style="color: black;">&#123;</span>
+    <span style="color: #ff7700;font-weight:bold;">for</span> <span style="color: black;">&#40;</span><span style="color: #008000;">int</span> j=<span style="color: #ff4500;">0</span><span style="color: #66cc66;">;</span> j<span style="color: #66cc66;">&lt;</span><span style="color: #ff4500;">45</span><span style="color: #66cc66;">;</span> j++<span style="color: black;">&#41;</span>
+        cout <span style="color: #66cc66;">&lt;&lt;</span> <span style="color: #483d8b;">'*'</span><span style="color: #66cc66;">;</span>
+    cout <span style="color: #66cc66;">&lt;&lt;</span> endl<span style="color: #66cc66;">;</span>
+<span style="color: black;">&#125;</span>
+&nbsp;
+void repchar<span style="color: black;">&#40;</span>char ch<span style="color: black;">&#41;</span> <span style="color: black;">&#123;</span>
+    <span style="color: #ff7700;font-weight:bold;">for</span> <span style="color: black;">&#40;</span><span style="color: #008000;">int</span> j=<span style="color: #ff4500;">0</span><span style="color: #66cc66;">;</span> j<span style="color: #66cc66;">&lt;</span><span style="color: #ff4500;">45</span><span style="color: #66cc66;">;</span> j++<span style="color: black;">&#41;</span>
+        cout <span style="color: #66cc66;">&lt;&lt;</span> ch<span style="color: #66cc66;">;</span>
+    cout <span style="color: #66cc66;">&lt;&lt;</span> endl<span style="color: #66cc66;">;</span>
+<span style="color: black;">&#125;</span>
+&nbsp;
+void repchar<span style="color: black;">&#40;</span>char ch, <span style="color: #008000;">int</span> n<span style="color: black;">&#41;</span> <span style="color: black;">&#123;</span>
+    <span style="color: #ff7700;font-weight:bold;">for</span> <span style="color: black;">&#40;</span><span style="color: #008000;">int</span> j=<span style="color: #ff4500;">0</span><span style="color: #66cc66;">;</span> j<span style="color: #66cc66;">&lt;</span>n<span style="color: #66cc66;">;</span> j++<span style="color: black;">&#41;</span>
+        cout <span style="color: #66cc66;">&lt;&lt;</span> ch<span style="color: #66cc66;">;</span>
+    cout <span style="color: #66cc66;">&lt;&lt;</span> endl<span style="color: #66cc66;">;</span>
+<span style="color: black;">&#125;</span></pre></div></p>
+<p>Вывод:</p>
+<pre>
+*********************************************
+=============================================
+++++++++++++++++++++++++++++++
+</pre><h4>Перегруженная функция (различные типы аргументов)</h4>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #808080; font-style: italic;">#include &lt;iostream&gt;</span>
+using namespace std<span style="color: #66cc66;">;</span>
+&nbsp;
+<span style="color: #dc143c;">struct</span> Distance <span style="color: black;">&#123;</span>
+    <span style="color: #008000;">int</span> feet<span style="color: #66cc66;">;</span>
+    <span style="color: #008000;">float</span> inches<span style="color: #66cc66;">;</span>
+<span style="color: black;">&#125;</span><span style="color: #66cc66;">;</span>
+&nbsp;
+void engldisp<span style="color: black;">&#40;</span>Distance<span style="color: black;">&#41;</span><span style="color: #66cc66;">;</span>
+void engldisp<span style="color: black;">&#40;</span><span style="color: #008000;">float</span><span style="color: black;">&#41;</span><span style="color: #66cc66;">;</span>
+&nbsp;
+<span style="color: #008000;">int</span> main<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> <span style="color: black;">&#123;</span>
+    Distance d1<span style="color: #66cc66;">;</span>
+    <span style="color: #008000;">float</span> d2<span style="color: #66cc66;">;</span>
+    cout <span style="color: #66cc66;">&lt;&lt;</span> <span style="color: #483d8b;">&quot;Введите число футов: &quot;</span><span style="color: #66cc66;">;</span>
+    cin <span style="color: #66cc66;">&gt;&gt;</span> d1.<span style="color: black;">feet</span><span style="color: #66cc66;">;</span>
+    cout <span style="color: #66cc66;">&lt;&lt;</span> <span style="color: #483d8b;">&quot;Введите число дюймов: &quot;</span><span style="color: #66cc66;">;</span>
+    cin <span style="color: #66cc66;">&gt;&gt;</span> d1.<span style="color: black;">inches</span><span style="color: #66cc66;">;</span>
+    cout <span style="color: #66cc66;">&lt;&lt;</span> <span style="color: #483d8b;">&quot;Введите длину в дюймах: &quot;</span><span style="color: #66cc66;">;</span>
+    cin <span style="color: #66cc66;">&gt;&gt;</span> d2<span style="color: #66cc66;">;</span>
+    cout <span style="color: #66cc66;">&lt;&lt;</span> <span style="color: #483d8b;">&quot;d1 = &quot;</span><span style="color: #66cc66;">;</span>
+    engldisp<span style="color: black;">&#40;</span>d1<span style="color: black;">&#41;</span><span style="color: #66cc66;">;</span>
+    cout <span style="color: #66cc66;">&lt;&lt;</span> <span style="color: #483d8b;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>d2 = &quot;</span><span style="color: #66cc66;">;</span>
+    engldisp<span style="color: black;">&#40;</span>d2<span style="color: black;">&#41;</span><span style="color: #66cc66;">;</span>
+    cout <span style="color: #66cc66;">&lt;&lt;</span> endl<span style="color: #66cc66;">;</span>
+    <span style="color: #ff7700;font-weight:bold;">return</span> <span style="color: #ff4500;">0</span><span style="color: #66cc66;">;</span>
+<span style="color: black;">&#125;</span>
+&nbsp;
+void engldisp<span style="color: black;">&#40;</span>Distance dd<span style="color: black;">&#41;</span> <span style="color: black;">&#123;</span>
+    cout <span style="color: #66cc66;">&lt;&lt;</span> dd.<span style="color: black;">feet</span> <span style="color: #66cc66;">&lt;&lt;</span> <span style="color: #483d8b;">&quot;<span style="color: #000099; font-weight: bold;">\'</span>-&quot;</span> <span style="color: #66cc66;">&lt;&lt;</span> dd.<span style="color: black;">inches</span> <span style="color: #66cc66;">&lt;&lt;</span> <span style="color: #483d8b;">&quot;<span style="color: #000099; font-weight: bold;">\&quot;</span>&quot;</span><span style="color: #66cc66;">;</span>
+<span style="color: black;">&#125;</span>
+&nbsp;
+void engldisp<span style="color: black;">&#40;</span><span style="color: #008000;">float</span> dd<span style="color: black;">&#41;</span> <span style="color: black;">&#123;</span>
+    <span style="color: #008000;">int</span> feet = static_cast<span style="color: #66cc66;">&lt;</span>int<span style="color: #66cc66;">&gt;</span><span style="color: black;">&#40;</span>dd/12<span style="color: black;">&#41;</span><span style="color: #66cc66;">;</span>
+    <span style="color: #008000;">float</span> inches = dd - feet <span style="color: #66cc66;">*</span> <span style="color: #ff4500;">12</span><span style="color: #66cc66;">;</span>
+    cout <span style="color: #66cc66;">&lt;&lt;</span> feet <span style="color: #66cc66;">&lt;&lt;</span> <span style="color: #483d8b;">&quot;<span style="color: #000099; font-weight: bold;">\'</span>-&quot;</span> <span style="color: #66cc66;">&lt;&lt;</span> inches <span style="color: #66cc66;">&lt;&lt;</span> <span style="color: #483d8b;">&quot;<span style="color: #000099; font-weight: bold;">\&quot;</span>&quot;</span><span style="color: #66cc66;">;</span>
+<span style="color: black;">&#125;</span></pre></div></p>
+<pre>
+Введите число футов: 45
+Введите число дюймов: 32
+Введите длину в дюймах: 123
+d1 = 45'-32"
+d2 = 10'-3"
+</pre><h4>Установка аргументов по умолчанию</h4>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #808080; font-style: italic;">#include &lt;iostream&gt;</span>
+using namespace std<span style="color: #66cc66;">;</span>
+&nbsp;
+void repchar<span style="color: black;">&#40;</span>char=<span style="color: #483d8b;">'*'</span>, <span style="color: #008000;">int</span>=45<span style="color: black;">&#41;</span><span style="color: #66cc66;">;</span>
+&nbsp;
+<span style="color: #008000;">int</span> main<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> <span style="color: black;">&#123;</span>
+    repchar<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span><span style="color: #66cc66;">;</span>
+    repchar<span style="color: black;">&#40;</span><span style="color: #483d8b;">'='</span><span style="color: black;">&#41;</span><span style="color: #66cc66;">;</span>
+    repchar<span style="color: black;">&#40;</span><span style="color: #483d8b;">'+'</span>,30<span style="color: black;">&#41;</span><span style="color: #66cc66;">;</span>
+    <span style="color: #ff7700;font-weight:bold;">return</span> <span style="color: #ff4500;">0</span><span style="color: #66cc66;">;</span>
+<span style="color: black;">&#125;</span>
+&nbsp;
+void repchar<span style="color: black;">&#40;</span>char ch, <span style="color: #008000;">int</span> n<span style="color: black;">&#41;</span> <span style="color: black;">&#123;</span>
+    <span style="color: #ff7700;font-weight:bold;">for</span> <span style="color: black;">&#40;</span><span style="color: #008000;">int</span> j=<span style="color: #ff4500;">0</span><span style="color: #66cc66;">;</span> j<span style="color: #66cc66;">&lt;</span>n<span style="color: #66cc66;">;</span> j++<span style="color: black;">&#41;</span>
+        cout <span style="color: #66cc66;">&lt;&lt;</span> ch<span style="color: #66cc66;">;</span>
+    cout <span style="color: #66cc66;">&lt;&lt;</span> endl<span style="color: #66cc66;">;</span>
+<span style="color: black;">&#125;</span></pre></div></p>
+<p>Вывод:</p>
+<pre>
+*********************************************
+=============================================
+++++++++++++++++++++++++++++++
+</pre>  </div>
+</div>
+    
+  </body>
+</html>

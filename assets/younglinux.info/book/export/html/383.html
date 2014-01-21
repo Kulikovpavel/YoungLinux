@@ -1,0 +1,786 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Решение задач на C</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+        
+    <div id="node-383" class="section-1">
+  <h1 class="book-heading">Решение задач на C</h1>
+  <p>Здесь находится коллекция решений задач и примеры маленьких программ на языке <span class="blue">C</span>. </p>
+<p>Первая половина задач и примеров взята из книги Б. Кернигана и Д. Ритчи "Язык программирования <span class="blue">C</span>" (второе издание). В отличие от книги задачи либо решены, либо прокомментированы, либо программы дописаны до рабочего состояния.</p>
+<p>Вторая половина задач - это ответы на некоторые задания к курсу <a href="http://younglinux.info/c" title="Учебник по языку программирования C">"Особенности языка C"</a>.</p>
+<p>В последнем примере "Указатели и массивы" демонстрируются особенности указателей.</p>
+  <div id="node-384" class="section-2">
+  <h1 class="book-heading">K&amp;R (41-43). Вывод самой длиной строки</h1>
+  <p class="right">Решение задач на языке программирования C</p>
+<p>В книге в данном разделе опущен момент о том, как происходит обмен данными между функциями (хотя оговаривается перед этим об особенностях передачи массивов в качестве аргументов). Все переменные локальные и поэтому с первого взгляда не понятно, почему функция getline() меняет значение переменной line в функции main(), а copy() - значение longest. Массивы в качестве аргументов передаются не по значению. Переменные в getline() и copy() получают ссылки на массивы, определенные в main(), а не содержимое этих массивов.</p>
+<p><div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+<span style="color: #339933;">#define MAXLINE 1000</span>
+&nbsp;
+<span style="color: #808080; font-style: italic;">/* Не надо использовать getline, иначе будет сообщение о
+несовпадении типов. Видимо getline определена в stdio */</span>
+<span style="color: #993333;">int</span> getline2 <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> s<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #993333;">int</span> lim<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #993333;">void</span> copy<span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> to<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #993333;">char</span> from<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> len<span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// длина текущей строки</span>
+	<span style="color: #993333;">int</span> max<span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// максимальная длина</span>
+	<span style="color: #993333;">char</span> line<span style="color: #009900;">&#91;</span>MAXLINE<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// текущая строка</span>
+	<span style="color: #993333;">char</span> longest<span style="color: #009900;">&#91;</span>MAXLINE<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// самая длиная строка</span>
+&nbsp;
+	max <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// сначала макс.длина равна нулю</span>
+	<span style="color: #808080; font-style: italic;">/* Пока длина строки больше 0 вызывать getline2, передавать
+	ей в качестве аргументов массив символов для строки и 
+	максимально возможную длину строки. getline2 возвращает
+	целое число, которое записывается в len, а также по ходу
+	выполнения заполняет массив line. */</span>
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>len <span style="color: #339933;">=</span> getline2<span style="color: #009900;">&#40;</span>line<span style="color: #339933;">,</span> MAXLINE<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">&gt;</span> <span style="color: #0000dd;">0</span><span style="color: #009900;">&#41;</span>
+		<span style="color: #808080; font-style: italic;">/* copy будет вызываться только, если длина 
+		текущей строки больше значения в max */</span>
+		<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>len <span style="color: #339933;">&gt;</span> max<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+			max <span style="color: #339933;">=</span> len<span style="color: #339933;">;</span>
+			<span style="color: #808080; font-style: italic;">/* copy передается массив символов самой
+			длиной строки до этого и текущая строка */</span> 
+			copy <span style="color: #009900;">&#40;</span>longest<span style="color: #339933;">,</span> line<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		<span style="color: #009900;">&#125;</span>
+	<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>max <span style="color: #339933;">&gt;</span> 0<span style="color: #009900;">&#41;</span>
+		<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s&quot;</span><span style="color: #339933;">,</span> longest<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">return</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">int</span> getline2 <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> s<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #993333;">int</span> lim<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> c<span style="color: #339933;">,</span> i<span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// символ и счетчик массива</span>
+&nbsp;
+	<span style="color: #808080; font-style: italic;">/* Происходит заполнение массива символами текущей строки до тех
+	пор, пока не будет превышен лимит, встречен конец файла или 
+	конец строки. i - счетчик, который после каждой итерации цикла 
+	указывает на следующий элемент массива */</span>
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> lim <span style="color: #339933;">-</span> <span style="color: #0000dd;">1</span> <span style="color: #339933;">&amp;&amp;</span> <span style="color: #009900;">&#40;</span>c <span style="color: #339933;">=</span> getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> EOF <span style="color: #339933;">&amp;&amp;</span> c <span style="color: #339933;">!=</span> <span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\n</span>'</span><span style="color: #339933;">;</span> <span style="color: #339933;">++</span>i<span style="color: #009900;">&#41;</span>
+		s<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> c<span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// c - это введенный очередной символ</span>
+	<span style="color: #808080; font-style: italic;">/* Если цикл for был прерван из-за конца строки, то
+	записать символ конца строки в массив. */</span>
+	<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>c <span style="color: #339933;">==</span> <span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\n</span>'</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		s<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> c<span style="color: #339933;">;</span>
+		<span style="color: #339933;">++</span>i<span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// индекс надо увеличить для записи \0</span>
+	<span style="color: #009900;">&#125;</span>
+	s<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// обозначение конца строки в языке Си</span>
+	<span style="color: #b1b100;">return</span> i<span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// длина строки</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #808080; font-style: italic;">/* Переменная to связана с longest. Массивы в качестве аргументов
+передаются по ссылке, а не по значению. В результате происходит
+изменение longest. from связана с line. */</span>
+<span style="color: #993333;">void</span> copy <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> to<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #993333;">char</span> from<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">;</span>
+&nbsp;
+	i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>
+	<span style="color: #808080; font-style: italic;">/* Происходит перезапись и дозаполнение  to до тех пор, 
+	пока в from не встретится символ конца строки. Перед этим он
+	также копируется в to. */</span>
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>to<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> from<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #009900;">&#41;</span>
+		<span style="color: #339933;">++</span>i<span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+  </div>
+<div id="node-385" class="section-2">
+  <h1 class="book-heading">K&amp;R (52-53). Длина строки</h1>
+  <p class="right">Решение задач на языке программирования C</p>
+<p>Говорится о том, что в стандартной библиотеки существует функция для измерения длины строки, а также приводится ее собственная версия. Рабочий вариант кода программы полностью отсутствует.</p>
+<p>В примере ниже строка, вводимая пользователем, записывается в массив символов. Затем ее длина измеряется с помощью встроенной функции strlen(), после чего с помощью пользовательской функции strlen2().</p>
+<p>Обращает на себя внимание то, что завершающий символ нуля в строку не записывался, однако видимо он туда автоматически добавляется. Поэтому цикл while в функции strlen2() работает корректно. Тогда непонятно, почему авторы "вручную" дописывают в конец строки нуль в предыдущем примере (поиск самой длиной строки) при считывании ввода.</p>
+<p><div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+<span style="color: #339933;">#include &lt;string.h&gt;</span>
+&nbsp;
+<span style="color: #993333;">int</span> strlen2 <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> s<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> c<span style="color: #339933;">,</span> i<span style="color: #339933;">;</span>
+	<span style="color: #993333;">char</span> s<span style="color: #009900;">&#91;</span>100<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// строка</span>
+&nbsp;
+	<span style="color: #666666; font-style: italic;">// Считывание строки</span>
+	i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>c <span style="color: #339933;">=</span> getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> <span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\n</span>'</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		s<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> c<span style="color: #339933;">;</span>
+		<span style="color: #339933;">++</span>i<span style="color: #339933;">;</span>
+	<span style="color: #009900;">&#125;</span>
+&nbsp;
+	i <span style="color: #339933;">=</span> strlen<span style="color: #009900;">&#40;</span>s<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// с помощью библиотечной функции</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> i<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	i <span style="color: #339933;">=</span> strlen2<span style="color: #009900;">&#40;</span>s<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// с помощью собственной функции</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> i<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">int</span> strlen2 <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> s<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">;</span>
+&nbsp;
+	i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span>s<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">!=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #009900;">&#41;</span>
+		<span style="color: #339933;">++</span>i<span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">return</span> i<span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+  </div>
+<div id="node-386" class="section-2">
+  <h1 class="book-heading">K&amp;R (61-62). Удаление символов из строки </h1>
+  <p class="right">Решение задач на языке программирования C</p>
+<p>Приводится пример функции <span class="geshifilter"><code class="python geshifilter-python">squeeze</code></span>, которая удаляет все символы <span class="geshifilter"><code class="python geshifilter-python">c</code></span> из строки <span class="geshifilter"><code class="python geshifilter-python">s</code></span>. </p>
+<p>Ниже представлен полный код программы с использованием этой функции. А также ответ к упражнению 2.4, где предлагается написать функцию, удаляющую из строки <span class="geshifilter"><code class="python geshifilter-python">s1</code></span> все символы, встречающиеся в строке <span class="geshifilter"><code class="python geshifilter-python">s2</code></span>.  </p>
+<p>Алгоритм удаления символа из строки можно описать так:</p>
+<ul>
+<li>Пока не будет достигнут конец строки, </li>
+<li>если очередной символ строки не равен символу для удаления, </li>
+<li>записать очередной символ по месту индекса <span class="geshifilter"><code class="python geshifilter-python">j</code></span>, после этого последний увеличить на единицу.</li>
+</ul>
+<p>Другими словами, алгоритм сводится к тому, что символ по индексу <span class="geshifilter"><code class="python geshifilter-python">i</code></span> затирается следующим символом, если он совпал с символом для удаления; т.к запись идет по счетчику <span class="geshifilter"><code class="python geshifilter-python">j</code></span>, а он увеличивается лишь тогда, когда символы из строки и для удаления не совпадают.</p>
+<p>Алгоритм удаления тех символов строки, которые встречаются в другой строке, отличается от предыдущего тем, что нужно по очереди извлекать символы из второй строки и удалять их из первой. Т.е. приведенный выше алгоритм следует вложить в цикл перебора символов второй строки.</p>
+<h4>Удаление всех символов <span class="geshifilter"><code class="python geshifilter-python">c</code></span> из строки</h4>
+<p><div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+<span style="color: #339933;">#define MAX 100</span>
+&nbsp;
+<span style="color: #993333;">void</span> squeeze <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> s<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #993333;">int</span> c<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">char</span> str0<span style="color: #009900;">&#91;</span>MAX<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">,</span> c<span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> <span style="color: #009900;">&#40;</span>c <span style="color: #339933;">=</span> getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> <span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\n</span>'</span><span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span> 
+		str0<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> c<span style="color: #339933;">;</span>
+	str0<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #339933;">;</span>
+&nbsp;
+	c <span style="color: #339933;">=</span> getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	squeeze <span style="color: #009900;">&#40;</span>str0<span style="color: #339933;">,</span> c<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> str0<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">void</span> squeeze <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> s<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #993333;">int</span> c<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">,</span> j<span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i <span style="color: #339933;">=</span> j <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> s<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">!=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span>
+		<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>s<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">!=</span> c<span style="color: #009900;">&#41;</span>
+			s<span style="color: #009900;">&#91;</span>j<span style="color: #339933;">++</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> s<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+	s<span style="color: #009900;">&#91;</span>j<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<h4>Удаление всех символов, встречающихся в строке <span class="geshifilter"><code class="python geshifilter-python">s2</code></span>, из строки <span class="geshifilter"><code class="python geshifilter-python">s1</code></span></h4>
+<p><div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+<span style="color: #339933;">#define MAX 100</span>
+<span style="color: #339933;">#define DEL 10</span>
+&nbsp;
+<span style="color: #993333;">void</span> squeeze <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> s<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #993333;">char</span> s1<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #993333;">void</span> written <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> s<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">char</span> str<span style="color: #009900;">&#91;</span>MAX<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+	<span style="color: #993333;">char</span> str1<span style="color: #009900;">&#91;</span>DEL<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>	 	
+&nbsp;
+	written <span style="color: #009900;">&#40;</span>str<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	written <span style="color: #009900;">&#40;</span>str1<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	squeeze <span style="color: #009900;">&#40;</span>str<span style="color: #339933;">,</span> str1<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> str<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">void</span> written <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> s<span style="color: #009900;">&#91;</span>100<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">,</span> c<span style="color: #339933;">;</span>
+&nbsp;
+	i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>c <span style="color: #339933;">=</span> getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> <span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\n</span>'</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		s<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> c<span style="color: #339933;">;</span>
+		<span style="color: #339933;">++</span>i<span style="color: #339933;">;</span>
+	<span style="color: #009900;">&#125;</span>
+	s<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">void</span> squeeze <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> s<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #993333;">char</span> s2<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> k<span style="color: #339933;">,</span> i<span style="color: #339933;">,</span> j<span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>k <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> s2<span style="color: #009900;">&#91;</span>k<span style="color: #009900;">&#93;</span> <span style="color: #339933;">!=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #339933;">;</span> k<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span> 
+		<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i <span style="color: #339933;">=</span> j <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> s<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">!=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span>
+			<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>s<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">!=</span> s2<span style="color: #009900;">&#91;</span>k<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span>
+				s<span style="color: #009900;">&#91;</span>j<span style="color: #339933;">++</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> s<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+		s<span style="color: #009900;">&#91;</span>j<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #339933;">;</span>
+	<span style="color: #009900;">&#125;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<p>Примечание. Во второй программе запись символов в строку выделена в отдельную функцию, т.к. надо записать две строки. Иначе пришлось бы дублировать код.</p>
+  </div>
+<div id="node-387" class="section-2">
+  <h1 class="book-heading">K&amp;R (71-72). Двоичный поиск </h1>
+  <p class="right">Решение задач на языке программирования C</p>
+<p>В книге описана функции поиска элемента в упорядоченном массиве с помощью алгоритма двоичного поиска (дихотомии). </p>
+<p>Пример рабочей программы с использованием этой функции:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+&nbsp;
+<span style="color: #993333;">int</span> binsearch <span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> x<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> v<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #993333;">int</span> n<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> n <span style="color: #339933;">=</span> <span style="color: #0000dd;">10</span><span style="color: #339933;">;</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">,</span> k <span style="color: #339933;">=</span> <span style="color: #0000dd;">2</span><span style="color: #339933;">;</span>
+	<span style="color: #993333;">int</span> arr<span style="color: #009900;">&#91;</span>n<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> n<span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		arr<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> k<span style="color: #339933;">;</span>
+		k <span style="color: #339933;">+=</span> <span style="color: #0000dd;">3</span><span style="color: #339933;">;</span>
+		<span style="color: #000066;">printf</span> <span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d &quot;</span><span style="color: #339933;">,</span> arr<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #009900;">&#125;</span>
+&nbsp;
+	<span style="color: #000066;">printf</span> <span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	scanf <span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%i&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>k<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	i <span style="color: #339933;">=</span> binsearch <span style="color: #009900;">&#40;</span>k<span style="color: #339933;">,</span> arr<span style="color: #339933;">,</span> n<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> i<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">int</span> binsearch <span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> x<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> v<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #993333;">int</span> n<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> low<span style="color: #339933;">,</span> high<span style="color: #339933;">,</span> mid<span style="color: #339933;">;</span>
+&nbsp;
+	low <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>
+	high <span style="color: #339933;">=</span> n <span style="color: #339933;">-</span> <span style="color: #0000dd;">1</span><span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span>low <span style="color: #339933;">&lt;=</span> high<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		mid <span style="color: #339933;">=</span> <span style="color: #009900;">&#40;</span>low <span style="color: #339933;">+</span> high<span style="color: #009900;">&#41;</span> <span style="color: #339933;">/</span> <span style="color: #0000dd;">2</span><span style="color: #339933;">;</span>
+		<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>x <span style="color: #339933;">&lt;</span> v<span style="color: #009900;">&#91;</span>mid<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span>
+			high <span style="color: #339933;">=</span> mid <span style="color: #339933;">-</span> <span style="color: #0000dd;">1</span><span style="color: #339933;">;</span>
+		<span style="color: #b1b100;">else</span> 
+			<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>x <span style="color: #339933;">&gt;</span> v<span style="color: #009900;">&#91;</span>mid<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span>
+				low <span style="color: #339933;">=</span> mid <span style="color: #339933;">+</span> <span style="color: #0000dd;">1</span><span style="color: #339933;">;</span>
+			<span style="color: #b1b100;">else</span>
+				<span style="color: #b1b100;">return</span> mid<span style="color: #339933;">;</span>
+	<span style="color: #009900;">&#125;</span>
+	<span style="color: #b1b100;">return</span> <span style="color: #339933;">-</span><span style="color: #0000dd;">1</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+  </div>
+<div id="node-388" class="section-2">
+  <h1 class="book-heading">K&amp;R (73). Замена управляющих символов обычными и наоборот </h1>
+  <p class="right">Решение задач на языке программирования C</p>
+<p>Ответ к упражнению 3.2.</p>
+<h4>Замена управляющих последовательностей обычными символами</h4>
+<p><div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+<span style="color: #339933;">#define MAX 1000</span>
+&nbsp;
+<span style="color: #993333;">void</span> escape <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> s<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #993333;">char</span> s1<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">char</span> str<span style="color: #009900;">&#91;</span>MAX<span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> str1<span style="color: #009900;">&#91;</span>MAX<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">,</span> c<span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> <span style="color: #009900;">&#40;</span>c <span style="color: #339933;">=</span> getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> EOF<span style="color: #339933;">;</span> <span style="color: #339933;">++</span>i<span style="color: #009900;">&#41;</span>
+		str<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> c<span style="color: #339933;">;</span>
+&nbsp;
+	escape <span style="color: #009900;">&#40;</span>str1<span style="color: #339933;">,</span> str<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> str1<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>	
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">void</span> escape <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> to<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #993333;">char</span> from<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">,</span> k<span style="color: #339933;">;</span>
+&nbsp;
+	i <span style="color: #339933;">=</span> k <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span>from<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">!=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		<span style="color: #b1b100;">switch</span> <span style="color: #009900;">&#40;</span>from<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		<span style="color: #b1b100;">case</span> <span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\n</span>'</span><span style="color: #339933;">:</span>
+			to<span style="color: #009900;">&#91;</span>k<span style="color: #339933;">++</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\\</span>'</span><span style="color: #339933;">;</span>
+			to<span style="color: #009900;">&#91;</span>k<span style="color: #339933;">++</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'n'</span><span style="color: #339933;">;</span>
+			<span style="color: #000000; font-weight: bold;">break</span><span style="color: #339933;">;</span>
+		<span style="color: #b1b100;">case</span> <span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\t</span>'</span><span style="color: #339933;">:</span>
+			to<span style="color: #009900;">&#91;</span>k<span style="color: #339933;">++</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\\</span>'</span><span style="color: #339933;">;</span>
+			to<span style="color: #009900;">&#91;</span>k<span style="color: #339933;">++</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'t'</span><span style="color: #339933;">;</span>
+			<span style="color: #000000; font-weight: bold;">break</span><span style="color: #339933;">;</span>
+		<span style="color: #b1b100;">default</span><span style="color: #339933;">:</span>
+			to<span style="color: #009900;">&#91;</span>k<span style="color: #339933;">++</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> from<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+			<span style="color: #000000; font-weight: bold;">break</span><span style="color: #339933;">;</span>
+		<span style="color: #009900;">&#125;</span>
+		<span style="color: #339933;">++</span>i<span style="color: #339933;">;</span>
+	<span style="color: #009900;">&#125;</span>
+	to<span style="color: #009900;">&#91;</span>k<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<p>Примечание. Используется постфиксная форма инкремента (k++). В этом случае k сначала используется и только потом увеличивается на единицу.<br />
+При выводе измененной строки появляются странные "артефакты" в конце.</p>
+<h4>Замена пар символов "\n" и "\t" управляющими последовательностями</h4>
+<p><div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+<span style="color: #339933;">#define MAX 1000</span>
+&nbsp;
+<span style="color: #993333;">void</span> escape <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> s<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #993333;">char</span> s1<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">char</span> str<span style="color: #009900;">&#91;</span>MAX<span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> str1<span style="color: #009900;">&#91;</span>MAX<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">,</span> c<span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> <span style="color: #009900;">&#40;</span>c <span style="color: #339933;">=</span> getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> EOF<span style="color: #339933;">;</span> <span style="color: #339933;">++</span>i<span style="color: #009900;">&#41;</span>
+		str<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> c<span style="color: #339933;">;</span>
+&nbsp;
+	escape <span style="color: #009900;">&#40;</span>str1<span style="color: #339933;">,</span> str<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> str1<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>	
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">void</span> escape <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> to<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #993333;">char</span> from<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">,</span> k<span style="color: #339933;">;</span>
+&nbsp;
+	i <span style="color: #339933;">=</span> k <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span>from<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">!=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>from<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">==</span> <span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\\</span>'</span> <span style="color: #339933;">&amp;&amp;</span> from<span style="color: #009900;">&#91;</span>i<span style="color: #339933;">+</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">==</span> <span style="color: #ff0000;">'n'</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+			to<span style="color: #009900;">&#91;</span>k<span style="color: #339933;">++</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\n</span>'</span><span style="color: #339933;">;</span>
+			i <span style="color: #339933;">+=</span> <span style="color: #0000dd;">2</span><span style="color: #339933;">;</span>
+		<span style="color: #009900;">&#125;</span>
+		<span style="color: #b1b100;">else</span> <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>from<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">==</span> <span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\\</span>'</span> <span style="color: #339933;">&amp;&amp;</span> from<span style="color: #009900;">&#91;</span>i<span style="color: #339933;">+</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">==</span> <span style="color: #ff0000;">'t'</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+			to<span style="color: #009900;">&#91;</span>k<span style="color: #339933;">++</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\t</span>'</span><span style="color: #339933;">;</span>
+			i <span style="color: #339933;">+=</span> <span style="color: #0000dd;">2</span><span style="color: #339933;">;</span>
+		<span style="color: #009900;">&#125;</span>
+		<span style="color: #b1b100;">else</span>
+			to<span style="color: #009900;">&#91;</span>k<span style="color: #339933;">++</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> from<span style="color: #009900;">&#91;</span>i<span style="color: #339933;">++</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+	<span style="color: #009900;">&#125;</span>
+	to<span style="color: #009900;">&#91;</span>k<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+  </div>
+<div id="node-389" class="section-2">
+  <h1 class="book-heading">K&amp;R (77). Функция, разворачивающая строку наподобие a-z</h1>
+  <p class="right">Решение задач на языке программирования C</p>
+<p>Ответ к упражнению 3.3. Упрощенная версия.</p>
+<p>Программа разворачивает строку наподобие a-z в строку abc...xyz. Если первая строка некорректно записана (например, z-a или oiy), то вторая строка содержит только символ конца строки.</p>
+<p><div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+&nbsp;
+<span style="color: #993333;">int</span> expand <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> s<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #993333;">char</span> s1<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">;</span>
+	<span style="color: #993333;">char</span> str<span style="color: #009900;">&#91;</span>3<span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> str1<span style="color: #009900;">&#91;</span>50<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+&nbsp;
+	i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span>i <span style="color: #339933;">&lt;</span> 3<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		str<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		i<span style="color: #339933;">++;</span>
+	<span style="color: #009900;">&#125;</span>
+	str<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #339933;">;</span>
+&nbsp;
+	expand<span style="color: #009900;">&#40;</span>str<span style="color: #339933;">,</span> str1<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> str1<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">int</span> expand <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> s<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #993333;">char</span> s1<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> c1<span style="color: #339933;">,</span> c2<span style="color: #339933;">,</span> i<span style="color: #339933;">;</span>
+&nbsp;
+	i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>s<span style="color: #009900;">&#91;</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">==</span> <span style="color: #ff0000;">'-'</span> <span style="color: #339933;">&amp;&amp;</span> s<span style="color: #009900;">&#91;</span>0<span style="color: #009900;">&#93;</span> <span style="color: #339933;">&lt;</span> s<span style="color: #009900;">&#91;</span>2<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		c1 <span style="color: #339933;">=</span> s<span style="color: #009900;">&#91;</span>0<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+		c2 <span style="color: #339933;">=</span> s<span style="color: #009900;">&#91;</span>2<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+		<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span>c1 <span style="color: #339933;">&lt;=</span> c2<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+			s1<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> c1<span style="color: #339933;">;</span>
+			<span style="color: #339933;">++</span>i<span style="color: #339933;">;</span>
+			<span style="color: #339933;">++</span>c1<span style="color: #339933;">;</span> 
+		<span style="color: #009900;">&#125;</span>
+	<span style="color: #009900;">&#125;</span>
+	s1<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+  </div>
+<div id="node-390" class="section-2">
+  <h1 class="book-heading">K&amp;R (124). Пример использования массива указателей</h1>
+  <p class="right">Решение задач на языке программирования C</p>
+<p>Массив <span class="geshifilter"><code class="python geshifilter-python">months</code></span> представляет собой массив указателей на первые символы строк. Например, <span class="geshifilter"><code class="python geshifilter-python">months<span style="color: black;">&#91;</span><span style="color: #ff4500;">3</span><span style="color: black;">&#93;</span></code></span> содержит адрес на символ 'M', который можно получить так: <span class="geshifilter"><code class="python geshifilter-python"><span style="color: #66cc66;">*</span>months<span style="color: black;">&#91;</span><span style="color: #ff4500;">3</span><span style="color: black;">&#93;</span></code></span>.</p>
+<p>Функция <span class="geshifilter"><code class="python geshifilter-python">month_name</code></span> возвращает указатель на первый символ строки. Но как ее получить всю по данному адресу? Ее можно считать в строку (массив символов), инкреминируя указатель, или просто посимвольно вывести на экран. Самый простой способ - это указать формат вывода "строка" (<span class="geshifilter"><code class="python geshifilter-python"><span style="color: #66cc66;">%</span>s</code></span>) для указателя на первый символ. </p>
+<p><div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+&nbsp;
+<span style="color: #993333;">char</span> <span style="color: #339933;">*</span>month_name <span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> n<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> m<span style="color: #339933;">,</span> i<span style="color: #339933;">;</span>
+	<span style="color: #993333;">char</span> <span style="color: #339933;">*</span>ch<span style="color: #339933;">;</span>
+	<span style="color: #993333;">char</span> str<span style="color: #009900;">&#91;</span>20<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+<span style="color: #666666; font-style: italic;">// 1 ---------------------------------------------</span>
+	scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>m<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	ch <span style="color: #339933;">=</span> month_name<span style="color: #009900;">&#40;</span>m<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span><span style="color: #339933;">*</span>ch <span style="color: #339933;">!=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		str<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #339933;">*</span>ch<span style="color: #339933;">;</span>
+		ch<span style="color: #339933;">++;</span>
+		i<span style="color: #339933;">++;</span>
+	<span style="color: #009900;">&#125;</span>
+	str<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> str<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #666666; font-style: italic;">// 2 ---------------------------------------------</span>
+	scanf <span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>m<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	ch <span style="color: #339933;">=</span> month_name<span style="color: #009900;">&#40;</span>m<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span><span style="color: #339933;">*</span>ch <span style="color: #339933;">!=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #009900;">&#41;</span>
+		<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%c&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">*</span>ch<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #666666; font-style: italic;">// 3 --------------------------------------------</span>
+	scanf <span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>m<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	ch <span style="color: #339933;">=</span> month_name<span style="color: #009900;">&#40;</span>m<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span> <span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> ch<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">char</span> <span style="color: #339933;">*</span>month_name <span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> n<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">static</span> <span style="color: #993333;">char</span> <span style="color: #339933;">*</span>months<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #009900;">&#123;</span>
+		<span style="color: #ff0000;">&quot;Illegal month&quot;</span><span style="color: #339933;">,</span>
+		<span style="color: #ff0000;">&quot;January&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;February&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;March&quot;</span><span style="color: #339933;">,</span>
+		<span style="color: #ff0000;">&quot;April&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;May&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;June&quot;</span><span style="color: #339933;">,</span>
+		<span style="color: #ff0000;">&quot;July&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;August&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;September&quot;</span><span style="color: #339933;">,</span>
+		<span style="color: #ff0000;">&quot;October&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;November&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;December&quot;</span>
+	<span style="color: #009900;">&#125;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">return</span> <span style="color: #009900;">&#40;</span>n <span style="color: #339933;">&lt;</span> 1 <span style="color: #339933;">||</span> n <span style="color: #339933;">&gt;</span> 12<span style="color: #009900;">&#41;</span> <span style="color: #339933;">?</span> months<span style="color: #009900;">&#91;</span>0<span style="color: #009900;">&#93;</span> <span style="color: #339933;">:</span> months<span style="color: #009900;">&#91;</span>n<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+  </div>
+<div id="node-392" class="section-2">
+  <h1 class="book-heading">Подсчет символов, строк и слов</h1>
+  <p class="right">Решение задач на языке программирования C</p>
+<p>Программа считает количество введенных пользователем символов, строк и слов.</p>
+<p><div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+&nbsp;
+main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">char</span> ch<span style="color: #339933;">,</span> flag<span style="color: #339933;">=-</span><span style="color: #0000dd;">1</span><span style="color: #339933;">;</span>
+	<span style="color: #993333;">unsigned</span> c<span style="color: #339933;">=</span>0<span style="color: #339933;">,</span> n<span style="color: #339933;">=</span>0<span style="color: #339933;">,</span> w<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>ch <span style="color: #339933;">=</span> getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> EOF<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>ch <span style="color: #339933;">==</span> <span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\n</span>'</span><span style="color: #009900;">&#41;</span> n<span style="color: #339933;">++;</span> <span style="color: #666666; font-style: italic;">// строки</span>
+		<span style="color: #b1b100;">else</span> c<span style="color: #339933;">++;</span> <span style="color: #666666; font-style: italic;">// символы</span>
+&nbsp;
+		<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>ch <span style="color: #339933;">==</span> <span style="color: #ff0000;">' '</span> <span style="color: #339933;">||</span> ch <span style="color: #339933;">==</span> <span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\n</span>'</span><span style="color: #009900;">&#41;</span> flag <span style="color: #339933;">=</span> <span style="color: #339933;">-</span><span style="color: #0000dd;">1</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// слова</span>
+		<span style="color: #b1b100;">else</span>
+			<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>flag <span style="color: #339933;">==</span> <span style="color: #339933;">-</span>1<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+				flag <span style="color: #339933;">=</span> <span style="color: #0000dd;">1</span><span style="color: #339933;">;</span>
+				w<span style="color: #339933;">++;</span>
+			<span style="color: #009900;">&#125;</span>
+	<span style="color: #009900;">&#125;</span>
+&nbsp;
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%u %u %u<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> c<span style="color: #339933;">,</span> n<span style="color: #339933;">,</span> w<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+  </div>
+<div id="node-393" class="section-2">
+  <h1 class="book-heading">Ряд Фибоначчи и вычисление факториала</h1>
+  <p class="right">Решение задач на языке программирования C</p>
+<p>Напишите программу, в которой помимо функции main() были бы еще две функции: в одной вычислялся факториал переданного числа, в другой — находился n-ый элемент ряда Фибоначчи (n — параметр функции). Вызовите эти функции с разными аргументами.</p>
+<p><div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+&nbsp;
+<span style="color: #993333;">unsigned</span> fibonachi <span style="color: #009900;">&#40;</span><span style="color: #993333;">unsigned</span> num<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #993333;">unsigned</span> <span style="color: #993333;">long</span> factorial <span style="color: #009900;">&#40;</span><span style="color: #993333;">unsigned</span> n<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+     <span style="color: #993333;">unsigned</span> <span style="color: #993333;">long</span> result<span style="color: #339933;">;</span>
+&nbsp;
+     result <span style="color: #339933;">=</span> fibonachi<span style="color: #009900;">&#40;</span>10<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+     <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Значение 10-го элемента ряда Фибоначчи равно %lu<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> result<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+     result <span style="color: #339933;">=</span> fibonachi<span style="color: #009900;">&#40;</span>25<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+     <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Значение 25-го элемента ряда Фибоначчи равно %lu<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> result<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+     result <span style="color: #339933;">=</span> factorial<span style="color: #009900;">&#40;</span>5<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+     <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;5! = %lu<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> result<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+     result <span style="color: #339933;">=</span> factorial<span style="color: #009900;">&#40;</span>12<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+     <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;12! = %lu<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> result<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">unsigned</span> fibonachi <span style="color: #009900;">&#40;</span><span style="color: #993333;">unsigned</span> num<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">unsigned</span> i<span style="color: #339933;">=</span>1<span style="color: #339933;">,</span> a<span style="color: #339933;">=</span>0<span style="color: #339933;">,</span> b<span style="color: #339933;">=</span>1<span style="color: #339933;">,</span> s<span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span>i<span style="color: #339933;">++</span> <span style="color: #339933;">&lt;</span> num<span style="color: #339933;">-</span>1<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		s <span style="color: #339933;">=</span> a<span style="color: #339933;">;</span>
+		a <span style="color: #339933;">=</span> b<span style="color: #339933;">;</span>
+		b <span style="color: #339933;">=</span> s<span style="color: #339933;">+</span>a<span style="color: #339933;">;</span>
+	<span style="color: #009900;">&#125;</span>
+	<span style="color: #b1b100;">return</span> b<span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">unsigned</span> <span style="color: #993333;">long</span> factorial <span style="color: #009900;">&#40;</span><span style="color: #993333;">unsigned</span> n<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">unsigned</span> <span style="color: #993333;">long</span> fact<span style="color: #339933;">=</span><span style="color: #0000dd;">1</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span>n <span style="color: #339933;">&gt;</span> 0<span style="color: #009900;">&#41;</span> fact <span style="color: #339933;">=</span> fact <span style="color: #339933;">*</span> n<span style="color: #339933;">--;</span>
+&nbsp;
+	<span style="color: #b1b100;">return</span> fact<span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+  </div>
+<div id="node-394" class="section-2">
+  <h1 class="book-heading">Сравнение дат</h1>
+  <p class="right">Решение задач на языке программирования C</p>
+<p>Напишите программу, которая запрашивает у пользователя две даты в формате дд.мм.гггг. Дни, месяцы и года следует присвоить целочисленным переменным. Программа должна выводить на экран информацию о том, какая дата более ранняя, а какая более поздняя.</p>
+<p><div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+&nbsp;
+main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> dd1<span style="color: #339933;">,</span> dd2<span style="color: #339933;">,</span> mm1<span style="color: #339933;">,</span> mm2<span style="color: #339933;">,</span> yy1<span style="color: #339933;">,</span> yy2<span style="color: #339933;">;</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Enter first date (dd.mm.yyyy): &quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d.%d.%d&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>dd1<span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>mm1<span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>yy1<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Enter second date (dd.mm.yyyy): &quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d.%d.%d&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>dd2<span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>mm2<span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>yy2<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>yy1 <span style="color: #339933;">&gt;</span> yy2<span style="color: #009900;">&#41;</span> i <span style="color: #339933;">=</span> <span style="color: #0000dd;">1</span><span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">else</span> 
+		<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>yy1 <span style="color: #339933;">&lt;</span> yy2<span style="color: #009900;">&#41;</span> i <span style="color: #339933;">=</span> <span style="color: #0000dd;">2</span><span style="color: #339933;">;</span>
+		<span style="color: #b1b100;">else</span> <span style="color: #666666; font-style: italic;">// когда года равны</span>
+			<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>mm1 <span style="color: #339933;">&gt;</span> mm2<span style="color: #009900;">&#41;</span> i <span style="color: #339933;">=</span> <span style="color: #0000dd;">1</span><span style="color: #339933;">;</span>
+			<span style="color: #b1b100;">else</span>
+				<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>mm1 <span style="color: #339933;">&lt;</span> mm2<span style="color: #009900;">&#41;</span> i <span style="color: #339933;">=</span> <span style="color: #0000dd;">2</span><span style="color: #339933;">;</span>
+				<span style="color: #b1b100;">else</span> <span style="color: #666666; font-style: italic;">// когда равны года и месяцы</span>
+					<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>dd1 <span style="color: #339933;">&gt;</span> dd2<span style="color: #009900;">&#41;</span> i <span style="color: #339933;">=</span> <span style="color: #0000dd;">1</span><span style="color: #339933;">;</span>
+					<span style="color: #b1b100;">else</span> 
+						<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>dd1 <span style="color: #339933;">&lt;</span> dd2<span style="color: #009900;">&#41;</span> i <span style="color: #339933;">=</span> <span style="color: #0000dd;">2</span><span style="color: #339933;">;</span>
+						<span style="color: #b1b100;">else</span> <span style="color: #666666; font-style: italic;">// даты совпадают</span>
+							i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>i <span style="color: #339933;">==</span> 1<span style="color: #009900;">&#41;</span> <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Первая дата более поздняя<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">else</span> 
+		<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>i <span style="color: #339933;">==</span> 2<span style="color: #009900;">&#41;</span> <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Вторая дата более поздняя<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		<span style="color: #b1b100;">else</span> <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Даты совпадают<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>		
+<span style="color: #009900;">&#125;</span></pre></div></p>
+  </div>
+<div id="node-395" class="section-2">
+  <h1 class="book-heading">Функция для объединения строк</h1>
+  <p class="right">Решение задач на языке программирования C</p>
+<p>Объявите в программе три массива символов. Данные для двух из них получите с помощью вызовов функции <span class="geshifilter"><code class="c geshifilter-c">gets<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>. Третий массив должен содержать результат конкатенации (соединения) двух введенных строк. Напишите функцию, которая выполняет конкатенацию строк. </p>
+<p><div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #993333;">void</span> concat <span style="color: #009900;">&#40;</span><span style="color: #993333;">const</span> <span style="color: #993333;">char</span> <span style="color: #339933;">*,</span> <span style="color: #993333;">const</span> <span style="color: #993333;">char</span> <span style="color: #339933;">*,</span> <span style="color: #993333;">char</span> <span style="color: #339933;">*</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">char</span> str0<span style="color: #009900;">&#91;</span>50<span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> str1<span style="color: #009900;">&#91;</span>50<span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> str2<span style="color: #009900;">&#91;</span>100<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+&nbsp;
+	gets<span style="color: #009900;">&#40;</span>str0<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	gets<span style="color: #009900;">&#40;</span>str1<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	concat<span style="color: #009900;">&#40;</span>str0<span style="color: #339933;">,</span> str1<span style="color: #339933;">,</span> str2<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	puts<span style="color: #009900;">&#40;</span>str2<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">void</span> concat <span style="color: #009900;">&#40;</span><span style="color: #993333;">const</span> <span style="color: #993333;">char</span> <span style="color: #339933;">*</span>s0<span style="color: #339933;">,</span> <span style="color: #993333;">const</span> <span style="color: #993333;">char</span> <span style="color: #339933;">*</span>s1<span style="color: #339933;">,</span> <span style="color: #993333;">char</span> <span style="color: #339933;">*</span>s<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">,</span> j<span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> s0<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #339933;">!=</span><span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span> 
+		s<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> s0<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>j<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> s1<span style="color: #009900;">&#91;</span>j<span style="color: #009900;">&#93;</span><span style="color: #339933;">!=</span><span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #339933;">;</span> j<span style="color: #339933;">++,</span>i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span>
+		s<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> s1<span style="color: #009900;">&#91;</span>j<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+	s<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+  </div>
+<div id="node-396" class="section-2">
+  <h1 class="book-heading">Соотношение гласных и согласных букв</h1>
+  <p class="right">Решение задач на языке программирования C</p>
+<p>Напишите программу, которая определяет в процентном соотношении количество гласных и согласных букв в текстовом файле. Имя файла передается в программу через командную строку.</p>
+<p><div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+<span style="color: #339933;">#include &lt;string.h&gt;</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> argc<span style="color: #339933;">,</span> <span style="color: #993333;">char</span> <span style="color: #339933;">*</span>argv<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	FILE <span style="color: #339933;">*</span>f<span style="color: #339933;">;</span>
+	<span style="color: #993333;">char</span> ch<span style="color: #339933;">;</span>
+	<span style="color: #993333;">char</span> vowels<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">&quot;aeiouyAEIOUY&quot;</span><span style="color: #339933;">;</span>
+	<span style="color: #993333;">char</span> cons<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">&quot;bcdfghjklmnpqrstvwxzBCDFGHJKLMNPQRSTVWXZ&quot;</span><span style="color: #339933;">;</span>
+	<span style="color: #993333;">unsigned</span> v<span style="color: #339933;">=</span>0<span style="color: #339933;">,</span> c<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>
+&nbsp;
+	f <span style="color: #339933;">=</span> fopen<span style="color: #009900;">&#40;</span>argv<span style="color: #009900;">&#91;</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;r&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>f <span style="color: #339933;">==</span> NULL<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		puts<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Не удалось прочитать файл&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		<span style="color: #b1b100;">return</span> <span style="color: #0000dd;">1</span><span style="color: #339933;">;</span>
+	<span style="color: #009900;">&#125;</span>
+&nbsp;
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>ch <span style="color: #339933;">=</span> getc<span style="color: #009900;">&#40;</span>f<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> EOF<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>strchr<span style="color: #009900;">&#40;</span>vowels<span style="color: #339933;">,</span> ch<span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> NULL<span style="color: #009900;">&#41;</span> v<span style="color: #339933;">++;</span>
+		<span style="color: #b1b100;">else</span>
+			<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>strchr<span style="color: #009900;">&#40;</span>cons<span style="color: #339933;">,</span> ch<span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> NULL<span style="color: #009900;">&#41;</span> c<span style="color: #339933;">++;</span>
+	<span style="color: #009900;">&#125;</span>
+&nbsp;
+	fclose<span style="color: #009900;">&#40;</span>f<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Гласные: %.2f%%<span style="color: #000099; font-weight: bold;">\n</span>Согласные: %.2f%%<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span><span style="color: #993333;">float</span><span style="color: #009900;">&#41;</span>v<span style="color: #339933;">/</span><span style="color: #009900;">&#40;</span>v<span style="color: #339933;">+</span>c<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">*</span>100<span style="color: #339933;">,</span> <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span><span style="color: #993333;">float</span><span style="color: #009900;">&#41;</span>c<span style="color: #339933;">/</span><span style="color: #009900;">&#40;</span>v<span style="color: #339933;">+</span>c<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">*</span>100<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>	
+<span style="color: #009900;">&#125;</span></pre></div></p>
+  </div>
+<div id="node-397" class="section-2">
+  <h1 class="book-heading">Случайные четные и нечетные числа</h1>
+  <p class="right">Решение задач на языке программирования C</p>
+<p>Напишите функцию, которая принимает указатели на два массива. Функция должна заполнять один массив 25-ю случайными четными числами, а другой — 25 нечетными. Продемонстрируйте ее работу.</p>
+<p><div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+<span style="color: #339933;">#include &lt;time.h&gt;</span>
+&nbsp;
+<span style="color: #339933;">#define N 25</span>
+&nbsp;
+<span style="color: #993333;">void</span> arrs_make<span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> even<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #993333;">int</span> odd<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #993333;">void</span> arr_print<span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> <span style="color: #339933;">*</span>arr<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> n<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> arr1<span style="color: #009900;">&#91;</span>N<span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> arr2<span style="color: #009900;">&#91;</span>N<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+&nbsp;
+	arrs_make<span style="color: #009900;">&#40;</span>arr1<span style="color: #339933;">,</span> arr2<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	arr_print<span style="color: #009900;">&#40;</span>arr1<span style="color: #339933;">,</span> N<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	arr_print<span style="color: #009900;">&#40;</span>arr2<span style="color: #339933;">,</span> N<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>  
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">void</span> arrs_make<span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> <span style="color: #339933;">*</span>even<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> <span style="color: #339933;">*</span>odd<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">,</span>j<span style="color: #339933;">,</span>k<span style="color: #339933;">;</span>
+&nbsp;
+	srand<span style="color: #009900;">&#40;</span>time<span style="color: #009900;">&#40;</span>NULL<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>j<span style="color: #339933;">=</span>0<span style="color: #339933;">,</span> k<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> j<span style="color: #339933;">&lt;</span>N <span style="color: #339933;">||</span> k<span style="color: #339933;">&lt;</span>N<span style="color: #339933;">;</span> <span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		i <span style="color: #339933;">=</span> rand<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">%</span> <span style="color: #009900;">&#40;</span>100<span style="color: #009900;">&#41;</span> <span style="color: #339933;">+</span> <span style="color: #0000dd;">250</span><span style="color: #339933;">;</span>
+		<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>i<span style="color: #339933;">%</span>2 <span style="color: #339933;">==</span> 0 <span style="color: #339933;">&amp;&amp;</span> j <span style="color: #339933;">&lt;</span> N<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+			even<span style="color: #009900;">&#91;</span>j<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> i<span style="color: #339933;">;</span>
+			j<span style="color: #339933;">++;</span>
+		<span style="color: #009900;">&#125;</span> <span style="color: #b1b100;">else</span> 
+			<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>k <span style="color: #339933;">&lt;</span> N<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+				odd<span style="color: #009900;">&#91;</span>k<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> i<span style="color: #339933;">;</span>
+				k<span style="color: #339933;">++;</span>
+			<span style="color: #009900;">&#125;</span>
+	<span style="color: #009900;">&#125;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">void</span> arr_print<span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> <span style="color: #339933;">*</span>arr<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> n<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i<span style="color: #339933;">&lt;</span>n<span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span>
+		<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d &quot;</span><span style="color: #339933;">,</span> arr<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+  </div>
+<div id="node-398" class="section-2">
+  <h1 class="book-heading">Сохранение динамической структуры в файле</h1>
+  <p class="right">Решение задач на языке программирования C</p>
+<p>Пользователь вводит адреса сайтов и их ТИЦ. Данные о каждом сайте сохраняются в элементе динамической структуры. По команде пользователя данные записываются в файл, при этом память, выделенная под динамическую структуру, высвобождается. Далее пользователь может снова начать вводить информацию о сайтах, либо завершить выполнение программы.</p>
+<p><div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+<span style="color: #339933;">#include &lt;malloc.h&gt;</span>
+<span style="color: #339933;">#include &lt;string.h&gt;</span>
+&nbsp;
+<span style="color: #993333;">struct</span> site <span style="color: #009900;">&#123;</span>
+       <span style="color: #993333;">char</span> address<span style="color: #009900;">&#91;</span>25<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+       <span style="color: #993333;">unsigned</span> index<span style="color: #339933;">;</span>
+       <span style="color: #993333;">struct</span> site <span style="color: #339933;">*</span>next<span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span><span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #993333;">struct</span> site <span style="color: #339933;">*</span>add_site<span style="color: #009900;">&#40;</span><span style="color: #993333;">struct</span> site <span style="color: #339933;">*,</span> <span style="color: #993333;">char</span> <span style="color: #339933;">*</span>adds<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> tic<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// присоединение элемента к голове, возврат адреса головы</span>
+<span style="color: #993333;">void</span> save<span style="color: #009900;">&#40;</span><span style="color: #993333;">struct</span> site <span style="color: #339933;">*</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// сохранение стека</span>
+&nbsp;
+main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">char</span> adds<span style="color: #009900;">&#91;</span>25<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+	<span style="color: #993333;">unsigned</span> tic<span style="color: #339933;">;</span>
+	<span style="color: #993333;">struct</span> site <span style="color: #339933;">*</span>head<span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// адрес, указывающий на голову стека</span>
+&nbsp;
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span>1<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		head <span style="color: #339933;">=</span> NULL<span style="color: #339933;">;</span>
+		<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span>1<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		   <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Адрес сайта (s - stop): &quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		   scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s&quot;</span><span style="color: #339933;">,</span> adds<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		   <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>strcmp<span style="color: #009900;">&#40;</span>adds<span style="color: #339933;">,</span><span style="color: #ff0000;">&quot;s&quot;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">==</span> 0<span style="color: #009900;">&#41;</span> <span style="color: #000000; font-weight: bold;">break</span><span style="color: #339933;">;</span>
+		   <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Тиц %s: &quot;</span><span style="color: #339933;">,</span> adds<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		   scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%u&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>tic<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		   head <span style="color: #339933;">=</span> add_site<span style="color: #009900;">&#40;</span>head<span style="color: #339933;">,</span>adds<span style="color: #339933;">,</span>tic<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		<span style="color: #009900;">&#125;</span>
+		<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		save<span style="color: #009900;">&#40;</span>head<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		free<span style="color: #009900;">&#40;</span>head<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Продолжить? (y - yes): &quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s&quot;</span><span style="color: #339933;">,</span>adds<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>strcmp<span style="color: #009900;">&#40;</span>adds<span style="color: #339933;">,</span><span style="color: #ff0000;">&quot;y&quot;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> 0<span style="color: #009900;">&#41;</span> <span style="color: #000000; font-weight: bold;">break</span><span style="color: #339933;">;</span>
+	<span style="color: #009900;">&#125;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">struct</span> site <span style="color: #339933;">*</span>add_site<span style="color: #009900;">&#40;</span><span style="color: #993333;">struct</span> site <span style="color: #339933;">*</span>head<span style="color: #339933;">,</span> <span style="color: #993333;">char</span> <span style="color: #339933;">*</span>ch<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> tic<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">struct</span> site <span style="color: #339933;">*</span>element<span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// указатель на новую структуру		</span>
+	element <span style="color: #339933;">=</span> <span style="color: #009900;">&#40;</span><span style="color: #993333;">struct</span> site <span style="color: #339933;">*</span><span style="color: #009900;">&#41;</span>malloc<span style="color: #009900;">&#40;</span><span style="color: #993333;">sizeof</span><span style="color: #009900;">&#40;</span><span style="color: #993333;">struct</span> site<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// выделяем память</span>
+	element<span style="color: #339933;">-&gt;</span>next <span style="color: #339933;">=</span> head<span style="color: #339933;">;</span>
+	strcpy<span style="color: #009900;">&#40;</span>element<span style="color: #339933;">-&gt;</span>address<span style="color: #339933;">,</span> ch<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	element<span style="color: #339933;">-&gt;</span>index <span style="color: #339933;">=</span> tic<span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">return</span> element<span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">void</span> save<span style="color: #009900;">&#40;</span><span style="color: #993333;">struct</span> site <span style="color: #339933;">*</span>p<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#123;</span>
+	FILE <span style="color: #339933;">*</span>f<span style="color: #339933;">;</span>
+	f <span style="color: #339933;">=</span> fopen<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;sites.txt&quot;</span><span style="color: #339933;">,</span><span style="color: #ff0000;">&quot;a&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span>p <span style="color: #339933;">!=</span> NULL<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span> <span style="color: #666666; font-style: italic;">// пока не конец стека    </span>
+	   fprintf<span style="color: #009900;">&#40;</span>f<span style="color: #339933;">,</span><span style="color: #ff0000;">&quot;%s - %u<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> p<span style="color: #339933;">-&gt;</span>address<span style="color: #339933;">,</span> p<span style="color: #339933;">-&gt;</span>index<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	   p <span style="color: #339933;">=</span> p<span style="color: #339933;">-&gt;</span>next<span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// продвижение по списку</span>
+	<span style="color: #009900;">&#125;</span>
+	fclose<span style="color: #009900;">&#40;</span>f<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+  </div>
+<div id="node-391" class="section-2">
+  <h1 class="book-heading">Демонстрационный пример. Указатели и массивы</h1>
+  <p class="right">Решение задач на языке программирования C</p>
+<p>Этот пример поможет закрепить понимание, как работать с указателем на массив. В выводе программы обратите внимание, адреса различаются между собой на 4 байта, т.е. переменная типа <strong>int</strong> занимает 4 байта. Также из примера можно удостовериться, что элементы массива располагаются в памяти последовательно друг за другом.</p>
+<p><span class="geshifilter"><code class="python geshifilter-python"><span style="color: #66cc66;">&amp;</span></code></span> - операция взятия адреса переменной;<br />
+<span class="geshifilter"><code class="python geshifilter-python"><span style="color: #66cc66;">*</span></code></span> - операция извлечения значения по указанному адресу; применяется к переменным, содержащим адрес (т.е. к указателям).</p>
+<p>Когда переменная-указатель объявляется (например, <span class="geshifilter"><code class="python geshifilter-python"><span style="color: #008000;">int</span> <span style="color: #66cc66;">*</span>q</code></span>), перед ее именем также ставится знак *. Однако в данном контексте он просто сообщает, что данная переменная - это указатель, и знак * не имеет отношения к извлечению значения.</p>
+<p><div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #666666; font-style: italic;">// объявление массива и его инициализация</span>
+	<span style="color: #993333;">int</span> arr<span style="color: #009900;">&#91;</span>10<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #009900;">&#123;</span>101<span style="color: #339933;">,</span> 102<span style="color: #339933;">,</span> 103<span style="color: #339933;">,</span> 104<span style="color: #339933;">,</span> 105<span style="color: #339933;">,</span> 106<span style="color: #339933;">,</span> 107<span style="color: #339933;">,</span> 108<span style="color: #339933;">,</span> 109<span style="color: #339933;">,</span> 110<span style="color: #009900;">&#125;</span><span style="color: #339933;">;</span>
+	<span style="color: #993333;">int</span> <span style="color: #339933;">*</span>p<span style="color: #339933;">,</span> <span style="color: #339933;">*</span>q<span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// указатели на тип int</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Массив: &quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> <span style="color: #0000dd;">10</span><span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span>
+		<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot; [%d]=%d|&quot;</span><span style="color: #339933;">,</span> i<span style="color: #339933;">,</span> arr<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;<span style="color: #000099; font-weight: bold;">\n</span><span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #666666; font-style: italic;">// 1 ----------------------------------------------------------------------</span>
+	p <span style="color: #339933;">=</span> <span style="color: #339933;">&amp;</span>arr<span style="color: #009900;">&#91;</span>0<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Адрес 1-го элемента массива (p): %p<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> p<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Значение 1-го элемента массива (*p): %d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">*</span>p<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	q <span style="color: #339933;">=</span> p <span style="color: #339933;">+</span> <span style="color: #0000dd;">1</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Адрес 2-го элемента массива (q): %p<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> q<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Значение 2-го элемента массива (*q): %d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">*</span>q<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	q <span style="color: #339933;">=</span> q <span style="color: #339933;">+</span> <span style="color: #0000dd;">2</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Адрес 4-го элемента массива (q): %p<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> q<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Значение 4-го элемента массива (*q): %d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">*</span>q<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #666666; font-style: italic;">// 2 ---------------------------------------------------------------------</span>
+	<span style="color: #666666; font-style: italic;">// имя массива является указателем не его первый элемент</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Адрес 1-го элемента массива (arr): %p<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> arr<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Значение 1-го элемента массива (*arr): %d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">*</span>arr<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #666666; font-style: italic;">// Поэтому ...</span>
+	p <span style="color: #339933;">=</span> arr <span style="color: #339933;">+</span> <span style="color: #0000dd;">2</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// то же самое, что p = &amp;arr[0] + 2</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Адрес 3-го элемента массива (arr + 2): %p<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> p<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Значение 3-го элемента массива (*(arr+2)): %d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">*</span>p<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Адрес 6-го элемента массива (p + 3): %p<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> p<span style="color: #339933;">+</span>3<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Значение 6-го элемента массива (*(p+3)): %d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">*</span><span style="color: #009900;">&#40;</span>p<span style="color: #339933;">+</span>3<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #666666; font-style: italic;">// 3 --------------------------------------------------------------------</span>
+	<span style="color: #666666; font-style: italic;">// указатель можно употреблять в выражениях с индексом</span>
+	p <span style="color: #339933;">=</span> arr<span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Значение 10-го элемента массива (p[9]): %d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> p<span style="color: #009900;">&#91;</span>9<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #666666; font-style: italic;">// 4 --------------------------------------------------------------------</span>
+	p <span style="color: #339933;">=</span> arr<span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// arr++ использовать нельзя, a p++ можно</span>
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> <span style="color: #0000dd;">10</span><span style="color: #339933;">;</span> i<span style="color: #339933;">++,</span> p<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span>
+		<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%2d-й: %p    %d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> i<span style="color: #339933;">+</span>1<span style="color: #339933;">,</span> p<span style="color: #339933;">,</span> <span style="color: #339933;">*</span>p<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<p>Вывод программы:</p>
+<pre>
+Массив:  [0]=101| [1]=102| [2]=103| [3]=104| [4]=105| [5]=106| [6]=107| [7]=108| [8]=109| [9]=110|
+
+Адрес 1-го элемента массива (p): 0x7fff5c4c0d60
+Значение 1-го элемента массива (*p): 101
+Адрес 2-го элемента массива (q): 0x7fff5c4c0d64
+Значение 2-го элемента массива (*q): 102
+Адрес 4-го элемента массива (q): 0x7fff5c4c0d6c
+Значение 4-го элемента массива (*q): 104
+
+Адрес 1-го элемента массива (arr): 0x7fff5c4c0d60
+Значение 1-го элемента массива (*arr): 101
+Адрес 3-го элемента массива (arr + 2): 0x7fff5c4c0d68
+Значение 3-го элемента массива (*(arr+2)): 103
+Адрес 6-го элемента массива (p + 3): 0x7fff5c4c0d74
+Значение 6-го элемента массива (*(p+3)): 106
+
+Значение 10-го элемента массива (p[9]): 110
+
+ 1-й: 0x7fff5c4c0d60    101
+ 2-й: 0x7fff5c4c0d64    102
+ 3-й: 0x7fff5c4c0d68    103
+ 4-й: 0x7fff5c4c0d6c    104
+ 5-й: 0x7fff5c4c0d70    105
+ 6-й: 0x7fff5c4c0d74    106
+ 7-й: 0x7fff5c4c0d78    107
+ 8-й: 0x7fff5c4c0d7c    108
+ 9-й: 0x7fff5c4c0d80    109
+10-й: 0x7fff5c4c0d84    110
+</pre>  </div>
+</div>
+    
+  </body>
+</html>

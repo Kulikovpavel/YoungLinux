@@ -1,0 +1,128 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Урок 7. Переменные, адреса и указатели</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-367" class="section-2">
+  <h1 class="book-heading">Урок 7. Переменные, адреса и указатели</h1>
+  <p class="right">Особенности языка С. Учебное пособие</p>
+<p>Переменная — это область памяти, к которой мы обращаемся за находящимися там данными, используя идентификатор (в данном случае, имя переменной). При этом у этой помеченной именем области есть еще и адрес, выраженный числом и понятный компьютерной системе. Этот адрес можно получить и записать в особую переменную. Переменную, содержащую адрес области памяти, называют указателем.</p>
+<p>Когда мы меняем значение обычной переменной, то, можно сказать, просто удаляем из конкретной области памяти данные и записываем туда новые. Когда мы меняем значение переменной-указателя, то начинаем работать с совершенно иным участком памяти, т.к. меняем содержащийся в ней адрес. </p>
+<p>Тема указателей тесно связана с темой динамических типов данных. Когда программа компилируется, то под объявленные переменные так или иначе (в зависимости от того, где они были объявлены) выделяются участки памяти. Потом размер этих участков не меняется,  может меняться только их содержимое (значения или данные). Однако именно с помощью указателей можно захватывать и освобождать новые участки памяти уже в процессе выполнения программы. Динамические типы данных будут рассмотрены позже.</p>
+<p>Прежде чем перейти к рассмотрению объявления и определения переменных-указателей, посмотрим, что из себя представляет адрес любой переменной и как его получить.<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">  <span style="color: #993333;">int</span> i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>
+  <span style="color: #000066;">printf</span> <span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;i=%d, &amp;i=%p <span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> i<span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>i<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>В результате выполнения данного программного кода на экране появляется примерно следующее (шестнадцатеричное число у вас будет другим):</p>
+<pre>i=0, &i=0x7fffa40c5fac </pre><p>
+Знак амперсанда (&amp;) перед переменной позволяет получить ее адрес в памяти. Для вывода адреса переменной на экран используется специальный формат <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #339933;">%</span>p</code></span>. Адреса обычных переменных (не указателей) в процессе выполнения программы никогда не меняются. В этом можно убедиться:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">  <span style="color: #993333;">int</span> a <span style="color: #339933;">=</span> <span style="color: #0000dd;">6</span><span style="color: #339933;">;</span>
+  <span style="color: #993333;">float</span> b <span style="color: #339933;">=</span> <span style="color:#800080;">10.11</span><span style="color: #339933;">;</span>
+  <span style="color: #993333;">char</span> c <span style="color: #339933;">=</span> <span style="color: #ff0000;">'k'</span><span style="color: #339933;">;</span>
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d - %p, %.2f - %p, %c - %p<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> a<span style="color: #339933;">,&amp;</span>a<span style="color: #339933;">,</span> b<span style="color: #339933;">,&amp;</span>b<span style="color: #339933;">,</span> c<span style="color: #339933;">,&amp;</span>c<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+  a <span style="color: #339933;">=</span> <span style="color: #0000dd;">2</span><span style="color: #339933;">;</span> b <span style="color: #339933;">=</span> <span style="color:#800080;">50.99</span><span style="color: #339933;">;</span> c <span style="color: #339933;">=</span> <span style="color: #ff0000;">'z'</span><span style="color: #339933;">;</span>
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d - %p, %.2f - %p, %c - %p<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> a<span style="color: #339933;">,&amp;</span>a<span style="color: #339933;">,</span> b<span style="color: #339933;">,&amp;</span>b<span style="color: #339933;">,</span> c<span style="color: #339933;">,&amp;</span>c<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>Результат:</p>
+<pre>
+6 - 0x7fff8e1d38e4, 10.11 - 0x7fff8e1d38e8, k - 0x7fff8e1d38ef 
+2 - 0x7fff8e1d38e4, 50.99 - 0x7fff8e1d38e8, z - 0x7fff8e1d38ef
+</pre><p>
+Как мы видим, несмотря на то, что значения переменных поменялись, ячейки памяти остались прежними.</p>
+<p>Зная адрес, можно получить значение, которое находится по этому адресу, поставив знак * перед адресом:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">  <span style="color: #993333;">int</span> a <span style="color: #339933;">=</span> <span style="color: #0000dd;">8</span><span style="color: #339933;">;</span>
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d <span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">*&amp;</span>a<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>На экране будет выведено число 8. </p>
+<p>Однако запись типа <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #339933;">&amp;</span>a</code></span> не всегда возможна или удобна. Поэтому существует специальный тип данных — указатели, которым и присваивается адрес на область памяти. </p>
+<p>Указатели в языке <span class="blue">C</span>, как и другие переменные, являются типизированными, т.е. при объявлении указателя надо указывать его тип. Как мы узнаем позже, с указателями можно выполнять некоторые арифметические операции, и именно точное определение их типа позволяет протекать им корректно. Чтобы объявить указатель, надо перед его именем поставить знак *. Например:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">  <span style="color: #993333;">int</span> <span style="color: #339933;">*</span>pi<span style="color: #339933;">;</span>
+  <span style="color: #993333;">float</span> <span style="color: #339933;">*</span>pf<span style="color: #339933;">;</span></pre></div></p>
+<p>Обратите внимание на то, что в данном случае * говорит о том, что объявляется переменная-указатель. Когда * используется перед указателем не при его объявлении, а в выражениях, то обозначает совсем иное — "получить значение (данные) по адресу, который присвоен указателю". Посмотрите на код ниже:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">  <span style="color: #993333;">int</span> x <span style="color: #339933;">=</span> 1<span style="color: #339933;">,</span> y<span style="color: #339933;">,</span> z <span style="color: #339933;">=</span> <span style="color: #0000dd;">3</span><span style="color: #339933;">;</span>
+  <span style="color: #993333;">int</span> <span style="color: #339933;">*</span>p<span style="color: #339933;">,</span> <span style="color: #339933;">*</span>q<span style="color: #339933;">;</span>
+&nbsp;
+  p <span style="color: #339933;">=</span> <span style="color: #339933;">&amp;</span>x<span style="color: #339933;">;</span>
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">*</span>p<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// 1</span>
+&nbsp;
+  y <span style="color: #339933;">=</span> <span style="color: #339933;">*</span>p<span style="color: #339933;">;</span>
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> y<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// 1</span>
+&nbsp;
+  <span style="color: #339933;">*</span>p <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d %d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> x<span style="color: #339933;">,</span> y<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// 0 1</span>
+&nbsp;
+  q <span style="color: #339933;">=</span> <span style="color: #339933;">&amp;</span>z<span style="color: #339933;">;</span>
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">*</span>q<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// 3</span>
+&nbsp;
+  p <span style="color: #339933;">=</span> q<span style="color: #339933;">;</span>
+  <span style="color: #339933;">*</span>p <span style="color: #339933;">=</span> <span style="color: #0000dd;">4</span><span style="color: #339933;">;</span>
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> z<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// 4</span>
+&nbsp;
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%p %p<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> p<span style="color: #339933;">,</span> q<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// p == q</span></pre></div></p>
+<p>С помощью комментариев указаны текущие значения ячеек памяти. Подробно опишем, что происходит:</p>
+<ol>
+<li>Выделяется память под пять переменных: три типа <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #993333;">int</span></code></span> и два указателя на <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #993333;">int</span></code></span>. В ячейки <span class="monoi">x</span> и <span class="monoi">z</span> записываются числа 1 и 3 соответственно.</li>
+<li>Указателю <span class="monoi">p</span> присваивается адрес ячейки <span class="monoi">x</span>. Извлекая оттуда значение (<span class="geshifilter"><code class="c geshifilter-c"><span style="color: #339933;">*</span>p</code></span>), получаем 1.</li>
+<li>В область памяти, которая названа именем <span class="monoi">у</span>, помещают значение равное содержимому ячейки, на которую ссылается указатель <span class="monoi">p</span>. В результате имеем две области памяти (<span class="monoi">x</span> и <span class="monoi">y</span>), в которые записаны единицы.</li>
+<li>В качестве значения по адресу <span class="monoi">p</span> записываем 0. Поскольку <span class="monoi">p</span> указывает на <span class="monoi">x</span>, то значение <span class="monoi">x</span> меняется. Переменная <span class="monoi">p</span> не указывает на <span class="monoi">y</span>, поэтому там остается прежнее значение. </li>
+<li>Указателю <span class="monoi">q</span> присваивается адрес переменной <span class="monoi">z</span>. Извлекая оттуда значение (<span class="geshifilter"><code class="c geshifilter-c"><span style="color: #339933;">*</span>q</code></span>), получаем 3.</li>
+<li>Переменной <span class="monoi">p</span> присваивается значение, хранимое в <span class="monoi">q</span>. Это значит, что <span class="monoi">p</span> начинает ссылаться на тот же участок памяти, что и <span class="monoi">q</span>. Поскольку <span class="monoi">q</span> ссылается на <span class="monoi">z</span>, то и <span class="monoi">p</span> начинает ссылаться туда же.</li>
+<li>В качестве значения по адресу <span class="monoi">p</span> записываем 4. Т.к. <span class="monoi">p</span> является указателем на <span class="monoi">z</span>, следовательно, меняется значение <span class="monoi">z</span>.</li>
+<li>Проверяем, <span class="monoi">p</span> и <span class="monoi">q</span> являются указателями на одну и туже ячейку памяти. </li>
+</ol>
+<p>Если для вас вышеописанное не очевидно, то повторите урок сначала, почитайте другие источники и добейтесь полного понимания, т.к. без этого дальше двигаться бесполезно.</p>
+<p>Под сам указатель (там, где хранится адрес) также должна быть выделена память. Объем этой памяти можно узнать с помощью функции <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #993333;">sizeof</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">  <span style="color: #993333;">int</span> <span style="color: #339933;">*</span>pi<span style="color: #339933;">;</span>
+  <span style="color: #993333;">float</span> <span style="color: #339933;">*</span>pf<span style="color: #339933;">;</span>
+&nbsp;
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%lu<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #993333;">sizeof</span><span style="color: #009900;">&#40;</span>pi<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> 
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%lu<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #993333;">sizeof</span><span style="color: #009900;">&#40;</span>pf<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>Под указатели всех типов выделяется одинаковый объем памяти, т.к. размер адреса не зависит от типа, а зависит от вычислительной системы. В таком случае, зачем при объявлении указателя следует указывать тип данных, на который он может ссылаться? Дело в том, что по типу данных определяется, сколько ячеек памяти занимает значение, на которое ссылается указатель, и через сколько ячеек начнется следующее значение. </p>
+<p>Если указатель объявлен, но не определен, то он ссылается на произвольный участок памяти с неизвестно каким значением:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">  <span style="color: #993333;">int</span> <span style="color: #339933;">*</span>pa<span style="color: #339933;">,</span> <span style="color: #339933;">*</span>pb<span style="color: #339933;">;</span>
+  <span style="color: #993333;">float</span> <span style="color: #339933;">*</span>pc<span style="color: #339933;">;</span>
+&nbsp;
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot; %p %p %p<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> pa<span style="color: #339933;">,</span> pc<span style="color: #339933;">,</span> pb<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot; %d %f<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">*</span>pa<span style="color: #339933;">,</span> <span style="color: #339933;">*</span>pc<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// может возникнуть ошибка</span></pre></div></p>
+<p>Результат (в Ubuntu):</p>
+<pre>
+ 0x400410 0x7fff5b729580 (nil) 
+ -1991643855 0.000000
+</pre><p>
+Использование неопределенных указателей в программе при вычислениях чревато возникновением серьезных ошибок. Чтобы избежать этого, указателю можно присвоить значение, говорящее, что указатель никуда не ссылается (NULL). Использовать такой указатель в выражениях не получится, пока ему не будет присвоено конкретное значение:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">  <span style="color: #993333;">int</span> a <span style="color: #339933;">=</span> 5<span style="color: #339933;">,</span> b <span style="color: #339933;">=</span> <span style="color: #0000dd;">7</span><span style="color: #339933;">;</span>
+  <span style="color: #993333;">float</span> c <span style="color: #339933;">=</span> <span style="color:#800080;">6.98</span><span style="color: #339933;">;</span>
+  <span style="color: #993333;">int</span> <span style="color: #339933;">*</span>pa<span style="color: #339933;">,</span> <span style="color: #339933;">*</span>pb<span style="color: #339933;">;</span>
+  <span style="color: #993333;">float</span> <span style="color: #339933;">*</span>pc<span style="color: #339933;">;</span>
+&nbsp;
+  pa <span style="color: #339933;">=</span> pb <span style="color: #339933;">=</span> NULL<span style="color: #339933;">;</span>
+  pc <span style="color: #339933;">=</span> NULL<span style="color: #339933;">;</span>
+&nbsp;
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot; %15p %15p %15p<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> pa<span style="color: #339933;">,</span> pc<span style="color: #339933;">,</span> pb<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #666666; font-style: italic;">// printf(&quot; %15d %15f %15d\n&quot;, *pa, *pc, *pb); // Error</span>
+&nbsp;
+  pa <span style="color: #339933;">=</span> <span style="color: #339933;">&amp;</span>a<span style="color: #339933;">;</span>
+  pb <span style="color: #339933;">=</span> <span style="color: #339933;">&amp;</span>b<span style="color: #339933;">;</span>
+  pc <span style="color: #339933;">=</span> <span style="color: #339933;">&amp;</span>c<span style="color: #339933;">;</span>
+&nbsp;
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot; %15p %15p %15p<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> pa<span style="color: #339933;">,</span> pc<span style="color: #339933;">,</span> pb<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot; %15d %15f %15d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">*</span>pa<span style="color: #339933;">,</span> <span style="color: #339933;">*</span>pc<span style="color: #339933;">,</span> <span style="color: #339933;">*</span>pb<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>Результат (в Ubuntu):</p>
+<pre>
+           (nil)           (nil)           (nil) 
+  0x7fffeabf4e44  0x7fffeabf4e4c  0x7fffeabf4e48 
+               5        6.980000               7 
+</pre><p>
+В данном случае, если попытаться извлечь значение из памяти с помощью указателя, который никуда не ссылается, то возникает "ошибка сегментирования".</p>
+<p>На этом уроке вы должны понять, что такое адрес переменной и как его получить (<span class="geshifilter"><code class="c geshifilter-c"><span style="color: #339933;">&amp;</span>var</code></span>), что такое переменная-указатель (<span class="geshifilter"><code class="c geshifilter-c">type <span style="color: #339933;">*</span>p_var<span style="color: #339933;">;</span> p_var <span style="color: #339933;">=</span> <span style="color: #339933;">&amp;</span>var</code></span>) и как получить значение, хранимое в памяти, зная адрес ячейки (<span class="geshifilter"><code class="c geshifilter-c"><span style="color: #339933;">*</span>p_var</code></span>). Однако у вас может остаться неприятный осадок из-за непонимания, зачем все это надо? Это нормально. Понимание практической значимости указателей придет позже по мере знакомства с новым материалом.</p>
+<p><span class="blue"><strong>Задание</strong><br />
+Практически проверьте результат работы всех примеров данного урока, придумайте свои примеры работы с указателями.</span></p>
+  </div>
+    </div>
+  </body>
+</html>

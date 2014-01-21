@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Конструктор класса — метод __init__. Урок 3</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-39" class="section-2">
+  <h1 class="book-heading">Конструктор класса — метод __init__. Урок 3</h1>
+  <div style="text-align:center;">
+<h4>Методическая разработка урока<br />
+Элективный курс: Введение в объектно-ориентированное программирование на Python<br />
+Уровень: Программирование для начинающих</h4>
+</div>
+<p>Большинство классов имеют специальный метод, который автоматически при создании объекта создает ему атрибуты. Т.е. вызывать данный метод не нужно, т.к. он сам запускается при вызове класса. (Вызов класса происходит, когда создается объект.) Такой метод называется <strong>конструктором класса</strong> и в языке программирования Python носит имя <strong>__init__</strong>. (В начале и конце по два знака подчеркивания.)</p>
+<p>Первым параметром, как и у любого другого метода, у <strong>__init__</strong> является <strong>self</strong>, на место которого подставляется объект в момент его создания. Второй и последующие (если есть) параметры заменяются аргументами, переданными в конструктор при вызове класса.</p>
+<p>Рассмотрим два класса: в одном будет использоваться конструктор, а в другом нет. Требуется создать два атрибута объекта.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> YesInit:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,one,two<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">fname</span> = one
+          <span style="color: #008000;">self</span>.<span style="color: black;">sname</span> = two
+&nbsp;
+obj1 = YesInit<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Peter&quot;</span>,<span style="color: #483d8b;">&quot;Ok&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>obj1.<span style="color: black;">fname</span>, obj1.<span style="color: black;">sname</span><span style="color: black;">&#41;</span></pre></div></p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> NoInit:
+     <span style="color: #ff7700;font-weight:bold;">def</span> names<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,one,two<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">fname</span> = one
+          <span style="color: #008000;">self</span>.<span style="color: black;">sname</span> = two
+&nbsp;
+obj1 = NoInit<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+obj1.<span style="color: black;">names</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Peter&quot;</span>,<span style="color: #483d8b;">&quot;Ok&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>obj1.<span style="color: black;">fname</span>, obj1.<span style="color: black;">sname</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>Вывод интерпретатора в обоих случаях:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">Peter Ok</pre></div></p>
+<p>В обоих программах у объекта появляются два атрибута: fname и sname. Однако в первом случае они инициализируются при создании объекта и должны передаваться в скобках при вызове класса. Если какие-то атрибуты должны присутствовать у объектов класса обязательно, то использование метода <strong>__init__</strong> - идеальный вариант. Во второй программе (без использования конструктора) атрибуты создаются путем вызова метода names после создания объекта. В данном случае вызов метода names необязателен, поэтому объекты могут существовать без атрибутов fname и sname.</p>
+<p>Обычно метод <strong>__init__</strong> предполагает передачу аргументов при создании объектов, однако аргумент может не быть передан. Например, если в примере выше создать объект так: obj1 = YesInit(), т.е. не передать классу аргументы, то произойдет ошибка. Чтобы избежать подобных ситуаций, можно в методе <strong>__init__</strong> присваивать параметрам значения по умолчанию. Если при вызове класса были заданы аргументы для данных параметров, то хорошо — они и будут использоваться, если нет — еще лучше — в теле метода будут использованы значения по умолчанию. Пример:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> YesInit:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,one=<span style="color: #483d8b;">&quot;noname&quot;</span>,two=<span style="color: #483d8b;">&quot;nonametoo&quot;</span><span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">fname</span> = one
+          <span style="color: #008000;">self</span>.<span style="color: black;">sname</span> = two
+&nbsp;
+obj1 = YesInit<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Sasha&quot;</span>,<span style="color: #483d8b;">&quot;Tu&quot;</span><span style="color: black;">&#41;</span>
+obj2 = YesInit<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+obj3 = YesInit<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Spartak&quot;</span><span style="color: black;">&#41;</span>
+obj4 = YesInit<span style="color: black;">&#40;</span>two=<span style="color: #483d8b;">&quot;Harry&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>obj1.<span style="color: black;">fname</span>, obj1.<span style="color: black;">sname</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>obj2.<span style="color: black;">fname</span>, obj2.<span style="color: black;">sname</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>obj3.<span style="color: black;">fname</span>, obj3.<span style="color: black;">sname</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>obj4.<span style="color: black;">fname</span>, obj4.<span style="color: black;">sname</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>Вывод интерпретатора:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">Sasha Tu
+noname nonametoo
+Spartak nonametoo
+noname Harry</pre></div></p>
+<p>В данном случае, второй объект создается без передачи аргументов, поэтому в методе <strong>__init__</strong> используются значения по умолчанию ("noname" и "nonametoo"). При создании третьего и четвертого объектов передаются по одному аргументу. Если указывается значение не первого аргумента, то следует явно указать имя параметра (четвертый объект).</p>
+<p>Метод <strong>__init__</strong> может содержать параметры как без значений по умолчанию, так и со значениями по умолчанию. В таком случае, параметры, аргументы которых должны быть обязательно указаны при создании объектов, указываются первыми, а параметры со значениями по умолчанию — после. Например, ниже вторая программа с ошибкой:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> fruits:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,w,n=0<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">what</span> = w
+          <span style="color: #008000;">self</span>.<span style="color: black;">numbers</span> = n
+&nbsp;
+f1 = fruits<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;apple&quot;</span>,<span style="color: #ff4500;">150</span><span style="color: black;">&#41;</span>
+f2 = fruits<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;pineapple&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>f1.<span style="color: black;">what</span>,f1.<span style="color: black;">numbers</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>f2.<span style="color: black;">what</span>,f2.<span style="color: black;">numbers</span><span style="color: black;">&#41;</span></pre></div></p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> fruits:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,n=<span style="color: #ff4500;">0</span>,w<span style="color: black;">&#41;</span>: <span style="color: #808080; font-style: italic;">#ERROR</span>
+          <span style="color: #008000;">self</span>.<span style="color: black;">what</span> = w
+          <span style="color: #008000;">self</span>.<span style="color: black;">numbers</span> = n
+&nbsp;
+f1 = fruits<span style="color: black;">&#40;</span><span style="color: #ff4500;">150</span>,<span style="color: #483d8b;">&quot;apple&quot;</span><span style="color: black;">&#41;</span>
+f2 = fruits<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;pineapple&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>f1.<span style="color: black;">what</span>,f1.<span style="color: black;">numbers</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>f2.<span style="color: black;">what</span>,f2.<span style="color: black;">numbers</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>Напишем более существенную программу с использованием конструктора. Допустим это будет класс, значение начальных атрибутов (из метода <strong>__init__</strong>) которого зависит от переданных аргументов при создании объектов. Далее эти свойства объектов, созданных на основе данного класса, можно менять с помощью обычных методов.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> Building:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,w,c,n=0<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">what</span> = w
+          <span style="color: #008000;">self</span>.<span style="color: black;">color</span> = c
+          <span style="color: #008000;">self</span>.<span style="color: black;">numbers</span> = n
+          <span style="color: #008000;">self</span>.<span style="color: black;">mwhere</span><span style="color: black;">&#40;</span>n<span style="color: black;">&#41;</span>
+&nbsp;
+     <span style="color: #ff7700;font-weight:bold;">def</span> mwhere<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,n<span style="color: black;">&#41;</span>:
+          <span style="color: #ff7700;font-weight:bold;">if</span> n <span style="color: #66cc66;">&lt;</span>= 0:
+               <span style="color: #008000;">self</span>.<span style="color: black;">where</span> = <span style="color: #483d8b;">&quot;отсутствуют&quot;</span>
+          <span style="color: #ff7700;font-weight:bold;">elif</span> 0 <span style="color: #66cc66;">&lt;</span> n <span style="color: #66cc66;">&lt;</span> 100:
+               <span style="color: #008000;">self</span>.<span style="color: black;">where</span> = <span style="color: #483d8b;">&quot;малый склад&quot;</span>
+          <span style="color: #ff7700;font-weight:bold;">else</span>:
+               <span style="color: #008000;">self</span>.<span style="color: black;">where</span> = <span style="color: #483d8b;">&quot;основной склад&quot;</span>
+&nbsp;
+     <span style="color: #ff7700;font-weight:bold;">def</span> plus<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,p<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">numbers</span> = <span style="color: #008000;">self</span>.<span style="color: black;">numbers</span> + p
+          <span style="color: #008000;">self</span>.<span style="color: black;">mwhere</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>.<span style="color: black;">numbers</span><span style="color: black;">&#41;</span>
+     <span style="color: #ff7700;font-weight:bold;">def</span> minus<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,m<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">numbers</span> = <span style="color: #008000;">self</span>.<span style="color: black;">numbers</span> - m
+          <span style="color: #008000;">self</span>.<span style="color: black;">mwhere</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>.<span style="color: black;">numbers</span><span style="color: black;">&#41;</span>
+&nbsp;
+m1 = Building<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;доски&quot;</span>, <span style="color: #483d8b;">&quot;белые&quot;</span>,<span style="color: #ff4500;">50</span><span style="color: black;">&#41;</span>
+m2 = Building<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;доски&quot;</span>, <span style="color: #483d8b;">&quot;коричневые&quot;</span>, <span style="color: #ff4500;">300</span><span style="color: black;">&#41;</span>
+m3 = Building<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;кирпичи&quot;</span>,<span style="color: #483d8b;">&quot;белые&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>m1.<span style="color: black;">what</span>,m1.<span style="color: black;">color</span>,m1.<span style="color: black;">where</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>m2.<span style="color: black;">what</span>,m2.<span style="color: black;">color</span>,m2.<span style="color: black;">where</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>m3.<span style="color: black;">what</span>,m3.<span style="color: black;">color</span>,m3.<span style="color: black;">where</span><span style="color: black;">&#41;</span>
+&nbsp;
+m1.<span style="color: black;">plus</span><span style="color: black;">&#40;</span>500<span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>m1.<span style="color: black;">numbers</span>, m1.<span style="color: black;">where</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>В данном примере значение атрибута where объекта зависит от значения атрибута numbers.</p>
+<h2>Практическая работа:</h2>
+<ol>
+<li>Спишите представленные выше скрипт с классом Building. Запустите программу, объясните как она работает. В какой момент создается атрибут where объектов? Зачем потребовалось конструкцию if-elif-else вынести в отдельную функцию, а не оставить ее в методе __init__?</li>
+<li>Самостоятельно придумайте класс, содержащий конструктор. Создайте на его основе несколько объектов.</li>
+</ol>
+  </div>
+    </div>
+  </body>
+</html>

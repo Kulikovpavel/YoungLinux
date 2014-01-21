@@ -1,0 +1,42 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Прозрачный куб с непрозрачными гранями (Blender 2.6x)</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-454" class="section-2">
+  <h1 class="book-heading">Прозрачный куб с непрозрачными гранями (Blender 2.6x)</h1>
+  <h4>Создание ребер</h4>
+<ol>
+<li>Вид сверху (7). Shift+D (дублирование). Смещаем копию на равное количество единиц (Ctrl) вправо.</li>
+<li>N. В разделе Scale устанавливаем значения X и Z в 0.01. Получается объемное ребро. N.</li>
+<li>Дублируем ребро и смещаем его ровно на то количество единиц, которое равно стороне куба.</li>
+<li>Выделяем оба ребра, дублируем, поворачиваем по оси Z на 90<sup>0</sup> (R, Z, Ctrl).</li>
+<li>Выделяем четыре ребра. Вид спереди (1). Перемещаем вниз (на уровень основания исходного куба). Дублируем, перемещаем вверх. (Всегда использовать Ctrl.)</li>
+<li>Выделить два видимых из вида спереди ребра. Дублировать, повернуть по Y на 90<sup>0</sup> (R, Y, Ctrl).</li>
+<li>Не снимая выделения, перейти на вид сбоку. Дублировать и переместить на противоположную грань.</li>
+<li>Выделить все грани (B) и объединить (Ctrl+J).</li>
+</ol>
+<h4>Настройки материалов</h4>
+<ul>
+<li>Для ребер лучше добавить материал с более темным оттенком.</li>
+<li>Для куба включиь опцию Transparency (прозрачность), уменьшить значение Alpha до 0.5-0.7.</li>
+</ul>
+<p>Совместите каркас из ребер с кубом, объединить их.</p>
+<h4>Настройка окружения</h4>
+<ul>
+<li>На панели Rander на вкладке Shading отключите опции Shadows и Ray Tracing.</li>
+<li>На панели World можно поменять цвет горизонта.</li>
+<li>Внутрь куба установить лампу. Исходную лампу поместить между кубом и камерой.</li>
+</ul>
+<p><img src="../../../img/blender26/cube1.png" alt="Прозрачный куб, созданный в Blender" /></p>
+  </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Ввод данных с клавиатуры. Урок 8</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-28" class="section-2">
+  <h1 class="book-heading">Ввод данных с клавиатуры. Урок 8</h1>
+  <p class="right">Основы программирования на Python</p>
+<p>Компьютерные программы обрабатывают данные, производя над ними операции, которые задал программист, и которые были обусловлены поставленными задачами. Данные в программу можно "заложить" в процессе ее разработки. Однако такая программа всегда будет обрабатывать одни и те же данные и возвращать один и тот же результат. Чаще требуется совершенно другое — программа должна обрабатывать разные (относительно, в определенном диапазоне) данные, которые поступают в нее из внешних источников. В качестве последних могут выступать файлы или клавиатура. Когда информация вводится с клавиатуры, а результаты выводятся на экран монитора, то можно говорить об интерактивном режиме работы программы. Она обменивается информацией с внешней для нее средой: может выводить и получать данные в процессе выполнения, и не является замкнутой сама на себе. С выводом данных мы уже отчасти знакомы: выводом на экран (и не только) в языке программирования Python занимается функция <strong>print()</strong>.</p>
+<p>Ввод данных с клавиатуры в программу (начиная с версии Python 3.0) осуществляется с помощью функции <strong>input()</strong>. Когда данная функция выполняется, то поток выполнения программы останавливается в ожидании данных, которые пользователь должен ввести с помощью клавиатуры. После ввода данных и нажатия Enter, функция <strong>input()</strong> завершает свое выполнение и возвращает результат, который представляет собой строку символов, введенных пользователем.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+<span style="color: #ff4500;">1234</span>
+<span style="color: #483d8b;">'1234'</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+Hello World<span style="color: #66cc66;">!</span>
+<span style="color: #483d8b;">'Hello World!'</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> </pre></div></p>
+<p>Когда выполняющаяся программа предлагает пользователю что-либо ввести, то пользователь может не понять, что от него хотят. Надо как-то сообщить, ввод каких данных ожидает программа. С этой целью функция <strong>input()</strong> может принимать необязательный аргумент-приглашение строкового типа; при выполнении функции сообщение будет появляться на экране и информировать человека о запрашиваемых данных.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Введите номер карты: &quot;</span><span style="color: black;">&#41;</span>
+Введите номер карты: <span style="color: #ff4500;">98765</span>
+<span style="color: #483d8b;">'98765'</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'Input your name: '</span><span style="color: black;">&#41;</span>
+Input your name: Sasha
+<span style="color: #483d8b;">'Sasha'</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> </pre></div></p>
+<p>Из примеров видно, что данные возвращаются в виде строки, даже если было введено число. В более ранних версиях Python были две встроенные функции, позволяющие получать данные с клавиатуры: <strong>raw_input()</strong>, возвращающая в программу строку и <strong>input()</strong>, возвращающая число. Начиная с версии Python 3.0, если требуется получить число, то результат выполнения функции <strong>input()</strong> изменяют с помощью функций <strong>int()</strong> или <strong>float()</strong>.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'Введите число: '</span><span style="color: black;">&#41;</span>
+Введите число: <span style="color: #ff4500;">10</span>
+<span style="color: #483d8b;">'10'</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'Введите число: '</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+Введите число: 10
+10
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #008000;">float</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'Введите число: '</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+Введите число: <span style="color: #ff4500;">10</span>
+<span style="color: #ff4500;">10.0</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> </pre></div></p>
+<p>Результат, возвращаемый функцией <strong>input()</strong>, обычно присваивают переменной для дальнейшего использования в программе.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> userName = <span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'What is your name? '</span><span style="color: black;">&#41;</span>
+What <span style="color: #ff7700;font-weight:bold;">is</span> your name<span style="color: #66cc66;">?</span> Masha
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> exp = <span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'3*34 = '</span><span style="color: black;">&#41;</span>
+3<span style="color: #66cc66;">*</span>34 = 102
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> exp = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span>exp<span style="color: black;">&#41;</span> + <span style="color: #ff4500;">21</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> userName
+<span style="color: #483d8b;">'Masha'</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> exp
+<span style="color: #ff4500;">123</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> </pre></div></p>
+<h3>Практическая работа</h3>
+<p>1. Создайте скрипт (файл data.py), который бы запрашивал у пользователя<br />
+ - его имя: "What is your name?"<br />
+ - возраст: "How old are you?"<br />
+ - место жительства: "Where are you live?"<br />
+, а затем выводил три строки<br />
+ - "This is <span class="mono">имя</span>"<br />
+ - "It is <span class="mono">возраст</span>"<br />
+ - "He live in <span class="mono">место_жительства</span>"<br />
+, где вместо <span class="mono">имя, возраст, место_жительства</span> должны быть соответствующие данные, введенные пользователем.</p>
+<p>2. Напишите программу (файл example.py), которая предлагала бы пользователю решить пример 4*100-54. Если пользователь напишет правильный ответ, то получит поздравление от программы, иначе – программа сообщит ему об ошибке. (При решении задачи используйте конструкцию <strong>if-else</strong>.)</p>
+<p>3. Перепишите предыдущую программу так, чтобы пользователю предлагалось решать пример до тех пор, пока он не напишет правильный ответ. (При решении задачи используйте цикл <strong>while</strong>.)</p>
+  </div>
+    </div>
+  </body>
+</html>

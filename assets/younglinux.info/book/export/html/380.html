@@ -1,0 +1,124 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Урок 20. Многофайловые программы</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-380" class="section-2">
+  <h1 class="book-heading">Урок 20. Многофайловые программы</h1>
+  <p class="right">Особенности языка С. Учебное пособие</p>
+<h3>Объектный код</h3>
+<p>Запуск gcc позволяет обработать файл с исходным кодом препроцессором и далее скомпилировать его. Однако при этом сам инструмент gcc не компилирует файл исходного кода в конечный исполняемый файл. Он компилирует его в объектный файл, после чего вызывает так называемый линковщик, или компоновщик. Но зачем надо сначала получать объектный файл, а потом из него уже исполняемый? Для программ, состоящих из одного файла, такой необходимости нет. Хотя при желании здесь также можно отказаться от компоновки, если выполнить команду gcc с ключом -c:</p>
+<pre>gcc -c hello.c</pre><p>
+В результате получится файл с расширением *.o. Чтобы получить из объектного файла исполняемый, надо использовать ключ -o:</p>
+<pre>gcc -o hello hello.o</pre><p>
+<span class="blue"><strong>Задание</strong><br />
+Получите из любого ранее написанного файла с исходным кодом на языке C объектный файл, а затем из него исполняемый. </span></p>
+<p>Для программ, состоящих из нескольких файлов исходного кода, получение объектных файлов является необходимым. Именно из них потом компонуется единственный исполняемый файл.</p>
+<h3>Компиляция программы, состоящей из нескольких файлов исходного кода</h3>
+<p>Рассмотрим пример. Пусть в одном файле определена пара функций, а в другом, содержащем функцию <span class="geshifilter"><code class="c geshifilter-c">main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>, осуществляется их вызов. </p>
+<p>Файл superprint.c:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+&nbsp;
+<span style="color: #993333;">void</span> l2r <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> <span style="color: #339933;">**</span>c<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> n<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">,</span> j<span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span>i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i<span style="color: #339933;">&lt;</span>n<span style="color: #339933;">;</span> i<span style="color: #339933;">++,</span> c<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>j<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> j<span style="color: #339933;">&lt;</span>i<span style="color: #339933;">;</span> j<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span>
+			<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;<span style="color: #000099; font-weight: bold;">\t</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		<span style="color: #000066;">printf</span> <span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,*</span>c<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #009900;">&#125;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">void</span> r2l <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> <span style="color: #339933;">**</span>c<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> n<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> j<span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span><span style="color: #339933;">;</span> n<span style="color: #339933;">&gt;</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> n<span style="color: #339933;">--,</span> c<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>j<span style="color: #339933;">=</span><span style="color: #0000dd;">1</span><span style="color: #339933;">;</span> j<span style="color: #339933;">&lt;</span>n<span style="color: #339933;">;</span> j<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span>
+			<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;<span style="color: #000099; font-weight: bold;">\t</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		<span style="color: #000066;">printf</span> <span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,*</span>c<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #009900;">&#125;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<p>Файл main.c:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+&nbsp;
+<span style="color: #339933;">#define N 5</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">char</span> strs<span style="color: #009900;">&#91;</span>N<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#91;</span>10<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+	<span style="color: #993333;">char</span> <span style="color: #339933;">*</span>p<span style="color: #009900;">&#91;</span>N<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span>i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i<span style="color: #339933;">&lt;</span>N<span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s&quot;</span><span style="color: #339933;">,</span> strs<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		p<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #339933;">&amp;</span>strs<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#91;</span>0<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+	<span style="color: #009900;">&#125;</span>
+&nbsp;
+	l2r<span style="color: #009900;">&#40;</span>p<span style="color: #339933;">,</span> N<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>	
+	r2l<span style="color: #009900;">&#40;</span>p<span style="color: #339933;">,</span> N<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>		
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<p>В теле функции <span class="geshifilter"><code class="c geshifilter-c">main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> заполняется массив, состоящий из строк, а также массив указателей на эти строки. Далее в функции <span class="geshifilter"><code class="c geshifilter-c">l2r<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> и <span class="geshifilter"><code class="c geshifilter-c">r2l<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> передаются ссылки на первый элемент массива указателей и значение символической константы N. Эти функции осуществляют вывод элементов массива строк с отступами.</p>
+<p>Чтобы получить исполняемый файл этой программы, надо сначала получить объектные файлы из исходных:</p>
+<pre>
+gcc -c superprint.c
+gcc -c main.c
+</pre><p>
+Тоже самое можно сделать за один вызов gcc:</p>
+<pre>gcc -c superprint.c main.c</pre><p>
+Или даже вот так, если в каталоге находятся только файлы текущего проекта:</p>
+<pre>gcc -c *.c</pre><p>
+В любом случае в каталоге появятся два объектных файла: superprint.o и main.o. Далее их можно скомпилировать в один исполняемый файл так:</p>
+<pre>gcc -o myprint main.o superprint.o</pre><p>
+или так:</p>
+<pre>gcc -o myprint *.o</pre><p>
+Обратите внимание на то, что в данном случае обязательно требуется указывать имя исполняемого файла. Такой вариант недопустим:</p>
+<pre>gcc -o main.o superprint.o</pre><p>
+Если теперь запустить файл myprint, то программа будет ожидать ввода пяти слов, после чего выведет их на экран два раза по-разному (с помощью функций <span class="geshifilter"><code class="c geshifilter-c">l2r<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> и <span class="geshifilter"><code class="c geshifilter-c">r2l<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>):<br />
+<img src="../../../img/c/myprint.png" width="376" height="213" alt="Скомпилированная программа" /></p>
+<p>Задумаемся, каким образом в представленной выше программе функция <span class="geshifilter"><code class="c geshifilter-c">main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> "узнает" о существовании функций <span class="geshifilter"><code class="c geshifilter-c">l2r<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> и <span class="geshifilter"><code class="c geshifilter-c">r2l<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>. Ведь в исходном коде файла main.c нигде не указано, что мы подключаем файл superprint.c, содержащий эти функции. Действительно, если попытаться получить из <span class="geshifilter"><code class="c geshifilter-c">main.<span style="color: #202020;">c</span></code></span> отдельный исполняемый файл, т.е. скомпилировать программу без superprint.c:</p>
+<pre>gcc main.c</pre><p>, то ничего не получиться. Компилятор сообщит об ошибке вызова неопределенных идентификаторов. Получить из файла superprint.c отдельный исполняемый файл вообще невозможно, т.к. там отсутствует функция <span class="geshifilter"><code class="c geshifilter-c">main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>. А вот получить из этих файлов отдельные объектные файлы можно. Представим, что одни объектные файлы как бы "выставляют наружу" имена определенных в них функций и глобальных переменных, а другие - вызовы этих имен из тел других функций. Дальше объектные файлы "ожидают", что имена будут связаны с их вызовами. Связывание происходит при компиляции исполняемого файла из объектных.</p>
+<p><span class="blue"><strong>Задание</strong><br />
+Придумайте и напишите свой пример программы, состоящей из двух-трех файлов исходного кода.</span></p>
+<h3>Создание заголовочных файлов</h3>
+<p>Продолжим разбирать приведенную выше программу. Что будет, если в функции <span class="geshifilter"><code class="c geshifilter-c">main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> осуществить неправильный вызов функций <span class="geshifilter"><code class="c geshifilter-c">l2r<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> и <span class="geshifilter"><code class="c geshifilter-c">r2l<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>? Например, указать неверное количество параметров. В таком случае создание объектных файлов пройдет без ошибок, и скорее всего удастся получить исполняемый файл; но вот работать программа будет неправильно. Такое возможно потому, что ничего не контролирует соответствие вызовов прототипам (объявлениям) функций.</p>
+<p><span class="blue"><strong>Задание</strong><br />
+В вашей программе в функции <span class="geshifilter"><code class="c geshifilter-c">main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> вызовите функцию из другого файла с неверным количеством параметров. Попробуйте скомпилировать программу и запустить исполняемый файл.</span> </p>
+<p>Куда правильней сообщать о неверном вызове функций уже при получении объектного файла. Поэтому хотя можно обойтись и без этого, но очень желательно сообщать функции <span class="geshifilter"><code class="c geshifilter-c">main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> прототипы функций, которые из нее вызываются. Это можно сделать, прописав объявления функций в файле main.c:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">…
+<span style="color: #993333;">void</span> l2r <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> <span style="color: #339933;">**</span>c<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> n<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #993333;">void</span> r2l <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> <span style="color: #339933;">**</span>c<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> n<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+…</pre></div></p>
+<p>Теперь, если мы передадим неправильные параметры, ошибка возникнет уже на этапе получения объектных файлов.</p>
+<p>А теперь представим, что программа у нас несколько больше и содержит десяток файлов исходного кода. Файл aa.c требует функций из файла bb.c, dd.c, ee.c. В свою очередь dd.c вызывает функции из ee.c и ff.c, а эти два последних файла активно пользуются неким файлом stars.c и одной из функций в bb.c. Программист замучится сверять, что чего вызывает откуда и куда, где и какие объявления надо прописывать. Поэтому все прототипы (объявления) функций проекта, а также совместно используемые символические константы и макросы выносят в отдельный файл, который подключают к каждому файлу исходного кода. Такие файлы называются заголовочными; с ними мы уже не раз встречались. В отличие от заголовочных файлов стандартной библиотеки, заголовочные файлы, которые относятся только к вашему проекту, при подключении к файлу исходного кода заключаются в кавычки, а не скобки. Об этом упоминалось в предыдущем уроке. </p>
+<p>Итак, более грамотно будет не добавлять объявления функций в файл main.c, а создать заголовочный файл, например, myprint.h и поместить туда прототипы функций <span class="geshifilter"><code class="c geshifilter-c">l2r<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> и <span class="geshifilter"><code class="c geshifilter-c">r2l<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>. А в файле <span class="geshifilter"><code class="c geshifilter-c">main.<span style="color: #202020;">c</span></code></span> следует прописать директиву препроцессора:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &quot;myprint.h&quot;</span></pre></div></p>
+<p>В принципе смысла подключать myprint.h к файлу superprint.c в данном случае нет, т.к. последний не использует никаких сторонних функций, кроме стандартной библиотеки. Но если планируется расширять программу и есть вероятность, что в файле superprint.c будут вызываться сторонние для него функции, то будет надежней сразу подключить заголовочный файл.</p>
+<p><span class="blue"><strong>Задание</strong><br />
+Создайте заголовочный файл для вашей программы и подключите его к файлам исходного кода.</span></p>
+<p>Обратим внимание еще на один момент. Стоит ли в описанном в этом уроке примере выносить константу N в заголовочный файл? Здесь нельзя дать однозначный ответ. Если ее туда вынести, то она станет доступна в обоих файлах, и поэтому можно изменить прототипы функций так, чтобы они принимали только один параметр (указатель), а значение N будет известно функциям их заголовочного файла. Однако стоит ли так делать? В функции <span class="geshifilter"><code class="c geshifilter-c">r2l<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> второй параметр изменяется в процессе ее выполнения, что делать с константой будет невозможно. Придется переписывать тело функции. Кроме того, вдруг в последствии нам захочется использовать файл superprint.c в другом проекте, где будут свои порядки, и константы N в заголовочном файле не найдется. </p>
+<p>В таком случае лучше N не выносить в заголовочный файл. Хотя имейте в виду, в каких-то проектах символическая константа может использоваться так часто и во множестве функций, что ее будет лучше поместить в заголовочный файл.</p>
+<h3>Особенности использования глобальных переменных</h3>
+<p>Помните, если можно отказаться от использования глобальных переменных, то лучше это сделать. Желательно стремиться к тому, чтобы любой файл проекта, скажем так, "не лез к соседу за данными, а сосед не разбрасывал эти данные в виде глобальных переменных". Обмен данными между функциями должен осуществлять за счет передачи данных в качестве параметров и возврата значений с помощью оператора <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">return</span></code></span>. (Массивов это не касается.)</p>
+<p>Однако в языке программирования <span class="blue">C</span> есть проблема на этот счет. С помощью <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">return</span></code></span> можно вернуть только одно значение. Но могут быть случаи, когда функция должна изменить несколько переменных (здесь не имеются ввиду элементы массива). В таком случае, возможно, без глобальных переменных не обойтись. Так как же их использовать, если вдруг?</p>
+<ul>
+<li>Если в файле aa.c объявлена переменная за пределами любой функции (например, так: <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #993333;">int</span> count</code></span>), то она является глобальной для всех файлов проекта. Чтобы получить значение этой переменной в файле aa.c достаточно просто указать ее имя (если в функции нет локальной переменной с тем же именем). Чтобы получить значение из других файлов, надо указать, что имеется в виду глобальная переменная, а не локальная. Делается это с помощью ключевого слова <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #000000; font-weight: bold;">extern</span></code></span> (например, <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #000000; font-weight: bold;">extern</span> count</code></span>).</li>
+<li>Бывают ситуации, когда в одном файле для нескольких содержащихся в нем функций нужна глобальная переменная. Но эта переменная не должна быть доступна функциям, содержащимся в других файлах. В таком случае глобальная переменная объявляется с ключевым словом <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #993333;">static</span></code></span> (например, <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #993333;">static</span> <span style="color: #993333;">int</span> count</code></span>). Тем самым мы как бы скрываем глобальную переменную.</li>
+</ul>
+<p><span class="blue"><strong>Задание</strong><br />
+Напишите простые наглядные примеры, использования глобальных функций: </span></p>
+<ol>
+<li><span class="blue">Объявите глобальную переменную в одном файле, а получите ее значение в другом файле (выведите на экран).</span></li>
+<li><span class="blue">Объявите в одном файле статическую глобальную переменную. Выведите ее значение на экран из функции данного файла. Попытайтесь сделать это из функции другого файла.</span></li>
+<li><span class="blue">Создайте две глобальные переменные в одном файле. В другом файле напишите функцию, которая меняет их значение.</span></li>
+</ol>
+  </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,496 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Приложение С. Особенности Shell</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-328" class="section-2">
+  <h1 class="book-heading">Приложение С. Особенности Shell</h1>
+  <p class="right">Introduction to Linux. A Hands on Guide —<br />
+Введение в Linux. Руководство по работе</p>
+<p>Здесь дается обзор базовых функций оболочки (одинаковых для всех оболочек) и некоторых специфичных особенностей.</p>
+  <div id="node-329" class="section-3">
+  <h1 class="book-heading">C1. Базовые функции</h1>
+  <p class="right">Introduction to Linux. A Hands on Guide —<br />
+Введение в Linux. Руководство по работе</p>
+<p>Следующие функции являются стандартными для каждой оболочки. Обратите внимание, что команды <strong>stop, suspend, jobs, bg</strong> и <strong>fg</strong> доступны только в системах, которые поддерживают соответствующее управление.</p>
+<p><strong>Таблица C.1. Базовые функции shell</strong></p>
+<table>
+<tr>
+<th>Команда</th>
+<th>Значение</th>
+</tr>
+<tr>
+<td>></td>
+<td>Перенаправление вывода</td>
+</tr>
+<tr>
+<td>>></td>
+<td>Добавление в файл</td>
+</tr>
+<tr>
+<td>&lt;</td>
+<td>Перенаправление ввода</td>
+</tr>
+<tr>
+<td>&lt;&lt;</td>
+<td>"Здесь" документ (перенаправление ввода)</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>|</td>
+<td>Канальный вывод</td>
+</tr>
+<tr>
+<td>&amp;</td>
+<td>Запустить процесс в фоновом режиме</td>
+</tr>
+<tr>
+<td>;</td>
+<td>Разделение команд</td>
+</tr>
+<tr>
+<td>*</td>
+<td>Соответствует любому(ым) символу(ам) в имени файла</td>
+</tr>
+<tr>
+<td>?</td>
+<td>Соответствует одному символу в имени файла</td>
+</tr>
+<tr>
+<td>[ ]</td>
+<td>Соответствует любому символу, заключенному в скобки</td>
+</tr>
+<tr>
+<td>( )</td>
+<td>Выполнить в дочерней оболочке</td>
+</tr>
+<tr>
+<td>` `</td>
+<td>Заменить вывод заключенной в кавычки командой</td>
+</tr>
+<tr>
+<td>" "</td>
+<td>Частичное цитирование (допустимы переменные и командные расширения)</td>
+</tr>
+<tr>
+<td>' '</td>
+<td>Полное цитирование (нет расширений)</td>
+</tr>
+<tr>
+<td>\</td>
+<td>Цитировать следующий символ</td>
+</tr>
+<tr>
+<td>$var</td>
+<td>Использовать значение переменной</td>
+</tr>
+<tr>
+<td>$$</td>
+<td>id процесса</td>
+</tr>
+<tr>
+<td>$0</td>
+<td>Имя команды</td>
+</tr>
+<tr>
+<td>$n</td>
+<td>n-ый аргумент (n от 0 до 9)</td>
+</tr>
+<tr>
+<td>$*</td>
+<td>Все аргументы как простое слово</td>
+</tr>
+<tr>
+<td>#</td>
+<td>Начать комментарий</td>
+</tr>
+<tr>
+<td>bg</td>
+<td>Фоновое исполнение</td>
+</tr>
+<tr>
+<td>break</td>
+<td>Прервать цикл</td>
+</tr>
+<tr>
+<td>cd</td>
+<td>Изменить директорию</td>
+</tr>
+<tr>
+<td>continue</td>
+<td>Прервать очередной цикл программы</td>
+</tr>
+<tr>
+<td>echo</td>
+<td>Отобразить вывод</td>
+</tr>
+<tr>
+<td>eval</td>
+<td>Оценить аргументы</td>
+</tr>
+<tr>
+<td>exec</td>
+<td>Выполнить новую оболочку</td>
+</tr>
+<tr>
+<td>fg</td>
+<td>Выполнить на переднем плане</td>
+</tr>
+<tr>
+<td>jobs</td>
+<td>Показать активные задания</td>
+</tr>
+<tr>
+<td>kill</td>
+<td>Прервать запущенные задания</td>
+</tr>
+<tr>
+<td>newgrp</td>
+<td>Изменения в новой группе</td>
+</tr>
+<tr>
+<td>shift</td>
+<td>Сдвиг позиционных параметров</td>
+</tr>
+<tr>
+<td>stop</td>
+<td>Приостановить фоновое задание</td>
+</tr>
+<tr>
+<td>suspend</td>
+<td>Приостановить  задание</td>
+</tr>
+<tr>
+<td>time</td>
+<td>Время команды</td>
+</tr>
+<tr>
+<td>umask</td>
+<td>Установить или посмотреть разрешения на файлы</td>
+</tr>
+<tr>
+<td>unset</td>
+<td>Удалить переменную или определения функций</td>
+</tr>
+<tr>
+<td>wait</td>
+<td>Ожидать пока выполняется фоновое задание</td>
+</tr>
+</table>
+  </div>
+<div id="node-357" class="section-3">
+  <h1 class="book-heading">C2. Отличительные особенности оболочек</h1>
+  <p class="right">Introduction to Linux. A Hands on Guide —<br />
+Введение в Linux. Руководство по работе</p>
+<p>В таблице ниже показаны основные различия между обычной shell (<strong>sh</strong>), Bourne Again SHell (<strong>bash</strong>), Korn shell (<strong>ksh</strong>) и C shell (<strong>csh</strong>).</p>
+<p class="note"><img src="../../../img/linuxintro/note.gif" alt="" /><strong>Совместимость оболочек</strong><br />
+Так как Bourne Again SHell является расширением <span class="blue">sh</span>, все команды <span class="blue">sh</span> будут также работать в <span class="blue">bash</span> - но не наоборот. Сам по себе <span class="blue">bash</span> включает много возможностей, и, как показывает таблица ниже, многие функции включены из других оболочек.<br />
+Поскольку оболочка Turbo C является надстройкой <span class="blue">csh</span>, все команды <span class="blue">csh</span> будут работать в <span class="blue">tcsh</span>, но не наоборот.</p>
+<p><strong>Таблица C.2. Различные свойства оболочек</strong></p>
+<table>
+<tr>
+<th>sh</th>
+<th>bash</th><br />
+		<Th>ksh</th><br />
+		<Th>csh</th><br />
+		<Th>Значение/Действие<br />
+	</th></tr><br />
+<TR><br />
+		<TD>$</td><br />
+		<TD>$</td><br />
+		<TD>$</td><br />
+		<TD>%</td><br />
+		<TD>Приглашение к вводу по умолчанию</td><br />
+	</tr><br />
+	<TR><br />
+		<TD> </td><br />
+		<TD>&gt;|</td><br />
+		<TD>&gt;|</td><br />
+		<TD>&gt;!</td><br />
+		<TD>Принудительное перенаправление</td><br />
+	</tr><br />
+	<TR><br />
+		<TD>&gt; file 2&gt;&amp;1</td><br />
+		<TD>&amp;&gt; file или<BR />&gt; file 2&gt;&amp;1</td><br />
+		<TD>&gt; file 2&gt;&amp;1</td><br />
+		<TD>&gt;&amp; file</td><br />
+		<TD>Перенаправление стандартных потоков вывода и ошибок в file</td><br />
+	</tr><br />
+	<TR><br />
+		<TD><BR /></td><br />
+		<TD>{ }</td><br />
+		<TD><BR /></td><br />
+		<TD>{ }</td><br />
+		<TD>Расширить элементы в список</td><br />
+	</tr><br />
+	<TR><br />
+		<TD>`command`</td><br />
+		<TD>`command` или<BR />$(command)</td><br />
+		<TD>$(command)</td><br />
+		<TD>`command`</td><br />
+		<TD>Заменить вывод заключенной в обратные кавычки командой</td><br />
+	</tr><br />
+	<TR><br />
+		<TD>$HOME</td><br />
+		<TD>$HOME</td><br />
+		<TD>$HOME</td><br />
+		<TD>$home</td><br />
+		<TD>Домашний каталог</td><br />
+	</tr><br />
+	<TR><br />
+		<TD><BR /></td><br />
+		<TD>~</td><br />
+		<TD>~</td><br />
+		<TD>~</td><br />
+		<TD>Символ домашнего каталога</td><br />
+	</tr><br />
+	<TR><br />
+		<TD><BR /></td><br />
+		<TD>~+, ~-, dirs</td><br />
+		<TD>~+, ~-</td><br />
+		<TD>=-, =N</td><br />
+		<TD>Стек доступа к каталогам</td><br />
+	</tr><br />
+	<TR><br />
+		<TD>var=value</td><br />
+		<TD>var=value</td><br />
+		<TD>var=value</td><br />
+		<TD>set var=value</td><br />
+		<TD>Назначение переменной</td><br />
+	</tr><br />
+	<TR><br />
+		<TD>export var</td><br />
+		<TD>export VAR=value</td><br />
+		<TD>export VAR=value</td><br />
+		<TD>setenv var val</td><br />
+		<TD>Установка переменной окружения</td><br />
+	</tr><br />
+	<TR><br />
+		<TD><BR /></td><br />
+		<TD>${nnnn}</td><br />
+		<TD>${nn}</td><br />
+		<TD><BR /></td><br />
+		<TD>Возможность ссылаться на более, чем 9 аргументов</td><br />
+	</tr><br />
+	<TR><br />
+		<TD>&quot;$@&quot;</td><br />
+		<TD>&quot;$@&quot;</td><br />
+		<TD>&quot;$@&quot;</td><br />
+		<TD><BR /></td><br />
+		<TD>Все аргументы в виде отдельных слов</td><br />
+	</tr><br />
+	<TR><br />
+		<TD>$#</td><br />
+		<TD>$#</td><br />
+		<TD>$#</td><br />
+		<TD>$#argv</td><br />
+		<TD>Количество аргументов</td><br />
+	</tr><br />
+	<TR><br />
+		<TD>$?</td><br />
+		<TD>$?</td><br />
+		<TD>$?</td><br />
+		<TD>$status</td><br />
+		<TD>Код возврата от последней выполненной команды</td><br />
+	</tr><br />
+	<TR><br />
+		<TD>$!</td><br />
+		<TD>$!</td><br />
+		<TD>$!</td><br />
+		<TD><BR /></td><br />
+		<TD>PID последнего фонового<br />
+			процесса</td><br />
+	</tr><br />
+	<TR><br />
+		<TD>$-</td><br />
+		<TD>$-</td><br />
+		<TD>$-</td><br />
+		<TD><BR /></td><br />
+		<TD>Текущие опции</td><br />
+	</tr><br />
+	<TR><br />
+		<TD>. file</td><br />
+		<TD>source file  or . file</td><br />
+		<TD>. file</td><br />
+		<TD>source file</td><br />
+		<TD>Читает команды в файле</td><br />
+	</tr><br />
+	<TR><br />
+		<TD><BR /></td><br />
+		<TD>alias x='y'</td><br />
+		<TD>alias x=y</td><br />
+		<TD>alias x y</td><br />
+		<TD>Имя x устанавливается для команды y</td><br />
+	</tr><br />
+	<TR><br />
+		<TD>case</td><br />
+		<TD>case</td><br />
+		<TD>case</td><br />
+		<TD>switch or case</td><br />
+		<TD>Выбор альтернативы</td><br />
+	</tr><br />
+	<TR><br />
+		<TD>done</td><br />
+		<TD>done</td><br />
+		<TD>done</td><br />
+		<TD>end</td><br />
+		<TD>Конец заявленного цикла</td><br />
+	</tr><br />
+	<TR><br />
+		<TD>esac</td><br />
+		<TD>esac</td><br />
+		<TD>esac</td><br />
+		<TD>endsw</td><br />
+		<TD>Окончание case или switch</td><br />
+	</tr><br />
+	<TR><br />
+		<TD>exit n</td><br />
+		<TD>exit n</td><br />
+		<TD>exit n</td><br />
+		<TD>exit (expr)</td><br />
+		<TD>Выход со статусом</td><br />
+	</tr><br />
+	<TR><br />
+		<TD>for/do</td><br />
+		<TD>for/do</td><br />
+		<TD>for/do</td><br />
+		<TD>foreach</td><br />
+		<TD>Цикл по переменным</td><br />
+	</tr><br />
+	<TR><br />
+		<TD><BR /></td><br />
+		<TD>set -f , set -o nullglob|dotglob|nocaseglob|noglob</td><br />
+		<TD><BR /></td><br />
+		<TD>noglob</td><br />
+		<TD>Игнорировать замену символов при генерации имени файла</td><br />
+	</tr><br />
+	<TR><br />
+		<TD>hash</td><br />
+		<TD>hash</td><br />
+		<TD>alias -t</td><br />
+		<TD>hashstat</td><br />
+		<TD>Отображение хэшированных команд (для которых установлены псевдонимы)</td><br />
+	</tr><br />
+	<TR><br />
+		<TD>hash cmds</td><br />
+		<TD>hash cmds</td><br />
+		<TD>alias -t cmds</td><br />
+		<TD>rehash</td><br />
+		<TD>Вспомнить  команды</td><br />
+	</tr><br />
+	<TR><br />
+		<TD>hash -r</td><br />
+		<TD>hash -r</td><br />
+		<TD><BR /></td><br />
+		<TD>unhash</td><br />
+		<TD>Забыть команды</td><br />
+	</tr><br />
+	<TR><br />
+		<TD><BR /></td><br />
+		<TD>history</td><br />
+		<TD>history</td><br />
+		<TD>history</td><br />
+		<TD>Список предыдущих команд</td><br />
+	</tr><br />
+	<TR ><br />
+		<TD><BR /></td><br />
+		<TD>ArrowUp+Enter or !!</td><br />
+		<TD>r</td><br />
+		<TD>!!</td><br />
+		<TD>Повторить предыдущую команду</td><br />
+	</tr><br />
+	<TR><br />
+		<TD><BR /></td><br />
+		<TD>!str</td><br />
+		<TD>r str</td><br />
+		<TD>!str</td><br />
+		<TD>Повторить предыдущую команду, которая начинается со &ldquo;str&rdquo;.</td><br />
+	</tr><br />
+	<TR><br />
+		<TD><BR /></td><br />
+		<TD>!cmd:s/x/y/</td><br />
+		<TD>r x=y cmd</td><br />
+		<TD>!cmd:s/x/y/</td><br />
+		<TD>Заменить &ldquo;x&rdquo; на &ldquo;y&rdquo; в самой недавней команде, которая начинается с &ldquo;cmd&rdquo;.</td><br />
+	</tr><br />
+	<TR><br />
+		<TD>if [ $i -eq 5 ]</td><br />
+		<TD>if [ $i -eq 5 ]</td><br />
+		<TD>if ((i==5))</td><br />
+		<TD>if ((i==5))</td><br />
+		<TD>Образец проверки условия</td><br />
+	</tr><br />
+	<TR><br />
+		<TD>fi</td><br />
+		<TD>fi</td><br />
+		<TD>fi</td><br />
+		<TD>endif</td><br />
+		<TD>Конец инструкции <SPAN LANG="en-US">if</span></td><br />
+	</tr><br />
+	<TR><br />
+		<TD>ulimit</td><br />
+		<TD>ulimit</td><br />
+		<TD>ulimit</td><br />
+		<TD>limit</td><br />
+		<TD>Установка ограничений на ресурсы</td><br />
+	</tr><br />
+	<TR><br />
+		<TD>pwd</td><br />
+		<TD>pwd</td><br />
+		<TD>pwd</td><br />
+		<TD>dirs</td><br />
+		<TD>Вывод рабочей директории</td><br />
+	</tr><br />
+	<TR><br />
+		<TD>read</td><br />
+		<TD>read</td><br />
+		<TD>read</td><br />
+		<TD>$&lt;</td><br />
+		<TD>Чтение с терминала</td><br />
+	</tr><br />
+	<TR><br />
+		<TD>trap 2</td><br />
+		<TD>trap 2</td><br />
+		<TD>trap 2</td><br />
+		<TD>onintr</td><br />
+		<TD>Игнорировать прерывания</td><br />
+	</tr><br />
+	<TR><br />
+		<TD><BR /></td><br />
+		<TD>unalias</td><br />
+		<TD>unalias</td><br />
+		<TD>unalias</td><br />
+		<TD>Удалить псевдонимы</td><br />
+	</tr><br />
+	<TR><br />
+		<TD>until</td><br />
+		<TD>until</td><br />
+		<TD>until</td><br />
+		<TD><BR /></td><br />
+		<TD>Начало цикла until</td><br />
+	</tr><br />
+	<TR><br />
+		<TD>while/do</td><br />
+		<TD>while/do</td><br />
+		<TD>while/do</td><br />
+		<TD>while</td><br />
+		<TD>Начало цикла while</td><br />
+	</tr><br />
+</table>
+<p>	У Bourne Again SHell есть намного больше свойств, не перечисленных здесь. Но эта таблица может дать вам представление о том, как эта оболочка включает в себя все полезные идеи из других оболочек: в колонке <strong>bash</strong> нет пустот. Больше информации о специфических свойствах Bash можно получить из info-страниц Bash в разделе "Bash Features".</p>
+<p>	Как минимум вам надо прочитать руководство к вашей командной оболочке. Предпочтительно было бы выбрать <span class="blue">info bash</span>. Bash, будучи оболочкой GNU, также прост для начинающих./TD</p>
+  </div>
+</div>
+    </div>
+  </body>
+</html>

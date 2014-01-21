@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Логические выражения. Урок 4</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-24" class="section-2">
+  <h1 class="book-heading">Логические выражения. Урок 4</h1>
+  <p class="right">Основы программирования на Python</p>
+<h3>Логического выражения и логический тип данных</h3>
+<p>Часто в реальной жизни мы соглашаемся или отрицаем то или иное утверждение, событие, факт. Например, "Сумма чисел 3 и 5 больше 7" является правдивым утверждением, а "Сумма чисел 3 и 5 меньше 7" - ложным. Можно заметить, что с точки зрения логики подобные фразы предполагают только два результата: "Да" (правда) и "Нет" (ложь). Подобное используется в программировании: если результатом вычисления выражения может быть лишь истина или ложь, то такое выражение называется логическим. </p>
+<p>На прошлом уроке были описаны три  типа данных: целые, дробные числа, а также строки. Также выделяют <em>логический тип данных</em>. У этого типа всего два возможных значения: <strong>True</strong> (правда) — 1 и <strong>False</strong> (ложь) — 0. Только эти значения могут быть результатом логических выражений.</p>
+<h3>Логические операторы</h3>
+<p>Говоря на естественном языке (например, русском) мы обозначаем сравнение словами "равно", "больше", "меньше". В языках программирования используются специальные знаки, подобные тем, которые используются в математических выражениях: > (больше), &lt; (меньше), >= (больше или равно), &lt;= (меньше или равно).</p>
+<p>Новыми для вас могут оказаться обозначение равенства: == (два знака "равно"); а также неравенства !=. Здесь следует обратить внимание на следующее: не путайте операцию присваивания, обозначаемую в языке Python одиночным знаком "равно", и операцию сравнения (два знака "равно"). Присваивание и сравнение — совершенно разные операции. </p>
+<p>Примеры работы с логическими выражениями на языке программирования Python (после # написаны комментарии):<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">x = <span style="color: #ff4500;">12</span> – <span style="color: #ff4500;">5</span> <span style="color: #808080; font-style: italic;"># это не логическая операция, </span>
+<span style="color: #808080; font-style: italic;"># а операция присваивания переменной x результата выражения 12 — 5</span>
+x == <span style="color: #ff4500;">4</span> <span style="color: #808080; font-style: italic;"># x равен 4</span>
+x == <span style="color: #ff4500;">7</span> <span style="color: #808080; font-style: italic;"># x равен 7</span>
+x <span style="color: #66cc66;">!</span>= <span style="color: #ff4500;">7</span> <span style="color: #808080; font-style: italic;"># x не равен 7</span>
+x <span style="color: #66cc66;">!</span>= <span style="color: #ff4500;">4</span> <span style="color: #808080; font-style: italic;"># x не равен 4</span>
+x  <span style="color: #66cc66;">&gt;</span> <span style="color: #ff4500;">5</span> <span style="color: #808080; font-style: italic;"># x больше 5</span>
+x  <span style="color: #66cc66;">&lt;</span> <span style="color: #ff4500;">5</span> <span style="color: #808080; font-style: italic;"># x меньше 5</span>
+x <span style="color: #66cc66;">&gt;</span>= <span style="color: #ff4500;">6</span> <span style="color: #808080; font-style: italic;"># x больше или равен 6</span>
+x <span style="color: #66cc66;">&lt;</span>= <span style="color: #ff4500;">6</span> <span style="color: #808080; font-style: italic;"># x меньше или равен 6</span></pre></div><br />
+Определите устно результаты выполнения операций, приведенных в примере выше. Проверьте правильность ваших предположений, выполнив данные выражения с помощью интерпретатора языка Python.</p>
+<h3>Сложные логические выражения</h3>
+<p>Логические выражения типа <span class="mono">verymuch >= 1023</span> является простым. Однако, на практике не редко используются более сложные. Может понадобиться получить ответа "Да" или "Нет" в зависимости от результата выполнения двух простых выражений. Например, "на улице идет снег или дождь", "переменная new больше 12 и меньше 20" и т.п.</p>
+<p>В таких случаях используются специальные операторы, объединяющие два и более простых логических выражения. Широко используются два способа объединения: через, так называемые, логические И (<strong>and</strong>) и ИЛИ (<strong>or</strong>).</p>
+<p>Чтобы получить истину (<strong>True</strong>) при использовании оператора <strong>and</strong>, необходимо, чтобы результаты обоих простых выражений, которые связывает данный оператор, были истинными. Если хотя бы в одном случае результатом будет <strong>False</strong> (ложь), то и все сложное выражение будет ложным. </p>
+<p>Чтобы получить истину (<strong>True</strong>) при использовании оператора <strong>or</strong>, необходимо, чтобы результаты хотя бы одного простого выражения, входящего в состав сложного, был истинным. В случае оператора <strong>or</strong> сложное выражение становится ложным лишь тогда, когда ложны все составляющие его простые выражения. </p>
+<p>Примеры работы со сложными логическими выражениями на языке программирования Python (после # написаны комментарии):<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">x = 8 
+y = 13 
+x == 8 <span style="color: #ff7700;font-weight:bold;">and</span> y <span style="color: #66cc66;">&lt;</span> <span style="color: #ff4500;">15</span> <span style="color: #808080; font-style: italic;">#  x равен 8 и y меньше 15</span>
+x <span style="color: #66cc66;">&gt;</span> 8 <span style="color: #ff7700;font-weight:bold;">and</span> y <span style="color: #66cc66;">&lt;</span> <span style="color: #ff4500;">15</span> <span style="color: #808080; font-style: italic;">#  x больше 8 и y меньше 15</span>
+x <span style="color: #66cc66;">!</span>= 0 <span style="color: #ff7700;font-weight:bold;">or</span> y <span style="color: #66cc66;">&gt;</span><span style="color: #ff4500;">15</span> <span style="color: #808080; font-style: italic;">#  x не равен 0 или y больше 15</span>
+x <span style="color: #66cc66;">&lt;</span> 0 <span style="color: #ff7700;font-weight:bold;">or</span> y <span style="color: #66cc66;">&gt;</span><span style="color: #ff4500;">15</span> <span style="color: #808080; font-style: italic;">#  x меньше 0 или y больше 15</span></pre></div></p>
+<p>Определите устно результаты выполнения операций, приведенных в примере выше. Проверьте правильность ваших предположений, выполнив данные выражения с помощью интерпретатора языка Python.</p>
+<h3>Практическая работа</h3>
+<ol>
+<li>Присвойте двум переменным любые числовые значения.</li>
+<li>Составьте четыре сложных логических выражения с помощью оператора <strong>and</strong>, два из которых должны давать истину, а два других  - ложь.</li>
+<li>Аналогично выполните п. 2, но уже используя оператор <strong>or</strong>.</li>
+<li>Попробуйте использовать в сложных логических выражениях работу с переменными строкового типа.</li>
+</ol>
+<h4>Примерный результат выполнения практической работы</h4>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> num1 = 34
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> num2 = 8.5
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> num1 <span style="color: #66cc66;">&gt;</span> 12 <span style="color: #ff7700;font-weight:bold;">and</span> num2 <span style="color: #66cc66;">!</span>= 12
+<span style="color: #008000;">True</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> num1 == 34 <span style="color: #ff7700;font-weight:bold;">and</span> num2 <span style="color: #66cc66;">&gt;</span>= 8
+<span style="color: #008000;">True</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> num1 <span style="color: #66cc66;">!</span>= 34 <span style="color: #ff7700;font-weight:bold;">and</span> num2 <span style="color: #66cc66;">!</span>= 12
+<span style="color: #008000;">False</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> num1 <span style="color: #66cc66;">&lt;</span>= 12 <span style="color: #ff7700;font-weight:bold;">and</span> num1 == 0
+<span style="color: #008000;">False</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> num1 <span style="color: #66cc66;">!</span>= 34 <span style="color: #ff7700;font-weight:bold;">or</span> num2 <span style="color: #66cc66;">!</span>= 12
+<span style="color: #008000;">True</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> num1 <span style="color: #66cc66;">&lt;</span> 1 <span style="color: #ff7700;font-weight:bold;">or</span> num2 <span style="color: #66cc66;">&gt;</span> 9.6
+<span style="color: #008000;">False</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> str1 = <span style="color: #483d8b;">&quot;a&quot;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> str2 = <span style="color: #483d8b;">&quot;b&quot;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> str1 <span style="color: #66cc66;">&lt;</span> <span style="color: #483d8b;">&quot;c&quot;</span> <span style="color: #ff7700;font-weight:bold;">and</span> str2 <span style="color: #66cc66;">!</span>= <span style="color: #483d8b;">&quot;a&quot;</span>
+<span style="color: #008000;">True</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> </pre></div></p>
+  </div>
+    </div>
+  </body>
+</html>

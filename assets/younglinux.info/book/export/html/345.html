@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Программа &quot;Светофор&quot;</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-345" class="section-2">
+  <h1 class="book-heading">Программа &quot;Светофор&quot;</h1>
+  <h3>Описание работы программы</h3>
+<ol>
+<li>Черепаха рисует на холсте три окружности по вертикали. </li>
+<li>В каждой окружности рисует короткую толстую черную линию, похожую на квадрат с заливкой. Также прорисовывается ножка светофора.</li>
+<li>Пользователю программы пять раз задаются вопросы в случайном порядке: "На какой цвет надо стоять?", "На какой цвет надо приготовиться?", "На какой цвет надо идти?".</li>
+<li>В текстовом поле диалогового окна пользователь должен вписать ответ: "Красный", "Желтый" или "Зеленый".</li>
+<li>Если пользователь дал правильный ответ, то черепаха закрашивает на светофоре соответствующий квадрат этим цветом.</li>
+<li>Если пользователь дал неправильный ответ, то появляется диалоговое окно с сообщением об ошибке и правильным ответом. </li>
+<li>В конце на холсте выводится оценка ответов пользователя, которая зависит от количества правильных ответов (от 0 до 5). </li>
+</ol>
+<h3>Создание программы</h3>
+<h4>Светофор</h4>
+<p>Светофор состоит из трех окружностей, отличающихся между собой только координатой <span class="geshifilter"><code class="python geshifilter-python">y</code></span>:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">сброс
+толщина_пера <span style="color: #ff4500;">3</span>
+иди <span style="color: #ff4500;">170</span>, <span style="color: #ff4500;">100</span>
+повтори <span style="color: #ff4500;">36</span> <span style="color: black;">&#123;</span>
+  вперёд <span style="color: #ff4500;">5</span>
+  направо <span style="color: #ff4500;">10</span>
+<span style="color: black;">&#125;</span>
+иди <span style="color: #ff4500;">170</span>, <span style="color: #ff4500;">159</span>
+повтори <span style="color: #ff4500;">36</span> <span style="color: black;">&#123;</span>
+  вперёд <span style="color: #ff4500;">5</span>
+  направо <span style="color: #ff4500;">10</span>
+<span style="color: black;">&#125;</span>
+иди <span style="color: #ff4500;">170</span>, <span style="color: #ff4500;">218</span>
+повтори <span style="color: #ff4500;">36</span> <span style="color: black;">&#123;</span>
+  вперёд <span style="color: #ff4500;">5</span>
+  направо <span style="color: #ff4500;">10</span>
+<span style="color: black;">&#125;</span></pre></div></p>
+<p>Далее рисуем три квадрата в окружностях с помощью очень толстой линии:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">толщина_пера <span style="color: #ff4500;">40</span>
+назад <span style="color: #ff4500;">1</span>
+иди <span style="color: #ff4500;">198</span>, <span style="color: #ff4500;">156</span>
+назад <span style="color: #ff4500;">1</span>
+иди <span style="color: #ff4500;">198</span>, <span style="color: #ff4500;">215</span>
+назад <span style="color: #ff4500;">1</span>
+иди <span style="color: #ff4500;">199</span>, <span style="color: #ff4500;">253</span>
+толщина_пера <span style="color: #ff4500;">10</span>
+назад <span style="color: #ff4500;">100</span>
+В конце ножка светофора:
+толщина_пера <span style="color: #ff4500;">10</span>
+назад <span style="color: #ff4500;">100</span></pre></div></p>
+<h4>"Включение" и "выключение" светофора</h4>
+<p>Программа должна уметь менять цвет любого из трех черных квадратов на соответствующий ему красный, желтый или зеленый. Поскольку изменение цвета должно происходить в результате определенных действий пользователя и несколько раз, то лучше оформить "включение-выключение" определенных "ламп" с помощью функций:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">выучи красный <span style="color: black;">&#123;</span>
+  иди <span style="color: #ff4500;">198</span>, <span style="color: #ff4500;">98</span>
+  цвет_пера <span style="color: #ff4500;">255</span>,<span style="color: #ff4500;">0</span>,<span style="color: #ff4500;">0</span>
+  толщина_пера <span style="color: #ff4500;">40</span>
+  назад <span style="color: #ff4500;">1</span>
+  цвет_пера <span style="color: #ff4500;">0</span>,<span style="color: #ff4500;">0</span>,<span style="color: #ff4500;">0</span>
+  иди <span style="color: #ff4500;">198</span>, <span style="color: #ff4500;">156</span>
+  назад <span style="color: #ff4500;">1</span>
+  иди <span style="color: #ff4500;">198</span>, <span style="color: #ff4500;">215</span>
+  назад <span style="color: #ff4500;">1</span>
+<span style="color: black;">&#125;</span>
+&nbsp;
+выучи желтый <span style="color: black;">&#123;</span>
+  иди <span style="color: #ff4500;">198</span>, <span style="color: #ff4500;">98</span>
+  толщина_пера <span style="color: #ff4500;">40</span>
+  назад <span style="color: #ff4500;">1</span>
+  цвет_пера <span style="color: #ff4500;">255</span>,<span style="color: #ff4500;">255</span>,<span style="color: #ff4500;">0</span>
+  иди <span style="color: #ff4500;">198</span>, <span style="color: #ff4500;">156</span>
+  назад <span style="color: #ff4500;">1</span>
+  цвет_пера <span style="color: #ff4500;">0</span>,<span style="color: #ff4500;">0</span>,<span style="color: #ff4500;">0</span>
+  иди <span style="color: #ff4500;">198</span>, <span style="color: #ff4500;">215</span>
+  назад <span style="color: #ff4500;">1</span>
+<span style="color: black;">&#125;</span>
+&nbsp;
+выучи зеленый <span style="color: black;">&#123;</span>
+  иди <span style="color: #ff4500;">198</span>, <span style="color: #ff4500;">98</span>
+  толщина_пера <span style="color: #ff4500;">40</span>
+  назад <span style="color: #ff4500;">1</span>
+  иди <span style="color: #ff4500;">198</span>, <span style="color: #ff4500;">156</span>
+  назад <span style="color: #ff4500;">1</span>
+  цвет_пера <span style="color: #ff4500;">0</span>,<span style="color: #ff4500;">255</span>,<span style="color: #ff4500;">0</span>
+  иди <span style="color: #ff4500;">198</span>, <span style="color: #ff4500;">215</span>
+  назад <span style="color: #ff4500;">1</span>
+  цвет_пера <span style="color: #ff4500;">0</span>,<span style="color: #ff4500;">0</span>,<span style="color: #ff4500;">0</span>
+<span style="color: black;">&#125;</span></pre></div></p>
+<p>Обратите внимание, в каждой функции предусмотрено закрашивание черным ранее окрашенных в иные цвета квадратов.</p>
+<h4>Диалог с пользователем</h4>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">$оценка = <span style="color: #ff4500;">0</span>
+повтори <span style="color: #ff4500;">5</span> <span style="color: black;">&#123;</span>
+  $число = случайное <span style="color: #ff4500;">0.5</span>,<span style="color: #ff4500;">3.5</span>
+  $число = округли $число
+  если $число == <span style="color: #ff4500;">1</span> <span style="color: black;">&#123;</span>
+    $ответ = спроси <span style="color: #483d8b;">&quot;На какой цвет надо стоять?&quot;</span>
+    если $ответ == <span style="color: #483d8b;">&quot;Красный&quot;</span> <span style="color: black;">&#123;</span>
+      красный
+      $оценка = $оценка + <span style="color: #ff4500;">1</span>
+    <span style="color: black;">&#125;</span>
+    иначе <span style="color: black;">&#123;</span>
+      сообщение <span style="color: #483d8b;">&quot;Не правильно. Стоять нужно на красный цвет!&quot;</span>
+    <span style="color: black;">&#125;</span>
+  <span style="color: black;">&#125;</span>
+  если $число == <span style="color: #ff4500;">2</span> <span style="color: black;">&#123;</span>
+    $ответ = спроси <span style="color: #483d8b;">&quot;На какой цвет надо приготовиться?&quot;</span>
+    если $ответ == <span style="color: #483d8b;">&quot;Желтый&quot;</span> <span style="color: black;">&#123;</span>
+      желтый
+      $оценка = $оценка + <span style="color: #ff4500;">1</span>
+    <span style="color: black;">&#125;</span>
+    иначе <span style="color: black;">&#123;</span>
+      сообщение <span style="color: #483d8b;">&quot;Не правильно. Приготовиться нужно на желтый цвет!&quot;</span>
+    <span style="color: black;">&#125;</span>
+  <span style="color: black;">&#125;</span>
+  если $число == <span style="color: #ff4500;">3</span> <span style="color: black;">&#123;</span>
+    $ответ = спроси <span style="color: #483d8b;">&quot;На какой цвет надо идти?&quot;</span>
+    если $ответ == <span style="color: #483d8b;">&quot;Зеленый&quot;</span> <span style="color: black;">&#123;</span>
+      зеленый
+      $оценка = $оценка + <span style="color: #ff4500;">1</span>
+    <span style="color: black;">&#125;</span>
+    иначе <span style="color: black;">&#123;</span>
+      сообщение <span style="color: #483d8b;">&quot;Не правильно. Идти нужно на зеленый цвет!&quot;</span>
+    <span style="color: black;">&#125;</span>
+  <span style="color: black;">&#125;</span>
+<span style="color: black;">&#125;</span>  
+&nbsp;
+иди <span style="color: #ff4500;">250</span>,<span style="color: #ff4500;">250</span>
+напиши <span style="color: #483d8b;">&quot;Ваша оценка: &quot;</span> + $оценка</pre></div></p>
+<p>В переменной <span class="geshifilter"><code class="python geshifilter-python">$оценка</code></span> храним количество правильных ответов пользователя.<br />
+Чтобы программ задавала вопросы в случайном порядке, используем переменную <span class="geshifilter"><code class="python geshifilter-python">$число</code></span>, в которой хранится случайное число от 0.5 до 3.5 округленное до целого, т.е. 1, 2 или 3.</p>
+  </div>
+    </div>
+  </body>
+</html>

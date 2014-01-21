@@ -1,0 +1,814 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Введение в объектно-ориентированное программирование  (ООП) на Python</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+        
+    <div id="node-36" class="section-1">
+  <h1 class="book-heading">Введение в объектно-ориентированное программирование  (ООП) на Python</h1>
+  <p><img src="../../../bg/oopython.gif" width="50" height="50" align="left" style="padding:10px;" /></p>
+<p>Элективный курс по информатике "Введение в объектно-ориентированное программирование на Python" представляет собой вводный курс, знакомящий с особенностями ООП (классах, объектах, наследовании, полиморфизме и др.).
+</p>
+<p>Место курса "Введение в объектно-ориентированное программирование на Python" в составе образовательной программы дополнительного образования детей "Лаборатория юного линуксоида" — второй год обучения.</p>
+<p>Курс рассчитан примерно на 12 часов.</p>
+<h2>Цели и задачи курса</h2>
+<p>Основной целью данного элективного курса является формирование базовых понятий объектно-ориентированного программирования, развитие системного мышления обучающихся. Курс не является учебником по Python.</p>
+<p>План изложения оличается от большинства учебников по программированию, где описывают ООП. Обычно сначала вводятся такие понятия как класс, объект, наследование, инкапсуляция и полиморфизм. Возможно, это слишком большой объем абстрактной информации, которую сложно усвоить сразу.</p>
+<p>В данном курсе сначала вводятся понятия класса и объекта, потом, постепенно, рассматриваются вопросы наследования, полиморфизма и др. При этом далеко не абсрактно, а на конкретных примерах. И только на предпоследнем уроке конкретизируются основные идеи объектно-ориентированного программирования.</p>
+<p>Что касается инкапсуляции, то в python ее как таковой нет. По сути то, что есть – это не совсем инкапсуляция; вводить сложное понятие, которое в данном случае еще и немного другое – достаточно трудно. Поэтому урок про инкапсуляцию в элективном курсе опущен.</p>
+  <div id="node-37" class="section-2">
+  <h1 class="book-heading">Общее представление об объектно-ориентированном программировании. Понятия класса и объекта. Урок 1</h1>
+  <div style="text-align:center;">
+<h4>Урок - лекция<br />
+Элективный курс: Введение в объектно-ориентированное программирование на Python<br />
+Уровень: Программирование для начинающих</h4>
+</div>
+<p>Циклы, ветвления, функции — все это элементы так называемого структурного программирования (директивная парадигма программирования). Для написания небольших программ возможностей структурного программирования обычно достаточно. Однако крупные проекты, работу над которыми ведут группы людей, намного рациональней выполнять используя парадигму объектно-ориентированного программирования. Почему? Это мы выясним позднее. Сначала разберемся в общих чертах, что из себя представляет объектно-ориентированное программирование.</p>
+<p>ООП — аббревиатура (сокращенное название) объектно-ориентированного программирования. </p>
+<p>Истоки ООП начинаются с 60-х годов XX века. Однако окончательное оформление и популяризацию можно отнести к 80-м годам XX века. Особую роль сыграл Алан Кей, сформулировавший основные принципы ООП. Наверное в настоящее время большинство проектов реализуются в стиле ООП. Хотя в программировании операционных систем (системном программировании) большую роль играет язык С (это не ОО язык).</p>
+<p>Итак, что же такое ООП? Судя по названию ключевую роль в этой парадигме играет некий объект, а точнее множество объектов. Реальный мир состоит из объектов и их взаимодействий между собой. В результате взаимодействий объекты могут изменяться сами или изменять другие объекты. Поэтому, можно сказать, что ООП является более естественным в каком-то смысле. </p>
+<p>В мире можно условно выделять различные системы, реализующие определенные цели (изменяющиеся из одного состояния в другое). Например, группа на занятии. Это система, состоящая из таких объектов как дети, учитель, столы, компьютеры, проектор и др. У этой системы можно выделить основную цель - увеличение доли знаний детей на некую величину. Чтобы добиться этого, объекты системы должны определенным образом выполнить взаимодействие между собой. </p>
+<p>Пример с занятием - это своего рода программа. Допустим, что какому-то «глобальному программисту» нужно было, чтобы на планете люди обладали обширными знаниями. Для этого он придумал специальную программу, которая вбирает на входе людей с N-количеством знаний, а на выходе возвращает с N+1(возможно чуть меньше-больше)-количеством знаний. Он наделил определенными способностями объекты этой системы, чтобы можно было добиться результата. Так, грубо говоря, «объекты-дети» способны воспринимать информацию, «объект-учитель» - ее транслировать, «объекты-предметы» помогать воспринимать и транслировать. Несмотря на то, что все ученики так или иначе способны воспринимать информацию, они различны по своим свойствам (по скорости и объему восприятия, способам обработки знаний и т.п.). Выполнение программы может происходить примерно таким образом: «объект-учитель», используя «объект-доска», «объект-компьютер», «объекты-картинки», передает информацию «объектам-детям». Те в свою очередь принимают информацию и изменяют свои свойства (допустим, количество знаний в голове). На выходе мы получаем «объектов-детей» с новыми свойствами (хотя бывает, что программа дает сбои по разным причинам).</p>
+<p>Следует понимать, существенную разницу между программой написанной с структурном «стиле» и программой в «стиле» ООП. В первом случае, на первый план выходит логика, понимание последовательности выполнения выражений (действий) для достижения целей. Во-втором — важно системное мышление, умение видеть систему в целом, с одной стороны, и понимание роли ее частей (объектов), с другой.</p>
+<p>В свое время Алан Кей сформулировал для разработанного им языка программирования Smalltalk несколько принципов. Они прекрасно описывают принципы ООП. Так например, утверждается, что объектно-ориентированная программа состоит из объектов, которые посылают друг другу сообщения. Каждый объект может состоять из других объектов (а может и не состоять). Каждый объект принадлежит определенному классу (типу), который задает поведение объектов, созданных на его основе. </p>
+<p>Что такое класс или тип? В реальном мире стол — это объект. Но когда его изготавливают, то руководствуются определенным описанием (знанием), что такое стол? Я могу сказать «стол» не имея ввиду никакой конкретный, но большинство поймут, о чем идет речь, т.к знают особенности этого предмета (крышка, четыре ножки и т. п.). </p>
+<p>Класс — это описание объектов определенного типа. В каком-то смысле - это абстракция без материального воплощения, которая позволяет систематизировать объекты той или иной системы. </p>
+<p>На основе классов создаются объекты. Может быть множество объектов, принадлежащих одному классу. С другой стороны, может быть класс без объектов, реализованных на его основе.</p>
+<div style="text-align:center;"><img src="../../../img/oopython/obj.png" width="265" height="265" alt="Примерная схема взаимодействия в объектно-ориентированной программе" /></div>
+<p>Посмотрите на рисунок. Допустим внешняя окружность — это программа. Она состоит из объектов (цветные фигуры) и классов (белые фигуры). Так объекты «красная_крупная_звезда» и «желтая_мелкая_звезда» могут обрабатывать (видоизменять) объекты «зеленый_треугольник» и «синий_прямоугольник». Звезды — разные объекты, хотя и принадлежат к одному классу. Поэтому можно заподозрить, что обрабатывают они объекты немного по разному. В данном случае объект-прямоугольник и объект-треугольник можно представить исключительно как данные. Кстати, в Python даже число — это объект, принадлежащий классу (типу) integer или float (или другому числовому типу).</p>
+<p>Приведем более реальный программный пример (а не «из жизни про занятие»). Допустим нужно создать программу по обработке текстовой информации. Эта программа должна получать от пользователя данные, обрабатывать определенным способом, а затем выдавать на экран. Причем нам сказали написать эту программу, используя парадигму ООП. Выделим объекты системы: пусть это будут «приемщик», «обработчик №1», «обработчик №2» и «отображатель». Итак, пользователь передает «приемщику» текст и информацию каким «обработчиком» обрабатывать. «Приемщик» может взять все это (у него предусмотрены такие функции) и, предварительно оценив, что дают, может передать тому «обработчику», который выбрал пользователь. Выбранный «обработчик» видоизменяет текст и передает его «отображателю». Тот, в свою очередь, специфически форматирует текст и выводит на экран. Также в данной программе может быть предусмотрена возможность напрямую передавать текст от «приемщика» к «отображателю» минуя «обработчики». </p>
+<p><em>Придумайте свою систему взаимодействующих объектов. </em></p>
+<p>Многие современные языки поддерживают несколько парадигм программирования (например, директивное, функциональное, объектно-ориентированное). Такие языки являются смешанными. К ним относится и Python.</p>
+  </div>
+<div id="node-38" class="section-2">
+  <h1 class="book-heading">Создание классов и объектов. Урок 2</h1>
+  <div style="text-align:center;">
+<h4>Методическая разработка урока<br />
+Элективный курс: Введение в объектно-ориентированное программирование на Python<br />
+Уровень: Программирование для начинающих</h4>
+</div>
+<p>Итак, программа, написанная с использованием парадигмы объектно-ориентированного программирования, должна состоять из </p>
+<ul>
+<li>объектов, </li>
+<li>классов (описания объектов), </li>
+<li>взаимодействий объектов между собой, в результате которых меняются их свойства.</li>
+</ul>
+<p>Объект в программе можно создать лишь на основе какого-нибудь класса. Поэтому, первым делом, ООП должно начинаться с проектирования и создания классов. Классы могут располагаться или вначале кода программы, или импортироваться из других файлов-модулей (также в начале кода). </p>
+<h2>Создание классов:</h2>
+<p>Для создания классов предусмотрена <strong>инструкция class</strong>. Это составная инструкция, которая состоит из строки заголовка и тела. Заголовок состоит из ключевого слова class, имени класса и, возможно, названий суперклассов в скобках. Суперклассов может и не быть, в таком случае скобки не требуются. Тело класса состоит из блока различных инструкций. Тело должно иметь отступ (как и любые вложенные конструкции в языке Python).</p>
+<p>Схематично класс можно представить следующим образом:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> ИМЯКЛАССА:
+     ПЕРЕМЕННАЯ = ЗНАЧЕНИЕ
+     …
+     <span style="color: #ff7700;font-weight:bold;">def</span> ИМЯМЕТОДА<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>, ...<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.ПЕРЕМЕННАЯ = ЗНАЧЕНИЕ
+          …
+     … </pre></div><br />
+Данная схема не является полной. Например, в заголовке после имени класса могут быть указаны суперклассы (в скобках), а методы могут быть более сложными. </p>
+<p>Следует помнить, что методы в классах — это те же функции, за одним небольшим исключением. Они принимают один обязательный параметр — <strong>self</strong> (с англ. можно перевести как "собственная личность"). Он нужен для связи с конкретным объектом.</p>
+<p>Атрибуты класса — это имена переменных вне функций и имена функций. Эти атрибуты наследуются всеми объектами, созданными на основе данного класса. Атрибуты обеспечивают свойства и поведение объекта. Объекты могут иметь атрибуты, которые создаются в теле метода, если данный метод будет вызван для конкретного объекта.</p>
+<h2>Создание объектов:</h2>
+<p>Объекты создаются так:</p>
+<p><span class="geshifilter"><code class="python geshifilter-python">ПЕРЕМЕННАЯ = ИМЯКЛАССА<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></code></span></p>
+<p>Здесь скобки обязательны! После такой инструкции в программе появляется объект, доступ к которому можно получить по имени переменной, связанной с ним. При создании объект получает атрибуты его класса, т. е. объекты обладают характеристиками, определенными в их классах.</p>
+<p>Количество объектов, которые можно создать на основе того или иного класса, не ограничено.</p>
+<p>Объекты одного класса имеют схожий набор атрибутов, а вот значения атрибутов могут быть разными. Другими словами, объекты одного класса похожи, но индивидуально различимы. Чтобы понять это, можно сравнить отношения объектов одного класса в программировании со следующем высказыванием: "Все млекопитающие принадлежат одному классу и обычно имеют по два глаза, однако у каждого животного (объекта) глаза имеют свои особенности".</p>
+<h2>Self:</h2>
+<p>Можно сказать, что методы класса — это небольшие программки, предназначенные для работы с объектами. Методы могут создавать новые свойства (данные) объекта, изменять существующие, выполнять другие действия над объектами.</p>
+<p>Методу необходимо "знать", данные какого объекта ему предстоит обрабатывать. Для этого ему в качестве первого (а иногда и единственного) аргумента передается имя переменной, связанной с объектом (можно сказать, передается сам объект). Чтобы в описании класса указать передаваемый в дальнейшем объект, используется параметр <strong>self</strong>. (Посмотрите на схему класса вверху.)</p>
+<p>С другой стороны, вызов метода для конкретного объекта в основном блоке программы выглядит следующим образом:</p>
+<p><span class="geshifilter"><code class="python geshifilter-python">ОБЪЕКТ.ИМЯМЕТОДА<span style="color: black;">&#40;</span>…<span style="color: black;">&#41;</span></code></span></p>
+<p>Здесь под словом ОБЪЕКТ имеется ввиду переменная, связанная с ним. Это выражение преобразуется в классе, к которому относится объект, в </p>
+<p><span class="geshifilter"><code class="python geshifilter-python">ИМЯМЕТОДА<span style="color: black;">&#40;</span>ОБЪЕКТ, …<span style="color: black;">&#41;</span></code></span></p>
+<p>Т. е. конкретный объект подставляется вместо параметра self.</p>
+<h2>Первая ОО-программа:</h2>
+<p>Попробуем на основе имеющихся уже знаний написать небольшую ОО-программу. Допустим, это будет класс с одним атрибутом вне метода и одним методом, который выводит с небольшим изменением значение этого атрибута на экран: </p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> First:
+     color = <span style="color: #483d8b;">&quot;red&quot;</span>
+     <span style="color: #ff7700;font-weight:bold;">def</span> out<span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #008000;">self</span>.<span style="color: black;">color</span> + <span style="color: #483d8b;">&quot;!&quot;</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>Теперь создадим пару объектов данного класса:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">obj1 = First<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+obj2 = First<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>Оба этих объекта (obj1 и obj2) имею два одинаковых атрибута: color (в виде свойства) и out (в виде метода). Это легко проверить:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>obj1.<span style="color: black;">color</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>obj2.<span style="color: black;">color</span><span style="color: black;">&#41;</span>
+obj1.<span style="color: black;">out</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+obj2.<span style="color: black;">out</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>В результате выполнения данного скрипта получается вывод двух надписей red и двух red!. Первые две надписи red – это результат применения встроенной функции print по отношению к свойствам объектов. Вторые две надписи red! - результат применения метода out к объектам. </p>
+<h2>Усложняем программу:<br />
+</h2>
+<p>В предыдущей программе оба созданных объекта абсолютно одинаковы. Класс, на основе которого они созданы, слишком прост и не предполагает того, что объекты могут иметь различные значения свойств. Исправим это. </p>
+<p>Пусть теперь в классе с помощью атрибутов вне функции устанавливаются два свойства объектов: красный цвет и круглая форма. А методы могут менять эти свойства в зависимости от пожеланий тех, кто создает объекты.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> Second:
+     color = <span style="color: #483d8b;">&quot;red&quot;</span>
+     form = <span style="color: #483d8b;">&quot;circle&quot;</span>
+     <span style="color: #ff7700;font-weight:bold;">def</span> changecolor<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,newcolor<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">color</span> = newcolor
+     <span style="color: #ff7700;font-weight:bold;">def</span> changeform<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,newform<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">form</span> = newform
+&nbsp;
+obj1 = Second<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+obj2 = Second<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>obj1.<span style="color: black;">color</span>, obj1.<span style="color: black;">form</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># вывод на экран &quot;red circle&quot;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>obj2.<span style="color: black;">color</span>, obj2.<span style="color: black;">form</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># вывод на экран &quot;red circle&quot;</span>
+&nbsp;
+obj1.<span style="color: black;">changecolor</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;green&quot;</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># изменение цвета первого объекта</span>
+obj2.<span style="color: black;">changecolor</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;blue&quot;</span><span style="color: black;">&#41;</span>  <span style="color: #808080; font-style: italic;"># изменение цвет второго объекта</span>
+obj2.<span style="color: black;">changeform</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;oval&quot;</span><span style="color: black;">&#41;</span>   <span style="color: #808080; font-style: italic;"># изменение формы второго объекта</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>obj1.<span style="color: black;">color</span>, obj1.<span style="color: black;">form</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># вывод на экран &quot;green circle&quot;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>obj2.<span style="color: black;">color</span>, obj2.<span style="color: black;">form</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># вывод на экран &quot;blue oval&quot;</span></pre></div></p>
+<p>В данной программе по-умолчанию любой созданный объект имеет красный цвет и круглую форму. Однако в дальнейшем с помощью методов данного класса можно поменять и цвет и форму любого объекта. В результате объекты перестают быть одинаковыми (красными и круглыми), хотя сохраняют тот же набор свойств (цвет и форму).</p>
+<p>Как же происходят изменения? Дело в том, что методы помимо параметра self, могут иметь и другие параметры, в которых передаются данные для обработки их этим методом. Так, в примере выше, метод changecolor имеет дополнительный параметр newcolor, с помощью которого в метод можно передать данные о желаемом цвете фигуры. Далее метод меняет цвет с помощью соответствующих инструкций. </p>
+<h2>Практическая работа:</h2>
+<ol>
+<li>Напишите два скрипта представленных выше. Посмотрите, как они работают. Во второй программу добавьте еще одно свойство и один метод, позволяющий его менять. Создайте третий объект и измените все его свойства.</li>
+<li>Напишите программу в стиле ООП, удовлетворяющую следующим условиям: в программе должны быть два класса и два объекта, принадлежащих разным классам; один объект с помощью метода своего класса должен так или иначе изменять данные другого объекта.</li>
+</ol>
+  </div>
+<div id="node-39" class="section-2">
+  <h1 class="book-heading">Конструктор класса — метод __init__. Урок 3</h1>
+  <div style="text-align:center;">
+<h4>Методическая разработка урока<br />
+Элективный курс: Введение в объектно-ориентированное программирование на Python<br />
+Уровень: Программирование для начинающих</h4>
+</div>
+<p>Большинство классов имеют специальный метод, который автоматически при создании объекта создает ему атрибуты. Т.е. вызывать данный метод не нужно, т.к. он сам запускается при вызове класса. (Вызов класса происходит, когда создается объект.) Такой метод называется <strong>конструктором класса</strong> и в языке программирования Python носит имя <strong>__init__</strong>. (В начале и конце по два знака подчеркивания.)</p>
+<p>Первым параметром, как и у любого другого метода, у <strong>__init__</strong> является <strong>self</strong>, на место которого подставляется объект в момент его создания. Второй и последующие (если есть) параметры заменяются аргументами, переданными в конструктор при вызове класса.</p>
+<p>Рассмотрим два класса: в одном будет использоваться конструктор, а в другом нет. Требуется создать два атрибута объекта.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> YesInit:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,one,two<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">fname</span> = one
+          <span style="color: #008000;">self</span>.<span style="color: black;">sname</span> = two
+&nbsp;
+obj1 = YesInit<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Peter&quot;</span>,<span style="color: #483d8b;">&quot;Ok&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>obj1.<span style="color: black;">fname</span>, obj1.<span style="color: black;">sname</span><span style="color: black;">&#41;</span></pre></div></p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> NoInit:
+     <span style="color: #ff7700;font-weight:bold;">def</span> names<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,one,two<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">fname</span> = one
+          <span style="color: #008000;">self</span>.<span style="color: black;">sname</span> = two
+&nbsp;
+obj1 = NoInit<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+obj1.<span style="color: black;">names</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Peter&quot;</span>,<span style="color: #483d8b;">&quot;Ok&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>obj1.<span style="color: black;">fname</span>, obj1.<span style="color: black;">sname</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>Вывод интерпретатора в обоих случаях:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">Peter Ok</pre></div></p>
+<p>В обоих программах у объекта появляются два атрибута: fname и sname. Однако в первом случае они инициализируются при создании объекта и должны передаваться в скобках при вызове класса. Если какие-то атрибуты должны присутствовать у объектов класса обязательно, то использование метода <strong>__init__</strong> - идеальный вариант. Во второй программе (без использования конструктора) атрибуты создаются путем вызова метода names после создания объекта. В данном случае вызов метода names необязателен, поэтому объекты могут существовать без атрибутов fname и sname.</p>
+<p>Обычно метод <strong>__init__</strong> предполагает передачу аргументов при создании объектов, однако аргумент может не быть передан. Например, если в примере выше создать объект так: obj1 = YesInit(), т.е. не передать классу аргументы, то произойдет ошибка. Чтобы избежать подобных ситуаций, можно в методе <strong>__init__</strong> присваивать параметрам значения по умолчанию. Если при вызове класса были заданы аргументы для данных параметров, то хорошо — они и будут использоваться, если нет — еще лучше — в теле метода будут использованы значения по умолчанию. Пример:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> YesInit:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,one=<span style="color: #483d8b;">&quot;noname&quot;</span>,two=<span style="color: #483d8b;">&quot;nonametoo&quot;</span><span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">fname</span> = one
+          <span style="color: #008000;">self</span>.<span style="color: black;">sname</span> = two
+&nbsp;
+obj1 = YesInit<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Sasha&quot;</span>,<span style="color: #483d8b;">&quot;Tu&quot;</span><span style="color: black;">&#41;</span>
+obj2 = YesInit<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+obj3 = YesInit<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Spartak&quot;</span><span style="color: black;">&#41;</span>
+obj4 = YesInit<span style="color: black;">&#40;</span>two=<span style="color: #483d8b;">&quot;Harry&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>obj1.<span style="color: black;">fname</span>, obj1.<span style="color: black;">sname</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>obj2.<span style="color: black;">fname</span>, obj2.<span style="color: black;">sname</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>obj3.<span style="color: black;">fname</span>, obj3.<span style="color: black;">sname</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>obj4.<span style="color: black;">fname</span>, obj4.<span style="color: black;">sname</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>Вывод интерпретатора:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">Sasha Tu
+noname nonametoo
+Spartak nonametoo
+noname Harry</pre></div></p>
+<p>В данном случае, второй объект создается без передачи аргументов, поэтому в методе <strong>__init__</strong> используются значения по умолчанию ("noname" и "nonametoo"). При создании третьего и четвертого объектов передаются по одному аргументу. Если указывается значение не первого аргумента, то следует явно указать имя параметра (четвертый объект).</p>
+<p>Метод <strong>__init__</strong> может содержать параметры как без значений по умолчанию, так и со значениями по умолчанию. В таком случае, параметры, аргументы которых должны быть обязательно указаны при создании объектов, указываются первыми, а параметры со значениями по умолчанию — после. Например, ниже вторая программа с ошибкой:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> fruits:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,w,n=0<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">what</span> = w
+          <span style="color: #008000;">self</span>.<span style="color: black;">numbers</span> = n
+&nbsp;
+f1 = fruits<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;apple&quot;</span>,<span style="color: #ff4500;">150</span><span style="color: black;">&#41;</span>
+f2 = fruits<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;pineapple&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>f1.<span style="color: black;">what</span>,f1.<span style="color: black;">numbers</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>f2.<span style="color: black;">what</span>,f2.<span style="color: black;">numbers</span><span style="color: black;">&#41;</span></pre></div></p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> fruits:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,n=<span style="color: #ff4500;">0</span>,w<span style="color: black;">&#41;</span>: <span style="color: #808080; font-style: italic;">#ERROR</span>
+          <span style="color: #008000;">self</span>.<span style="color: black;">what</span> = w
+          <span style="color: #008000;">self</span>.<span style="color: black;">numbers</span> = n
+&nbsp;
+f1 = fruits<span style="color: black;">&#40;</span><span style="color: #ff4500;">150</span>,<span style="color: #483d8b;">&quot;apple&quot;</span><span style="color: black;">&#41;</span>
+f2 = fruits<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;pineapple&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>f1.<span style="color: black;">what</span>,f1.<span style="color: black;">numbers</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>f2.<span style="color: black;">what</span>,f2.<span style="color: black;">numbers</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>Напишем более существенную программу с использованием конструктора. Допустим это будет класс, значение начальных атрибутов (из метода <strong>__init__</strong>) которого зависит от переданных аргументов при создании объектов. Далее эти свойства объектов, созданных на основе данного класса, можно менять с помощью обычных методов.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> Building:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,w,c,n=0<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">what</span> = w
+          <span style="color: #008000;">self</span>.<span style="color: black;">color</span> = c
+          <span style="color: #008000;">self</span>.<span style="color: black;">numbers</span> = n
+          <span style="color: #008000;">self</span>.<span style="color: black;">mwhere</span><span style="color: black;">&#40;</span>n<span style="color: black;">&#41;</span>
+&nbsp;
+     <span style="color: #ff7700;font-weight:bold;">def</span> mwhere<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,n<span style="color: black;">&#41;</span>:
+          <span style="color: #ff7700;font-weight:bold;">if</span> n <span style="color: #66cc66;">&lt;</span>= 0:
+               <span style="color: #008000;">self</span>.<span style="color: black;">where</span> = <span style="color: #483d8b;">&quot;отсутствуют&quot;</span>
+          <span style="color: #ff7700;font-weight:bold;">elif</span> 0 <span style="color: #66cc66;">&lt;</span> n <span style="color: #66cc66;">&lt;</span> 100:
+               <span style="color: #008000;">self</span>.<span style="color: black;">where</span> = <span style="color: #483d8b;">&quot;малый склад&quot;</span>
+          <span style="color: #ff7700;font-weight:bold;">else</span>:
+               <span style="color: #008000;">self</span>.<span style="color: black;">where</span> = <span style="color: #483d8b;">&quot;основной склад&quot;</span>
+&nbsp;
+     <span style="color: #ff7700;font-weight:bold;">def</span> plus<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,p<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">numbers</span> = <span style="color: #008000;">self</span>.<span style="color: black;">numbers</span> + p
+          <span style="color: #008000;">self</span>.<span style="color: black;">mwhere</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>.<span style="color: black;">numbers</span><span style="color: black;">&#41;</span>
+     <span style="color: #ff7700;font-weight:bold;">def</span> minus<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,m<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">numbers</span> = <span style="color: #008000;">self</span>.<span style="color: black;">numbers</span> - m
+          <span style="color: #008000;">self</span>.<span style="color: black;">mwhere</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>.<span style="color: black;">numbers</span><span style="color: black;">&#41;</span>
+&nbsp;
+m1 = Building<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;доски&quot;</span>, <span style="color: #483d8b;">&quot;белые&quot;</span>,<span style="color: #ff4500;">50</span><span style="color: black;">&#41;</span>
+m2 = Building<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;доски&quot;</span>, <span style="color: #483d8b;">&quot;коричневые&quot;</span>, <span style="color: #ff4500;">300</span><span style="color: black;">&#41;</span>
+m3 = Building<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;кирпичи&quot;</span>,<span style="color: #483d8b;">&quot;белые&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>m1.<span style="color: black;">what</span>,m1.<span style="color: black;">color</span>,m1.<span style="color: black;">where</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>m2.<span style="color: black;">what</span>,m2.<span style="color: black;">color</span>,m2.<span style="color: black;">where</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>m3.<span style="color: black;">what</span>,m3.<span style="color: black;">color</span>,m3.<span style="color: black;">where</span><span style="color: black;">&#41;</span>
+&nbsp;
+m1.<span style="color: black;">plus</span><span style="color: black;">&#40;</span>500<span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>m1.<span style="color: black;">numbers</span>, m1.<span style="color: black;">where</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>В данном примере значение атрибута where объекта зависит от значения атрибута numbers.</p>
+<h2>Практическая работа:</h2>
+<ol>
+<li>Спишите представленные выше скрипт с классом Building. Запустите программу, объясните как она работает. В какой момент создается атрибут where объектов? Зачем потребовалось конструкцию if-elif-else вынести в отдельную функцию, а не оставить ее в методе __init__?</li>
+<li>Самостоятельно придумайте класс, содержащий конструктор. Создайте на его основе несколько объектов.</li>
+</ol>
+  </div>
+<div id="node-40" class="section-2">
+  <h1 class="book-heading">Наследование в ООП на Python. Урок 4</h1>
+  <div style="text-align:center;">
+<h4>Методическая разработка урока<br />
+Элективный курс: Введение в объектно-ориентированное программирование на Python<br />
+Уровень: Программирование для начинающих</h4>
+</div>
+<p>Одной из важнейших особенностей ООП является возможность наследования объектами атрибутов классов, а также наследование одними классами атрибутов других классов. На самом деле с наследованием мы уже сталкивались, когда создавали любой объект в Python: объекты наследуют атрибуты класса, хотя могут иметь и индивидуальные. </p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> Things:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,n,t<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">namething</span> = n
+          <span style="color: #008000;">self</span>.<span style="color: black;">total</span> = t
+&nbsp;
+th1 = Things<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;table&quot;</span>, <span style="color: #ff4500;">5</span><span style="color: black;">&#41;</span>
+th2 = Things<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;computer&quot;</span>, 7<span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>th1.<span style="color: black;">namething</span>,th1.<span style="color: black;">total</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># Вывод: table 5</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>th2.<span style="color: black;">namething</span>,th2.<span style="color: black;">total</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># Вывод: computer 7</span>
+&nbsp;
+th1.<span style="color: black;">color</span> = <span style="color: #483d8b;">&quot;green&quot;</span> <span style="color: #808080; font-style: italic;"># новое свойство объекта th1</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>th1.<span style="color: black;">color</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># Вывод: green</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>th2.<span style="color: black;">color</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># ОШИБКА: у объекта th2 нет свойства color!</span></pre></div></p>
+<p>Здесь оба объекта имеют свойства namething и total, однако только у первого объекта есть свойство color. Все просто: атрибуты класса наследуются объектами, созданными на его основе; однако атрибуты конкретного объекта не зависят от атрибутов других объектов и представляют собственное пространство имен объекта. Последнее позволяет объектам одного класса иметь различные значения атрибутов, а если потребуется и различный набор атрибутов.</p>
+<p><strong>Задание.</strong> <em>Спишите код, выполните его с помощью интерпретатора Python. Как можно исправить код, чтобы не было ошибки? Исправьте.</em></p>
+<p>На самом деле, наследование более широкое понятие, чем просто взаимосвязь между классами и объектами. Один класс может быть подклассом другого, дополняя его. Пояснить это можно проведя аналогию с реальным миром. Например, все столы имеют общие характерные черты («класс»), при этом они имеют разное назначение («подклассы»), хотя продолжают наследовать общие черты. В результате того, что есть такой механизм как наследование можно избежать избыточность кода, просто описав общие свойства и методы в надклассах.</p>
+<p>По поводу терминологии. Классы, атрибуты которых наследуются другими классами, могут называть как надклассами так и суперклассами. Классы, которые наследуют атрибуты других классов, часто называют подклассами.</p>
+<p>Класс, являющийся надклассом по отношению к одному классу, сам может быть подклассом по отношению к другому. Другими словами, может существовать целая цепочка наследования. </p>
+<p>При обращении к атрибуту объекта (obj.prop) сначала просматривается на наличие этого атрибута сам объект, затем его класс, на основе которого он создан. Если в классе не будет найден атрибут, то его поиск продолжится в суперклассе, к которому относится класс.</p>
+<p>Суперклассы класса указываются в скобках в заголовке инструкции class. </p>
+<p>Рассмотрим такой пример:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> Table:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,l,w,h<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: #008000;">long</span> = l
+          <span style="color: #008000;">self</span>.<span style="color: black;">width</span> = w
+          <span style="color: #008000;">self</span>.<span style="color: black;">height</span> = h
+     <span style="color: #ff7700;font-weight:bold;">def</span> outing<span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #008000;">self</span>.<span style="color: #008000;">long</span>,<span style="color: #008000;">self</span>.<span style="color: black;">width</span>,<span style="color: #008000;">self</span>.<span style="color: black;">height</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">class</span> Kitchen<span style="color: black;">&#40;</span>Table<span style="color: black;">&#41;</span>:
+     <span style="color: #ff7700;font-weight:bold;">def</span> howplaces<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,n<span style="color: black;">&#41;</span>:
+          <span style="color: #ff7700;font-weight:bold;">if</span> n <span style="color: #66cc66;">&lt;</span> 2:
+               <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;It is not kitchen table&quot;</span><span style="color: black;">&#41;</span>
+          <span style="color: #ff7700;font-weight:bold;">else</span>:
+               <span style="color: #008000;">self</span>.<span style="color: black;">places</span> = n
+     <span style="color: #ff7700;font-weight:bold;">def</span> outplases<span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #008000;">self</span>.<span style="color: black;">places</span><span style="color: black;">&#41;</span>
+&nbsp;
+t_room1 = Kitchen<span style="color: black;">&#40;</span><span style="color: #ff4500;">2</span>,<span style="color: #ff4500;">1</span>,<span style="color: #ff4500;">0.5</span><span style="color: black;">&#41;</span>
+t_room1.<span style="color: black;">outing</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+t_room1.<span style="color: black;">howplaces</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">5</span><span style="color: black;">&#41;</span>
+t_room1.<span style="color: black;">outplases</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+t_2 = Table<span style="color: black;">&#40;</span><span style="color: #ff4500;">1</span>,<span style="color: #ff4500;">3</span>,<span style="color: #ff4500;">0.7</span><span style="color: black;">&#41;</span>
+t_2.<span style="color: black;">outing</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+t_2.<span style="color: black;">howplaces</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">8</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># ОШИБКА</span></pre></div></p>
+<p>Здесь создается два класса: Table и Kitchen. Второй является подклассом первого и наследует все его атрибуты (методы __init__ и outing). Далее создаются два объекта: t_room1 и t_2. Первый объект принадлежит к классу Kitchen и наследует атрибуты этого класса и его суперкласса. Второй объект принадлежит классу Table; к классу Kitchen он никакого отношения не имеет и поэтому не может обращаться к методам howplaces и outplases. В данном примере также можно увидеть, что объекты можно создавать как на основе классов так и суперклассов.</p>
+<p><strong>Задание.</strong> <em>Расширьте программу, представленную выше, создав второй подкласс класса Table (например, Worker), содержащий пару методов, отличающихся от методов класса Kitchen().</em></p>
+<p>Класс может иметь не один, а несколько суперклассов, которые перечисляются друг за другом в скобках в строке заголовка. Такое наследование называется множественным. Потребность во множественном наследовании возникает в случае, если объекты класса предполагают использование свойств и методов различных суперклассов.</p>
+<h2>Практическая работа</h2>
+<p>Напишите программу, где класс «геометрические фигуры» (figure) содержит свойство color с изначальным значением white и метод для изменения цвета фигуры, а его подклассы «овал» (oval) и «квадрат» (square) содержат методы __init__ для задания начальных размеров объектов при их создании.</p>
+  </div>
+<div id="node-41" class="section-2">
+  <h1 class="book-heading">Полиморфизм и переопределение методов в ООП на Python. Урок 5</h1>
+  <div style="text-align:center;">
+<h4>Методическая разработка урока<br />
+Элективный курс: Введение в объектно-ориентированное программирование на Python<br />
+Уровень: Программирование для начинающих</h4>
+</div>
+<h2>Полиморфизм</h2>
+<p>Парадигма объектно-ориентированного программирования помимо наследования включает еще одну важную особенность — полиморфизм. Слово «полиморфизм» можно перевести как «много форм». В ОО программировании этим термином обозначают возможность использования одного и того же имени операции или метода к объектам разных классов, при этом действия, совершаемые с объектами, могут существенно различаться. Поэтому можно сказать, что у одного и того же слова много форм. Например, два разных класса могут содержать метод total, однако инструкции в методах могут предусматривать совершенно разные операции: так в классе T1 – это прибавление 10 к аргументу, а в T2 – подсчет длины строки символов. В зависимости от того, к объекту какого класса применяется метод total, выполняются те или иные инструкции.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> T1:
+     n=10
+     <span style="color: #ff7700;font-weight:bold;">def</span> total<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,N<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">total</span> = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>.<span style="color: black;">n</span><span style="color: black;">&#41;</span> + <span style="color: #008000;">int</span><span style="color: black;">&#40;</span>N<span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">class</span> T2:
+     <span style="color: #ff7700;font-weight:bold;">def</span> total<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,s<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">total</span> = <span style="color: #008000;">len</span><span style="color: black;">&#40;</span><span style="color: #008000;">str</span><span style="color: black;">&#40;</span>s<span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+&nbsp;
+t1 = T1<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+t2 = T2<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+t1.<span style="color: black;">total</span><span style="color: black;">&#40;</span>45<span style="color: black;">&#41;</span>
+t2.<span style="color: black;">total</span><span style="color: black;">&#40;</span>45<span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>t1.<span style="color: black;">total</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># Вывод: 55</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>t2.<span style="color: black;">total</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># Вывод: 2</span></pre></div> </p>
+<p><strong>Задание.</strong> <em>Напишите программу, запрашивающую у пользователя ввод числа. Если число принадлежит диапазону от -100 до 100, то создается объект одного класса, во всех остальных случаях создается объект другого класса. В обоих классах должен быть метод-конструктор __init__, который в первом классе возводит число в квадрат, а во-втором - умножает на два.</em></p>
+<p>Ответ:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> One:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,a<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">a</span> = a <span style="color: #66cc66;">**</span> 2
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">class</span> Two:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,a<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">a</span> = a <span style="color: #66cc66;">*</span> 2
+&nbsp;
+a = <span style="color: #008000;">input</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;введите число &quot;</span><span style="color: black;">&#41;</span>
+a = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span>a<span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">if</span> -100 <span style="color: #66cc66;">&lt;</span> a <span style="color: #66cc66;">&lt;</span> 100:
+     obj = One<span style="color: black;">&#40;</span>a<span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">else</span>:
+     obj = Two<span style="color: black;">&#40;</span>a<span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>obj.<span style="color: black;">a</span><span style="color: black;">&#41;</span> </pre></div></p>
+<h2>Переопределение методов</h2>
+<p>Использование полиморфизма при наследовании классов позволяет переопределять методы суперклассов их подклассами. Например, может возникнуть ситуация, когда все подклассы реализуют определенный метод из суперкласса, и лишь один подкласс должен иметь его другую реализацию. В таком случае метод переопределяется в подклассе. Пример:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> Base:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,n<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">numb</span> = n
+     <span style="color: #ff7700;font-weight:bold;">def</span> out<span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #008000;">self</span>.<span style="color: black;">numb</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">class</span> One<span style="color: black;">&#40;</span>Base<span style="color: black;">&#41;</span>:
+     <span style="color: #ff7700;font-weight:bold;">def</span> multi<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,m<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">numb</span> <span style="color: #66cc66;">*</span>= m
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">class</span> Two<span style="color: black;">&#40;</span>Base<span style="color: black;">&#41;</span>:
+     <span style="color: #ff7700;font-weight:bold;">def</span> inlist<span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">inlist</span> = <span style="color: #008000;">list</span><span style="color: black;">&#40;</span><span style="color: #008000;">str</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>.<span style="color: black;">numb</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+     <span style="color: #ff7700;font-weight:bold;">def</span> out<span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          i = 0
+          <span style="color: #ff7700;font-weight:bold;">while</span> i <span style="color: #66cc66;">&lt;</span> <span style="color: #008000;">len</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>.<span style="color: black;">inlist</span><span style="color: black;">&#41;</span>:
+               <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #008000;">self</span>.<span style="color: black;">inlist</span><span style="color: black;">&#91;</span>i<span style="color: black;">&#93;</span><span style="color: black;">&#41;</span>
+               i += <span style="color: #ff4500;">1</span>
+&nbsp;
+obj1 = One<span style="color: black;">&#40;</span><span style="color: #ff4500;">45</span><span style="color: black;">&#41;</span>
+obj2 = Two<span style="color: black;">&#40;</span><span style="color: #483d8b;">'abc'</span><span style="color: black;">&#41;</span>
+&nbsp;
+obj1.<span style="color: black;">multi</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">2</span><span style="color: black;">&#41;</span>
+obj1.<span style="color: black;">out</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># Вывод числа 90</span>
+&nbsp;
+obj2.<span style="color: black;">inlist</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+obj2.<span style="color: black;">out</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># Вывод в столбик букв a, b, c </span></pre></div></p>
+<p>В данном случае объект obj1 использует метод out из cуперкласса Base, а obj2 – из своего класса Two. Атрибуты ищутся «снизу вверх»: сначала в классах, затем суперклассах. Поскольку для obj2 атрибут out уже был найден в классе Two, то из класса Base он не используется. Другими словами, класс Two переопределят атрибут суперкласса Base.</p>
+<h2>Расширение методов</h2>
+<p>При ООП может возникнуть ситуация, когда метод суперкласса в принципе подходит для реализации того или иного действия с объектами класса, однако требует небольших изменений. В таком случае можно использовать так называемое расширение метода, когда из тела метода класса вызывается метод суперкласса и дописываются дополнительные инструкции. В примере ниже в методе класса Subclass вызывается метод другого класса (в данном случае его суперкласса; однако может вызываться метод, не принадлежащий собственному суперклассу):</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> Base:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,N<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">numb</span> = N
+     <span style="color: #ff7700;font-weight:bold;">def</span> out<span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">numb</span> /= 2 
+          <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #008000;">self</span>.<span style="color: black;">numb</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">class</span> Subclass<span style="color: black;">&#40;</span>Base<span style="color: black;">&#41;</span>:
+     <span style="color: #ff7700;font-weight:bold;">def</span> out<span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>----&quot;</span><span style="color: black;">&#41;</span>
+          Base.<span style="color: black;">out</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>
+          <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;----<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+i = 0
+<span style="color: #ff7700;font-weight:bold;">while</span> i <span style="color: #66cc66;">&lt;</span> 10:
+     <span style="color: #ff7700;font-weight:bold;">if</span> 4 <span style="color: #66cc66;">&lt;</span> i <span style="color: #66cc66;">&lt;</span> 7:
+          obj = Subclass<span style="color: black;">&#40;</span>i<span style="color: black;">&#41;</span>
+     <span style="color: #ff7700;font-weight:bold;">else</span>:
+          obj = Base<span style="color: black;">&#40;</span>i<span style="color: black;">&#41;</span>
+     i += <span style="color: #ff4500;">1</span>
+     obj.<span style="color: black;">out</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div> </p>
+<h2>Вывод</h2>
+<p>Полиморфизм в объектно-ориентированном программировании дает возможность реализовывать так называемые единые интерфейсы для объектов различных классов. Имеется ввиду, что если есть методы с одинаковыми названиями (или операции, обозначаемая одинаковыми знаками, как будет показано в уроке №7) для всех объектов, то это позволяет писать более очевидный исходный код. Например, разные классы могут предусматривать различный способ вывода той или иной информации объектов. Однако единое название для всех объектов метода «вывода» позволит не запутать программу, сделать ее более очевидной.</p>
+<p>Переопределение методов в подклассах (а также их расширение) позволяет специализировать ранее написанный исходный код, не меняя его в суперклассах, где обычно требуется оставить код в неизменном виде для других подклассов.</p>
+<h2>Практическая работа</h2>
+<p>Напишите небольшую объектно-ориентированную программку, демонстрирующую такие свойства ООП как наследование и полиморфизм.</p>
+  </div>
+<div id="node-42" class="section-2">
+  <h1 class="book-heading">Композиционный подход в объектно-ориентированном программировании. Урок 7</h1>
+  <div style="text-align:center;">
+<h4>Методическая разработка урока<br />
+Элективный курс: Введение в объектно-ориентированное программирование на Python<br />
+Уровень: Программирование для начинающих<br />
+</h4>
+</div>
+<p>Еще одной особенностью объектно-ориентированного программирования является возможность реализовывать так называемый композиционный подход. Заключается он в следующем: есть класс-контейнер, который включает в себя вызовы других классов. В результате получается, что создавая объект класса-контейнера, мы одновременно создаем и объекты включенных в него классов.</p>
+<p>Чтобы понять зачем нужна композиция в программировании, можно как всегда провести аналогию с реальным миром. Так подавляющее большинство природных, биологических и технических объектов состоят из других более простых частей, по своей сути, также являющихся объектами. Например, человек состоит из различный органов (сердце, кожа и др.), компьютер — из различного "железа" (процессор, ОЗУ, диск и т.д.).</p>
+<p>Следует понимать, что "композиция" и "наследование" - достаточно разные свойства реальных и виртуальных систем. Наследование предполагает принадлежность к какой-то общности (похожесть), а композиция — формирование целого из частей.</p>
+<p>Еще раз: при создании объекта, принадлежащего классу-контейнеру, автоматически создаются объекты-части, из которых он как бы состоит. Свойства и методы объектов частей определяются в их классах. Программисты могут создавать целые коллекции встраиваемых классов.</p>
+<p>Рассмотрим использование композиции при программировании на Python с помощью конкретного примера. </p>
+<h2>Описание задачи</h2>
+<p>Допустим, нам требуется написать программу, которая вычисляет площадь обоев для оклеивания комнаты определенных пользователем размеров. При этом необходимо учитывать, что окна, двери, пол и потолок оклеивать не надо. </p>
+<p>Для начала решим данную задачу логически. Комната — это прямоугольный параллелепипед, состоящий из шести прямоугольников. Его площадь представляет собой сумму площадей составляющих его прямоугольников. Площадь прямоугольника равна произведению его длины на ширину.</p>
+<div style="text-align:center;"><img src="../../../img/oopython/parallelepiped.png" width="340" height="143" alt="Параллелепипед" /></div>
+<p>Обои клеятся только на стены, следовательно площади верхнего и нижнего прямоугольников нам не нужны. Из рисунка можно заключить, что площадь одного прямоугольника равна x * z, второго – у * z. Противоположные прямоугольники равны, значит общая площадь четырех прямоугольников будет равна S = 2xz + 2уz = 2z(x+y). Потом из этой площади надо будет вычесть общую площадь дверей и окон. Двери и окна — это прямоугольники (как вычислить их площадь должно быть понятно).</p>
+<h2>Создание классов-частей</h2>
+<p>Теперь приступим к созданию программы. В соответствие с изучаемой темой написать ее надо используя объектно-ориентированную парадигму программирования, да еще и применяя "композиционный подход" (насколько он здесь уместен не обсуждается :b).</p>
+<p>Можно заметить, что фактически у нас есть три типа объектов - это объекты-окна, объекты-двери и объекты-комнаты. Получается три класса. Окна и двери являются частями помещения, а значит могут создаваться внутри класса «комнаты». Кроме того, для данной задачи существенное значение имеют только два свойства: длина и ширина. Поэтому классы «окна» и «двери» можно объединить в один. Понятно, что если для задачи были бы важны другие свойства (например, толщина стекла, материал), то возможно следовало бы создать два класса. </p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> Win_Door:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,x,y<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">square</span> = x <span style="color: #66cc66;">*</span> y </pre></div></p>
+<p>Здесь при вызове класса Win_Door будет автоматически создан атрибут square объекта, являющийся ссылкой на значение площади объекта.</p>
+<h2>Создание класса-контейнера</h2>
+<p>Можно по-разному реализовать класс-контейнер. Есть подозрение, что многое зависит от задачи, решаемой программистом, его мастерства и вкуса. Классы-части можно вызывать в методе __init__, тем самым объекты-части будут автоматически создаваться при создании объекта-контейнера. Однако в данной задаче мы пойдем другим путем: окна и двери будут создаваться специальным для этих целей методом (будем считать, что так интересней). Также класс должен содержать метод для вычисления площади требуемых обоев (wallpapers). В конце можно добавить метод, в котором реализован вывод тех или иных данных.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> Room:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,x,y,z<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">square</span> = 2 <span style="color: #66cc66;">*</span> z <span style="color: #66cc66;">*</span> <span style="color: black;">&#40;</span>x + y<span style="color: black;">&#41;</span>
+     <span style="color: #ff7700;font-weight:bold;">def</span> win_door<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>, d,e, f,g, m=1,n=1<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">window</span> = Win_Door<span style="color: black;">&#40;</span>d,e<span style="color: black;">&#41;</span>
+          <span style="color: #008000;">self</span>.<span style="color: black;">door</span> = Win_Door<span style="color: black;">&#40;</span>f,g<span style="color: black;">&#41;</span>
+          <span style="color: #008000;">self</span>.<span style="color: black;">numb_w</span> = m
+          <span style="color: #008000;">self</span>.<span style="color: black;">numb_d</span> = n
+     <span style="color: #ff7700;font-weight:bold;">def</span> wallpapers<span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">wallpapers</span> = <span style="color: #008000;">self</span>.<span style="color: black;">square</span> - \
+               <span style="color: #008000;">self</span>.<span style="color: black;">window</span>.<span style="color: black;">square</span> <span style="color: #66cc66;">*</span> <span style="color: #008000;">self</span>.<span style="color: black;">numb_w</span> \
+               - <span style="color: #008000;">self</span>.<span style="color: black;">door</span>.<span style="color: black;">square</span> <span style="color: #66cc66;">*</span> <span style="color: #008000;">self</span>.<span style="color: black;">numb_d</span>
+     <span style="color: #ff7700;font-weight:bold;">def</span> printer<span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Площадь стен комнаты равна &quot;</span>\
+          ,<span style="color: #008000;">str</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>.<span style="color: black;">square</span><span style="color: black;">&#41;</span>,<span style="color: #483d8b;">&quot; кв.м&quot;</span><span style="color: black;">&#41;</span>
+          <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Оклеиваемая площадь равна: &quot;</span>, \
+               <span style="color: #008000;">str</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>.<span style="color: black;">wallpapers</span><span style="color: black;">&#41;</span>, <span style="color: #483d8b;">&quot; кв.м&quot;</span><span style="color: black;">&#41;</span></pre></div> </p>
+<p>В методе __init__ создается атрибут square объекта представляющий собой площадь стен комнаты. Метод принимает три аргумента: длину, ширину и высоту помещения.</p>
+<p>В методе win_door создаются два объекта: window и door, а также атрибуты numb_w и numb_d (в последних будут содержаться значения о количестве окон и дверей). Если при вызове данного метода в программе не будет указано количество окон и дверей, то по умолчанию будут подставлены значения равные 1.</p>
+<p>Метод wallpapers вычисляет площадь_требуемых_обоев = площадь_комнаты — площадь_окна * количество_окон — площадь_двери * количество_дверей. В коде данная строка разбита на несколько строчек с помощью знака \ (так делают, если строка очень длинная). Также обратите внимание, как происходит обращение к свойствам square объектов-частей: указывается объект класса Room (в классе его заменяет self), далее объект-часть, и наконец, сам атрибут (свойство) объекта-части. </p>
+<p>Метод printer просто выводит данные.</p>
+<h2>Создание объектов</h2>
+<p>После того, как классы созданы, посмотрим как это все работает. </p>
+<p>1. Создаем объект класса Room:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">labor34 = Room<span style="color: black;">&#40;</span><span style="color: #ff4500;">5</span>,<span style="color: #ff4500;">4</span>,<span style="color: #ff4500;">2</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>2. Создаем в помещении labor34 окна и двери:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">labor34.<span style="color: black;">win_door</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">1.5</span>,<span style="color: #ff4500;">1.5</span>, <span style="color: #ff4500;">2</span>,<span style="color: #ff4500;">1</span>, <span style="color: #ff4500;">2</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>Обратите внимание, что количество дверей не указано, а значит их будет ровно 1.</p>
+<p>3. Вычисляем метры обоев:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">labor34.<span style="color: black;">wallpapers</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>4. Просим вывести, что получилось:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">labor34.<span style="color: black;">printer</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>В результате работы метода printer интерпретатор должен выдать что-то вроде этого:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">Площадь комнаты равна <span style="color: #ff4500;">36</span> кв.м
+Оклеиваемая площадь равна: <span style="color: #ff4500;">29.5</span> кв.м</pre></div></p>
+<p>Может показаться, что в программе всего один реальный объект — labor34. Однако это не так. Там есть еще объекты labor34.window и labor34.door. Чтобы в этом убедиться достаточно обратиться к их свойствам.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span>labor34.<span style="color: black;">window</span>.<span style="color: black;">square</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span>labor34.<span style="color: black;">door</span>.<span style="color: black;">square</span><span style="color: black;">&#41;</span></pre></div></p>
+<h2>Практическая работа</h2>
+<p>Попробуйте самостоятельно придумать задачу, для решения которой можно использовать композиционный подход. Напишите программу на Python.</p>
+  </div>
+<div id="node-43" class="section-2">
+  <h1 class="book-heading">Модули и их импорт. Урок 8</h1>
+  <div style="text-align:center;">
+<h4>Методическая разработка урока<br />
+Элективный курс: Введение в объектно-ориентированное программирование на Python<br />
+Уровень: Программирование для начинающих</h4>
+</div>
+<p>На прошлом уроке нами была написана "серьезная" программа, которую могут использовать другие программисты. Однако как? Просто копировать код и вставлять в свои скрипты? Или есть более экономный способ (в смысле уменьшения объема кода и удобства его использования)?</p>
+<p>При создании крупных программ оказался выгодным так называемый модульный принцип организации, когда есть основной файл с частью кода программы, к которому подсоединяется (в который импортируется) содержимое других файлов. Когда исходный код основного файла транслируется в машинный код, то импортируемые файлы также выполняются как и код основного файла. </p>
+<div style="text-align:center;"><img src="../../../img/oopython/module.png" width="481" height="454" alt="Программные модули" /></div>
+<p>Такой способ организации программы позволяет изолировать часто используемый код в файл-модуль, а затем импортировать его в другие файлы без копирования кода. Но это далеко не единственное преимущество модульного принципа организации программы.</p>
+<p>Так как же импортировать содержимое одного файла в другой в языке программирования Python? Существует два основных способа: инструкция <strong>import</strong> и инструкция <strong>from</strong>. Первая инструкция запускает (интерпретирует) файл-модуль полностью, при этом для доступа к переменным (атрибутам) модуля из основного файла следует указывать имя модуля впереди требуемого атрибута: module.attribute (так называемая, точечная нотация). Инструкция <strong>from</strong> передает интерпретатору лишь указанные имена из файла-модуля, однако при доступе к этим переменным не надо указывать имя модуля. Первый способ хорош, если предстоит пользоваться содержимым почти всего модуля, второй — если будут востребованы одна-две функции или класс из модуля. В примере данного урока мы воспользуемся инструкцией <strong>import</strong>.</p>
+<p>Импорт в языке программирования Python осуществляется следующим образом: после слова <strong>import</strong> пишется имя импортируемого модуля. Модуль и файл в Python понятия почти не различимые. Файлы с кодом на языке Python обычно имеют расширение .py, однако в инструкции <strong>import</strong> расширение не указывается. Например, если мы имеем файл-модуль scale.py, то импортировать его в другой файл следует так: import scale.</p>
+<p>Где должен располагаться модуль? В принципе, где угодно, т.к. можно "вручную" настроить интерпретатор так, что он будет искать там, где пожелает программист. Однако, если ничего не настраивать, то интерпретатор Python найдет файлы, если их расположить например, в каталоге, куда установлен Python или в том же каталоге, где и файл, в который осуществляется импорт. Этим последним вариантом мы и воспользуемся. </p>
+<p>Итак, у нас есть файл с кодом, позволяющим вычислять оклеиваемую площадь помещения (урок №7). Пусть он называется rooms.py. Кроме того, удалим из него "код тестирования" …</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">labor34 = Room<span style="color: black;">&#40;</span>5,4,2<span style="color: black;">&#41;</span>
+labor34.<span style="color: black;">win_door</span><span style="color: black;">&#40;</span>1.5,1.5, 2,1, 2<span style="color: black;">&#41;</span>
+labor34.<span style="color: black;">wallpapers</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+labor34.<span style="color: black;">printer</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span>labor34.<span style="color: black;">window</span>.<span style="color: black;">square</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span>labor34.<span style="color: black;">door</span>.<span style="color: black;">square</span><span style="color: black;">&#41;</span></pre></div> </p>
+<p>… и предположим, что классы этого модуля будут использоваться в другом (основном) файле. Допустим, этот основной файл предоставляет интерфейс пользователю для ввода данных и получения результата. Основной файл должен быть сохранен в том же каталоге, что и файл rooms.py.</p>
+<p>Первым делом, импортируем содержимое файла rooms.py</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">import</span> rooms</pre></div></p>
+<p>Далее организуем запрос данных у пользователя, одновременно преобразовав данные в целочисленный тип (функция int):</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Введите размеры помещения (в метрах) ...&quot;</span><span style="color: black;">&#41;</span>
+l = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;длина: &quot;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+w = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;ширина: &quot;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+h = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;высота: &quot;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Введите данные об оконных проемах (в метрах) ...&quot;</span><span style="color: black;">&#41;</span>
+h_w = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;высота: &quot;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+w_w = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;ширина: &quot;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+m = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;количество: &quot;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Введите данные о дверных проемах (в метрах) ...&quot;</span><span style="color: black;">&#41;</span>
+h_d = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;высота: &quot;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+w_d = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;ширина: &quot;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+n = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;количество: &quot;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>Теперь создаем объект класса Room. Описание класса находится в модуле rooms, который был импортирован инструкцией <strong>import</strong> (а не from), поэтому, чтобы получить доступ к классу Room и его атрибутам, следует при создании объекта указать модуль, в котором он находится:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">uroom = rooms.<span style="color: black;">Room</span><span style="color: black;">&#40;</span>l,w,h<span style="color: black;">&#41;</span></pre></div> </p>
+<p>А теперь можно пользоваться атрибутами класса из модуля сколько влезет:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">uroom.<span style="color: black;">win_door</span><span style="color: black;">&#40;</span>h_w, w_w, h_d, w_d, m,n<span style="color: black;">&#41;</span>
+uroom.<span style="color: black;">wallpapers</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+uroom.<span style="color: black;">printer</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> </pre></div></p>
+<h2>Практическая работа:</h2>
+<ol>
+<li>Создайте скрипт, импортирующий модуль с классом Room и использующий его (как показано в данном уроке).</li>
+<li>Допишите предыдущую программу, расширив ее возможности: можно по-желанию получить дополнительные сведения (площадь окна и двери).</li>
+<li>Переделайте программу таким образом, чтобы она не запрашивала у пользователя данные, а предлагала выбор из пяти готовых решений: на экран выводятся характеристики различных помещений, — пользователю остается только выбрать.</li>
+</ol>
+  </div>
+<div id="node-44" class="section-2">
+  <h1 class="book-heading">Строки документации исходного кода на Python. Урок 9</h1>
+  <div style="text-align:center;">
+<h4>Методическая разработка урока<br />
+Элективный курс: Введение в объектно-ориентированное программирование на Python<br />
+Уровень: Программирование для начинающих<br />
+Версия интерпретатора python: 3.-.-</h4>
+</div>
+<h2>__doc__ - строки документации</h2>
+<p>На прошлом уроке мы рассмотрели случай импорта программного кода одного файла в другой. Таким образом, например, один программист может использовать разработки другого. К тому же, существует множество стандартных модулей и библиотек, входящих в установочный пакет интерпретатора python, а также огромное количество модулей сторонних разработчиков. Понятно, что чтобы использовать чужую разработку надо знать, что она делает. Для этого вовсе необязательно анализировать исходный код, поскольку есть инструменты для его документирования, которыми приличные программисты должны регулярно пользоваться. Когда кому-то потребуется узнать, что делает тот или иной скрипт, достаточно будет выполнить специальную команду, которая выдаст описание модуля. </p>
+<p>Документировать исходный код на языке программирования Python можно по разному. Иногда бывает достаточно простых комментариев. Еще один способ — это создание <strong>строк документации</strong>. Они представляют собой текст, заключенный в кавычки (тройные, тройные одинарные, обычные). Такой текст может располагаться после заголовков классов, функций (методов), а также в начале файла (модуля). Пример:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #483d8b;">&quot;&quot;&quot; Строка документации в начале файла.
+     А это ее продолжение с новой строки. &quot;&quot;&quot;</span>
+<span style="color: #ff7700;font-weight:bold;">class</span> … :
+     <span style="color: #483d8b;">''</span><span style="color: #483d8b;">' Это строка документирования класса. 
+          Причем она заключена в тройные одинарные кавычки...
+          или одинарные тройные 0_о '</span><span style="color: #483d8b;">''</span>
+     .....
+     .....
+     <span style="color: #ff7700;font-weight:bold;">def</span> … :
+          <span style="color: #483d8b;">&quot;&quot;&quot; Это документирование модуля.
+               Пишите коменты на инглише. &quot;&quot;&quot;</span></pre></div></p>
+<p>Для получения доступа к такой документации предусмотрена специальный метод <strong>__doc__</strong>. Когда интерпретатор Python обрабатывает исходный код класса или функции и обнаруживает там строки документирования, то делает их значением атрибута <strong>__doc__</strong> данного объекта. </p>
+<p>Чтобы посмотреть как это выглядит, рассмотрим реальный пример. В языке программирования Python строки, списки, числа являются по-сути такими же классами как и пользовательские (создаваемые для специализированного проекта). Данные классы автоматически загружаются (интерпретируются), когда запускается программа-интерпретатор python, поэтому не требуется дополнительный импорт модулей, содержащих их описание. Однако сути это не меняет, и получить доступ к их строкам документации можно также как и к пользовательскому классу (функции, модулю), а именно <strong>имяОбъекта.__doc__</strong>. Пример:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #008000;">str</span>.__doc__<span style="color: black;">&#41;</span>
+<span style="color: #008000;">str</span><span style="color: black;">&#40;</span><span style="color: #dc143c;">string</span><span style="color: black;">&#91;</span>, encoding<span style="color: black;">&#91;</span>, errors<span style="color: black;">&#93;</span><span style="color: black;">&#93;</span><span style="color: black;">&#41;</span> -<span style="color: #66cc66;">&gt;</span> <span style="color: #008000;">str</span>
+&nbsp;
+Create a <span style="color: #dc143c;">new</span> <span style="color: #dc143c;">string</span> <span style="color: #008000;">object</span> <span style="color: #ff7700;font-weight:bold;">from</span> the given encoded <span style="color: #dc143c;">string</span>.
+<span style="color: black;">encoding</span> defaults to the current default <span style="color: #dc143c;">string</span> encoding.
+<span style="color: black;">errors</span> can be <span style="color: #483d8b;">'strict'</span>, <span style="color: #483d8b;">'replace'</span> <span style="color: #ff7700;font-weight:bold;">or</span> <span style="color: #483d8b;">'ignore'</span> <span style="color: #ff7700;font-weight:bold;">and</span> defaults to <span style="color: #483d8b;">'strict'</span>.</pre></div> </p>
+<p>Таким образом, мы получили данные о классе <strong>str</strong> (описывает атрибуты строк). Однако мы не получили никаких сведений о методах данного класса. Да и вообще: какие методы есть у строк? Тут может помочь встроенная функция <strong>dir</strong>, которая выводит список переменных (атрибутов) переданного ей аргумента. </p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #008000;">dir</span><span style="color: black;">&#40;</span><span style="color: #008000;">str</span><span style="color: black;">&#41;</span>
+<span style="color: black;">&#91;</span><span style="color: #483d8b;">'__add__'</span>, <span style="color: #483d8b;">'__class__'</span>, <span style="color: #483d8b;">'__contains__'</span>, <span style="color: #483d8b;">'__delattr__'</span>, <span style="color: #483d8b;">'__doc__'</span>, <span style="color: #483d8b;">'__eq__'</span>, <span style="color: #483d8b;">'__format__'</span>, <span style="color: #483d8b;">'__ge__'</span>, <span style="color: #483d8b;">'__getattribute__'</span>, <span style="color: #483d8b;">'__getitem__'</span>, <span style="color: #483d8b;">'__getnewargs__'</span>, <span style="color: #483d8b;">'__gt__'</span>, <span style="color: #483d8b;">'__hash__'</span>, <span style="color: #483d8b;">'__init__'</span>, <span style="color: #483d8b;">'__iter__'</span>, <span style="color: #483d8b;">'__le__'</span>, <span style="color: #483d8b;">'__len__'</span>, <span style="color: #483d8b;">'__lt__'</span>, <span style="color: #483d8b;">'__mod__'</span>, <span style="color: #483d8b;">'__mul__'</span>, <span style="color: #483d8b;">'__ne__'</span>, <span style="color: #483d8b;">'__new__'</span>, <span style="color: #483d8b;">'__reduce__'</span>, <span style="color: #483d8b;">'__reduce_ex__'</span>, <span style="color: #483d8b;">'__repr__'</span>, <span style="color: #483d8b;">'__rmod__'</span>, <span style="color: #483d8b;">'__rmul__'</span>, <span style="color: #483d8b;">'__setattr__'</span>, <span style="color: #483d8b;">'__sizeof__'</span>, <span style="color: #483d8b;">'__str__'</span>, <span style="color: #483d8b;">'__subclasshook__'</span>, <span style="color: #483d8b;">'_formatter_field_name_split'</span>, <span style="color: #483d8b;">'_formatter_parser'</span>, <span style="color: #483d8b;">'capitalize'</span>, <span style="color: #483d8b;">'center'</span>, <span style="color: #483d8b;">'count'</span>, <span style="color: #483d8b;">'encode'</span>, <span style="color: #483d8b;">'endswith'</span>, <span style="color: #483d8b;">'expandtabs'</span>, <span style="color: #483d8b;">'find'</span>, <span style="color: #483d8b;">'format'</span>, <span style="color: #483d8b;">'index'</span>, <span style="color: #483d8b;">'isalnum'</span>, <span style="color: #483d8b;">'isalpha'</span>, <span style="color: #483d8b;">'isdecimal'</span>, <span style="color: #483d8b;">'isdigit'</span>, <span style="color: #483d8b;">'isidentifier'</span>, <span style="color: #483d8b;">'islower'</span>, <span style="color: #483d8b;">'isnumeric'</span>, <span style="color: #483d8b;">'isprintable'</span>, <span style="color: #483d8b;">'isspace'</span>, <span style="color: #483d8b;">'istitle'</span>, <span style="color: #483d8b;">'isupper'</span>, <span style="color: #483d8b;">'join'</span>, <span style="color: #483d8b;">'ljust'</span>, <span style="color: #483d8b;">'lower'</span>, <span style="color: #483d8b;">'lstrip'</span>, <span style="color: #483d8b;">'maketrans'</span>, <span style="color: #483d8b;">'partition'</span>, <span style="color: #483d8b;">'replace'</span>, <span style="color: #483d8b;">'rfind'</span>, <span style="color: #483d8b;">'rindex'</span>, <span style="color: #483d8b;">'rjust'</span>, <span style="color: #483d8b;">'rpartition'</span>, <span style="color: #483d8b;">'rsplit'</span>, <span style="color: #483d8b;">'rstrip'</span>, <span style="color: #483d8b;">'split'</span>, <span style="color: #483d8b;">'splitlines'</span>, <span style="color: #483d8b;">'startswith'</span>, <span style="color: #483d8b;">'strip'</span>, <span style="color: #483d8b;">'swapcase'</span>, <span style="color: #483d8b;">'title'</span>, <span style="color: #483d8b;">'translate'</span>, <span style="color: #483d8b;">'upper'</span>, <span style="color: #483d8b;">'zfill'</span><span style="color: black;">&#93;</span></pre></div> </p>
+<p>Допустим, нас интересует функция метод <strong>find</strong>, но мы точно не знаем, делает ли он то, что нам нужно. Выяснить это можно так:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #008000;">str</span>.<span style="color: black;">find</span>.__doc__<span style="color: black;">&#41;</span>
+S.<span style="color: black;">find</span><span style="color: black;">&#40;</span>sub<span style="color: black;">&#91;</span>, start<span style="color: black;">&#91;</span>, end<span style="color: black;">&#93;</span><span style="color: black;">&#93;</span><span style="color: black;">&#41;</span> -<span style="color: #66cc66;">&gt;</span> <span style="color: #008000;">int</span>
+&nbsp;
+Return the lowest index <span style="color: #ff7700;font-weight:bold;">in</span> S where substring sub <span style="color: #ff7700;font-weight:bold;">is</span> found, such that sub <span style="color: #ff7700;font-weight:bold;">is</span> contained within s<span style="color: black;">&#91;</span>start:end<span style="color: black;">&#93;</span>. <span style="color: black;">Optional</span> arguments start <span style="color: #ff7700;font-weight:bold;">and</span> end are interpreted <span style="color: #ff7700;font-weight:bold;">as</span> <span style="color: #ff7700;font-weight:bold;">in</span> <span style="color: #008000;">slice</span> notation.
+&nbsp;
+<span style="color: black;">Return</span> -<span style="color: #ff4500;">1</span> on failure. </pre></div></p>
+<p>Становятся известны следующие подробности. Оказывается функция find класса str просто возвращает первый индекс подстроки переданной ей в качестве аргумента, если та встречается в строке. По желанию можно указать откуда и докуда искать в исходной строке. Не в тему, но чтобы было понятно:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> a = <span style="color: #483d8b;">&quot;hello new worlds&quot;</span> <span style="color: #808080; font-style: italic;"># создаем строку</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> a.<span style="color: black;">find</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;new&quot;</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># ищем индекс первого элемента подстроки</span>
+<span style="color: #ff4500;">6</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> a.<span style="color: black;">find</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;l&quot;</span>,<span style="color: #ff4500;">7</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># ищем индекс символа, начиная с 8-го элемента</span>
+<span style="color: #ff4500;">13</span></pre></div></p>
+<h2>Форматирование строк документирования</h2>
+<p>Обратите внимание, когда мы вызывали метод __doc__ для объектов, то использовали встроенную функцию print. Зачем? Ведь в интерактивном режиме вывод работает и без print. Однако если при вызове метода __doc__ не использовать функцию print, то вывод не отформатируется, а будет выглядеть как в исходном коде:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #008000;">str</span>.__doc__
+<span style="color: #483d8b;">&quot;str(string[, encoding[, errors]]) -&gt; str<span style="color: #000099; font-weight: bold;">\n</span><span style="color: #000099; font-weight: bold;">\n</span>Create a new string object from the given encoded string.<span style="color: #000099; font-weight: bold;">\n</span>encoding defaults to the current default string encoding.<span style="color: #000099; font-weight: bold;">\n</span>errors can be 'strict', 'replace' or 'ignore' and defaults to 'strict'.&quot;</span></pre></div> </p>
+<p>Обратите внимание на сочетание символов <strong>\n</strong>. Оно обозначает переход на новую строку. Вообще оформление строк документации должно соответствовать определенному стандарту. </p>
+<h2>Функция help</h2>
+<p>Еще более интересный способ получить информацию о модуле или его частях — это использование встроенной функции <strong>help</strong>. Она выводит текстовый отчет о переданном ей в качестве аргумента объекте. Этот отчет включает не только строки документации, но и структуру запрошенной части кода. т.е. применив функцию <strong>help</strong> по отношению к объектам мы получим еще и информацию о внутренних функциях и классах.</p>
+<h2>Практическая работа</h2>
+<ol>
+<li>Напишите строки документации к программе, созданной на 7 уроке (вычисление площади оклеивания) . Поместите следующую информацию:
+<ul>
+<li>Модуль. Для чего предназначена данная программа.</li>
+<li>Классы. Для чего предназначены, какие аргументы передаются методу __init__.</li>
+<li>Методы (кроме __init__). Назначение, описание входных и выходных данных.</li>
+</ul>
+</li>
+<li>Используя метод __doc__, вызовите в интерактивном режиме строки документации для различных объектов модуля. Предварительно необходимо импортировать модуль (чтобы импортировать его без проблем, поместите файл в каталог установки python).</li>
+<li>Примените функцию help для данного модуля. Например, если имя модуля rooms, то вызов справки по нему будет выглядеть так: help (rooms).</li>
+</ol>
+<h2>Пример документированного исходного кода</h2>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #483d8b;">&quot;It is the program for definition of quantity of wall-paper&quot;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">class</span> Win_Door:
+     <span style="color: #483d8b;">&quot;&quot;&quot;
+Class Win_Door calculates the area of a rectangular.
+Method __init__ accepts two parameters: length and width.
+     &quot;&quot;&quot;</span>
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,x,y<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">square</span> = x <span style="color: #66cc66;">*</span> y
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">class</span> Room:
+     <span style="color: #483d8b;">&quot;&quot;&quot;
+Class Room is intended for definition of the pasted over area of a room.
+Method __init__ accepts three arguments (length, width and height).
+     &quot;&quot;&quot;</span>
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,x,y,z<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">square</span> = 2 <span style="color: #66cc66;">*</span> z <span style="color: #66cc66;">*</span> <span style="color: black;">&#40;</span>x + y<span style="color: black;">&#41;</span>
+     <span style="color: #ff7700;font-weight:bold;">def</span> win_door<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>, d,e, f,g, m=<span style="color: #ff4500;">1</span>,n=<span style="color: #ff4500;">1</span><span style="color: black;">&#41;</span>:
+          <span style="color: #483d8b;">&quot;&quot;&quot;
+The first pair parameters - the sizes of a window,
+the second pair - the sizes of a door,
+the fifth and sixth parameters - quantity of windows and doors accordingly
+          &quot;&quot;&quot;</span>
+          <span style="color: #008000;">self</span>.<span style="color: black;">window</span> = Win_Door<span style="color: black;">&#40;</span>d,e<span style="color: black;">&#41;</span>
+          <span style="color: #008000;">self</span>.<span style="color: black;">door</span> = Win_Door<span style="color: black;">&#40;</span>f,g<span style="color: black;">&#41;</span>
+          <span style="color: #008000;">self</span>.<span style="color: black;">numb_w</span> = m
+          <span style="color: #008000;">self</span>.<span style="color: black;">numb_d</span> = n
+     <span style="color: #ff7700;font-weight:bold;">def</span> wallpapers<span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          <span style="color: #483d8b;">&quot;&quot;&quot;
+This method calculates the pasted over area
+          &quot;&quot;&quot;</span>
+          <span style="color: #008000;">self</span>.<span style="color: black;">wallpapers</span> = <span style="color: #008000;">self</span>.<span style="color: black;">square</span> - \
+               <span style="color: #008000;">self</span>.<span style="color: black;">window</span>.<span style="color: black;">square</span> <span style="color: #66cc66;">*</span> <span style="color: #008000;">self</span>.<span style="color: black;">numb_w</span> \
+               - <span style="color: #008000;">self</span>.<span style="color: black;">door</span>.<span style="color: black;">square</span> <span style="color: #66cc66;">*</span> <span style="color: #008000;">self</span>.<span style="color: black;">numb_d</span>
+     <span style="color: #ff7700;font-weight:bold;">def</span> printer<span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          <span style="color: #483d8b;">&quot;&quot;&quot;
+Displays the information
+          &quot;&quot;&quot;</span>
+          <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Площадь стен комнаты равна &quot;</span>\
+          ,<span style="color: #008000;">str</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>.<span style="color: black;">square</span><span style="color: black;">&#41;</span>,<span style="color: #483d8b;">&quot; кв.м&quot;</span><span style="color: black;">&#41;</span>
+          <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Оклеиваемая площадь равна: &quot;</span>, \
+               <span style="color: #008000;">str</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>.<span style="color: black;">wallpapers</span><span style="color: black;">&#41;</span>, <span style="color: #483d8b;">&quot; кв.м&quot;</span><span style="color: black;">&#41;</span></pre></div></p>
+  </div>
+<div id="node-45" class="section-2">
+  <h1 class="book-heading">Перегрузка операторов в ООП. Урок 10</h1>
+  <div style="text-align:center;">
+<h4>Методическая разработка урока<br />
+Элективный курс: Введение в объектно-ориентированное программирование на Python<br />
+Уровень: Программирование для начинающих</h4>
+</div>
+<p>До этого мы говорили только о классах и объектах, которые создает программист (пользовательские классы). Однако Python настолько объектно-ориентированный язык, что в нем любые строка, число, список и др. являются по сути объектами, принадлежащими встроенным классам (типам данных): строкам, числам и др. Т. е. типы данных — это встроенные классы, а любые данные — это объекты.</p>
+<p>Объектно-ориентированное программирование подразумевает не только наличие объектов, но и их взаимодействие между собой. Поэтому важно, чтобы к объектам разных классов можно было применить одну и туже операцию (например, сложение). </p>
+<p>Для пользовательских классов предусмотрены специальные методы, позволяющие объектам данных классов участвовать в таких привычных операциях как сложение, вычитание, умножение, деление (+ - * /), а также во многих других. Другими словами, смысл (то, что он делает) знака + (или любого другого оператора) зависит от того, к каким объектам он применяется. Это называется <strong>перегрузкой операторов</strong>. В классах перегруженные операторы описываются с помощью специальных зарезервированных методов, которые в начале и в конце имеют по два знака подчеркивания. В уроке рассматриваются лишь некоторые из них. Кроме того, ранее был уже рассмотрен один такой метод — конструктор <strong>__init__</strong>, который автоматически вызывается при создании объектов класса. </p>
+<p>Рассмотрим пример перегрузки операторов. </p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> Newclass:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>, base<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">base</span> = base
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__add__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>, a<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">base</span> = <span style="color: #008000;">self</span>.<span style="color: black;">base</span> + a
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__str__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          <span style="color: #ff7700;font-weight:bold;">return</span> <span style="color: #483d8b;">&quot;%s !!! &quot;</span> <span style="color: #66cc66;">%</span> <span style="color: #008000;">self</span>.<span style="color: black;">base</span>
+&nbsp;
+a = Newclass<span style="color: black;">&#40;</span>10<span style="color: black;">&#41;</span>
+a + 20
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>a<span style="color: black;">&#41;</span>
+&nbsp;
+b = Newclass<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;yes&quot;</span><span style="color: black;">&#41;</span>
+b + <span style="color: #483d8b;">&quot;terday&quot;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>b<span style="color: black;">&#41;</span>
+&nbsp;
+c = Newclass<span style="color: black;">&#40;</span><span style="color: black;">&#91;</span>2,6,3<span style="color: black;">&#93;</span><span style="color: black;">&#41;</span>
+c + <span style="color: black;">&#91;</span>7, 1<span style="color: black;">&#93;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>c<span style="color: black;">&#41;</span></pre></div> </p>
+<p>В данном примере используется два метода (исключая <strong>__init__</strong>) перегрузки операторов: <strong>__add__</strong> и <strong>__str__</strong>. Метод <strong>__add__</strong> вызывается в том случае, когда объект данного класса участвует в операции сложения (для чисел), конкатенации (для строк) и объединения (для списков). Метод <strong>__str__</strong> вызывается, когда объект передается в качестве аргумента встроенной функции <strong>print</strong> (на самом деле не только ей) и представляет данные в виде строки.</p>
+<p>Результат работы скрипта представленного выше будет таким:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff4500;">30</span> <span style="color: #66cc66;">!!!</span> 
+yesterday <span style="color: #66cc66;">!!!</span> 
+<span style="color: black;">&#91;</span><span style="color: #ff4500;">2</span>, <span style="color: #ff4500;">6</span>, <span style="color: #ff4500;">3</span>, <span style="color: #ff4500;">7</span>, <span style="color: #ff4500;">1</span><span style="color: black;">&#93;</span> <span style="color: #66cc66;">!!!</span> </pre></div></p>
+<p><strong>Задание.</strong> Спешите пример, посмотрите как он работает. Дополните класс методами <strong>__mul__</strong> (вызывается при использовании объекта в операциях умножения) и <strong>__sub__</strong> (вычитание). Вызовите данные методы с помощью соответствующих операций с объектами. Для каких объектов невозможно использовать метод <strong>__sub__</strong>?</p>
+<h2>__call__ - перегрузка вызова функции</h2>
+<p>Метод <strong>__call__</strong> автоматически вызывается, когда к объекту обращаются как к функции. Например, здесь во второй строке произойдет вызов метода <strong>__call__</strong> некогоКласса:</p>
+<div style="text-align:center;"><strong>объект = некийКласс()<br />
+объект([возможные аргументы])</strong></div>
+<p>Другими словами, метод <strong>__call__</strong> позволяет объектам вести себя как функции.</p>
+<p>Пример:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> Changeable:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>, color<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">color</span> = color
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__call__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>, newcolor<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">color</span> = newcolor
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__str__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          <span style="color: #ff7700;font-weight:bold;">return</span> <span style="color: #483d8b;">&quot;%s&quot;</span> <span style="color: #66cc66;">%</span> <span style="color: #008000;">self</span>.<span style="color: black;">color</span>
+&nbsp;
+canvas = Changeable<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;green&quot;</span><span style="color: black;">&#41;</span>
+frame = Changeable<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;blue&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+canvas<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;red&quot;</span><span style="color: black;">&#41;</span>
+frame<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;yellow&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>canvas, frame<span style="color: black;">&#41;</span></pre></div> </p>
+<p>В этом примере с помощью конструктора класса при создании объектов устанавливается их цвет. Если требуется его поменять, то достаточно обратиться к объекту как к функции и в качестве аргумента передать новый цвет. Такой обращение автоматически вызовет метод <strong>__call__</strong> (который, в данном случае, изменит атрибут color объекта).</p>
+<p><strong>Задание.</strong> <em>Создайте класс с методом <strong>__call__</strong>, принимающим два параметра и производящим над ними те или иные математические операции. Создайте несколько объектов класса и, затем, обратитесь к ним как к функциям.</em></p>
+<p>Рассмотренные в этом уроке методы перегрузки операторов лишь малая часть из существующих. Фактически все, что можно делать со встроенными типами (числами, словарями и др.), можно реализовать и для пользовательских типов (классов). Можно сказать, что перегрузка операторов обеспечивает единый интерфейс для встроенных и пользовательских типов (классов). Так, в первом примере можно видеть как "складываются" объект-число и объект класса Newclass.</p>
+  </div>
+<div id="node-46" class="section-2">
+  <h1 class="book-heading">Особенности объектно-ориентированного программирования. Урок 11</h1>
+  <div style="text-align:center;">
+<h4>Методическая разработка урока<br />
+Элективный курс: Введение в объектно-ориентированное программирование на Python<br />
+Уровень: Программирование для начинающих</h4>
+</div>
+<p>Общее представление об объектно-ориентированном программировании было рассмотрено на первом уроке. Здесь будет обобщение ранее рассмотренного материала и формулирование принципов, лежащих в основе ООП.</p>
+<h2>Идеи (принципы) объектно-ориентированного программирования</h2>
+<p>Во многих учебниках выделяют такие основные идеи ООП как наследование, инкапсуляция и полиморфизм. Заключаются они примерно в следующем:</p>
+<ol>
+<li><strong>наследование.</strong> Возможность выделять общие свойства и методы классов в один класс верхнего уровня (родительский). Классы, имеющие общего родителя, различаются между собой за счет включения в них различных дополнительных свойств и методов. </li>
+<li><strong>инкапсуляция.</strong> Свойства и методы класса делятся на доступные из вне (опубликованные) и недоступные (защищенные). Защищенные атрибуты нельзя изменить, находясь вне класса. Опубликованные же атрибуты также называют интерфейсом объекта, т. к. с их помощью с объектом можно взаимодействовать. По идеи, инкапсуляция призвана обеспечить надежность программы, т.к. изменить существенные для существования объекта атрибуты становится невозможно. </li>
+<li><strong>полиморфизм.</strong> Полиморфизм подразумевает замещение атрибутов, описанных ранее в других классах: имя атрибута остается прежним, а реализация уже другой. Полиморфизм позволяет специализировать (адаптировать) классы, оставляя при этом единый интерфейс взаимодействия.</li>
+</ol>
+<h2>Преимущества ООП</h2>
+<p>В связи со своими особенностями объектно-ориентированное программирование имеет ряд преимуществ перед структурным (и др.) программированием. Выделим некоторые из них:</p>
+<ol>
+<li>Использование одного и того же программного кода с разными данными. Классы позволяют создавать множество объектов, каждый из которых имеет собственные значения атрибутов. Нет потребности вводить множество переменных, т.к объекты получают в свое распоряжение индивидуальные так называемые пространства имен. Пространство имен конкретного объекта формируется на основе класса, от которого он был создан, а также от всех родительских классов данного класса. Объект можно представить как некую упаковку данных.</li>
+<li>Наследование и полиморфизм позволяют не писать новый код, а настраивать уже существующий, за счет добавления и переопределения атрибутов. Это ведет к сокращению объема исходного кода. </li>
+</ol>
+<h2>Особенность ООП</h2>
+<p>ООП позволяет сократить время на написание исходного кода, однако ООП всегда предполагает большую роль предварительного анализа предметной области, предварительного проектирования. От правильности решений на этом предварительном этапе зависит куда больше, чем от непосредственного написания исходного кода.</p>
+<h2>Особенности ООП в Python</h2>
+<p>По сравнению с другими распространенными языками программирования у Python можно выделить следующие особенности, связанные с объектно-ориентированным программированием:</p>
+<ol>
+<li>Любое данное (значение) — это объект. Число, строка, список, массив и др. — все является объектом. Бываю объекты встроенных классов (как те, что перечисленные в предыдущем предложении), а бывают объекты пользовательских классов (тех, что создает программист). Для единого механизма взаимодействия предусмотрены методы перегрузки операторов.</li>
+<li>Класс — это тоже объект с собственным пространством имен. Это нигде не было указано в данном цикле уроков. Однако это так. Поэтому правильнее было употреблять вместо слова «объект», слово «экземпляр». И говорить «экземпляр объекта», подразумевая под этим созданный на основе класса именно объект, и «экземпляр класса», имея ввиду сам класс как объект.</li>
+<li>Инкапсуляции в Python не уделяется особого внимания. В других языках программирования обычно нельзя получить напрямую доступ к свойству, описанному в классе. Для его изменения может быть предусмотрен специальный метод. В Python же это легко сделать, просто обратившись к свойству класса из вне. Несмотря на это в Python все-таки предусмотрены специальные способы ограничения доступа к переменным в классе.</li>
+</ol>
+  </div>
+<div id="node-47" class="section-2">
+  <h1 class="book-heading">Пример объектно-ориентированной программирования на языке Python. Урок 12</h1>
+  <div style="text-align:center;">
+<h4>Методическая разработка урока<br />
+Элективный курс: Введение в объектно-ориентированное программирование на Python<br />
+Уровень: Программирование для начинающих</h4>
+</div>
+<p>В конце данного курса придумаем и напишем небольшую программу, используя объектно-ориентированную парадигму программирования. </p>
+<p>Как уже отмечалось в предыдущем уроке в ООП очень важен этап предварительного проектирования. Вообще можно выделить следующие этапы создании ОО-программы:</p>
+<ol>
+<li>Формулирование задачи.</li>
+<li>Определение объектов, участвующих в ее решении.</li>
+<li>Проектирование классов, на основе которых будут созданы объекты, а также установление между ними иерархических связей. </li>
+<li>Определение существенных свойств и методов для задач, которые будут решать объекты на основе проектируемых классов.</li>
+<li>Создание классов, описание их свойств и атрибутов.</li>
+<li>Создание объектов.</li>
+<li>Решение задачи путем взаимодействия объектов.</li>
+</ol>
+<p><strong>Первый этап:</strong></p>
+<p>Допустим нам надо написать программу по «сценарию» описанному в уроке 1: про занятие, где ученики должны получить некий объем знаний.</p>
+<p><strong>Второй этап:</strong></p>
+<p>Какие объекты понадобятся? Очевидно, это ученики, учитель, информация, а также возможно вспомогательные предметы такие как проектор и др.</p>
+<p><strong>Третий этап:</strong></p>
+<p>Классы: учитель, ученик, информация. Учитель и ученик во многом похожи: по идеи оба - люди. Значит классы учитель и ученик могут принадлежать одному суперклассу - человек. Однако не все так просто. Если существенные признаки для решения данной задачи не имеют ничего общего, то выделить что-то в суперкласс просто невозможно. </p>
+<p><strong>Четвертый этап:</strong></p>
+<p>Выделим важное, чем должны обладать объекты (классы) для решения задачи «увеличить знания». </p>
+<p>Ученик должен уметь воспринимать информацию, и превращать ее в знания.</p>
+<p>Учитель, по крайней мере, должен уметь выбирать и транслировать информацию.</p>
+<p>Информация должна содержать определенный набор строк символов. Должна быть предусмотрена возможность извлечения ее частей.</p>
+<p><strong>Пятый этап:</strong></p>
+<p>Класс «Информация»:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> Information:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,info<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">info</span> = info
+     <span style="color: #ff7700;font-weight:bold;">def</span> extract<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,i<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">current</span> = <span style="color: #008000;">self</span>.<span style="color: black;">info</span><span style="color: black;">&#91;</span>i<span style="color: black;">&#93;</span>
+          <span style="color: #ff7700;font-weight:bold;">return</span> <span style="color: #483d8b;">&quot;%s&quot;</span> <span style="color: #66cc66;">%</span> <span style="color: #008000;">self</span>.<span style="color: black;">current</span> </pre></div></p>
+<p>Объекты данного класса при создании должны содержать ту или иную информацию (содержание урока), допустим в виде списка. В классе также предусмотрен метод extract, позволяющий извлекать какую-то часть информации и возвращать ее в основную программу.</p>
+<p>Класс «Учитель»:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> Teacher:
+     <span style="color: #ff7700;font-weight:bold;">def</span> into<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,phrase<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">phrase</span> = phrase
+     <span style="color: #ff7700;font-weight:bold;">def</span> out<span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          <span style="color: #ff7700;font-weight:bold;">return</span> <span style="color: #483d8b;">&quot;%s&quot;</span> <span style="color: #66cc66;">%</span> <span style="color: #008000;">self</span>.<span style="color: black;">phrase</span> </pre></div></p>
+<p>Объектам типа «Учитель» в нашей программе позволено лишь вспоминать фразу и громко транслировать.</p>
+<p>Класс «Ученик»:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> Pupil:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">know</span> = <span style="color: black;">&#91;</span><span style="color: black;">&#93;</span>
+     <span style="color: #ff7700;font-weight:bold;">def</span> take<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>, i<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">know</span>.<span style="color: black;">append</span><span style="color: black;">&#40;</span>i<span style="color: black;">&#41;</span></pre></div> </p>
+<p>Объекты класса Pupil уже при своем создании обязаны иметь атрибут know, куда будут помещаться знания. Также предусмотрен метод take, обеспечивающий приемку информации.</p>
+<p>Создание объектов:</p>
+<p>Допустим в программе будет по одному объекту «Информатика» и «Учитель» и пару объектов «Ученик».</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">inform = Information<span style="color: black;">&#40;</span><span style="color: black;">&#91;</span><span style="color: #483d8b;">&quot;&gt; (больше)&quot;</span>,<span style="color: #483d8b;">&quot;&lt; (меньше)&quot;</span>,<span style="color: #483d8b;">&quot;== (равно)&quot;</span>, <span style="color: #483d8b;">&quot;!= (не равно)&quot;</span><span style="color: black;">&#93;</span><span style="color: black;">&#41;</span>
+t = Teacher<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+p1 = Pupil<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+p2 = Pupil<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>Решение задачи с помощью взаимодействия объектов:</p>
+<p>Какая в данном случае задача? Научить учеников чему-нибудь. Приступим.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">t.<span style="color: black;">into</span><span style="color: black;">&#40;</span>inform.<span style="color: black;">extract</span><span style="color: black;">&#40;</span>2<span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+p1.<span style="color: black;">take</span><span style="color: black;">&#40;</span>t.<span style="color: black;">out</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;1-ый ученик пока еще знает только &quot;</span>, p1.<span style="color: black;">know</span><span style="color: black;">&#41;</span>
+&nbsp;
+t.<span style="color: black;">into</span><span style="color: black;">&#40;</span>inform.<span style="color: black;">extract</span><span style="color: black;">&#40;</span>0<span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+p1.<span style="color: black;">take</span><span style="color: black;">&#40;</span>t.<span style="color: black;">out</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+p2.<span style="color: black;">take</span><span style="color: black;">&#40;</span>t.<span style="color: black;">out</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;1-ый ученик знает, что &quot;</span>, p1.<span style="color: black;">know</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;2-ой ученик знает, что &quot;</span>, p2.<span style="color: black;">know</span><span style="color: black;">&#41;</span></pre></div> </p>
+<p>Учитель берет с помощью метода extract объекта inform часть информации. Ученики, используя свой метод take имеют возможность получить информацию, воспроизводимую учителем (метод out объекта t). </p>
+<p>В результате работы этой программы атрибут know учеников изменяется (если конечно те использовали метод take).</p>
+<h2>Практическая работа</h2>
+<ol>
+<li>Напишите программу рассмотренную в этом уроке. Посмотрите как она работает.</li>
+<li>Создайте еще пару учеников и еще один объект класса Information. Научите новых учеников чему-нибудь.</li>
+<li>Может ли в данной программе ученик освоить информацию минуя учителя. Если «да», то реализуйте в программе «самостоятельную работу» ученика.</li>
+</ol>
+  </div>
+</div>
+    
+  </body>
+</html>

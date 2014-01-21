@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Canvas (холст): методы, идентификаторы и теги. Урок 13</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-58" class="section-2">
+  <h1 class="book-heading">Canvas (холст): методы, идентификаторы и теги. Урок 13</h1>
+  <div style="text-align:center;">
+<h4>Методическая разработка урока<br />
+Элективный курс: Модуль tkinter. Создание графического интерфейса пользователя с помощью языка программирования Python<br />
+Уровень: Программирование для начинающих</h4>
+</div>
+<p>На прошлом уроке были рассмотрены методы объекта canvas, формирующие на нем геометрические примитивы и текст. Однако это лишь часть методов холста. В другую условную группу можно выделить методы, изменяющие свойства уже существующих объектов холста (например, геометрических фигур). И тут возникает вопрос: как обращаться к уже созданным фигурам? Ведь если при создании было прописано что-то вроде canvas.create_oval(30,10,130,80) и таких овалов, квадратов и др. на холсте очень много, то как к ним обращаться? </p>
+<p>Для решения этой проблемы в tkinter для объектов холста можно использовать идентификаторы и теги, которые затем передаются другим методам. У любого объекта может быть как идентификатор, так и тег. Использование идентификаторов и тегов немного различается.</p>
+<p>Рассмотрим несколько методов изменения уже существующих объектов с использованием при этом <strong>идентификаторов</strong>. Для начала создадим холст и три объекта на нем. При создании объекты "возвращают" свои идентификаторы, которые можно связать с переменными (oval, rect и trial в примере ниже) и потом использовать их для обращения к конкретному объекту.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">c = Canvas<span style="color: black;">&#40;</span>width=<span style="color: #ff4500;">460</span>,height=<span style="color: #ff4500;">460</span>,bg=<span style="color: #483d8b;">'grey80'</span><span style="color: black;">&#41;</span>
+c.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+oval = c.<span style="color: black;">create_oval</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">30</span>,<span style="color: #ff4500;">10</span>,<span style="color: #ff4500;">130</span>,<span style="color: #ff4500;">80</span><span style="color: black;">&#41;</span>
+rect = c.<span style="color: black;">create_rectangle</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">180</span>,<span style="color: #ff4500;">10</span>,<span style="color: #ff4500;">280</span>,<span style="color: #ff4500;">80</span><span style="color: black;">&#41;</span>
+trian = c.<span style="color: black;">create_polygon</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">330</span>,<span style="color: #ff4500;">80</span>,<span style="color: #ff4500;">380</span>,<span style="color: #ff4500;">10</span>,<span style="color: #ff4500;">430</span>,<span style="color: #ff4500;">80</span>, fill=<span style="color: #483d8b;">'grey80'</span>, outline=<span style="color: #483d8b;">&quot;black&quot;</span><span style="color: black;">&#41;</span></pre></div> </p>
+<p>Если вы выполните данный скрипт, то увидите на холсте три фигуры: овал, прямоугольник и треугольник.</p>
+<p>Далее можно использовать методы-"модификаторы" указывая в качестве первого аргумента идентификатор объекта. Метод move перемещает объект на по оси X и Y на расстояние указанное в качестве второго и третьего аргументов. Следует понимать, что это не координаты, а смещение, т. е. в примере ниже прямоугольник опустится вниз на 150 пикселей. Метод itemconfig изменяет указанные свойства объектов, coords изменяет координаты (им можно менять и размер объекта).</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">c.<span style="color: black;">move</span><span style="color: black;">&#40;</span>rect,<span style="color: #ff4500;">0</span>,<span style="color: #ff4500;">150</span><span style="color: black;">&#41;</span>
+c.<span style="color: black;">itemconfig</span><span style="color: black;">&#40;</span>trian,outline=<span style="color: #483d8b;">&quot;red&quot;</span>,width=<span style="color: #ff4500;">3</span><span style="color: black;">&#41;</span>
+c.<span style="color: black;">coords</span><span style="color: black;">&#40;</span>oval,<span style="color: #ff4500;">300</span>,<span style="color: #ff4500;">200</span>,<span style="color: #ff4500;">450</span>,<span style="color: #ff4500;">450</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>Если запустить скрипт, содержащий две приведенные части кода (друг за другом), то мы сразу увидим уже изменившуюся картину на холсте: прямоугольник опустится, треугольник приобретет красный контур, а эллипс сместится и сильно увеличится в размерах. Обычно в программах изменения должны наступать при каком-нибудь внешнем воздействии. Пусть по щелчку левой кнопкой мыши прямоугольник передвигается на два пикселя вниз (он будет это делать при каждом щелчке мышью):</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">def</span> mooove<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     c.<span style="color: black;">move</span><span style="color: black;">&#40;</span>rect,<span style="color: #ff4500;">0</span>,<span style="color: #ff4500;">2</span><span style="color: black;">&#41;</span>
+...
+<span style="color: black;">c</span>.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'&lt;Button-1&gt;'</span>,mooove<span style="color: black;">&#41;</span></pre></div> </p>
+<p>Теперь рассмотрим как работают теги. В отличие от идентификаторов, которые являются уникальными для каждого объекта, один и тот же тег может присваиваться разным объектам. Дальнейшее обращение к такому тегу позволит изменить все объекты, в которых он был указан. В примере ниже эллипс и линия содержат один и тот же тег, а функция color изменяет цвет всех объектов с тегом group1. Обратите внимание, что в отличие от имени идентификатора (переменная), имя тега заключается в кавычки (строковое значение).</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">oval = c.<span style="color: black;">create_oval</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">30</span>,<span style="color: #ff4500;">10</span>,<span style="color: #ff4500;">130</span>,<span style="color: #ff4500;">80</span>,tag=<span style="color: #483d8b;">&quot;group1&quot;</span><span style="color: black;">&#41;</span>
+c.<span style="color: black;">create_line</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">10</span>,<span style="color: #ff4500;">100</span>,<span style="color: #ff4500;">450</span>,<span style="color: #ff4500;">100</span>,tag=<span style="color: #483d8b;">&quot;group1&quot;</span><span style="color: black;">&#41;</span>
+…
+<span style="color: #ff7700;font-weight:bold;">def</span> color<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     c.<span style="color: black;">itemconfig</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'group1'</span>,fill=<span style="color: #483d8b;">&quot;red&quot;</span>,width=<span style="color: #ff4500;">3</span><span style="color: black;">&#41;</span>
+…
+c.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'&lt;Button-3&gt;'</span>,color<span style="color: black;">&#41;</span> </pre></div></p>
+<p>Еще один метод, который стоит рассмотреть, это delete, который удаляет объект по указанному идентификатору или тегу. В tkinter существуют зарезервированные теги: например, all обозначает все объекты холста. Так в примере ниже функция clean просто очищает холст. </p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">def</span> clean<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     c.<span style="color: black;">delete</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'all'</span><span style="color: black;">&#41;</span>
+...
+<span style="color: black;">c</span>.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'&lt;Button-2&gt;'</span>,clean<span style="color: black;">&#41;</span> </pre></div></p>
+<p>Метод tag_bind позволяет привязать событие (например, щелчок кнопкой мыши) к определенному объекту. Таким образом, можно реализовать обращение к различным областям холста с помощью одного и того же события. Пример ниже это наглядно иллюстрирует: изменения на холсте зависят от того, где произведен щелчок мышью.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+&nbsp;
+c = Canvas<span style="color: black;">&#40;</span>width=<span style="color: #ff4500;">460</span>,height=<span style="color: #ff4500;">100</span>,bg=<span style="color: #483d8b;">'grey80'</span><span style="color: black;">&#41;</span>
+c.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+oval = c.<span style="color: black;">create_oval</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">30</span>,<span style="color: #ff4500;">10</span>,<span style="color: #ff4500;">130</span>,<span style="color: #ff4500;">80</span>,fill=<span style="color: #483d8b;">&quot;orange&quot;</span><span style="color: black;">&#41;</span>
+c.<span style="color: black;">create_rectangle</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">180</span>,<span style="color: #ff4500;">10</span>,<span style="color: #ff4500;">280</span>,<span style="color: #ff4500;">80</span>,tag=<span style="color: #483d8b;">&quot;rect&quot;</span>,fill=<span style="color: #483d8b;">&quot;lightgreen&quot;</span><span style="color: black;">&#41;</span>
+trian = c.<span style="color: black;">create_polygon</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">330</span>,<span style="color: #ff4500;">80</span>,<span style="color: #ff4500;">380</span>,<span style="color: #ff4500;">10</span>,<span style="color: #ff4500;">430</span>,<span style="color: #ff4500;">80</span>,fill=<span style="color: #483d8b;">'white'</span>,outline=<span style="color: #483d8b;">&quot;black&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">def</span> oval_func<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     c.<span style="color: black;">delete</span><span style="color: black;">&#40;</span>oval<span style="color: black;">&#41;</span>
+     c.<span style="color: black;">create_text</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">30</span>,<span style="color: #ff4500;">10</span>,text=<span style="color: #483d8b;">&quot;Здесь был круг&quot;</span>,anchor=<span style="color: #483d8b;">&quot;w&quot;</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">def</span> rect_func<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     c.<span style="color: black;">delete</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;rect&quot;</span><span style="color: black;">&#41;</span>
+     c.<span style="color: black;">create_text</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">180</span>,<span style="color: #ff4500;">10</span>,text=<span style="color: #483d8b;">&quot;Здесь был<span style="color: #000099; font-weight: bold;">\n</span>прямоугольник&quot;</span>,anchor=<span style="color: #483d8b;">&quot;nw&quot;</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">def</span> triangle<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     c.<span style="color: black;">create_polygon</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">350</span>,<span style="color: #ff4500;">70</span>,<span style="color: #ff4500;">380</span>,<span style="color: #ff4500;">20</span>,<span style="color: #ff4500;">410</span>,<span style="color: #ff4500;">70</span>,fill=<span style="color: #483d8b;">'yellow'</span>,outline=<span style="color: #483d8b;">&quot;black&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+c.<span style="color: black;">tag_bind</span><span style="color: black;">&#40;</span>oval,<span style="color: #483d8b;">'&lt;Button-1&gt;'</span>,oval_func<span style="color: black;">&#41;</span>
+c.<span style="color: black;">tag_bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;rect&quot;</span>,<span style="color: #483d8b;">'&lt;Button-1&gt;'</span>,rect_func<span style="color: black;">&#41;</span>
+c.<span style="color: black;">tag_bind</span><span style="color: black;">&#40;</span>trian,<span style="color: #483d8b;">'&lt;Button-1&gt;'</span>,triangle<span style="color: black;">&#41;</span>
+&nbsp;
+mainloop<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> </pre></div></p>
+<h2>Практическая работа</h2>
+<ol>
+<li>Спишите скрипты, рассмотренные в данном уроке. Выполните их. Объясните увиденное.</li>
+<li>Подумайте как можно реализовать движение (анимацию) той или иной геометрическое фигуры по холсту. Подсказка: попробуйте использовать цикл while, в теле которого с помощью метода delete удаляется старая фигура, а с помощью move рисуется такая же на новом месте.</li>
+</ol>
+  </div>
+    </div>
+  </body>
+</html>

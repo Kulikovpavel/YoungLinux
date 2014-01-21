@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Множественное ветвление. Урок 6</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-26" class="section-2">
+  <h1 class="book-heading">Множественное ветвление. Урок 6</h1>
+  <p class="right">Основы программирования на Python</p>
+<p>Логика выполняющейся программы может быть сложнее, чем выбор одной из двух ветвей. Например, в зависимости от значения той или иной переменной, может выполняться одна из трех (или более) ветвей программы.<br />
+Как организовать такое множественное ветвление? Наверное, можно использовать несколько инструкций <strong>if</strong>: сначала проверяется условное выражение в первой инструкции <strong>if</strong> (если оно возвращает истину, то будет выполняться вложенный в нее блок кода), затем во второй инструкции <strong>if</strong> и т.д. Однако при таком подходе проверка последующих инструкций будет продолжаться даже тогда, когда первое условие было истинным, и блок кода при данной ветке был выполнен. Проверка последующих условий может оказаться бессмысленной. </p>
+<p>Обычно такую проблему можно решить с помощью вложенных конструкций <strong>if-else</strong>. Однако при этом часто появляется проблема правильной трактовки кода: непонятно, к какому <strong>if</strong> относится <strong>else</strong> (хотя в Python такая путаница не возможна из-за обязательных отступов).</p>
+<p>С другой стороны, в ряде языков программирования, в том числе и Python, предусмотрено специальное расширение инструкции <strong>if</strong>, позволяющее направить поток выполнения программы по одной из множества ветвей. Данная расширенная инструкция, помимо необязательной части <strong>else</strong>, содержит ряд ветвей <strong>elif</strong> (сокращение от "else if" - "еще если") и выглядит примерно так, как показано на блок-схеме. Частей <strong>elif</strong> может быть сколь угодно много (в пределах разумного, конечно).  </p>
+<div style="text-align:center;"><img src="../../../img/python/elif/elif.png" width="500" height="541" alt="Блок-схема множественного ветвления программы" /></div>
+<p>В отличии от использования множества одиночных инструкций <strong>if</strong>, инструкция <strong>if-elif-else</strong> прекращает просмотр последующих ветвей, как только логическое выражение в текущей ветке вернет <strong>true</strong>. Например, если выражение при <strong>if</strong> (первая ветка) будет истинным, то после выполнения вложенного блока выражений, программа вернется в основную ветку. </p>
+<p>Примеры скриптов с использованием инструкции <strong>if-elif-else</strong> на языке программирования Python:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">x = -10
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">if</span> x <span style="color: #66cc66;">&gt;</span> 0:
+     <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>1<span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">elif</span> x <span style="color: #66cc66;">&lt;</span> 0:
+     <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>-1<span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">else</span>:
+     <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #ff4500;">0</span><span style="color: black;">&#41;</span></pre></div><br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">result = <span style="color: #483d8b;">&quot;no result&quot;</span>
+num1 = 3
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">if</span> num1 == 0:
+     result = 0
+<span style="color: #ff7700;font-weight:bold;">elif</span> num1==1:
+     result = 1
+<span style="color: #ff7700;font-weight:bold;">elif</span> num1==2:
+     result = 2
+<span style="color: #ff7700;font-weight:bold;">elif</span> num1==3:
+     result = 3
+<span style="color: #ff7700;font-weight:bold;">elif</span> num1==4:
+     result = 4
+<span style="color: #ff7700;font-weight:bold;">elif</span> num1==5:
+     result = 5
+<span style="color: #ff7700;font-weight:bold;">else</span>:
+     <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Error&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>result<span style="color: black;">&#41;</span></pre></div><br />
+В какой момент прекратиться выполнение инструкции <strong>if-elif-else</strong> в примерах выше. При каком значении переменной могла сработать ветка <strong>else</strong>?</p>
+<h3>Практическая работа</h3>
+<p>1. Напишите программу по следующему описанию:<br />
+a. двум переменным присваиваются числовые значения;<br />
+b. если значение первой переменной больше второй, то найти разницу значений переменных (вычесть из первой вторую), результат связать с третьей переменной;<br />
+c. если первая переменная имеет меньшее значение, чем вторая, то третью переменную связать с результатом суммы значений двух первых переменных;<br />
+d. во всех остальных случаях, присвоить третьей переменной значение первой переменной;<br />
+e. вывести значение третьей переменной на экран.</p>
+<p>2. Придумайте программу, в которой бы использовалась инструкция <strong>if-elif-else</strong>. Количество ветвей должно быть как минимум четыре. </p>
+  </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Команда chmod. Изменение значений прав доступа к файлам</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-129" class="section-2">
+  <h1 class="book-heading">Команда chmod. Изменение значений прав доступа к файлам</h1>
+  <h2>Пояснение</h2>
+<p>Задача этого урока — изучить, как значения прав на файлы для разных категорий влияют на возможные действия с ним. Придется действовать от имен разных пользователей, поэтому необходимо, чтобы в системе было несколько пользователей.</p>
+<p>По умолчанию, когда создается новый пользователь в Linux, он входит только в свою собственную группу. Чтобы увидеть как члены одной группы могут работать с файлом, требуется создать новую группу и добавить туда пару пользователей (или одного пользователя добавить в группу другого).</p>
+<p>Поскольку в процессе урока происходит постоянное переключение между пользователями, необходимы элементарные навыки работы в текстовом режиме операционных систем GNU/Linux.</p>
+<p>Положительное право исполнять имеет смысл не для всех файлов. Поэтому в уроке предусмотрена подготовка файла с кодом на языке C и его последующая компиляция в бинарный файл.</p>
+<p>Данная методическая разработка может быть практической частью <a href="http://younglinux.info/rwx" title="Права доступа к файлам в Unix-подобных операционных системах (GNU/Linux)">к уроку о правах пользователей</a>.</p>
+<p>Для того, чтобы перейти на страницу с описанием команды chmod, щелкните по рисунку ниже.</p>
+<div style="text-align:center;"><a href="http://younglinux.info/chmodimg" title="Схема синтаксиса команды chmod"><img src="../../../sites/default/files/images/chmod.preview.png" width="640" height="338" alt="Изменение прав доступа к файлам. Команда chmod" /></a></div>
+<h2>Подготовка к уроку</h2>
+<p>Под <strong>администратором системы</strong> сделать следующее:</p>
+<ol>
+<li>Создать двух новых пользователей, если в системе их недостаточно. Потребуется три пользователя. Например: sv, pupil7, test.</li>
+<li>Создать новую группу. Например: real.<br />
+ <div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">groupadd real</pre></div></li>
+<li>Добавить двух пользователей в только что созданную группу.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">gpasswd -a sv real
+gpasswd -a pupil7 real</pre></div></li>
+<li>Создать общедоступный разделяемый каталог в каталоге /home. Например lesson.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">mkdir /home/lesson
+chmod a+wt /home/lesson</pre></div></li>
+<li>Перейти в каталог<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #dc143c;">cd</span> /home/lesson</pre></div></li>
+<li>В каталоге /home/lesson/ создать файл hello.c<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">vim hello.<span style="color: black;">c</span></pre></div><br />
+Нажать клавишу Insert. И ввести программный код:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #808080; font-style: italic;">#include &lt;stdio.h&gt;</span>
+main<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+<span style="color: black;">&#123;</span>
+     printf<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;hello world!<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: black;">&#41;</span><span style="color: #66cc66;">;</span>
+<span style="color: black;">&#125;</span></pre></div><br />
+Нажать Esc. Затем комбинацию :wq (двоеточие и две буквы). Нажать Enter.</li>
+<li>Скомпилировать файл.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">gcc hello.<span style="color: black;">c</span></pre></div><br />
+В результате в каталоге должен появиться исполняемый файл a.out</li>
+<li>Изменить пользователя и группу файлов.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">chown sv:real hello.<span style="color: black;">c</span>
+chown sv:real a.<span style="color: black;">out</span></pre></div></li>
+</ol>
+<h2>Инструкционная карта ученика</h2>
+<p><strong>Примечание:</strong> данную инструкционную карту необходимо отредактировать в соответствие с пользователями в вашей системе.</p>
+<ol>
+<li>Перейдите в текстовый режим (терминал tty2). Войдите в систему под пользователем sv. Перейдите в каталог /home/lesson.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #dc143c;">cd</span> /home/lesson</pre></div></li>
+<li>Сделайте тоже самое для пользователей pupil7 и test (терминалы соответственно tty3 и tty4).</li>
+<li>Вернитесь к пользователю sv.</li>
+<li>sv. Просмотрите содержимое каталога:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">ls -l</pre></div><br />
+Опишите кто является владельцем файлов a.out и hello.c, какой группе они принадлежат.<br />
+_____________________________________________________<br />
+_____________________________________________________</li>
+<li>sv. Запретите «остальным» исполнять файл a.out:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">chmod o-x a.<span style="color: black;">out</span></pre></div></li>
+<li>pupil7. Выполните файл a.out:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">./a.<span style="color: black;">out</span></pre></div></li>
+<li>test. Попытайтесь выполнить файл a.out также. Что произошло? Объясните разницу между пользователями test и pupil7 по отношению к данному файлу.<br />
+Что произошло?_________________________________________<br />
+Причина: ______________________________________________</li>
+<li>pupil7. Попытайтесь переименовать файл hello.c:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">mv hello.<span style="color: black;">c</span> hi.<span style="color: black;">c</span></pre></div><br />
+Что произошло? ________________________________________<br />
+Причина: ______________________________________________</li>
+<li>pupil7. Попытайтесь установить разрешение на изменение файла hello.c для группы:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">chmod g+w hello.<span style="color: black;">c</span></pre></div><br />
+Что произошло? ________________________________________</li>
+<li>sv. Выполните предыдущую команду в роли данного пользователя. Почему пользователь sv может менять значения прав файла hello.c, а pupil7 — нет?<br />
+_______________________________________________________</li>
+<li>pupil7. Переименуйте файл hello.c:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">mv hello.<span style="color: black;">c</span> hi.<span style="color: black;">c</span></pre></div></li>
+<li>test. Создайте файл:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">cat <span style="color: #66cc66;">&gt;</span> filetest</pre></div><br />
+Напишите несколько строчек, затем нажмите Ctrl + C.</li>
+<li>test. Просмотрите каталог:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">ls -l</pre></div><br />
+Просмотрите файл:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">cat filetest</pre></div></li>
+<li>test. Разрешите запись группе и запретите всё для «остальных»:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">chmod <span style="color: #ff4500;">660</span> filetest</pre></div></li>
+<li>sv. Попытайтесь прочитать файл:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">cat filetest</pre></div><br />
+Почему отказано в доступе? ___________________________________</li>
+</ol>
+  </div>
+    </div>
+  </body>
+</html>

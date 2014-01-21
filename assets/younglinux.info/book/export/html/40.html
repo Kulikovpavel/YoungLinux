@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Наследование в ООП на Python. Урок 4</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-40" class="section-2">
+  <h1 class="book-heading">Наследование в ООП на Python. Урок 4</h1>
+  <div style="text-align:center;">
+<h4>Методическая разработка урока<br />
+Элективный курс: Введение в объектно-ориентированное программирование на Python<br />
+Уровень: Программирование для начинающих</h4>
+</div>
+<p>Одной из важнейших особенностей ООП является возможность наследования объектами атрибутов классов, а также наследование одними классами атрибутов других классов. На самом деле с наследованием мы уже сталкивались, когда создавали любой объект в Python: объекты наследуют атрибуты класса, хотя могут иметь и индивидуальные. </p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> Things:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,n,t<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">namething</span> = n
+          <span style="color: #008000;">self</span>.<span style="color: black;">total</span> = t
+&nbsp;
+th1 = Things<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;table&quot;</span>, <span style="color: #ff4500;">5</span><span style="color: black;">&#41;</span>
+th2 = Things<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;computer&quot;</span>, 7<span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>th1.<span style="color: black;">namething</span>,th1.<span style="color: black;">total</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># Вывод: table 5</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>th2.<span style="color: black;">namething</span>,th2.<span style="color: black;">total</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># Вывод: computer 7</span>
+&nbsp;
+th1.<span style="color: black;">color</span> = <span style="color: #483d8b;">&quot;green&quot;</span> <span style="color: #808080; font-style: italic;"># новое свойство объекта th1</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>th1.<span style="color: black;">color</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># Вывод: green</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>th2.<span style="color: black;">color</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># ОШИБКА: у объекта th2 нет свойства color!</span></pre></div></p>
+<p>Здесь оба объекта имеют свойства namething и total, однако только у первого объекта есть свойство color. Все просто: атрибуты класса наследуются объектами, созданными на его основе; однако атрибуты конкретного объекта не зависят от атрибутов других объектов и представляют собственное пространство имен объекта. Последнее позволяет объектам одного класса иметь различные значения атрибутов, а если потребуется и различный набор атрибутов.</p>
+<p><strong>Задание.</strong> <em>Спишите код, выполните его с помощью интерпретатора Python. Как можно исправить код, чтобы не было ошибки? Исправьте.</em></p>
+<p>На самом деле, наследование более широкое понятие, чем просто взаимосвязь между классами и объектами. Один класс может быть подклассом другого, дополняя его. Пояснить это можно проведя аналогию с реальным миром. Например, все столы имеют общие характерные черты («класс»), при этом они имеют разное назначение («подклассы»), хотя продолжают наследовать общие черты. В результате того, что есть такой механизм как наследование можно избежать избыточность кода, просто описав общие свойства и методы в надклассах.</p>
+<p>По поводу терминологии. Классы, атрибуты которых наследуются другими классами, могут называть как надклассами так и суперклассами. Классы, которые наследуют атрибуты других классов, часто называют подклассами.</p>
+<p>Класс, являющийся надклассом по отношению к одному классу, сам может быть подклассом по отношению к другому. Другими словами, может существовать целая цепочка наследования. </p>
+<p>При обращении к атрибуту объекта (obj.prop) сначала просматривается на наличие этого атрибута сам объект, затем его класс, на основе которого он создан. Если в классе не будет найден атрибут, то его поиск продолжится в суперклассе, к которому относится класс.</p>
+<p>Суперклассы класса указываются в скобках в заголовке инструкции class. </p>
+<p>Рассмотрим такой пример:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> Table:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,l,w,h<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: #008000;">long</span> = l
+          <span style="color: #008000;">self</span>.<span style="color: black;">width</span> = w
+          <span style="color: #008000;">self</span>.<span style="color: black;">height</span> = h
+     <span style="color: #ff7700;font-weight:bold;">def</span> outing<span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #008000;">self</span>.<span style="color: #008000;">long</span>,<span style="color: #008000;">self</span>.<span style="color: black;">width</span>,<span style="color: #008000;">self</span>.<span style="color: black;">height</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">class</span> Kitchen<span style="color: black;">&#40;</span>Table<span style="color: black;">&#41;</span>:
+     <span style="color: #ff7700;font-weight:bold;">def</span> howplaces<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,n<span style="color: black;">&#41;</span>:
+          <span style="color: #ff7700;font-weight:bold;">if</span> n <span style="color: #66cc66;">&lt;</span> 2:
+               <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;It is not kitchen table&quot;</span><span style="color: black;">&#41;</span>
+          <span style="color: #ff7700;font-weight:bold;">else</span>:
+               <span style="color: #008000;">self</span>.<span style="color: black;">places</span> = n
+     <span style="color: #ff7700;font-weight:bold;">def</span> outplases<span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #008000;">self</span>.<span style="color: black;">places</span><span style="color: black;">&#41;</span>
+&nbsp;
+t_room1 = Kitchen<span style="color: black;">&#40;</span><span style="color: #ff4500;">2</span>,<span style="color: #ff4500;">1</span>,<span style="color: #ff4500;">0.5</span><span style="color: black;">&#41;</span>
+t_room1.<span style="color: black;">outing</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+t_room1.<span style="color: black;">howplaces</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">5</span><span style="color: black;">&#41;</span>
+t_room1.<span style="color: black;">outplases</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+t_2 = Table<span style="color: black;">&#40;</span><span style="color: #ff4500;">1</span>,<span style="color: #ff4500;">3</span>,<span style="color: #ff4500;">0.7</span><span style="color: black;">&#41;</span>
+t_2.<span style="color: black;">outing</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+t_2.<span style="color: black;">howplaces</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">8</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># ОШИБКА</span></pre></div></p>
+<p>Здесь создается два класса: Table и Kitchen. Второй является подклассом первого и наследует все его атрибуты (методы __init__ и outing). Далее создаются два объекта: t_room1 и t_2. Первый объект принадлежит к классу Kitchen и наследует атрибуты этого класса и его суперкласса. Второй объект принадлежит классу Table; к классу Kitchen он никакого отношения не имеет и поэтому не может обращаться к методам howplaces и outplases. В данном примере также можно увидеть, что объекты можно создавать как на основе классов так и суперклассов.</p>
+<p><strong>Задание.</strong> <em>Расширьте программу, представленную выше, создав второй подкласс класса Table (например, Worker), содержащий пару методов, отличающихся от методов класса Kitchen().</em></p>
+<p>Класс может иметь не один, а несколько суперклассов, которые перечисляются друг за другом в скобках в строке заголовка. Такое наследование называется множественным. Потребность во множественном наследовании возникает в случае, если объекты класса предполагают использование свойств и методов различных суперклассов.</p>
+<h2>Практическая работа</h2>
+<p>Напишите программу, где класс «геометрические фигуры» (figure) содержит свойство color с изначальным значением white и метод для изменения цвета фигуры, а его подклассы «овал» (oval) и «квадрат» (square) содержат методы __init__ для задания начальных размеров объектов при их создании.</p>
+  </div>
+    </div>
+  </body>
+</html>

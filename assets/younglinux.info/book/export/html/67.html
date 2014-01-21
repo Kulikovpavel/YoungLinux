@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Пересечение списков</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-67" class="section-2">
+  <h1 class="book-heading">Пересечение списков</h1>
+  <p>Если даны два списка и необходимо найти их совпадающие элементы (<strong>область пересечения списков</strong>), т.е. значения элементов, которые присутствуют в обоих списках, то это легко можно сделать с помощью цикла <strong>for</strong> языка программирования Python.</p>
+<p>Код ниже подходит для списков, содержащих неповторяющиеся значения в самих себе. Иначе в результирующем списке могут появиться одинаковые элементы.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">a = <span style="color: black;">&#91;</span><span style="color: #ff4500;">5</span>,<span style="color: black;">&#91;</span><span style="color: #ff4500;">1</span>,<span style="color: #ff4500;">2</span><span style="color: black;">&#93;</span>,<span style="color: #ff4500;">2</span>,<span style="color: #483d8b;">'r'</span>,<span style="color: #ff4500;">4</span>,<span style="color: #483d8b;">'ee'</span><span style="color: black;">&#93;</span>
+b = <span style="color: black;">&#91;</span><span style="color: #ff4500;">4</span>,<span style="color: #ff4500;">1</span>,<span style="color: #483d8b;">'we'</span>,<span style="color: #483d8b;">'ee'</span>,<span style="color: #ff4500;">2</span>,<span style="color: #483d8b;">'r'</span>,<span style="color: black;">&#91;</span>1,2<span style="color: black;">&#93;</span><span style="color: black;">&#93;</span>
+c = <span style="color: black;">&#91;</span><span style="color: black;">&#93;</span>
+<span style="color: #ff7700;font-weight:bold;">for</span> i <span style="color: #ff7700;font-weight:bold;">in</span> a:
+    <span style="color: #ff7700;font-weight:bold;">for</span> j <span style="color: #ff7700;font-weight:bold;">in</span> b:
+        <span style="color: #ff7700;font-weight:bold;">if</span> i == j:
+            c.<span style="color: black;">append</span><span style="color: black;">&#40;</span>i<span style="color: black;">&#41;</span>
+            <span style="color: #ff7700;font-weight:bold;">break</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>c<span style="color: black;">&#41;</span></pre></div></p>
+<p>Алгоритм поиска очень прост. Берется первый элемент первого списка (внешний цикл <strong>for</strong>) и последовательно сравнивается с каждым элементом второго списка (вложенный цикл <strong>for</strong>). В случае совпадения (равенства) значений элемент добавляется в третий список <span class="monoi">c</span>, который был создан до этого. Команда <strong>break</strong> служит для выхода из внутреннего цикла, т.к. в случае совпадения дальнейший поиск при данном значении <span class="monoi">i</span> бессмысленный.</p>
+<h3>Использование операций над множествами</h3>
+<p>	Другой, возможно более интересный, способ – это использование множеств. </p>
+<p>	Множества не могут содержать одинаковых элементов. Результатом операции пересечения двух множеств является множество, содержащее значения элементов, которые были и в первом и во втором операндах-множествах. Например, если первое множество было {1, 4, 9, 12}, а второе – {4, 6, 9, 14, 18}, то результатом операции пересечения будет {4, 9}.</p>
+<p>	Поскольку даны списки, то их можно преобразовать во множества с помощью функции <strong>set</strong>.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">a = <span style="color: black;">&#91;</span><span style="color: #ff4500;">5</span>,<span style="color: black;">&#91;</span><span style="color: #ff4500;">1</span>,<span style="color: #ff4500;">2</span><span style="color: black;">&#93;</span>,<span style="color: #ff4500;">2</span>,<span style="color: #483d8b;">'r'</span>,<span style="color: #ff4500;">4</span>,<span style="color: #483d8b;">'ee'</span><span style="color: black;">&#93;</span>
+b = <span style="color: black;">&#91;</span><span style="color: #ff4500;">4</span>,<span style="color: #ff4500;">1</span>,<span style="color: #483d8b;">'we'</span>,<span style="color: #483d8b;">'ee'</span>,<span style="color: #ff4500;">2</span>,<span style="color: #483d8b;">'r'</span>,<span style="color: black;">&#91;</span>1,2<span style="color: black;">&#93;</span><span style="color: black;">&#93;</span>
+a = <span style="color: #008000;">set</span><span style="color: black;">&#40;</span>a<span style="color: black;">&#41;</span>
+b = <span style="color: #008000;">set</span><span style="color: black;">&#40;</span>b<span style="color: black;">&#41;</span></pre></div></p>
+<p>При этом если в списках встречались одинаковые значения, то во множествах они будут уже представлены единственным вариантом. Поэтому в данном случае списки могут содержать одинаковые значения.</p>
+<p>	Если проверить тип данных, на которые ссылаются переменные <span class="monoi">a</span> и <span class="monoi">b</span> до использования функции <strong>set</strong>, то они, очевидно, будут типом <strong>list</strong>. После преобразования – уже типом <strong>set</strong>. Это можно проверить с помощью функции <strong>type</strong>.</p>
+<p>	После того, как списки были преобразованы во множества, над ними можно выполнить операцию пересечения, а результат связать с переменной.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">c = a <span style="color: #66cc66;">&amp;</span> b</pre></div></p>
+<p>	С помощью знака <strong>&amp;</strong> выполняется пересечение множеств. Кроме того, над множествами можно выполнять ряд других операций: <strong>|</strong> (объединение), <strong>-</strong> (разность), <strong>^</strong> (исключающее ИЛИ).</p>
+<p>	Переменная <span class="monoi">c</span> будет содержать только уникальные значения элементов, однако будет множеством. Требуется же получить список. Для этого можно использовать функцию <strong>list</strong>, выполняющую создание списка.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">c = <span style="color: #008000;">list</span><span style="color: black;">&#40;</span>c<span style="color: black;">&#41;</span></pre></div></p>
+<p>	Все вышесказанное можно записать короче:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">c = <span style="color: #008000;">list</span><span style="color: black;">&#40;</span><span style="color: #008000;">set</span><span style="color: black;">&#40;</span>a<span style="color: black;">&#41;</span> <span style="color: #66cc66;">&amp;</span> <span style="color: #008000;">set</span><span style="color: black;">&#40;</span>b<span style="color: black;">&#41;</span><span style="color: black;">&#41;</span></pre></div></p>
+  </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Получение помощи</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+                <div class="section-2">
+          
+    <div id="node-196" class="section-3">
+  <h1 class="book-heading">Получение помощи</h1>
+  <h2>Будьте осторожны</h2>
+<p>GNU/Linux приветствует самостоятельность. И как обычно в этой системе есть несколько способов достижения цели. Привычный способ получения помощи — это найти того, кто знает; однако несмотря на терпеливость и миролюбивость сообщества пользователей Linux, почти все будут предполагать, что вы пытались использовать один или несколько описанных в данном разделе методов, прежде чем спрашивать их; способы выражения этой точки зрения  могут быть достаточно грубыми, если окажется, что вы не следуете этому основному правилу.</p>
+<h2>Страницы man</h2>
+<p>Многие начинающие пользователи бояться справочных (man) страниц, потому что они ошеломляют количеством информации. Однако они хорошо структурированы, вы можете убедиться в этом на примере ниже:  <strong>man</strong> <span class="mono">man<span>.</span></span></p>
+<p>Чтение man-страниц обычно происходит в окне терминала в графическом режиме, или, если вы предпочитаете, прямо в текстовом режиме. Введите эту команду после приглашения и нажмите <strong>Enter</strong>:</p>
+<pre>yourname@yourcomp ~> <strong>man <em>man</em></strong></pre><p>Документация для man отобразится на экране после нажатия <strong>Enter</strong>:</p>
+<pre>
+man(1)                                                         man(1)
+
+
+NAME
+ man - format and display the on-line manual pages
+ manpath - determine user's search path for man pages
+
+SYNOPSIS
+ man [-acdfFhkKtwW] [--path] [-m system] [-p string] [-C config_file]
+ [-M pathlist] [-P pager] [-S section_list] [section] name ...
+
+
+DESCRIPTION
+ man formats and displays the on-line manual pages.  If you specify
+ section, man only looks in that section of the manual.  
+ name is normally the name of the manual page, which is typically the 
+ name of a  command, function, or file.  However, if name contains a 
+ slash (/) then man interprets it as a file specification, so that you
+ can do man ./foo.5 or even man /cd/foo/bar.1.gz.
+
+ See  below  for  a  description  of where man looks for the manual
+ page files.
+
+OPTIONS
+ -C  config_file
+lines 1-27
+</pre><p>Для просмотра следующей страницы нужно нажать пробел. Вы можете вернуться на предыдущую страницу, используя клавишу <strong>b</strong>. Когда вы дойдете до конца, <strong>man</strong> обычно закрывается, и вы возвращаетесь назад к приглашению. Нажмите <strong>q</strong>, если вы хотите покинуть man-страницу, не дойдя до конца, или если просмотр автоматически не завершается в конце страницы.</p>
+<p class="note"><img src="../../../img/linuxintro/note.gif" alt="" /><strong> Пейджеры</strong><br />
+Имеющиеся комбинации клавиш для работы с man-страницами зависят от <em>пейджера</em>, используемого в вашем дистрибутиве. Большинство дистрибутивов используют less для просмотра man-страниц и их прокрутки. См. <a href="http://younglinux.info/#">Раздел  "Меньше (less) значит больше"</a> для более подробной информации о пейджерах.</p>
+<p>Каждая man-страница обычно содержит несколько стандартных разделов (что  можно наблюдать на примере <strong>man</strong> <span class="mono">man<span>):</span></span></p>
+<ul>
+<li>Первая строка содержит имя команды, о которой вы читаете, и id раздела, в котором эта man-страница находится. Man-страницы упорядочены по разделам. Команды могут иметь несколько man-страниц, например, man-страницу из пользовательского раздела, man-страницу из раздела администратора системы, и man-страницу из раздела для программиста. </li>
+<li>Имя (<strong>name</strong>) команды и краткое описание приводятся в том виде, который используется при индексировании man-страниц. Вы можете просматривать эту базу при поиске любой  строки с помощью команды <strong>apropos</strong>.</li>
+<li>Обзор (<strong>synopsis</strong>) команды представляет специальные обозначения всех опций и/или аргументы, которые эта команда может принимать. Вы можете считать опции способом выполнения команды. Аргументы это то, по отношению к чему вы ее выполняете. У некоторых команд нет опций и аргументов. Необязательные опции и аргументы располагаются между "[" и "]", что указывает на то, что они могут быть опущены. </li>
+<li>Дается более длинное описание (<strong>description</strong>) команды. </li>
+<li>Список опций (<strong>options</strong>) с их описанием. Обычно опции могут быть скомбинированы. Если это не так, раздел уведомит вас об этом.</li>
+<li>Окружение (<strong>environment</strong>) описывает переменные оболочки, которые влияют на поведение этой команды (это есть не у всех команд).</li>
+<li>Иногда предусмотрены разделы специфичные для данной команды.</li>
+<li>Ссылки на другие man-страницы приводится в разделе “SEE ALSO” ("смотри также"). Между круглыми скобками есть номер раздела, в котором находится справочная страница для данной команды. Опытные пользователи часто переходят к разделу "SEE ALSO" используя команду /, за которой следует строка поиска see и нажимают <strong>Enter</strong>.</li>
+<li>Также обычно имеется информация об известных ошибках (аномалиях), а также куда можно сообщить о новых ошибках, если вы их найдете.</li>
+<li>Также может содержаться информация об авторе и авторских правах.</li>
+</ul>
+<p>У некоторых команд есть несколько man-страниц. Например, у команды <strong>passwd</strong> есть man-страница в разделе 1, а другая — в разделе 5. По умолчанию отображается man-страница с наименьшим номером. Если вы хотите увидеть другой раздел, а не тот, что по умолчанию, укажите его после команды <strong>man</strong>:</p>
+<p><span class="mono">man 5 <em>passwd</em></span> </p>
+<p>Если вы хотите увидеть все справочные страницы о команде, одну за другой, используйте с <strong>man</strong> опцию <strong>-a</strong>:</p>
+<p><span class="mono">man -a <em>passwd</em> </span></p>
+<p>Таким образом, когда вы дойдете до конца первой man-страницы и нажмите пробел, будет отображаться man-страница из следующего раздела.</p>
+<h2>Больше информации</h2>
+<h3>Страницы Info</h3>
+<p>В дополнение к man-страницам, вы можете почитать о команде info-страницы, используя команду <strong>info</strong>. Они обычно содержат более свежую информацию и несколько проще в использовании. Man-страницы некоторых команд ссылаются на info-страницы.</p>
+<p>Начните с ввода <strong>info </strong> <span class="monoi">info</span> в окне терминала:</p>
+<pre>
+File: info.info,  Node: Top,  Next: Getting Started,  Up: (dir)
+
+Info: An Introduction
+*********************
+
+   Info is a program, which you are using now, for reading
+documentation of computer programs.  The GNU Project distributes most
+of its on-line manuals in the Info format, so you need a program called
+"Info reader" to read the manuals.  One of such programs you are using
+now.
+
+   If you are new to Info and want to learn how to use it, type the
+command `h' now.  It brings you to a programmed instruction sequence.
+
+   To learn advanced Info commands, type `n' twice.  This brings you to
+`Info for Experts', skipping over the `Getting Started' chapter.
+
+* Menu:
+
+* Getting Started::             Getting started using an Info reader.
+* Advanced Info::               Advanced commands within Info.
+* Creating an Info File::       How to make your own Info file.
+--zz-Info: (info.info.gz)Top, 24 lines --Top-------------------------------
+Welcome to Info version 4.2. Type C-h for help, m for menu item.
+</pre><p>Используйте клавиши со стрелками для просмотра текста и перемещения курсора на строку, начинающуюся со звездочки и содержащую ключевое слово, о котором вы хотите получить информацию, и затем нажмите <strong>Enter</strong>. Используйте клавиши <strong>P</strong> и <strong>N</strong> для перехода к предыдущей или следующей теме. Пробел переместит вас на одну страницу дальше, независимо от того, начинается ли новая тема или страница info для другой команды. Используйте <strong>Q</strong> для выхода. Программа <strong>info</strong> содержит больше информации.</p>
+<h3>Команды whatis и apropos</h3>
+<p>Краткие пояснения к командам доступны путем использования команды <strong>whatis</strong>, как в примере ниже:</p>
+<pre>
+[your_prompt] <strong>whatis ls</strong>
+ls                   (1)  - list directory contents
+</pre><p>Она отображает краткую информацию о команде, и первый раздел в структуре man-страниц, который содержит соответствующую страницу.</p>
+<p>Если вы не знаете, где начать и какую man-страницу читать, команда <strong>apropos</strong> даст дополнительную информацию. Скажем, вы не знаете, как запустить браузер, тогда вы можете ввести следующую команду:</p>
+<pre>
+another prompt> apropos browser
+Galeon [galeon](1)  - gecko-based GNOME web browser
+lynx           (1)  - a general purpose distributed information browser 
+	            for the World Wide Web
+ncftp          (1)  - Browser program for the File Transfer Protocol
+opera          (1)  - a graphical web browser
+pilot          (1)  - simple file system browser in the style of the 
+		    Pine Composer
+pinfo          (1)  - curses based lynx-style info browser
+pinfo [pman]   (1)  - curses based lynx-style info browser
+viewres        (1x)  - graphical class browser for Xt
+</pre><p>После нажатия <strong>Enter</strong> вы увидите, что большая часть браузеров входят в состав вашей ОС: и не только веб-браузеры, но также файловые и FTP браузеры,  браузеры для документации. Если у вас установлены пакеты разработчика, то могут быть также сопровождающие man-страницы, касающиеся написания программ, связанных с браузерами. Как правило, команды с man-страницы находится в первом разделе, поэтому помечены "(1)", что соответствует их  использованию под пользователем. Пользователь, который написал выше команду <strong>apropos</strong>, может в результате попытаться выполнить команды <strong>galeon</strong>, <strong>lynx</strong> или <strong>opera</strong>, т.к. они очевидно связаны с просмотром World Wide Web.</p>
+<h3>Опция --help</h3>
+<p>Большинство команд GNU поддерживают <span class="mono">--help</span>, которая выдает краткое пояснение того, как использовать команду, и список доступных опций. Ниже результат выдачи с этой опцией для команды <strong>cat</strong>:</p>
+<pre>
+userprompt@host: cat --help
+Usage: cat [OPTION] [FILE]...
+Concatenate FILE(s), or standard input, to standard output.
+
+  -A, --show-all           equivalent to -vET
+  -b, --number-nonblank    number nonblank output lines
+  -e                       equivalent to -vE
+  -E, --show-ends          display $ at end of each line
+  -n, --number             number all output lines
+  -s, --squeeze-blank      never more than one single blank line
+  -t                       equivalent to -vT
+  -T, --show-tabs          display TAB characters as ^I
+  -u                       (ignored)
+  -v, --show-nonprinting   use ^ and M- notation, 
+			   except for LFD and TAB
+      --help     display this help and exit
+      --version  output version information and exit
+
+With no FILE, or when FILE is -, read standard input.
+
+Report bugs to <bug-textutils@gnu.org>.
+</bug-textutils@gnu.org></pre><h3>Помощь в графическом режиме</h3>
+<p>Если вы предпочитаете графический интерфейс пользователя, то не отчаивайтесь. Konqueror, файловый менеджер KDE по умолчанию, обеспечивает безболезненный и красочный доступ к man и info-страницам. Вы можете попробовать "info:info" в адресной строке, и сможете посмотреть info-страницу о команде <strong>info</strong>. Также "man:ls" представит вам man-страницу команды <strong>ls</strong>. У вас даже есть завершение имени команды: вы увидите man-страницы для всех команд, начинающихся с "ls"  прокрутив меню. Ввод "info:/dir" в адресной строке отображает все info-страницы, расположенные во вспомогательных категориях. Превосходен включенный в справочник Konqueror Help-контент. Запускается из меню или набрав команду <strong>konqueror</strong> в окне терминала c последующим нажатием <strong>Enter</strong>; см. скриншот ниже.</p>
+<p><strong>Рисунок 2.2. Konqueror как help-браузер</strong></p>
+<p><img src="../../../img/linuxintro/konqueror.png" width="556" height="508" alt="Просмотр справочной информации в Konqueror" /></p>
+<p>Help-браузер в Gnome также очень удобный. Вы можете запустить его выбрав <strong>Приложения ? Справка</strong> в меню Gnome, нажав спасателей значок на вашем рабочем столе, либо введя команду <strong>gnome-help</strong> в окне терминала. Системную документацию и man-страницы легче просматривать в простом интерфейсе.</p>
+<p>Файловый менеджер <strong>nautilus</strong> обеспечивает поиск по индексу man- и info-страниц, они легко просматриваются и взаимосвязаны. Nautilus запускается из командной строки, или нажатием на значке вашего домашнего каталога, или из меню Gnome.</p>
+<p>Большим преимуществом GUI для системной документации является то, что вся информация полностью взаимосвязана, так что вы можете переходить по ссылкам в разделе "SEE ALSO" ("См. также") и там, где появляются ссылки на другие man-страницы, и таким образом просматривать и приобретать знания без перерыва в течение нескольких часов.</p>
+<h3>Исключения</h3>
+<p>Некоторые команды не имеют отдельной документации, т.к. являются частью другой команды. <strong>cd, exit, logout</strong> и <strong>pwd</strong> как раз такие исключения. Они часть вашей программы shell и называются встроенными командами shell. Для получения информации о них обратитесь к man- или info-страницам вашей оболочки. Большинство начинающих пользователей Linux имеют Bash оболочку. См. <a href="http://younglinux.info/#">Раздел "Shell"</a> для дополнительной информации об оболочках.</p>
+<p>Если вы изменяете первоначальную системную конфигурацию, то все равно еще  может быть возможным, что man-страницы существуют, но не видны, т.к. окружение вашей оболочки изменилось. В этом случае вам нужно проверить переменную <span class="mono">MANPATH</span>. Как это сделать описано см. <a href="http://younglinux.info/#">Раздел "Экспорт переменных"</a>.</p>
+<p>Некоторые программы или пакеты содержат только набор инструкций или ссылки в каталог <span class="mono">/usr/share/doc</span>. Для их отображения см. <a href="http://younglinux.info/#">Раздел "Другие способы просмотра содержимого"</a>.</p>
+<p>В худшем случае, вы можете случайно удалить документы из системы (надеемся случайно, потому что это очень плохая идея делать это целенаправленно). В этом случае, попробуйте сначала убедиться, что там действительно нет ничего подходящего, используя инструмент поиска (прочитайте <a href="http://younglinux.info/#">Раздел "Поиск файлов"</a>). Если окажется именно так, то возможно, вам придется переустановить пакет, который содержит команду, к которой относится документация, см. <a href="http://younglinux.info/#">Раздел "Установка нового ПО"</a>.</p>
+  </div>
+    </div></div>
+  </body>
+</html>

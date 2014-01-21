@@ -1,0 +1,113 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Урок 9. Форматированный ввод данных</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-369" class="section-2">
+  <h1 class="book-heading">Урок 9. Форматированный ввод данных</h1>
+  <p class="right">Особенности языка С. Учебное пособие</p>
+<p>В то время как функция <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> осуществляет форматированный вывод данных, функция <span class="geshifilter"><code class="c geshifilter-c">scanf<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> осуществляет их форматированный ввод. Это значит, что поступающие на ввод данные преобразуются соответственно указанному формату(ам) и записываются по адресу(ам) указанной(ых) переменной(ых):</p>
+<pre>scanf(строка_формата, адреса_переменных);</pre><p>
+Причина, по которой в <span class="geshifilter"><code class="c geshifilter-c">scanf<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> передаются адреса, а не значения переменных, очевидна. Функция <span class="geshifilter"><code class="c geshifilter-c">scanf<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> должна изменять значения переменных тех функций, из которых вызывается. Единственный способ — это получить адреса областей памяти.</p>
+<p>Спецификации формата данных, допустимые в строке формата, для <span class="geshifilter"><code class="c geshifilter-c">scanf<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> почти идентичны тем, что были описаны для функции <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>. На этом уроке мы подробно не рассмотрим все возможности форматированного ввода с помощью <span class="geshifilter"><code class="c geshifilter-c">scanf<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>, зато разберем ряд конкретных примеров.</p>
+<h3>Ввод чисел, символов и строк</h3>
+<p>Пример ввода-вывода целого и вещественного чисел, символа и строки:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">  <span style="color: #993333;">int</span> a<span style="color: #339933;">;</span>
+  <span style="color: #993333;">float</span> b<span style="color: #339933;">;</span>
+  <span style="color: #993333;">char</span> ch<span style="color: #339933;">,</span> str<span style="color: #009900;">&#91;</span>30<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+&nbsp;
+  scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d%f%c%s&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>a<span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>b<span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>ch<span style="color: #339933;">,</span> str<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d %.3f %c %s<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> a<span style="color: #339933;">,</span> b<span style="color: #339933;">,</span> ch<span style="color: #339933;">,</span> str<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>Результат:</p>
+<pre>
+45 34.3456y hello 
+45 34.346 y hello 
+</pre><p>Здесь при выполнении программы все данные были введены в одну строку. Разделителем между числами и строками является пробел, а также любой другой символ пустого пространства (например, '\n'). Однако при считывании символа, пробел учитывается как символ; чтобы этого не произошло, в примере букву записали сразу после числа. Данные можно было бы ввести, разделяя их переходом на новую строку (опять же при этом надо иметь ввиду, как считывается символ).</p>
+<p>В строке формата функции <span class="geshifilter"><code class="c geshifilter-c">scanf<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> между спецификациями вполне допустимо поставить пробелы: <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #339933;">%</span>d &nbsp;<span style="color: #339933;">%</span>f <span style="color: #339933;">%</span>c <span style="color: #339933;">%</span>s</code></span>. Они никакой роли не сыграют. Понятно, что данные можно было получить и так:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">  scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>a<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%f&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>b<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%c&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>ch<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s&quot;</span><span style="color: #339933;">,</span> str<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>Обратите внимание, перед переменной <span class="monoi">str</span> отсутствует знак амперсанда. Это не опечатка. В последующих уроках вы узнаете, что имя массива уже само по себе является ссылкой на массив (другими словами, <span class="monoi">str</span> содержит адрес начала массива).</p>
+<p>В функции <span class="geshifilter"><code class="c geshifilter-c">scanf<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> в спецификации формата вещественных чисел не указывается точность представления числа. Запись типа %.3f или %.10lf приведет к невозможности получить вещественное число. Чтобы получить число типа double используют формат %lf, для long double - %Lf.</p>
+<p>Для целых чисел: длинное целое - %ld, короткое целое - %hd. Кроме того, существуют спецификации для ввода восьмеричных и шестнадцатеричных чисел.</p>
+<p>Функция <span class="geshifilter"><code class="c geshifilter-c">scanf<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> возвращает количество удачно считанных данных; т.е. значение, возвращаемое функцией, можно проанализировать и таким образом узнать, корректно ли были введены данные. Например:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">  <span style="color: #993333;">int</span> a<span style="color: #339933;">;</span>
+  <span style="color: #993333;">double</span> b<span style="color: #339933;">;</span>
+  <span style="color: #993333;">char</span> ch<span style="color: #339933;">,</span> str<span style="color: #009900;">&#91;</span>30<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span> 
+&nbsp;
+  ch <span style="color: #339933;">=</span> scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d %lf %s&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>a<span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>b<span style="color: #339933;">,</span> str<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>  
+&nbsp;
+  <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>ch <span style="color: #339933;">==</span> 3<span style="color: #009900;">&#41;</span>
+    <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d %.3lf %s<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> a<span style="color: #339933;">,</span> b<span style="color: #339933;">,</span> str<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #b1b100;">else</span>
+    <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Error input<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<h3>Использование обычных символов</h3>
+<p>В строке формата <span class="geshifilter"><code class="c geshifilter-c">scanf<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> допустимо использование обычных символов. В этом случае при вводе данных также должны вводится и эти символы:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">  <span style="color: #993333;">int</span> a<span style="color: #339933;">,</span> b<span style="color: #339933;">,</span> c<span style="color: #339933;">;</span>
+&nbsp;
+  scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d + %d = %d&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>a<span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>b<span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>c<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Your answer is %d<span style="color: #000099; font-weight: bold;">\n</span>The correct answer is %d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> c<span style="color: #339933;">,</span> a<span style="color: #339933;">+</span>b<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>В данном случае, когда программа выполняется, ввод должен выглядеть примерно так: 342+1024 = 1366. Знаки "+" и "=" обязательно должны присутствовать между числами, наличие пробелов или их отсутствие абсолютно никакой роли не играет:</p>
+<pre>
+45 + 839=875 
+Your answer is 875 
+The correct answer is 884 
+</pre><h3>Запрет присваивания</h3>
+<p>Если какие-либо данные, вводимые пользователем, следует проигнорировать, то используют запрет присваивания, ставя после знака %, но перед буквой формата звездочку *. В таком случае данные считываются, но никакой переменной не присваиваются. Это можно использовать, например, когда нет определенной уверенности в том, что поступит на ввод, с одной стороны, и нужды сохранять эти данные, с другой:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">  <span style="color: #993333;">float</span> arr<span style="color: #009900;">&#91;</span>3<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+  <span style="color: #993333;">int</span> i<span style="color: #339933;">;</span>
+&nbsp;
+  <span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span>i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> <span style="color: #0000dd;">3</span><span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span>
+    scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%*s %f&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>arr<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Sum: %.2f<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> arr<span style="color: #009900;">&#91;</span>0<span style="color: #009900;">&#93;</span><span style="color: #339933;">+</span>arr<span style="color: #009900;">&#91;</span>1<span style="color: #009900;">&#93;</span><span style="color: #339933;">+</span>arr<span style="color: #009900;">&#91;</span>2<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>Здесь предполагается, что перед каждым числом будет вводится строка, которую следует проигнорировать, например:</p>
+<pre>
+First: 23.356 
+Second: 17.285 
+Third: 32.457 
+Sum: 73.098 
+</pre><h3>Использование "шаблонов"</h3>
+<p>Для функции <span class="geshifilter"><code class="c geshifilter-c">scanf<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> есть пара спецификаций формата, отдаленно напоминающих шаблоны командной оболочки и др. Формат […] позволяет получить строку, содержащую любые символы, указанные в квадратных скобках. Как только на ввод поступает символ, не входящий в указанный набор, считывание данных прекращается. Формат [^…], наоборот, помещает в строку символы, не входящие в указанный набор, до тех пор пока не встретит любой из указанных.</p>
+<p>В примере ниже как только поступает не цифра, считывание ввода завершается. При этом если первый символ — не цифра, то в <span class="monoi">str</span> вообще ничего не записывается:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">  <span style="color: #993333;">char</span> str<span style="color: #009900;">&#91;</span><span style="color: #0000dd;">30</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">=</span><span style="color: #ff0000;">&quot;&quot;</span><span style="color: #339933;">;</span>
+&nbsp;
+  scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%[0-9]&quot;</span><span style="color: #339933;">,</span> str<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> str<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>А в этом случае строке будет присвоена последовательность символов до любого из указанных знаков препинания:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">  scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%[^;:,!?]&quot;</span><span style="color: #339933;">,</span> str<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> str<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>Результат:</p>
+<pre>
+Hello, World! 
+Hello
+</pre><h3>Некоторые особенности и ограничения функции scanf()</h3>
+<p>Как только поступают некорректные данные, функция <span class="geshifilter"><code class="c geshifilter-c">scanf<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> завершает свою работу. В примере:<br />
+<span class="geshifilter"><code class="c geshifilter-c">scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d%f&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>a<span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>b<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></code></span></p>
+<p>если переменной <span class="monoi">a</span> попытаться присвоить символ или строку, что невозможно, то переменная <span class="monoi">b</span> уже обрабатываться не будет. Можно предположить, что так будет надежнее:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">  scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>a<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%f&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>b<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>Вроде бы неудачное считывание <span class="monoi">a</span> не должно оказывать никакого влияния на <span class="monoi">b</span>, т.к. это уже иной вызов <span class="geshifilter"><code class="c geshifilter-c">scanf<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>. Но не все так просто: при некорректном вводе данные остаются в буфере и пытаются "навязать" себя последующим вызовам <span class="geshifilter"><code class="c geshifilter-c">scanf<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>. Поэтому при использовании <span class="geshifilter"><code class="c geshifilter-c">scanf<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> надо думать о том, как в случае некорректного ввода очистить буфер. Например, это можно сделать так, как показано ниже, или путем использования специальных функций (здесь не рассматриваются):<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">  <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>a<span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> <span style="color: #0000dd;">1</span><span style="color: #009900;">&#41;</span> <span style="color: #666666; font-style: italic;">// если данные не удалось присвоить переменной,</span>
+    scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%*s&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// то выбросить их в виде строки.</span>
+  scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%f&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>b<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>Разделителем данных для <span class="geshifilter"><code class="c geshifilter-c">scanf<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> являются символы пустого пространства. Это означает отсутствие возможности записать строку, содержащую неизвестное количество пробелов, в одну переменную, используя только <span class="geshifilter"><code class="c geshifilter-c">scanf<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>. Придется использовать либо другую функцию (например, <span class="geshifilter"><code class="c geshifilter-c">getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>), либо создать циклическую конструкцию, считывающую по одному слову и добавляющую его к общей строке.</p>
+<p>Таким образом, не смотря на достаточно большие возможности <span class="geshifilter"><code class="c geshifilter-c">scanf<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>, эта функция хранит в себе ряд неудобств и опасностей. </p>
+<h3>Решение задач</h3>
+<ol>
+<li><span class="blue">На прошлом занятии вы написали программу, содержащую функции, вычисляющие факториал числа и заданный элемент ряда Фибоначчи. Измените эту программу таким образом, чтобы она запрашивала у пользователя, что он хочет вычислить: факториал или число Фибоначчи. Затем программа запрашивала бы у пользователя либо число для вычисления факториала, либо номер элемента ряда Фибоначчи.</span></li>
+<li><span class="blue">Напишите программу, которая запрашивает у пользователя две даты в формате дд.мм.гггг. Дни, месяцы и года следует присвоить целочисленным переменным. Программа должна выводить на экран информацию о том, какая дата более ранняя, а какая более поздняя.</span></li>
+<li><span class="blue">Используя цикл, напишите код, в котором пользователю предлагается вводить данные до тех пор, пока он не сделает это корректно, т.е. пока все указанные в <span class="geshifilter"><code class="c geshifilter-c">scanf<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> переменные не получат свои значения. Протестируйте программу. Что вы наблюдаете и почему? Как можно решить проблему?</span></li>
+</ol>
+  </div>
+    </div>
+  </body>
+</html>

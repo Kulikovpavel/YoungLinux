@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Демонстрация с помощью Blender Game Engine относительности скорости</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-456" class="section-2">
+  <h1 class="book-heading">Демонстрация с помощью Blender Game Engine относительности скорости</h1>
+  <p>Цель: показать, что наблюдаемая скорость объекта зависит от скорости и направления движения системы отсчета (места, откуда ведется наблюдение).</p>
+<h3>Описание модели "Относительность скорости"</h3>
+<p>Куб - движущийся объект (прямолинейно с постоянной скоростью), камера - система отсчета. Камера может либо не двигаться, либо двигаться в том же направлении, что и объект, но с меньшей скоростью.</p>
+<p>Движение длится определенное время (t = const). Следовательно, длина пройденного пути зависит только от скорости объекта.</p>
+<p>При неподвижной камере за то же время объект пройдет большее расстояние, чем в случае, когда камера движется по направлению его движения (но медленнее).</p>
+<p>Пройденное расстояние измеряется с помощью линейки, прикрепленной к камере.</p>
+<h3>Создание модели в Blender</h3>
+<p>Используется движок Blender Game Engine.</p>
+<p>Для куба устанавливаются свойство (Timer) и два сенсора (Always и Property-timer). Сенсоры запускают движение и останавливают его (по истечении 2.5 сек). Скорость куба равна 0.05 (Loc).</p>
+<p>То же самое делается для камеры, за исключением скорости (здесь она 0.02) и сенсора Always (заменяется на Keyboard).</p>
+<p>Если запустить игру (P) и не двигать камеру, то куб пройдет большее расстояние. Например, остановится на отметке 9. Если камеру двигать, то меньшее (остановится на 6-ти).</p>
+<p><iframe width="640" height="480" src="../../../../www.youtube.com/embed/dR4zUzF8EGU%3Frel=0.html" frameborder="0" allowfullscreen></iframe></p>
+<table id="attachments" class="sticky-enabled">
+ <thead><tr><th>Прикрепленный файл</th><th>Размер</th> </tr></thead>
+<tbody>
+ <tr class="odd"><td><a href="http://younglinux.info/sites/default/files/rel_move.blend">rel_move.blend</a></td><td>2.11 Мб</td> </tr>
+</tbody>
+</table>
+  </div>
+    </div>
+  </body>
+</html>

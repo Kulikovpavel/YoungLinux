@@ -1,0 +1,93 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Пример объектно-ориентированной программирования на языке Python. Урок 12</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-47" class="section-2">
+  <h1 class="book-heading">Пример объектно-ориентированной программирования на языке Python. Урок 12</h1>
+  <div style="text-align:center;">
+<h4>Методическая разработка урока<br />
+Элективный курс: Введение в объектно-ориентированное программирование на Python<br />
+Уровень: Программирование для начинающих</h4>
+</div>
+<p>В конце данного курса придумаем и напишем небольшую программу, используя объектно-ориентированную парадигму программирования. </p>
+<p>Как уже отмечалось в предыдущем уроке в ООП очень важен этап предварительного проектирования. Вообще можно выделить следующие этапы создании ОО-программы:</p>
+<ol>
+<li>Формулирование задачи.</li>
+<li>Определение объектов, участвующих в ее решении.</li>
+<li>Проектирование классов, на основе которых будут созданы объекты, а также установление между ними иерархических связей. </li>
+<li>Определение существенных свойств и методов для задач, которые будут решать объекты на основе проектируемых классов.</li>
+<li>Создание классов, описание их свойств и атрибутов.</li>
+<li>Создание объектов.</li>
+<li>Решение задачи путем взаимодействия объектов.</li>
+</ol>
+<p><strong>Первый этап:</strong></p>
+<p>Допустим нам надо написать программу по «сценарию» описанному в уроке 1: про занятие, где ученики должны получить некий объем знаний.</p>
+<p><strong>Второй этап:</strong></p>
+<p>Какие объекты понадобятся? Очевидно, это ученики, учитель, информация, а также возможно вспомогательные предметы такие как проектор и др.</p>
+<p><strong>Третий этап:</strong></p>
+<p>Классы: учитель, ученик, информация. Учитель и ученик во многом похожи: по идеи оба - люди. Значит классы учитель и ученик могут принадлежать одному суперклассу - человек. Однако не все так просто. Если существенные признаки для решения данной задачи не имеют ничего общего, то выделить что-то в суперкласс просто невозможно. </p>
+<p><strong>Четвертый этап:</strong></p>
+<p>Выделим важное, чем должны обладать объекты (классы) для решения задачи «увеличить знания». </p>
+<p>Ученик должен уметь воспринимать информацию, и превращать ее в знания.</p>
+<p>Учитель, по крайней мере, должен уметь выбирать и транслировать информацию.</p>
+<p>Информация должна содержать определенный набор строк символов. Должна быть предусмотрена возможность извлечения ее частей.</p>
+<p><strong>Пятый этап:</strong></p>
+<p>Класс «Информация»:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> Information:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,info<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">info</span> = info
+     <span style="color: #ff7700;font-weight:bold;">def</span> extract<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,i<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">current</span> = <span style="color: #008000;">self</span>.<span style="color: black;">info</span><span style="color: black;">&#91;</span>i<span style="color: black;">&#93;</span>
+          <span style="color: #ff7700;font-weight:bold;">return</span> <span style="color: #483d8b;">&quot;%s&quot;</span> <span style="color: #66cc66;">%</span> <span style="color: #008000;">self</span>.<span style="color: black;">current</span> </pre></div></p>
+<p>Объекты данного класса при создании должны содержать ту или иную информацию (содержание урока), допустим в виде списка. В классе также предусмотрен метод extract, позволяющий извлекать какую-то часть информации и возвращать ее в основную программу.</p>
+<p>Класс «Учитель»:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> Teacher:
+     <span style="color: #ff7700;font-weight:bold;">def</span> into<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,phrase<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">phrase</span> = phrase
+     <span style="color: #ff7700;font-weight:bold;">def</span> out<span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          <span style="color: #ff7700;font-weight:bold;">return</span> <span style="color: #483d8b;">&quot;%s&quot;</span> <span style="color: #66cc66;">%</span> <span style="color: #008000;">self</span>.<span style="color: black;">phrase</span> </pre></div></p>
+<p>Объектам типа «Учитель» в нашей программе позволено лишь вспоминать фразу и громко транслировать.</p>
+<p>Класс «Ученик»:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> Pupil:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">know</span> = <span style="color: black;">&#91;</span><span style="color: black;">&#93;</span>
+     <span style="color: #ff7700;font-weight:bold;">def</span> take<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>, i<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">know</span>.<span style="color: black;">append</span><span style="color: black;">&#40;</span>i<span style="color: black;">&#41;</span></pre></div> </p>
+<p>Объекты класса Pupil уже при своем создании обязаны иметь атрибут know, куда будут помещаться знания. Также предусмотрен метод take, обеспечивающий приемку информации.</p>
+<p>Создание объектов:</p>
+<p>Допустим в программе будет по одному объекту «Информатика» и «Учитель» и пару объектов «Ученик».</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">inform = Information<span style="color: black;">&#40;</span><span style="color: black;">&#91;</span><span style="color: #483d8b;">&quot;&gt; (больше)&quot;</span>,<span style="color: #483d8b;">&quot;&lt; (меньше)&quot;</span>,<span style="color: #483d8b;">&quot;== (равно)&quot;</span>, <span style="color: #483d8b;">&quot;!= (не равно)&quot;</span><span style="color: black;">&#93;</span><span style="color: black;">&#41;</span>
+t = Teacher<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+p1 = Pupil<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+p2 = Pupil<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>Решение задачи с помощью взаимодействия объектов:</p>
+<p>Какая в данном случае задача? Научить учеников чему-нибудь. Приступим.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">t.<span style="color: black;">into</span><span style="color: black;">&#40;</span>inform.<span style="color: black;">extract</span><span style="color: black;">&#40;</span>2<span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+p1.<span style="color: black;">take</span><span style="color: black;">&#40;</span>t.<span style="color: black;">out</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;1-ый ученик пока еще знает только &quot;</span>, p1.<span style="color: black;">know</span><span style="color: black;">&#41;</span>
+&nbsp;
+t.<span style="color: black;">into</span><span style="color: black;">&#40;</span>inform.<span style="color: black;">extract</span><span style="color: black;">&#40;</span>0<span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+p1.<span style="color: black;">take</span><span style="color: black;">&#40;</span>t.<span style="color: black;">out</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+p2.<span style="color: black;">take</span><span style="color: black;">&#40;</span>t.<span style="color: black;">out</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;1-ый ученик знает, что &quot;</span>, p1.<span style="color: black;">know</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;2-ой ученик знает, что &quot;</span>, p2.<span style="color: black;">know</span><span style="color: black;">&#41;</span></pre></div> </p>
+<p>Учитель берет с помощью метода extract объекта inform часть информации. Ученики, используя свой метод take имеют возможность получить информацию, воспроизводимую учителем (метод out объекта t). </p>
+<p>В результате работы этой программы атрибут know учеников изменяется (если конечно те использовали метод take).</p>
+<h2>Практическая работа</h2>
+<ol>
+<li>Напишите программу рассмотренную в этом уроке. Посмотрите как она работает.</li>
+<li>Создайте еще пару учеников и еще один объект класса Information. Научите новых учеников чему-нибудь.</li>
+<li>Может ли в данной программе ученик освоить информацию минуя учителя. Если «да», то реализуйте в программе «самостоятельную работу» ученика.</li>
+</ol>
+  </div>
+    </div>
+  </body>
+</html>

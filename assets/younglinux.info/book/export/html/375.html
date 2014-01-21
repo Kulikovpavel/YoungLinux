@@ -1,0 +1,181 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Урок 15. Структурный тип данных</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-375" class="section-2">
+  <h1 class="book-heading">Урок 15. Структурный тип данных</h1>
+  <p class="right">Особенности языка С. Учебное пособие</p>
+<h3>Объявление и определение структур</h3>
+<p>Примером структуры может послужить любой объект, для которого описывается ряд его характеристик, имеющих значение в данной программе. Например, для книг это может быть название, автор, количество страниц; для окружности — координаты центра, диаметр, цвет. На языке программирования <span class="blue">C</span> объявление вышеупомянутых структурных типов данных может выглядеть так:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #993333;">struct</span> book <span style="color: #009900;">&#123;</span>
+    <span style="color: #993333;">char</span> title<span style="color: #009900;">&#91;</span>50<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+    <span style="color: #993333;">char</span> author<span style="color: #009900;">&#91;</span>30<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+    <span style="color: #993333;">int</span> pages<span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span><span style="color: #339933;">;</span>
+<span style="color: #993333;">struct</span> circle <span style="color: #009900;">&#123;</span>
+    <span style="color: #993333;">int</span> x<span style="color: #339933;">,</span> y<span style="color: #339933;">;</span>
+    <span style="color: #993333;">float</span> dia<span style="color: #339933;">;</span>
+    <span style="color: #993333;">char</span> color<span style="color: #009900;">&#91;</span>10<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>В данном случае мы как бы создаем новый тип данных, но еще не объявляем переменных этих типов. Обратите внимание на точку с запятой в конце объявлений.</p>
+<p>Чаще переменные структур объявляются так:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #993333;">struct</span> circle a<span style="color: #339933;">,</span> b<span style="color: #339933;">,</span> c<span style="color: #339933;">;</span>
+<span style="color: #993333;">struct</span> book mybook<span style="color: #339933;">;</span></pre></div></p>
+<p>Здесь объявляются три структуры типа <span class="monoi">circle</span> и одна структура типа <span class="monoi">book</span>. Можно объявлять типы структур и их переменные по-иному, но мы для избежания путаницы рассматривать другие способы не будем. </p>
+<p>Каждая переменная типа <span class="monoi">circle</span> содержит четыре элемента (или поля) — <span class="monoi">x, y, dia, color</span>. Можно сказать, что они представляют собой вложенные переменные. Причем эти переменные разных типов. Таким образом переменная-структура позволяет объединить под одним именем ряд разнородных данных. Обычно это нужно для удобства обработки данных. Если нельзя было бы создавать структуры, то пришлось бы создавать множество независимых переменных или ряд массивов, явной взаимосвязи между которыми не было бы. Структуру же позволяют объединять взаимосвязанные данные. Это конечно еще не объектно-ориентированное программирование, но уже взгляд в его сторону.</p>
+<p>Объявив переменную структурного типа, мы можем получить доступ к каждому ее элементу для присваивания, изменения или получения значения:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">	a.<span style="color: #202020;">x</span> <span style="color: #339933;">=</span> <span style="color: #0000dd;">10</span><span style="color: #339933;">;</span> a.<span style="color: #202020;">dia</span> <span style="color: #339933;">=</span> <span style="color:#800080;">2.35</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%.2f &quot;</span><span style="color: #339933;">,</span> a.<span style="color: #202020;">dia</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>Значение элементов структуры можно сразу определять при объявлении переменной, что похоже на инициализацию массивов:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">	<span style="color: #993333;">struct</span> book lang_c <span style="color: #339933;">=</span> <span style="color: #009900;">&#123;</span><span style="color: #ff0000;">&quot;Language C&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;Ritchi&quot;</span><span style="color: #339933;">,</span> 99<span style="color: #009900;">&#125;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>Значение переменной-структуры можно присвоить переменной того же типа:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">	<span style="color: #993333;">struct</span> book <span style="color: #009900;">&#123;</span> <span style="color: #993333;">char</span> <span style="color: #339933;">*</span>title<span style="color: #339933;">,</span> <span style="color: #339933;">*</span>author<span style="color: #339933;">;</span> <span style="color: #993333;">int</span> pages<span style="color: #339933;">;</span> <span style="color: #009900;">&#125;</span><span style="color: #339933;">;</span>
+	<span style="color: #993333;">struct</span> book old<span style="color: #339933;">,</span> new<span style="color: #339933;">;</span>
+	old.<span style="color: #202020;">title</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">&quot;GNU/Linux&quot;</span><span style="color: #339933;">;</span> old.<span style="color: #202020;">author</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">&quot;people&quot;</span><span style="color: #339933;">;</span> old.<span style="color: #202020;">pages</span> <span style="color: #339933;">=</span> <span style="color: #0000dd;">20213</span><span style="color: #339933;">;</span>
+	new <span style="color: #339933;">=</span> old<span style="color: #339933;">;</span>
+	new.<span style="color: #202020;">pages</span> <span style="color: #339933;">+=</span> <span style="color: #0000dd;">2000</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d, %d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> old.<span style="color: #202020;">pages</span><span style="color: #339933;">,</span> new.<span style="color: #202020;">pages</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>В четвертой строке кода данные переменной <span class="monoi">old</span> присваиваются <span class="monoi">new</span>. В итоге вторая структура содержит копию данных первой. То, что можно выполнять присваивание по отдельным полям должно быть понятно.</p>
+<p><span class="blue"><strong>Задание</strong><br />
+Придумайте и опишите структуру. Объявите переменные этого типа. Присвойте им значения и выведите на экран.</span></p>
+<h3>Структуры и функции</h3>
+<p>Структуры-переменные можно передавать в функции в качестве параметров и возвращать их оттуда. Структуры передаются по значению, как обычные переменные, а не по ссылке, как массивы.<br />
+Рассмотрим программу, в которой одна функция возвращает структуру, а другая — принимает ее в качестве параметра:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+<span style="color: #339933;">#include &lt;math.h&gt;</span>
+&nbsp;
+<span style="color: #993333;">struct</span> circle <span style="color: #009900;">&#123;</span> <span style="color: #993333;">int</span> x<span style="color: #339933;">,</span> y<span style="color: #339933;">;</span> <span style="color: #993333;">float</span> dia<span style="color: #339933;">;</span> <span style="color: #993333;">char</span> color<span style="color: #009900;">&#91;</span>10<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span> <span style="color: #009900;">&#125;</span><span style="color: #339933;">;</span>
+<span style="color: #993333;">struct</span> circle new_circle<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #993333;">void</span> cross <span style="color: #009900;">&#40;</span><span style="color: #993333;">struct</span> circle<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">struct</span> circle a<span style="color: #339933;">;</span>
+&nbsp;
+	a <span style="color: #339933;">=</span> new_circle<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	cross<span style="color: #009900;">&#40;</span>a<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span>	
+&nbsp;
+<span style="color: #993333;">struct</span> circle new_circle<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">struct</span> circle new<span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Координаты: &quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d%d&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>new.<span style="color: #202020;">x</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>new.<span style="color: #202020;">y</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Диаметр: &quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%f&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>new.<span style="color: #202020;">dia</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> 
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Цвет: &quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s&quot;</span><span style="color: #339933;">,</span> new.<span style="color: #202020;">color</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span><span style="color: #666666; font-style: italic;">//gets(new.color);</span>
+&nbsp;
+	<span style="color: #b1b100;">return</span> new<span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">void</span> cross <span style="color: #009900;">&#40;</span><span style="color: #993333;">struct</span> circle c<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">double</span> hyp<span style="color: #339933;">;</span>
+&nbsp;
+	hyp <span style="color: #339933;">=</span> sqrt<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span><span style="color: #993333;">double</span><span style="color: #009900;">&#41;</span> c.<span style="color: #202020;">x</span> <span style="color: #339933;">*</span> c.<span style="color: #202020;">x</span> <span style="color: #339933;">+</span> <span style="color: #009900;">&#40;</span><span style="color: #993333;">double</span><span style="color: #009900;">&#41;</span> c.<span style="color: #202020;">y</span> <span style="color: #339933;">*</span> c.<span style="color: #202020;">y</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Расстояние от центра круга до начала координат: %.2lf<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> hyp<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>hyp <span style="color: #339933;">&lt;=</span> c.<span style="color: #202020;">dia</span> <span style="color: #339933;">/</span> <span style="color: #0000dd;">2</span><span style="color: #009900;">&#41;</span> puts<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Круг пересекает начало координат&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">else</span> puts<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Круг не содержит точки начала коорднат&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<p>Примечание. При компиляции программы в GNU/Linux команда выглядит так: <span class="geshifilter"><code class="c geshifilter-c">gcc program.<span style="color: #202020;">c</span> <span style="color: #339933;">-</span>lm</code></span>. Это связано с использованием библиотеки с математическими функциями.</p>
+<ul>
+<li>Объявляется структура <span class="monoi">circle</span> как глобальный тип данных. Таким образом любая, а не только <span class="geshifilter"><code class="c geshifilter-c">main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>, функция может создавать переменные этого типа. </li>
+<li>Функция <span class="geshifilter"><code class="c geshifilter-c">new_circle<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> возвращает структуру, а функция <span class="geshifilter"><code class="c geshifilter-c">cross<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> принимает структуру по значению. Следует отметить, что можно создавать функции, которые как принимают (возможно, несколько структур) так и возвращают структуру.</li>
+<li>В функции <span class="geshifilter"><code class="c geshifilter-c">new_circle<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> создается переменная new типа <span class="monoi">struct circle</span>, поля которой заполняются пользователем. Функция возвращает значение переменной <span class="monoi">new</span> в функцию <span class="geshifilter"><code class="c geshifilter-c">main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>, где это значение присваивается переменной <span class="monoi">a</span>, которая также принадлежит типу <span class="monoi">sctruct circle</span>.</li>
+<li>Функция <span class="geshifilter"><code class="c geshifilter-c">cross<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> определяет, пересекает ли круг начало координат. В ее теле вычисляется расстояние от центра круга до начала координат. Это расстояние является гипотенузой прямоугольного треугольника, длина катетов которого равна значениям <span class="monoi">x</span> и <span class="monoi">у</span>. Далее, если гипотенуза  меньше радиуса, то круг пересекает начало координат, т.е. точку (0, 0).</li>
+<li>В функции <span class="geshifilter"><code class="c geshifilter-c">main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> при вызове <span class="geshifilter"><code class="c geshifilter-c">cross<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> данные, содержащиеся в переменной <span class="monoi">a</span>, копируются и присваиваются переменной <span class="monoi">c</span>.</li>
+</ul>
+<p><span class="blue"><strong>Задание</strong><br />
+Придумайте и напишите свою программу, в которой была бы как минимум еще одна функция помимо <span class="geshifilter"><code class="c geshifilter-c">main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>, манипулирующая структурой.</span></p>
+<h3>Указатели и структуры</h3>
+<p>В отличие от массивов, структуры передаются в функции по значению. Это не всегда рационально, т.к. структуры могут быть достаточно большого размера, и копирование таких участков памяти может замедлять работу программы. Поэтому часто структуры в функцию передают по ссылке, при этом можно использовать как указатель, так и операцию получения адреса.<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">	<span style="color: #993333;">struct</span> book new<span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// переменная-структура</span>
+	<span style="color: #993333;">struct</span> book <span style="color: #339933;">*</span>pnew<span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// указатель на структуру</span>
+	reader<span style="color: #009900;">&#40;</span><span style="color: #339933;">&amp;</span>new<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// передаем адрес</span>
+	pnew <span style="color: #339933;">=</span> <span style="color: #339933;">&amp;</span>new<span style="color: #339933;">;</span>
+	reader<span style="color: #009900;">&#40;</span>pnew<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// передаем указатель</span></pre></div></p>
+<p>Тогда функция <span class="geshifilter"><code class="c geshifilter-c">reader<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> должна иметь примерно такое объявление:<br />
+<span class="geshifilter"><code class="c geshifilter-c"><span style="color: #993333;">void</span> reader <span style="color: #009900;">&#40;</span><span style="color: #993333;">struct</span> book <span style="color: #339933;">*</span>pb<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> </code></span></p>
+<p>Возникает вопрос, как при использовании указателей обращаться к элементам структур? Во первых надо получить саму структуру, т.е. если <span class="monoi">pnew</span> указатель, то сама структура будет <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #339933;">*</span>pnew</code></span>. Далее можно уже обращаться к полям через точку: <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #339933;">*</span>pnew.<span style="color: #202020;">title</span></code></span>. Однако это выражение не верно, т.к. приоритет операции "точка" (обращение к полю) выше операции "звездочка" (получить значение по адресу). Таким образом приведенная запись сначала пытается получить значение поля <span class="monoi">title</span> у указателя <span class="monoi">pnew</span>, но у <span class="monoi">pnew</span> нет такого поля. Проблема решается с помощью скобок, которые изменяют порядок выполнения операций: <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #009900;">&#40;</span><span style="color: #339933;">*</span>pnew<span style="color: #009900;">&#41;</span>.<span style="color: #202020;">title</span></code></span>. В таком случае сначала извлекается значение по адресу <span class="monoi">pnew</span>, это значение является структурой. Затем происходит обращение к полю структуры.</p>
+<p>В языке программирования <span class="blue">C</span> записи типа <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #009900;">&#40;</span><span style="color: #339933;">*</span>pnew<span style="color: #009900;">&#41;</span>.<span style="color: #202020;">title</span></code></span> часто заменяют на такие: <span class="geshifilter"><code class="c geshifilter-c">pnew<span style="color: #339933;">-&gt;</span>title</code></span>, что позволяет синтаксис языка. Когда в программе вы видите стрелку (тире и скобка) всегда помните, то, что написано до стрелки, — это указатель на структуру, а не переменная-структура.</p>
+<p>Пример кода с использованием указателей:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+&nbsp;
+<span style="color: #993333;">struct</span> circle <span style="color: #009900;">&#123;</span> <span style="color: #993333;">int</span> x<span style="color: #339933;">,</span> y<span style="color: #339933;">;</span> <span style="color: #993333;">float</span> dia<span style="color: #339933;">;</span> <span style="color: #009900;">&#125;</span><span style="color: #339933;">;</span>
+<span style="color: #993333;">void</span> inversion <span style="color: #009900;">&#40;</span><span style="color: #993333;">struct</span> circle <span style="color: #339933;">*</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>	
+	<span style="color: #993333;">struct</span> circle cir<span style="color: #339933;">,</span> <span style="color: #339933;">*</span>pc <span style="color: #339933;">=</span> <span style="color: #339933;">&amp;</span>cir<span style="color: #339933;">;</span>
+&nbsp;
+	pc<span style="color: #339933;">-&gt;</span>x <span style="color: #339933;">=</span> <span style="color: #0000dd;">10</span><span style="color: #339933;">;</span> pc<span style="color: #339933;">-&gt;</span>y <span style="color: #339933;">=</span> <span style="color: #0000dd;">7</span><span style="color: #339933;">;</span> pc<span style="color: #339933;">-&gt;</span>dia <span style="color: #339933;">=</span> <span style="color: #0000dd;">6</span><span style="color: #339933;">;</span> 
+	inversion<span style="color: #009900;">&#40;</span>pc<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;x = %d, y = %d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> cir.<span style="color: #202020;">x</span><span style="color: #339933;">,</span> cir.<span style="color: #202020;">y</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span>	
+&nbsp;
+<span style="color: #993333;">void</span> inversion<span style="color: #009900;">&#40;</span><span style="color: #993333;">struct</span> circle <span style="color: #339933;">*</span>p<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	p<span style="color: #339933;">-&gt;</span>x <span style="color: #339933;">=</span> <span style="color: #339933;">-</span>p<span style="color: #339933;">-&gt;</span>x<span style="color: #339933;">;</span>
+	p<span style="color: #339933;">-&gt;</span>y <span style="color: #339933;">=</span> <span style="color: #339933;">-</span>p<span style="color: #339933;">-&gt;</span>y<span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<p><span class="blue"><strong>Задание</strong><br />
+Придумайте свою программу, в которой бы использовались указатели на структуры.</span></p>
+<h3>Массивы структур</h3>
+<p>Обычно создание в программе одной переменной структурного типа не имеет особого смысла. Чаще структурами пользуются, когда необходимо описать множество похожих объектов, имеющих разные значения признаков. Значения каждого объекта следует объединить вместе (в структуру) и тем самым отделить от значений других объектов. Например, описание ряда книг или множества людей. Таким образом мы можем организовать массив, где каждый элемент представляет собой отдельную структуру, а все элементы принадлежат одному и тому же структурному типу.</p>
+<p>Напишем программу для учета персональных компьютеров в организации. Каждая структура будет описывать определенные модели и содержать поле, в котором будет указано количество таких объектов. Поэтому при объявлении структурного типа данных следует описать такие поля как тип компьютера, модель процессора, количество. </p>
+<p>Программа будет предоставлять возможность получать информацию о всех моделях и изменять количество компьютеров указанной пользователем модели. В программе будут определены две функции (помимо <span class="geshifilter"><code class="c geshifilter-c">main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>): для вывода всей информации и для изменения количества компьютеров.<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+&nbsp;
+<span style="color: #339933;">#define N 5</span>
+&nbsp;
+<span style="color: #993333;">struct</span> computer <span style="color: #009900;">&#123;</span> <span style="color: #993333;">char</span> <span style="color: #339933;">*</span>type<span style="color: #339933;">;</span> <span style="color: #993333;">char</span> <span style="color: #339933;">*</span>proc<span style="color: #339933;">;</span> <span style="color: #993333;">int</span> qty<span style="color: #339933;">;</span> <span style="color: #009900;">&#125;</span><span style="color: #339933;">;</span>
+<span style="color: #993333;">void</span> viewer <span style="color: #009900;">&#40;</span><span style="color: #993333;">struct</span> computer <span style="color: #339933;">*</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #993333;">void</span> changer <span style="color: #009900;">&#40;</span><span style="color: #993333;">struct</span> computer <span style="color: #339933;">*</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">struct</span> computer comps<span style="color: #009900;">&#91;</span>N<span style="color: #009900;">&#93;</span><span style="color: #339933;">=</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #ff0000;">&quot;Desktop&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;earlier then P4&quot;</span><span style="color: #339933;">,</span> <span style="color: #0000dd;">10</span><span style="color: #339933;">,</span> 
+	<span style="color: #ff0000;">&quot;Desktop&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;P4&quot;</span><span style="color: #339933;">,</span> <span style="color: #0000dd;">30</span> <span style="color: #339933;">,</span>
+	<span style="color: #ff0000;">&quot;Desktop&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;Core&quot;</span><span style="color: #339933;">,</span> <span style="color: #0000dd;">20</span> <span style="color: #339933;">,</span>
+	<span style="color: #ff0000;">&quot;Desktop&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;AMD&quot;</span><span style="color: #339933;">,</span> <span style="color: #0000dd;">2</span> <span style="color: #339933;">,</span>
+	<span style="color: #ff0000;">&quot;Notebook&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;Core&quot;</span><span style="color: #339933;">,</span> 1 <span style="color: #009900;">&#125;</span><span style="color: #339933;">;</span>
+&nbsp;
+	viewer<span style="color: #009900;">&#40;</span>comps<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	changer<span style="color: #009900;">&#40;</span>comps<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	viewer<span style="color: #009900;">&#40;</span>comps<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>	
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">void</span> viewer <span style="color: #009900;">&#40;</span><span style="color: #993333;">struct</span> computer <span style="color: #339933;">*</span>comp<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> N<span style="color: #339933;">;</span> i<span style="color: #339933;">++,</span> comp<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span>
+		<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%2d) %-8s - %-15s: %3d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> i<span style="color: #339933;">+</span>1<span style="color: #339933;">,</span> comp<span style="color: #339933;">-&gt;</span>type<span style="color: #339933;">,</span> comp<span style="color: #339933;">-&gt;</span>proc<span style="color: #339933;">,</span> comp<span style="color: #339933;">-&gt;</span>qty<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">void</span> changer <span style="color: #009900;">&#40;</span><span style="color: #993333;">struct</span> computer <span style="color: #339933;">*</span>comp<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">,</span> differ<span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Введите номер модели: &quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>i<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> i<span style="color: #339933;">--;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;На сколько уменьшить или увеличить: &quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>differ<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #009900;">&#40;</span>comp<span style="color: #339933;">+</span>i<span style="color: #009900;">&#41;</span><span style="color: #339933;">-&gt;</span>qty <span style="color: #339933;">+=</span> differ<span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<ul>
+<li>Массив структур инициализируется при его объявлении.</li>
+<li>Функции <span class="geshifilter"><code class="c geshifilter-c">viewer<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> и <span class="geshifilter"><code class="c geshifilter-c">changer<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> принимают указатели на структуру <span class="monoi">computer</span>. </li>
+<li>В теле <span class="geshifilter"><code class="c geshifilter-c">viewer<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> указатель инкрементируется в заголовке цикла; таким образом указывая на следующий элемент массива, т.е. на следующую структуру.</li>
+<li>В выражении <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #009900;">&#40;</span>comp<span style="color: #339933;">+</span>i<span style="color: #009900;">&#41;</span><span style="color: #339933;">-&gt;</span>qty</code></span> скобки необходимы, т.к оператор -> имеет более высокий приоритет. Скобки позволяют сначала получить указатель на i-ый элемент массива, а потом обратиться к его полю.</li>
+<li>Декрементирование <span class="monoi">i</span> в функции <span class="geshifilter"><code class="c geshifilter-c">changer<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> связано с тем, что индексация начинается с нуля, а номера элементов массива, которые пользователь видит на экране, с единицы.</li>
+<li>Для того, чтобы уменьшить количество компьютеров, при запросе надо ввести отрицательное число.</li>
+</ul>
+<p>Пример результата работы программы:<br />
+<img src="../../../img/c/array_of_struct.png" width="308" height="221" alt="Массив структур" /></p>
+<p><span class="blue"><strong>Задание</strong><br />
+Придумайте свою программу, в которой бы использовался массив структур, или перепишите приведенную выше программу и дополните ее функцией, которая позволяет добавлять в массив новый элемент-структуру.</span></p>
+  </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Перемещение данных на устройство резервного копирования</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+                <div class="section-2">
+          
+    <div id="node-301" class="section-3">
+  <h1 class="book-heading">Перемещение данных на устройство резервного копирования</h1>
+  <p class="right">Introduction to Linux. A Hands on Guide —<br />
+Введение в Linux. Руководство по работе</p>
+<h3>Создание копии на дискете</h3>
+<h4>Форматирование дискеты</h4>
+<p>На большинстве систем Linux, пользователи имеют доступ к дисководу. Название устройства может варьировать в зависимости от размера и количества гибких дисков. На некоторых системах, вероятно, это будет ссылка <span class="mono">/dev/floppy</span>, указывающая на нужное устройство, возможно <span class="mono">/dev/fd0</span> (при автоматическом обнаружении дисковода гибких дисков) или <span class="mono">/dev/fd0H1440</span> (для дискет в 1,44 Мб).</p>
+<p><strong>fdformat</strong> представляет собой инструмент низкоуровневого форматирования дискеты. Команда принимает имя устройства в качестве опции. <strong>fdformat</strong> сообщит об ошибке, если дискета защищена от записи.</p>
+<pre>
+emma:~> <strong>fdformat /dev/fd0H1440</strong>
+Double-sided, 80 tracks, 18 sec/track. Total capacity 1440 kB.
+Formatting ... done
+Verifying ... done
+emma:~>
+</pre><p>Команда <strong>mformat</strong> (из пакета mtools) используется для создания DOS-совместимых дискет, которые затем могут быть доступны через <strong>mcopy, mdir</strong> и другие m-команды.</p>
+<p>Кроме того, доступны графические инструменты.</p>
+<p><strong>Рисунок 9.1. Форматирование дискеты</strong></p>
+<div style="text-align:center;"><img src="../../../img/linuxintro/formatfloppy.png" width="380" height="218" alt="Форматирование дискеты в Linux" /></div>
+<p>После того как дискета отформатирована, она может быть примонтирована к файловой системе и доступна как обычный, хотя маленький, каталог, обычно через <span class="mono">/mnt/floppy</span>.</p>
+<p>Если вам это нужно, установите утилиту <strong>mkbootdisk</strong>, которая создает дискету, с которой может загрузиться текущая система.</p>
+<h4>Использование команды dd для сбрасывания данных</h4>
+<p>Команда <strong>dd</strong> может использоваться для перемещения данных на диск, или обратно на дискету, в зависимости от заданных устройств ввода и вывода. Например:</p>
+<pre>
+gaby:~> <strong>dd if=images-without-dir.tar.gz of=/dev/fd0H1440</strong>
+98+1 records in
+98+1 records out
+
+gaby~> <strong>dd if=/dev/fd0H1440 of=/var/tmp/images.tar.gz</strong>
+2880+0 records in
+2880+0 records out
+
+gaby:~> <strong>ls /var/tmp/images*</strong>
+/var/tmp/images.tar.gz
+</pre><p>
+Заметьте, что сброс производится на демонтированное устройство. Дискеты, созданные с помощью этого метода не монтируются к файловой системе, это способ для создания загрузочных или спасательных дисков. Для получения дополнительной информации о возможностях <strong>dd</strong> читайте man-страницы.</p>
+<p>Этот инструмент является частью пакета GNU <em>coreutils</em>.</p>
+<p class="note"><img src="../../../img/linuxintro/note.gif" alt="" /><strong>   Сбрасывание дисков.</strong><br />
+Команда <strong>dd</strong> также может быть использована для создания "сырого" дампа всего жесткого диска.</p>
+<h3>Создание копии на CD</h3>
+<p>На некоторых системах пользователи могут использовать записывающие CD-устройства. Сначала ваши данные должны быть отформатированы. Используйте команду <strong>mkisofs</strong>, чтобы сделать это в каталоге, содержащем файлы, для которых вы хотите сделать резервную копию. Проверьте командой <strong>df</strong>, что на диске достаточно свободное места, так как новый файл будет примерно такого же размера, как вся текущая директория:</p>
+<pre>
+[rose@blob recordables] <strong>df -h .</strong>
+Filesystem            Size  Used Avail Use% Mounted on
+/dev/hde5              19G   15G  3.2G  82% /home
+
+[rose@blob recordables] <strong>du -h -s .</strong>
+325M    .
+
+[rose@blob recordables] <strong>mkisofs -J -r -o cd.iso .</strong>
+&lt;--snap-->
+making a lot of conversions
+&lt;--/snap-->
+98.95% done, estimate finish Fri Apr  5 13:54:25 2002
+Total translation table size: 0
+Total rockridge attributes bytes: 35971
+Total directory bytes: 94208
+Path table size(bytes): 452
+Max brk space used 37e84
+166768 extents written (325 Mb)
+</pre><p>
+Опции <span class="mono">-J</span> и <span class="mono">-r</span>  используются для монтирования CD-ROM на различных системах, см. man-страницы. После этого, компакт-диск можно создать с помощью инструмента <strong>cdrecord</strong> с соответствующими опциями:</p>
+<pre>
+[rose@blob recordables] <strong>cdrecord -dev 0,0,0 -speed=8 cd.iso</strong>
+Cdrecord 1.10 (i686-pc-linux-gnu) (C) 1995-2001 Joerg Schilling
+scsidev: '0,0,0'
+scsibus: 0 target: 0 lun: 0
+Linux sg driver version: 3.1.20
+Using libscg version 'schily-0.5'
+Device type    : Removable CD-ROM
+Version        : 0
+Response Format: 1
+Vendor_info    : 'HP      '
+Identification : 'CD-Writer+ 8100 '
+Revision       : '1.0g'
+Device seems to be: Generic mmc CD-RW.
+Using generic SCSI-3/mmc CD-R driver (mmc_cdr).
+Driver flags   : SWABAUDIO
+Starting to write CD/DVD at speed 4 in write mode for single session.
+Last chance to quit, starting real write in 0 seconds. 
+Operation starts.
+</pre><p>
+В зависимости от скорости вашего CD-дисковода, у вас появится время, чтобы перекусить. Когда задание будет выполнено, вы получите подтверждающее сообщение:</p>
+<pre>
+Track 01: Total bytes read/written: 341540864/341540864 
+          (166768 sectors).
+</pre><p>Существуют некоторые графические инструменты, облегчающие создание дисков. Одним из популярных является <strong>xcdroast</strong>, который находится в свободном доступе на сайте <noindex>http://www.xcdroast.org</noindex> и включен во многие системы и в каталог GNU. Менеджеры рабочего стола KDE и Gnome имеют собственные средства для создания компакт-дисков.</p>
+<h3>Бэкапы на/с jazz дисков, USB-устройств и других съемных носителей</h3>
+<p>Эти устройства обычно монтируются к файловой системе. После процедуры монтирования они доступны как обычные каталоги, так что вы можете использовать стандартные команды для работы с файлами. </p>
+<p>В примере, приведенном ниже, подготавливается копирование изображений с камеры на жесткий диск:</p>
+<pre>
+robin:~> <strong>mount /mnt/camera</strong>
+
+robin:~> <strong>mount | grep camera</strong>
+/dev/sda1 on /mnt/camera type vfat (rw,nosuid,nodev)
+</pre><p>
+Если у камеры есть только USB-устройство хранения, которое вы когда-нибудь подключали к вашей системе, это безопасно. Но имейте в виду, что USB-устройства присваиваются записям в <span class="mono">/dev</span>, как только они подключены к системе. Таким образом, если вы сначала подключите USB-устройство к системе, оно окажется на <span class="mono">/dev/sda</span> входе, и если вы подключите камеру после этого, ей будет назначен в <span class="mono">/dev/sdb</span> - при условии, что у вас нет каких-либо SCSI-дисков, которые также монтируются на <span class="mono">/dev/sd*</span>. На новых системах, где ядро 2.6, автоопределение системы под названием HAL (Hardware Abstraction Layer) гарантирует, что пользователи не должны иметь дело с этим бременем. Если вы хотите проверить, где устройство, введите <strong>dmesg</strong> после его вставки.</p>
+<p>Теперь можно копировать файлы:</p>
+<pre>
+robin:~> <strong>cp -R /mnt/camera/* images/</strong>
+
+robin:~> <strong>umount /mnt/camera</strong>
+</pre><p>
+Кроме того, джаз-диск может быть смонтирован в <span class="mono">/mnt/jazz</span>.<br />
+Чтобы это произошло, соответствующие строки должны быть добавлены в <span class="mono">/etc/modules.conf</span> и <span class="mono">/etc/fstab</span>. Обратитесь к специальным HOWTO аппаратного обеспечения для получения дополнительной информации. В системах с ядром 2.6.x или выше, вы также можете посмотреть man-страницы <strong>modprobe</strong> и <span class="mono">modprobe.conf</span>.</p>
+<h3>Резервирование данных с помощью ленточных устройств</h3>
+<p>Это делается с помощью <strong>tar</strong> (см. ранее). Инструмент <strong>mt</strong> используется для контроля магнитного ленточного устройства, подобно <span class="mono">/dev/st0</span>. Целые книги были написаны о резервном копировании на ленту, поэтому обратитесь к <a href="http://younglinux.info/#">Приложению B, Сравнение команд DOS и Linux</a>. Имейте в виду, что базы данных могут потребовать другие процедуры резервного копирования из-за своей архитектуры.</p>
+<p>Соответствующие команды резервного копирования обычно помещают в один из каталогов cron с тем, чтобы они выполнялись регулярно.</p>
+<h3>Инструменты вашего дистрибутива</h3>
+<p>Большинство дистрибутивов Linux предлагают свои собственные инструменты для облегчения жизни. Вот краткий перечень:</p>
+<ul>
+<li>SuSE: YaST теперь включает расширенные модули для резервного копирования и восстановления.</li>
+<li>RedHat: инструмент File Roller обеспечивает визуальное управление сжатыми архивами. Похоже, они предпочитают X-CD-Roast для перемещения бэкапов на внешние устройства.</li>
+<li>Mandrake: X-CD-Roast.</li>
+<li>Большинство дистрибутивов поставляются с утилитами BSD <strong>dump</strong> и <strong>restore</strong> для создания резервных копий файловых систем <em>ext2</em> и <em>ext3</em>. Этот инструмент может записывать на различные устройства и буквально сбрасывать файл(ы) или файловую систему бит за битом на указанное устройство. Подобно <strong>dd</strong>, это позволяет создавать бэкапы для специальных типов файлов, подобных тем, что находятся в <span class="mono">/dev<span>.</span></span></li>
+</ul>
+  </div>
+    </div></div>
+  </body>
+</html>

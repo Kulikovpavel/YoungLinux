@@ -1,0 +1,110 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Рисование цветка</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-447" class="section-2">
+  <h1 class="book-heading">Рисование цветка</h1>
+  <p>Меняя значения переменных, можно получать различные цветки.</p>
+<p>Смена цвета лепестков чередуется. Для этого используются флаги. Начальное значение флагов определяется в зависимости от значений переменных $r, $g, $b.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">сброс
+толщина_пера <span style="color: #ff4500;">10</span>
+$x = <span style="color: #ff4500;">200</span> <span style="color: #808080; font-style: italic;"># координаты центра цветка</span>
+$y = <span style="color: #ff4500;">200</span> <span style="color: #808080; font-style: italic;"># ...</span>
+$a = <span style="color: #ff4500;">50</span>  <span style="color: #808080; font-style: italic;"># нач.угол для первого лепестка</span>
+$l = <span style="color: #ff4500;">3</span>   <span style="color: #808080; font-style: italic;"># влияет на длину лепестка</span>
+$r = <span style="color: #ff4500;">125</span>  <span style="color: #808080; font-style: italic;"># цвет</span>
+$g = <span style="color: #ff4500;">0</span> <span style="color: #808080; font-style: italic;"># ...</span>
+$b = <span style="color: #ff4500;">125</span>  <span style="color: #808080; font-style: italic;"># ...</span>
+&nbsp;
+если $r <span style="color: #66cc66;">&lt;</span> <span style="color: #ff4500;">128</span> <span style="color: black;">&#123;</span> <span style="color: #808080; font-style: italic;"># установка флагов</span>
+  $fr = <span style="color: #ff4500;">1</span>
+<span style="color: black;">&#125;</span> иначе <span style="color: black;">&#123;</span>
+  $fr = <span style="color: #ff4500;">0</span>
+<span style="color: black;">&#125;</span>
+если $g <span style="color: #66cc66;">&lt;</span> <span style="color: #ff4500;">128</span> <span style="color: black;">&#123;</span>
+  $fg = <span style="color: #ff4500;">1</span>
+<span style="color: black;">&#125;</span> иначе <span style="color: black;">&#123;</span>
+  $fg = <span style="color: #ff4500;">0</span>
+<span style="color: black;">&#125;</span>
+если $b <span style="color: #66cc66;">&lt;</span> <span style="color: #ff4500;">128</span> <span style="color: black;">&#123;</span>
+  $fb = <span style="color: #ff4500;">1</span>
+<span style="color: black;">&#125;</span> иначе <span style="color: black;">&#123;</span>
+  $fb = <span style="color: #ff4500;">0</span>
+<span style="color: black;">&#125;</span>
+&nbsp;
+выучи лепесток <span style="color: black;">&#123;</span> <span style="color: #808080; font-style: italic;"># на самом деле поллепестка</span>
+  повтори <span style="color: #ff4500;">36</span> <span style="color: black;">&#123;</span>
+    направо <span style="color: #ff4500;">3</span>
+    вперёд $l
+  <span style="color: black;">&#125;</span>
+<span style="color: black;">&#125;</span>
+&nbsp;
+выучи цвет $d <span style="color: black;">&#123;</span> 
+<span style="color: #808080; font-style: italic;"># значение $d влияет на контраст, </span>
+<span style="color: #808080; font-style: italic;"># не должено быть больше 128</span>
+  если $fr == <span style="color: #ff4500;">1</span> <span style="color: black;">&#123;</span>
+    $r = $r + $d
+    $fr = <span style="color: #ff4500;">0</span>
+  <span style="color: black;">&#125;</span> иначе <span style="color: black;">&#123;</span>
+    $r = $r - $d
+    $fr = <span style="color: #ff4500;">1</span>
+  <span style="color: black;">&#125;</span>
+  если $fg == <span style="color: #ff4500;">1</span> <span style="color: black;">&#123;</span>
+    $g = $g + $d
+    $fg = <span style="color: #ff4500;">0</span>
+  <span style="color: black;">&#125;</span> иначе <span style="color: black;">&#123;</span>
+    $g = $g - $d
+    $fg = <span style="color: #ff4500;">1</span>
+  <span style="color: black;">&#125;</span>
+  если $fb == <span style="color: #ff4500;">1</span> <span style="color: black;">&#123;</span>
+    $b = $b + $d
+    $fb = <span style="color: #ff4500;">0</span>
+  <span style="color: black;">&#125;</span> иначе <span style="color: black;">&#123;</span>
+    $b = $b - $d
+    $fb = <span style="color: #ff4500;">1</span>
+  <span style="color: black;">&#125;</span>
+  цвет_пера $r,$g,$b
+<span style="color: black;">&#125;</span>
+&nbsp;
+<span style="color: #808080; font-style: italic;">#################################</span>
+повтори <span style="color: #ff4500;">6</span> <span style="color: black;">&#123;</span>
+  цвет <span style="color: #ff4500;">80</span>
+  иди $x,$y
+  нпр $a
+  лепесток
+  нпр $a+<span style="color: #ff4500;">180</span>
+  лепесток 
+  $a = $a+<span style="color: #ff4500;">60</span>
+<span style="color: black;">&#125;</span>
+&nbsp;
+цвет <span style="color: #ff4500;">120</span>
+нпр <span style="color: #ff4500;">0</span>
+$x = $x+$l<span style="color: #66cc66;">*</span><span style="color: #ff4500;">3</span>
+$y = $y-$l-<span style="color: #ff4500;">1</span>
+иди $x,$y
+толщина_пера $l<span style="color: #66cc66;">*</span><span style="color: #ff4500;">6</span>
+повтори <span style="color: #ff4500;">72</span> <span style="color: black;">&#123;</span>
+  вперёд <span style="color: #ff4500;">1</span>
+  налево <span style="color: #ff4500;">5</span>
+<span style="color: black;">&#125;</span>
+&nbsp;
+иди <span style="color: #ff4500;">0</span>,<span style="color: #ff4500;">0</span></pre></div><br />
+<img src="../../../img/kturtle/flower.png" alt="программирование цветка в KTurtle" /></p>
+<table id="attachments" class="sticky-enabled">
+ <thead><tr><th>Прикрепленный файл</th><th>Размер</th> </tr></thead>
+<tbody>
+ <tr class="odd"><td><a href="http://younglinux.info/sites/default/files/flower.turtle">flower.turtle</a></td><td>1.34 кб</td> </tr>
+</tbody>
+</table>
+  </div>
+    </div>
+  </body>
+</html>

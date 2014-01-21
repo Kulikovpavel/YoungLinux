@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Модули и их импорт. Урок 8</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-43" class="section-2">
+  <h1 class="book-heading">Модули и их импорт. Урок 8</h1>
+  <div style="text-align:center;">
+<h4>Методическая разработка урока<br />
+Элективный курс: Введение в объектно-ориентированное программирование на Python<br />
+Уровень: Программирование для начинающих</h4>
+</div>
+<p>На прошлом уроке нами была написана "серьезная" программа, которую могут использовать другие программисты. Однако как? Просто копировать код и вставлять в свои скрипты? Или есть более экономный способ (в смысле уменьшения объема кода и удобства его использования)?</p>
+<p>При создании крупных программ оказался выгодным так называемый модульный принцип организации, когда есть основной файл с частью кода программы, к которому подсоединяется (в который импортируется) содержимое других файлов. Когда исходный код основного файла транслируется в машинный код, то импортируемые файлы также выполняются как и код основного файла. </p>
+<div style="text-align:center;"><img src="../../../img/oopython/module.png" width="481" height="454" alt="Программные модули" /></div>
+<p>Такой способ организации программы позволяет изолировать часто используемый код в файл-модуль, а затем импортировать его в другие файлы без копирования кода. Но это далеко не единственное преимущество модульного принципа организации программы.</p>
+<p>Так как же импортировать содержимое одного файла в другой в языке программирования Python? Существует два основных способа: инструкция <strong>import</strong> и инструкция <strong>from</strong>. Первая инструкция запускает (интерпретирует) файл-модуль полностью, при этом для доступа к переменным (атрибутам) модуля из основного файла следует указывать имя модуля впереди требуемого атрибута: module.attribute (так называемая, точечная нотация). Инструкция <strong>from</strong> передает интерпретатору лишь указанные имена из файла-модуля, однако при доступе к этим переменным не надо указывать имя модуля. Первый способ хорош, если предстоит пользоваться содержимым почти всего модуля, второй — если будут востребованы одна-две функции или класс из модуля. В примере данного урока мы воспользуемся инструкцией <strong>import</strong>.</p>
+<p>Импорт в языке программирования Python осуществляется следующим образом: после слова <strong>import</strong> пишется имя импортируемого модуля. Модуль и файл в Python понятия почти не различимые. Файлы с кодом на языке Python обычно имеют расширение .py, однако в инструкции <strong>import</strong> расширение не указывается. Например, если мы имеем файл-модуль scale.py, то импортировать его в другой файл следует так: import scale.</p>
+<p>Где должен располагаться модуль? В принципе, где угодно, т.к. можно "вручную" настроить интерпретатор так, что он будет искать там, где пожелает программист. Однако, если ничего не настраивать, то интерпретатор Python найдет файлы, если их расположить например, в каталоге, куда установлен Python или в том же каталоге, где и файл, в который осуществляется импорт. Этим последним вариантом мы и воспользуемся. </p>
+<p>Итак, у нас есть файл с кодом, позволяющим вычислять оклеиваемую площадь помещения (урок №7). Пусть он называется rooms.py. Кроме того, удалим из него "код тестирования" …</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">labor34 = Room<span style="color: black;">&#40;</span>5,4,2<span style="color: black;">&#41;</span>
+labor34.<span style="color: black;">win_door</span><span style="color: black;">&#40;</span>1.5,1.5, 2,1, 2<span style="color: black;">&#41;</span>
+labor34.<span style="color: black;">wallpapers</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+labor34.<span style="color: black;">printer</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span>labor34.<span style="color: black;">window</span>.<span style="color: black;">square</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span>labor34.<span style="color: black;">door</span>.<span style="color: black;">square</span><span style="color: black;">&#41;</span></pre></div> </p>
+<p>… и предположим, что классы этого модуля будут использоваться в другом (основном) файле. Допустим, этот основной файл предоставляет интерфейс пользователю для ввода данных и получения результата. Основной файл должен быть сохранен в том же каталоге, что и файл rooms.py.</p>
+<p>Первым делом, импортируем содержимое файла rooms.py</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">import</span> rooms</pre></div></p>
+<p>Далее организуем запрос данных у пользователя, одновременно преобразовав данные в целочисленный тип (функция int):</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Введите размеры помещения (в метрах) ...&quot;</span><span style="color: black;">&#41;</span>
+l = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;длина: &quot;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+w = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;ширина: &quot;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+h = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;высота: &quot;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Введите данные об оконных проемах (в метрах) ...&quot;</span><span style="color: black;">&#41;</span>
+h_w = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;высота: &quot;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+w_w = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;ширина: &quot;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+m = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;количество: &quot;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Введите данные о дверных проемах (в метрах) ...&quot;</span><span style="color: black;">&#41;</span>
+h_d = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;высота: &quot;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+w_d = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;ширина: &quot;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+n = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;количество: &quot;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>Теперь создаем объект класса Room. Описание класса находится в модуле rooms, который был импортирован инструкцией <strong>import</strong> (а не from), поэтому, чтобы получить доступ к классу Room и его атрибутам, следует при создании объекта указать модуль, в котором он находится:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">uroom = rooms.<span style="color: black;">Room</span><span style="color: black;">&#40;</span>l,w,h<span style="color: black;">&#41;</span></pre></div> </p>
+<p>А теперь можно пользоваться атрибутами класса из модуля сколько влезет:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">uroom.<span style="color: black;">win_door</span><span style="color: black;">&#40;</span>h_w, w_w, h_d, w_d, m,n<span style="color: black;">&#41;</span>
+uroom.<span style="color: black;">wallpapers</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+uroom.<span style="color: black;">printer</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> </pre></div></p>
+<h2>Практическая работа:</h2>
+<ol>
+<li>Создайте скрипт, импортирующий модуль с классом Room и использующий его (как показано в данном уроке).</li>
+<li>Допишите предыдущую программу, расширив ее возможности: можно по-желанию получить дополнительные сведения (площадь окна и двери).</li>
+<li>Переделайте программу таким образом, чтобы она не запрашивала у пользователя данные, а предлагала выбор из пяти готовых решений: на экран выводятся характеристики различных помещений, — пользователю остается только выбрать.</li>
+</ol>
+  </div>
+    </div>
+  </body>
+</html>

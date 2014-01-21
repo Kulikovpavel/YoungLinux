@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Урок 9. Повторение команд</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-224" class="section-2">
+  <h1 class="book-heading">Урок 9. Повторение команд</h1>
+  <p class="right">Тема: Язык программирования Logo </p>
+<h2>Как правильно повторять команды</h2>
+<p>	Допустим, у нас есть вот такой программный код:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">сброс
+цвет_пера <span style="color: #ff4500;">23</span>, <span style="color: #ff4500;">130</span>, <span style="color: #ff4500;">95</span>
+толщина_пера <span style="color: #ff4500;">3</span>
+&nbsp;
+$отрезок = <span style="color: #ff4500;">120</span>
+$угол = <span style="color: #ff4500;">90</span>
+&nbsp;
+иди <span style="color: #ff4500;">260</span>,<span style="color: #ff4500;">260</span>
+&nbsp;
+вперёд $отрезок
+налево $угол
+вперёд $отрезок
+налево $угол
+вперёд $отрезок
+налево $угол
+вперёд $отрезок
+налево $угол
+&nbsp;
+иди <span style="color: #ff4500;">200</span>,<span style="color: #ff4500;">200</span></pre></div></p>
+<p> 	Что получится в результате выполнения этого кода?</p>
+<ol>
+<li>Сначала будут установлены цвет и толщина пера.</li>
+<li>Далее мы записываем в компьютерную память два числа (120 и 90), связав их с переменными <span class="mono">$отрезок</span> и <span class="mono">$угол</span>.</li>
+<li>Черепаха перемещается в точку с координатами 260, 260 (это чуть ниже и правее середины холста).</li>
+<li>После этого четыре раза повторяется пара команд <span class="mono">вперёд</span> и <span class="mono">налево</span> (проверьте это, посчитав команды). Этим командам передаются переменные <span class="mono">$отрезок</span> и <span class="mono">$угол</span> соответственно. Во время выполнения кода на их место будут подставляться числа 120 и 90 из памяти. Каждая пара команд рисует линию и поворачивает черепаху на 90 градусов. Поскольку таких пар четыре, то в итоге получается ни что иное как квадрат.</li>
+<li>В конце черепаха перемещается в центр холста.</li>
+</ol>
+<p>	В представленном программном коде мы наблюдаем повторение группы команд (<span class="mono">вперёд</span> и <span class="mono">налево</span>). Но обязательно ли писать каждое повторение? А что если бы нам требовалось повторить какую-нибудь команду сто раз? Пришлось бы сто раз написать ее в программном коде? Это как минимум не эффективно.</p>
+<p>	В языке программирования Лого, как и в большинстве других языков, есть специальная конструкция, позволяющая повторять любые команды или группы команд, и при этом не писать их множество раз. Эта конструкция начинается с инструкции-команды <span class="mono">повтори</span>. После команды <span class="mono">повтори</span> записывается число, которое обозначает, сколько раз требуется повторить команду или группу команд. Потом открывается фигурная скобка. На следующих строках один раз пишутся команды, которые при выполнении будут повторяться. В конце ставится закрывающая фигурная скобка.</p>
+<p>	Вот как будет выглядеть код, приведенный выше, если использовать в нем конструкцию "<strong>повтори</strong>":</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">сброс
+цвет_пера <span style="color: #ff4500;">23</span>, <span style="color: #ff4500;">130</span>, <span style="color: #ff4500;">95</span>
+толщина_пера <span style="color: #ff4500;">3</span>
+&nbsp;
+$отрезок = <span style="color: #ff4500;">120</span>
+$угол = <span style="color: #ff4500;">90</span>
+&nbsp;
+иди <span style="color: #ff4500;">260</span>,<span style="color: #ff4500;">260</span>
+&nbsp;
+повтори <span style="color: #ff4500;">4</span> <span style="color: black;">&#123;</span>
+	вперёд $отрезок
+	налево $угол
+<span style="color: black;">&#125;</span>
+&nbsp;
+иди <span style="color: #ff4500;">200</span>,<span style="color: #ff4500;">200</span></pre></div></p>
+<p>	Результат будет таким же как в примере выше. Однако запись получилась короче. Кроме того, такой код более понятен. Например, программисту, который первый раз увидит код, не надо считать количество повторений команд <span class="mono">вперёд</span> и <span class="mono">налево</span>. Он увидит число 4 и сразу все поймет.</p>
+<h2>Что такое цикл</h2>
+<p>	Конструкция "<strong>повтори</strong>" представляет собой ничто иное как <strong>цикл</strong>. Цикл можно представить себе как многократное повторение каких-либо действий. Т.е. когда одни и те же действия повторяются – это цикл. Например, нам дали задание перенести 6 мониторов из одного кабинета в другой. Мы все шесть раз проделаем почти одно и тоже. Поэтому наши действия будут цикличны. При этом мы один раз запомнили, что именно нам делать и сколько раз это делать, а не ждем очередной команды после каждого принесенного монитора. Почти также и в программировании. Мы записываем сколько раз повторять и что именно повторять. Нет надобности много раз писать одно и тоже.</p>
+<h2>Задание</h2>
+<p>1. Напишите программу на языке Logo, в результате выполнения которой на холсте появляется равносторонний восьмиугольник. Обязательно используйте цикл.<br />
+2. Спишите код сложной программы, приведенной ниже. Выполните его. Попробуйте объяснить, почему получилось именно так.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">сброс
+&nbsp;
+$х = <span style="color: #ff4500;">100</span>
+$у = <span style="color: #ff4500;">100</span>
+&nbsp;
+повтори <span style="color: #ff4500;">4</span> <span style="color: black;">&#123;</span>
+	иди $х,$у
+	цвет_пера <span style="color: #ff4500;">23</span>, <span style="color: #ff4500;">130</span>, <span style="color: #ff4500;">95</span>
+	толщина_пера <span style="color: #ff4500;">3</span>
+	повтори <span style="color: #ff4500;">6</span> <span style="color: black;">&#123;</span>
+		вперёд <span style="color: #ff4500;">50</span>
+		налево <span style="color: #ff4500;">60</span>
+	<span style="color: black;">&#125;</span>
+	иди $х-<span style="color: #ff4500;">5</span>,$у-<span style="color: #ff4500;">15</span>
+	цвет_пера <span style="color: #ff4500;">200</span>, <span style="color: #ff4500;">200</span>, <span style="color: #ff4500;">50</span>
+	толщина_пера <span style="color: #ff4500;">2</span>
+	повтори <span style="color: #ff4500;">12</span> <span style="color: black;">&#123;</span>
+		вперёд <span style="color: #ff4500;">20</span>
+		налево <span style="color: #ff4500;">30</span>
+	<span style="color: black;">&#125;</span>
+	$х = $х+<span style="color: #ff4500;">90</span>
+	$у = $у+<span style="color: #ff4500;">90</span>
+<span style="color: black;">&#125;</span>
+&nbsp;
+иди <span style="color: #ff4500;">400</span>,<span style="color: #ff4500;">400</span></pre></div></p>
+<div style="text-align:center;"><img src="../../../sites/default/files/images/repeat9.png" width="421" height="421" alt="пример использования цикла 'повтори'" /></div>
+<p>3. Напишите программу, которая запрашивает у пользователя длину отрезка и угол, а затем по этим данным рисует на холсте равносторонний многоугольник.</p>
+<h4>Примерный ответ к заданию 3:</h4>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">сброс
+&nbsp;
+$отрезок = спроси <span style="color: #483d8b;">&quot;Введите длину отрезка&quot;</span>
+$угол = спроси <span style="color: #483d8b;">&quot;Введите угол&quot;</span>
+&nbsp;
+$количество = <span style="color: #ff4500;">360</span> / $угол
+&nbsp;
+повтори $количество <span style="color: black;">&#123;</span>
+	вперёд $отрезок
+	направо $угол
+<span style="color: black;">&#125;</span></pre></div></p>
+  </div>
+    </div>
+  </body>
+</html>

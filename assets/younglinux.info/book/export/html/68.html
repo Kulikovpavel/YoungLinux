@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Решето Эратосфена - алгоритм определения простых чисел</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-68" class="section-2">
+  <h1 class="book-heading">Решето Эратосфена - алгоритм определения простых чисел</h1>
+  <h2>Описание алгоритма</h2>
+<p><strong>Решето Эратосфена</strong> – это алгоритм нахождения простых чисел до заданного числа n. В процессе выполнения данного алгоритма постепенно отсеиваются составные числа, кратные простым, начиная с 2. </p>
+<h2>Исходный код на Python</h2>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">n = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;вывод простых чисел до числа ... &quot;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+a = <span style="color: black;">&#91;</span><span style="color: #ff4500;">0</span><span style="color: black;">&#93;</span> <span style="color: #66cc66;">*</span> n <span style="color: #808080; font-style: italic;"># создание массива с n количеством элементов</span>
+<span style="color: #ff7700;font-weight:bold;">for</span> i <span style="color: #ff7700;font-weight:bold;">in</span> <span style="color: #008000;">range</span><span style="color: black;">&#40;</span>n<span style="color: black;">&#41;</span>: <span style="color: #808080; font-style: italic;"># заполнение массива ...</span>
+    a<span style="color: black;">&#91;</span>i<span style="color: black;">&#93;</span> = i <span style="color: #808080; font-style: italic;"># значениями от 0 до n-1</span>
+&nbsp;
+<span style="color: #808080; font-style: italic;"># вторым элементом является единица, которую не считают простым числом</span>
+<span style="color: #808080; font-style: italic;"># забиваем ее нулем.</span>
+a<span style="color: black;">&#91;</span><span style="color: #ff4500;">1</span><span style="color: black;">&#93;</span> = <span style="color: #ff4500;">0</span>
+&nbsp;
+m = <span style="color: #ff4500;">2</span> <span style="color: #808080; font-style: italic;"># замена на 0 начинается с 3-го элемента (первые два уже нули)</span>
+<span style="color: #ff7700;font-weight:bold;">while</span> m <span style="color: #66cc66;">&lt;</span> n: <span style="color: #808080; font-style: italic;"># перебор всех элементов до заданного числа</span>
+    <span style="color: #ff7700;font-weight:bold;">if</span> a<span style="color: black;">&#91;</span>m<span style="color: black;">&#93;</span> <span style="color: #66cc66;">!</span>= <span style="color: #ff4500;">0</span>: <span style="color: #808080; font-style: italic;"># если он не равен нулю, то</span>
+        j = m <span style="color: #66cc66;">*</span> <span style="color: #ff4500;">2</span> <span style="color: #808080; font-style: italic;"># увеличить в два раза (текущий элемент простое число)</span>
+        <span style="color: #ff7700;font-weight:bold;">while</span> j <span style="color: #66cc66;">&lt;</span> n:
+            a<span style="color: black;">&#91;</span>j<span style="color: black;">&#93;</span> = <span style="color: #ff4500;">0</span> <span style="color: #808080; font-style: italic;"># заменить на 0</span>
+            j = j + m <span style="color: #808080; font-style: italic;"># перейти в позицию на m больше</span>
+    m += <span style="color: #ff4500;">1</span>
+&nbsp;
+<span style="color: #808080; font-style: italic;"># вывод простых чисел на экран (может быть реализован как угодно)</span>
+b = <span style="color: black;">&#91;</span><span style="color: black;">&#93;</span>
+<span style="color: #ff7700;font-weight:bold;">for</span> i <span style="color: #ff7700;font-weight:bold;">in</span> a:
+    <span style="color: #ff7700;font-weight:bold;">if</span> a<span style="color: black;">&#91;</span>i<span style="color: black;">&#93;</span> <span style="color: #66cc66;">!</span>= 0:
+        b.<span style="color: black;">append</span><span style="color: black;">&#40;</span>a<span style="color: black;">&#91;</span>i<span style="color: black;">&#93;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">del</span> a
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>b<span style="color: black;">&#41;</span></pre></div></p>
+<h2>Блок-схема</h2>
+<div style="text-align:center;"><img src="../../../img/algorithm/sieve.png" width="453" height="685" alt="Блок-схема к алгоритму `Решето Эратосфена`" /></div>
+  </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Замена элементов в списке</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-426" class="section-2">
+  <h1 class="book-heading">Замена элементов в списке</h1>
+  <p>Заменить в списке элементы с одним значением на другое. </p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #808080; font-style: italic;"># Замена элементов в списке.</span>
+<span style="color: #808080; font-style: italic;"># Демонстрация использования методов списка.</span>
+&nbsp;
+lst = <span style="color: black;">&#91;</span>10, 45, 24, 43, 89, 15, 16, 23, 89, 23, 35, 64, 21, 12, 45<span style="color: black;">&#93;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span>lst<span style="color: black;">&#41;</span>
+item = <span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'Еnter item: '</span><span style="color: black;">&#41;</span>
+item = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span>item<span style="color: black;">&#41;</span>
+item1 = <span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'Еnter new item: '</span><span style="color: black;">&#41;</span>
+item1 = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span>item1<span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #808080; font-style: italic;">#~ j = 0 </span>
+<span style="color: #808080; font-style: italic;">#~ for i in lst:</span>
+	<span style="color: #808080; font-style: italic;">#~ if i == item:</span>
+		<span style="color: #808080; font-style: italic;">#~ lst.remove(i)</span>
+		<span style="color: #808080; font-style: italic;">#~ lst.insert(j,item1)	</span>
+	<span style="color: #808080; font-style: italic;">#~ j += 1</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">for</span> i <span style="color: #ff7700;font-weight:bold;">in</span> lst:
+	<span style="color: #ff7700;font-weight:bold;">if</span> i == item:
+		j = lst.<span style="color: black;">index</span><span style="color: black;">&#40;</span>i<span style="color: black;">&#41;</span>
+		<span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span>j<span style="color: black;">&#41;</span>
+		lst.<span style="color: black;">remove</span><span style="color: black;">&#40;</span>i<span style="color: black;">&#41;</span>
+		lst.<span style="color: black;">insert</span><span style="color: black;">&#40;</span>j,item1<span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span>lst<span style="color: black;">&#41;</span></pre></div></p>
+  </div>
+    </div>
+  </body>
+</html>

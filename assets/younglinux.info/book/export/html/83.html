@@ -1,0 +1,36 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Сглаживание объектов в Blender. Урок 11</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-83" class="section-2">
+  <h1 class="book-heading">Сглаживание объектов в Blender. Урок 11</h1>
+  <div style="text-align:center;">
+<h4>Разработка урока к элективному курсу "3D-моделирование в Blender"</h4>
+</div>
+<p>Как вы могли заметить, mesh-объекты в Blender ни только в объектом режиме, но и на изображении (F12) не являются сглаженными: можно хорошо различить части, из которых они состоят. Для того, чтобы сгладить объект в Blender существует несколько способов. Один из них – это кнопка <strong>Set Smooth</strong> (установить сглаживание) на вкладке <strong>Link and Materials</strong>, находящейся на панели кнопок <strong>Editing</strong> (F9). </p>
+<div style="text-align:center;"><img src="../../../img/blender/smooth_8/setsmooth.gif" width="280" height="201" alt="Сглаживание объектов в Blender" /></div>
+<p>Нажатие на кнопку <strong>Set Smooth</strong> в объектном режиме приводит к сглаживанию всего объекта. В режиме редактирования можно сгладить только отдельные части объекта, предварительно выделив их. Работу данного инструмента можно хорошо увидеть на примере сферы.</p>
+<div style="text-align:center;"><img src="../../../img/blender/smooth_8/sphere.gif" width="390" height="269" alt="Сферы: до сглаживания, после сглаживания, и со сглаженной частью" /></div>
+<p>Для того, чтобы преобразовать обратно сглаженный объект в рельефный, следует нажать на кнопку <strong>Set Solid</strong>, расположенную рядом с кнопкой <strong>Set Smooth</strong>.</p>
+<p>Есть еще другой способ получения сглаженного объекта. В определенной степени он более гибкий. Это использование модификатора <strong>SubSurf</strong>. </p>
+<div style="text-align:center;"><img src="../../../img/blender/smooth_8/subsurf.gif" width="259" height="178" alt="Модификатор Subsurf" /></div>
+<p>Его действие основано в эффекте подразделения поверхности на более мелкие части. В примере ниже mesh-объекты <strong>Icosphere</strong>. К дальнему не был применен модификатор, к среднему был применен <strong>Subsurf</strong> с уровнем (level) 1, а к переднему — с уровнем 2. </p>
+<div style="text-align:center;"><img src="../../../img/blender/smooth_8/icosphere.gif" width="445" height="319" alt="Объект Icosphere до использования модификатора Subsurf и после" /></div>
+<p>Следует учитывать, что чем выше уровень, тем больше требуется ресурсов памяти для обработки изображения. Кроме того, если вы хотите получить такое же изображение, как в 3D-окне, то <strong>Levels</strong> и <strong>Render Levels</strong> в настройках модификатора <strong>Subsurf</strong> должны совпадать.</p>
+<h2>Практическая работа</h2>
+<ol>
+<li>Разместите на сцене несколько различных mesh-объектов. Продублируйте их. К первым примените инструмент <strong>Set Smooth</strong>, а вторым — <strong>Subsurf</strong>.</li>
+<li>Если вы сохраняли blender-файлы на прошлых уроках, то откройте их и придайте моделям сглаженный вид.</li>
+</ol>
+  </div>
+    </div>
+  </body>
+</html>

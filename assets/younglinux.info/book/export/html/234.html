@@ -1,0 +1,188 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Урок 13. Контрольная работа по основам языка программирования Logo</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-234" class="section-2">
+  <h1 class="book-heading">Урок 13. Контрольная работа по основам языка программирования Logo</h1>
+  <p class="right">Тема: Язык программирования Logo </p>
+<h2>Часть 1. Команды языка Logo</h2>
+<p><strong>Пояснение.</strong> Вставьте вместо точек пропущенные команды или их описание.</p>
+<table class="il">
+<tr>
+<td width="40"><strong>№</strong></td>
+<td width="180"><strong>Команда</strong></td>
+<td><strong>Описание</strong></td>
+</tr>
+<tr>
+<td>1</td>
+<td>............ x, y</td>
+<td>Перемещает черепаху в точку с координатами <span class="monoi">x, y.</span></td>
+</tr>
+<tr>
+<td>2</td>
+<td>вперёд x</td>
+<td>....................................................</td>
+</tr>
+<tr>
+<td>3</td>
+<td>............</td>
+<td>Черепаха двигается задом на x точек, оставляя за собой след.</td>
+</tr>
+<tr>
+<td>4</td>
+<td>............ x</td>
+<td>Черепаха поворачивается в указанном в градусах направлении (<span class="monoi">x</span>). 0 градусов — черепаха смотрит вверх. Окружность равна  360 градусам.</td>
+</tr>
+<tr>
+<td>5</td>
+<td>............</td>
+<td>Черепаха поворачивает на <span class="monoi">x</span> градусов налево.</td>
+</tr>
+<tr>
+<td>6</td>
+<td>............</td>
+<td>Черепаха поворачивает на <span class="monoi">x</span> градусов направо.</td>
+</tr>
+<tr>
+<td>7</td>
+<td>............</td>
+<td>Черепаха поднимает перо и не может оставлять след.</td>
+</tr>
+<tr>
+<td>8</td>
+<td>перо_опусти</td>
+<td>....................................................</td>
+</tr>
+<tr>
+<td>9</td>
+<td>цвет_пера</td>
+<td>....................................................</td>
+</tr>
+<tr>
+<td>10</td>
+<td>толщина_пера</td>
+<td>....................................................</td>
+</tr>
+<tr>
+<td>11</td>
+<td>............</td>
+<td>Устанавливается цвет холста.</td>
+</tr>
+<tr>
+<td>12</td>
+<td>............</td>
+<td>Очищается экран и черепаха перемещается в центр холста.</td>
+</tr>
+<tr>
+<td>13</td>
+<td>
+<pre>если <em>выражение</em> {
+    <em>команды</em>
+}</pre></td>
+<td>....................................................<br /><br />
+....................................................<br /><br />
+....................................................</td>
+</tr>
+<tr>
+<td>14</td>
+<td>............<br /><br />
+............<br /><br />
+............</td>
+<td>Конструкция, повторяющая команды, расположенные внутри фигурных скобок. Количество повторений равно <span class="monoi">x</span>.</td>
+</tr>
+<tr>
+<td>15</td>
+<td>............<br /><br />
+............<br /><br />
+............</td>
+<td>Конструкция, повторяющая команды, расположенные внутри фигурных скобок. Команды повторяются до тех пор, пока выражение возвращает правду.</td>
+</tr>
+<tr>
+<td>16</td>
+<td>
+<pre>выучи <em>имя</em> {
+    <em>команды</em>
+}</pre></td>
+<td>....................................................<br /><br />
+....................................................<br /><br />
+....................................................</td>
+</tr>
+</table>
+<h2>Часть 2. "Неизвестный код"</h2>
+<p><strong>Пояснение.</strong> Вставьте пропущенный код в программу, при выполнении которой черепаха чертит на холсте соответствующие коду изображения.</p>
+<p><strong>1. "Шестиугольники"</strong></p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">сброс
+&nbsp;
+$x = <span style="color: #ff4500;">10</span>
+$y = <span style="color: #ff4500;">100</span>
+&nbsp;
+пока $x <span style="color: #66cc66;">&lt;</span> <span style="color: #ff4500;">350</span> <span style="color: black;">&#123;</span>
+	иди $x, $y
+	$r = случайное .........
+	$g = случайное .........
+	$b = случайное .........
+	цвет_пера .........
+	повтори .... <span style="color: black;">&#123;</span>
+		...... <span style="color: #ff4500;">50</span>
+		налево <span style="color: #ff4500;">60</span>
+	<span style="color: black;">&#125;</span>
+	$x = $x + <span style="color: #ff4500;">70</span>
+	$y = ... + <span style="color: #ff4500;">40</span>
+<span style="color: black;">&#125;</span></pre></div>	</p>
+<div class="image">
+<img src="../../../img/kturtle/kturtle13a.png" width="394" height="393" alt="KTurtle. Уроки по языку Logo" />
+</div>
+<p><strong>2. "Зигзаги"</strong></p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">сброс
+&nbsp;
+выучи зигзаг $размер, $цвет <span style="color: black;">&#123;</span>
+	если $цвет == <span style="color: #483d8b;">&quot;красный&quot;</span> <span style="color: black;">&#123;</span>
+		цвет_пера <span style="color: #ff4500;">255</span>, <span style="color: #ff4500;">0</span>, <span style="color: #ff4500;">0</span>
+	<span style="color: black;">&#125;</span>
+	если $цвет == <span style="color: #483d8b;">&quot;зеленый&quot;</span> <span style="color: black;">&#123;</span>
+		....................
+	<span style="color: black;">&#125;</span>
+	если $цвет == <span style="color: #483d8b;">&quot;синий&quot;</span> <span style="color: black;">&#123;</span>
+		....................
+	<span style="color: black;">&#125;</span>
+	вперёд .......
+	налево <span style="color: #ff4500;">45</span>
+	назад .......
+	направо <span style="color: #ff4500;">45</span>
+	вперёд .......
+<span style="color: black;">&#125;</span>
+&nbsp;
+выучи звезда ..., ... <span style="color: black;">&#123;</span>
+	повтори <span style="color: #ff4500;">8</span> <span style="color: black;">&#123;</span>
+		иди $x, $y
+		вперёд <span style="color: #ff4500;">30</span>
+		налево ...
+	<span style="color: black;">&#125;</span>
+<span style="color: black;">&#125;</span>
+&nbsp;
+иди <span style="color: #ff4500;">20</span>, <span style="color: #ff4500;">150</span>
+зигзаг <span style="color: #ff4500;">80</span>, <span style="color: #483d8b;">&quot;синий&quot;</span>
+&nbsp;
+иди <span style="color: #ff4500;">200</span>, <span style="color: #ff4500;">350</span>
+зигзаг <span style="color: #ff4500;">150</span>, <span style="color: #483d8b;">&quot;красный&quot;</span>
+&nbsp;
+цвет_пера <span style="color: #ff4500;">0</span>, <span style="color: #ff4500;">150</span>, <span style="color: #ff4500;">100</span>
+звезда <span style="color: #ff4500;">60</span>, <span style="color: #ff4500;">300</span>
+&nbsp;
+цвет_пера <span style="color: #ff4500;">100</span>, <span style="color: #ff4500;">50</span>, <span style="color: #ff4500;">200</span>
+звезда <span style="color: #ff4500;">360</span>, <span style="color: #ff4500;">50</span></pre></div></p>
+<div class="image">
+<img src="../../../img/kturtle/kturtle13b.png" width="392" height="392" alt="KTurtle. Уроки по языку Logo" />
+</div>
+  </div>
+    </div>
+  </body>
+</html>

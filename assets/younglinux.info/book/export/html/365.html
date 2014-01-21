@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Урок 5. Битовые операции</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-365" class="section-2">
+  <h1 class="book-heading">Урок 5. Битовые операции</h1>
+  <p class="right">Особенности языка С. Учебное пособие</p>
+<p>Для освоения темы этого урока вам потребуются знания о системах счисления (двоичной, восьмеричной и др.), навыки перевода чисел из одной системы счисления в другую, а также вы должны иметь представление о том, что такое битовые (они же поразрядные) операции. С последним можно познакомиться по <a href="http://inf1.info/bitwise-operations" title="Битовые операции">вот этой лекции</a>.</p>
+<p>В языке программирования <span class="blue">C</span> существуют следующие поразрядные операции: &amp; (И), | (ИЛИ), ^ (исключающее ИЛИ), &lt;&lt; (сдвиг влево), >> (сдвиг вправо), ~ (поразрядное дополнение до единицы). Рассмотрим на примерах, как они работают, но перед этим уделим внимание выводу в языке <span class="blue">C</span> чисел в отличных от десятичной системах счисления.</p>
+<p>В <span class="blue">С</span> можно присваивать целочисленные значения в десятичной, восьмеричной и шестнадцатеричной системах счисления. Для того, чтобы присвоить переменной число в восьмеричной системе счисления, перед ним надо написать 0 (ноль), в шестнадцатеричной — 0x (ноль и икс), например:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">  <span style="color: #993333;">int</span> a<span style="color: #339933;">,</span> b<span style="color: #339933;">;</span>
+  a <span style="color: #339933;">=</span> <span style="color: #208080;">077</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// записано восьмеричное число</span>
+  b <span style="color: #339933;">=</span> <span style="color: #208080;">0x1F</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// присвоено шестнадцатеричное число</span></pre></div></p>
+<p>Любые целые числа можно выводить на экран в десятичном, восьмеричном и шестнадцатеричном представлении. Пример кода для вывода определенных ранее двух переменных в различных системаъ счисления:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d %o %x %X<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> a<span style="color: #339933;">,</span>a<span style="color: #339933;">,</span>a<span style="color: #339933;">,</span>a<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d %o %x %X<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> b<span style="color: #339933;">,</span>b<span style="color: #339933;">,</span>b<span style="color: #339933;">,</span>b<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>В результате на экране вы увидите: </p>
+<pre>
+63 77 3f 3F 
+31 37 1f 1F
+</pre><p>
+Восьмеричные и шестнадцатеричные числа используются из-за удобства при работе с двоичной системой счисления. Каждая цифра восьмеричного числа может быть заменена тремя цифрами двоичного. И каждая цифра шестнадцатеричного числа легко заменяет четыре разряда двоичного числа. Вот таблица соответствия цифр восьмеричной системы счисления числам двоичной системы:</p>
+<table>
+<tr>
+<td>0</td>
+<td>000</td>
+</tr>
+<tr>
+<td>1</td>
+<td>001</td>
+</tr>
+<tr>
+<td>2</td>
+<td>010</td>
+</tr>
+<tr>
+<td>3</td>
+<td>011</td>
+</tr>
+<tr>
+<td>4</td>
+<td>100</td>
+</tr>
+<tr>
+<td>5</td>
+<td>101</td>
+</tr>
+<tr>
+<td>6</td>
+<td>110</td>
+</tr>
+<tr>
+<td>7</td>
+<td>111</td>
+</tr>
+</table>
+<p>Теперь допустим, что у нас есть восьмеричное число 037. По таблице легко понять, что в двоичном выражении оно будет выглядеть как 011 111.</p>
+<p><span class="blue"><strong>Задание</strong></span></p>
+<ol>
+<li><span class="blue">Как будут выглядеть восьмеричные числа 04271 и 03566  в двоичном представлении.</span></li>
+<li><span class="blue">Составьте на бумаге таблицу соответствия шестнадцатеричный цифр двоичным числам. Переведите числа 7D, FFFF, 2C9 в двоичную систему счисления.</span></li>
+</ol>
+<p>Итак, если бы мы при работе с поразрядными операциями использовали десятичные числа, то чтобы оценить результат нам бы каждый раз приходилось переводить десятичное число в двоичную систему счисления, что относительно трудоемко. Если же человек видит, например, восьмеричное число, то он может представить как оно выглядит в двоичном представлении, помня или держа перед глазами таблицу соответствия чисел. Например, как только мы видим 017, то можем представить в уме, как последние четыре бита ячейки памяти забиты единицами. </p>
+<p>Теперь вернемся к поразрядным операциям и протестируем каждую из них. Для этого напишем небольшую программу:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">  <span style="color: #993333;">int</span> a<span style="color: #339933;">,</span> b<span style="color: #339933;">;</span>
+  a <span style="color: #339933;">=</span> <span style="color: #208080;">017</span><span style="color: #339933;">;</span>
+  b <span style="color: #339933;">=</span> <span style="color: #208080;">036</span><span style="color: #339933;">;</span>
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;0%o &amp; 0%o = 0%o<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> a<span style="color: #339933;">,</span> b<span style="color: #339933;">,</span> a <span style="color: #339933;">&amp;</span> b<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;0%o | 0%o = 0%o<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> a<span style="color: #339933;">,</span> b<span style="color: #339933;">,</span> a <span style="color: #339933;">|</span> b<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;0%o ^ 0%o = 0%o<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> a<span style="color: #339933;">,</span> b<span style="color: #339933;">,</span> a <span style="color: #339933;">^</span> b<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;0%o &lt;&lt; 2 = 0%o<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> a<span style="color: #339933;">,</span> a <span style="color: #339933;">&lt;&lt;</span> 2<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;0%o &gt;&gt; 2 = 0%o<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> a<span style="color: #339933;">,</span> a <span style="color: #339933;">&gt;&gt;</span> 2<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;~0%o = 0%o<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> a<span style="color: #339933;">,</span> ~a<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>Результат ее работы будет выглядеть так:</p>
+<pre>
+017 & 036 = 016 
+017 | 036 = 037 
+017 ^ 036 = 021 
+017 &lt;&lt; 2 = 074 
+017 >> 2 = 03 
+~017 = 037777777760
+</pre><p>Этот результат будет проще понять с помощью рисунка:<br />
+<img src="../../../img/c/bits.png" width="700" height="394" alt="Пример результата битовых операций" /></p>
+<p>В последнем случае получилось такое большое число потому, что под форматы вывода целых чисел (<span class="geshifilter"><code class="c geshifilter-c"><span style="color: #339933;">%</span>d<span style="color: #339933;">,</span> <span style="color: #339933;">%</span>o<span style="color: #339933;">,</span> <span style="color: #339933;">%</span>X</code></span>) выделяется по 4 байта.</p>
+<p><span class="blue"><strong>Задание</strong></span></p>
+<ul>
+<li><span class="blue">Используя шестнадцатеричные числа, напишите аналогичную приведенной выше программу. Объясните результат.</span> </li>
+<li><span class="blue">Попробуйте составлять сложные битовые операции (в несколько действий) и оценивать их результат.</span></li>
+</ul>
+<p>Теперь рассмотрим пример использования битовых операций. Допустим, у нас есть массив, требуется снять с него "маску", которая бы отражала, в какой позиции стоят отрицательные, а в какой положительные элементы. Пусть единица в бите обозначает соответствующий ей положительный элемент массива, а ноль — отрицательный. Другими словами, если у нас есть массив {4, -3, 2, 2, 8, -1}, то его "битовая маска" будет выглядеть как 101110, или в восьмеричном представлении как 056. Составим алгоритм решения этой задачи:</p>
+<ol>
+<li>Будем считать, что массив состоит не более чем из 32 элементов. Поэтому для хранения его "маски" достаточно переменной типа <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #993333;">int</span></code></span>. Назовем ее <span class="monoi">mask</span> и присвоим значение 0.</li>
+<li>Перебрать элементы массива в цикле <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">for</span></code></span>. Если встречается положительный элемент, то установить соответствующий ему бит значения <span class="monoi">mask</span> в 1.</li>
+<li>Вывести значение переменной <span class="monoi">mask</span> на экран в виде восьмеричного числа.</li>
+</ol>
+<p>Вроде бы все просто, но как установить в единицу определенный бит числа? Существует закономерность соответствия степеней двойки и двоичного представления числа:<br />
+2<sup>0</sup> = 0000 0001<br />
+2<sup>1</sup> = 0000 0010<br />
+2<sup>2</sup> = 0000 0100<br />
+2<sup>3</sup> = 0000 1000<br />
+2<sup>4</sup> = 0001 0000<br />
+и т.д. Если для вас эта последовательность не очевидна, то пересчитайте. Теперь если применить к <span class="monoi">mask</span> побитовую операцию | (ИЛИ), а в качестве второго операнда использовать определенную степень двойки, то один бит будет установлен в 1. Например:<br />
+ (0) 0000 0000 | (2<sup>5</sup>) 0010 0000 = 0010 0000<br />
+(32) 0010 0000 | (2<sup>7</sup>) 1000 0000 = 1010 0000</p>
+<p>При переборе первый элемент массива имеет индекс 0, но соответствующий ему бит в <span class="monoi">mask</span> должен стоять впереди остальных. Если известно общее количество элементов массива (<span class="monoi">N</span>), то можно определить степень двойки по формуле <span class="geshifilter"><code class="c geshifilter-c">N <span style="color: #339933;">-</span> i <span style="color: #339933;">-</span> <span style="color: #0000dd;">1</span></code></span>. Действительно, имея третий положительный элемент массива из 10 элементов, следует установить в единицу восьмой с конца бит, а это значит надо использовать вторым операндом битового ИЛИ 27, а 7 как раз будет 10(N) - 2(i) - 1.</p>
+<p>Другая проблема — как в языке <span class="blue">C</span> возвести число в степень. Понятно, что можно написать свой код, но скорее всего в стандартной библиотеке уже есть подобная функция. С помощью заголовочного файла math.h можно подключить библиотеку с математическими функциями. Среди них есть функция <span class="geshifilter"><code class="c geshifilter-c">pow<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>, которая принимает два числа и возвращает результат возведения первого числа в степень, выраженную вторым числом. Однако результат возвращается в виде вещественного числа, а нам требуется целое. Как быть? В языке программирования <span class="blue">С</span> есть операции приведения типов, которые меняют тип значения с одного на другой. Например, чтобы преобразовать значение вещественной переменной a в целое, следует написать <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span><span style="color: #009900;">&#41;</span> a</code></span>.<br />
+Вот как может выглядеть вышеописанная программа:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+<span style="color: #339933;">#include &lt;math.h&gt;</span>
+&nbsp;
+<span style="color: #339933;">#define N 12</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>  
+&nbsp;
+  <span style="color: #993333;">int</span> nums<span style="color: #009900;">&#91;</span>N<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #009900;">&#123;</span>7<span style="color: #339933;">,</span> 3<span style="color: #339933;">,</span> 9<span style="color: #339933;">,</span> <span style="color: #339933;">-</span>5<span style="color: #339933;">,</span> <span style="color: #339933;">-</span>3<span style="color: #339933;">,</span> 2<span style="color: #339933;">,</span> 1<span style="color: #339933;">,</span> 0<span style="color: #339933;">,</span> 16<span style="color: #339933;">,</span> <span style="color: #339933;">-</span>4<span style="color: #339933;">,</span> 2<span style="color: #339933;">,</span> 0<span style="color: #009900;">&#125;</span><span style="color: #339933;">;</span>
+  <span style="color: #993333;">int</span> mask <span style="color: #339933;">=</span> 0<span style="color: #339933;">,</span> i<span style="color: #339933;">;</span>
+&nbsp;
+  <span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> N<span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span>
+    <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>nums<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">&gt;=</span> 0<span style="color: #009900;">&#41;</span>
+      mask <span style="color: #339933;">=</span> mask <span style="color: #339933;">|</span> <span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span><span style="color: #009900;">&#41;</span>pow<span style="color: #009900;">&#40;</span>2<span style="color: #339933;">,</span>N<span style="color: #339933;">-</span>i<span style="color: #339933;">-</span>1<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> 
+&nbsp;
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%o<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> mask<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<p><span class="blue"><strong>Задание</strong><br />
+Напишите предыдущую программу. Оцените как она работает<sup>1</sup>. Подумайте над тем, как вывести на экран двоичное представление восьмеричного числа. Попробуйте реализовать это.</span><br />
+<span class="mono"><sup>1</sup> Если у вас не получается скомпилировать программу, добавьте в конце вызова gcc опцию <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #339933;">-</span>lm</code></span> (например, <span class="geshifilter"><code class="c geshifilter-c">gcc <span style="color: #339933;">-</span>o bits bits.<span style="color: #202020;">c</span> <span style="color: #339933;">-</span>lm</code></span>). </span> </p>
+  </div>
+    </div>
+  </body>
+</html>

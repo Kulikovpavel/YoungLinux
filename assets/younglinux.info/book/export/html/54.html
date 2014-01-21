@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Переменные Tkinter. Урок 9</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-54" class="section-2">
+  <h1 class="book-heading">Переменные Tkinter. Урок 9</h1>
+  <div style="text-align:center;">
+<h4>Методическая разработка урока<br />
+Элективный курс: Модуль tkinter. Создание графического интерфейса пользователя с помощью языка программирования Python<br />
+Уровень: Программирование для начинающих</h4>
+</div>
+<p>Библиотека Tkinter содержит специальные классы, объекты которых выполняют роль переменных для хранения значений о состоянии различных виджет. Изменение значения такой переменной ведет к изменению и свойства виджета, и наоборот: изменение свойства виджета изменяет значение ассоциированной переменной.</p>
+<p>Существует несколько таких классов Tkinter, предназначенных для обработки данных разных типов.</p>
+<ol>
+<li>StringVar() - для строк;</li>
+<li>IntVar() - целых чисел;</li>
+<li>DoubleVar() - дробных чисел;</li>
+<li>BooleanVar() - для обработки булевых значений (true и false).</li>
+</ol>
+<p><strong>Пример 1.</strong> </p>
+<p>Во втором уроке мы уже использовали переменную-объект типа IntVar() при создании группы радиокнопок:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">var=IntVar<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+var.<span style="color: #008000;">set</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">1</span><span style="color: black;">&#41;</span>
+rad0 = Radiobutton<span style="color: black;">&#40;</span>root,text=<span style="color: #483d8b;">&quot;Первая&quot;</span>,variable=var,value=<span style="color: #ff4500;">0</span><span style="color: black;">&#41;</span>
+rad1 = Radiobutton<span style="color: black;">&#40;</span>root,text=<span style="color: #483d8b;">&quot;Вторая&quot;</span>,variable=var,value=<span style="color: #ff4500;">1</span><span style="color: black;">&#41;</span>
+rad2 = Radiobutton<span style="color: black;">&#40;</span>root,text=<span style="color: #483d8b;">&quot;Третья&quot;</span>,variable=var,value=<span style="color: #ff4500;">2</span><span style="color: black;">&#41;</span></pre></div> </p>
+<p>Здесь создается объект класса IntVar и связывается с переменной var. С помощью метода set устанавливается начальное значение, равное 1. Три радиокнопки относятся к одной группе: об этом свидетельствует одинаковое значение опции (свойства) variable. Variable предназначена для связывания переменной Tkinter с радиокнопкой. Опция value определяет значение, которое будет передано переменной, если данная кнопка будет в состоянии "включено". Если в процессе выполнения скрипта значение переменной var будет изменено, то это отразится на группе кнопок. Например, это делается во второй строчке кода: включена кнопка rad1.</p>
+<p>Если метод set позволяет устанавливать значения переменных, то метод get, наоборот, позволяет получать (узнавать) значения для последующего их использования.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">def</span> display<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     v = var.<span style="color: black;">get</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+     <span style="color: #ff7700;font-weight:bold;">if</span> v == 0:
+          <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Включена первая кнопка&quot;</span><span style="color: black;">&#41;</span>
+     <span style="color: #ff7700;font-weight:bold;">elif</span> v == 1:
+          <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Включена вторая кнопка&quot;</span><span style="color: black;">&#41;</span>
+     <span style="color: #ff7700;font-weight:bold;">elif</span> v == 2:
+          <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Включена третья кнопка&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+but = Button<span style="color: black;">&#40;</span>root,text=<span style="color: #483d8b;">&quot;Получить значение&quot;</span><span style="color: black;">&#41;</span>
+but.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'&lt;Button-1&gt;'</span>,display<span style="color: black;">&#41;</span> </pre></div></p>
+<p>При вызове функции display в переменную v “записывается“ значение, связанное в текущий момент с переменной var. Чтобы получить значение переменной var, используется метод get (вторая строчка кода).<br />
+<strong>Пример 2.</strong> </p>
+<p>Несколько сложнее обстоит дело с флажками. Поскольку состояния флажков независимы друг друга, то для каждого должна быть введена собственная ассоциированная переменная-объект.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+&nbsp;
+root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+var0=StringVar<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># значение каждого флажка ...</span>
+var1=StringVar<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># ... хранится в собственной переменной</span>
+var2=StringVar<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+<span style="color: #808080; font-style: italic;"># если флажок установлен, то в ассоциированную переменную ...</span>
+<span style="color: #808080; font-style: italic;"># ...(var0,var1 или var2) заносится значение onvalue, ...</span>
+<span style="color: #808080; font-style: italic;"># ...если флажок снят, то - offvalue.</span>
+ch0 = Checkbutton<span style="color: black;">&#40;</span>root,text=<span style="color: #483d8b;">&quot;Окружность&quot;</span>,variable=var0,
+          onvalue=<span style="color: #483d8b;">&quot;circle&quot;</span>,offvalue=<span style="color: #483d8b;">&quot;-&quot;</span><span style="color: black;">&#41;</span>
+ch1 = Checkbutton<span style="color: black;">&#40;</span>root,text=<span style="color: #483d8b;">&quot;Квадрат&quot;</span>,variable=var1,
+          onvalue=<span style="color: #483d8b;">&quot;square&quot;</span>,offvalue=<span style="color: #483d8b;">&quot;-&quot;</span><span style="color: black;">&#41;</span>
+ch2 = Checkbutton<span style="color: black;">&#40;</span>root,text=<span style="color: #483d8b;">&quot;Треугольник&quot;</span>,variable=var2,
+          onvalue=<span style="color: #483d8b;">&quot;triangle&quot;</span>,offvalue=<span style="color: #483d8b;">&quot;-&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+lis = Listbox<span style="color: black;">&#40;</span>root,height=3<span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">def</span> result<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     v0 = var0.<span style="color: black;">get</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+     v1 = var1.<span style="color: black;">get</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+     v2 = var2.<span style="color: black;">get</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+     l = <span style="color: black;">&#91;</span>v0,v1,v2<span style="color: black;">&#93;</span> <span style="color: #808080; font-style: italic;"># значения переменных заносятся в список</span>
+     lis.<span style="color: black;">delete</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">0</span>,<span style="color: #ff4500;">2</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># предыдущее содержимое удаляется из Listbox</span>
+     <span style="color: #ff7700;font-weight:bold;">for</span> v <span style="color: #ff7700;font-weight:bold;">in</span> l: <span style="color: #808080; font-style: italic;"># содержимое списка l последовательно ...</span>
+          lis.<span style="color: black;">insert</span><span style="color: black;">&#40;</span>END,v<span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># ...вставляется в Listbox</span>
+&nbsp;
+but = Button<span style="color: black;">&#40;</span>root,text=<span style="color: #483d8b;">&quot;Получить значения&quot;</span><span style="color: black;">&#41;</span>
+but.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'&lt;Button-1&gt;'</span>,result<span style="color: black;">&#41;</span>
+&nbsp;
+ch0.<span style="color: black;">deselect</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span><span style="color: #808080; font-style: italic;"># &quot;по умолчанию&quot; флажки сняты</span>
+ch1.<span style="color: black;">deselect</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+ch2.<span style="color: black;">deselect</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+ch0.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+ch1.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+ch2.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+but.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+lis.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div><br />
+<strong>Пример 3. </strong></p>
+<p>Помимо свойства (опции) variable, связывающей виджет с переменной-объектом Tkinter (IntVar, StringVar и др.), у многих виджет существует опция textvariable, которая определяет текст-содержимое или текст-надпись виджета. Несмотря на то, что «текстовое свойство» может быть установлено для виджета и изменено в процессе выполнения кода без использования ассоциированных переменных, иногда такой способ изменения оказывается более удобным.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+v = StringVar<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+ent1 = Entry <span style="color: black;">&#40;</span>root, textvariable = v,bg=<span style="color: #483d8b;">&quot;black&quot;</span>,fg=<span style="color: #483d8b;">&quot;white&quot;</span><span style="color: black;">&#41;</span>
+ent2 = Entry<span style="color: black;">&#40;</span>root, textvariable = v<span style="color: black;">&#41;</span>
+ent1.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+ent2.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div> </p>
+<p>Здесь содержимое одного текстового поля немедленно, отображается в другом, т.к. оба поля привязаны к одной и той же переменной v.</p>
+<h2>практическая работа</h2>
+<ol>
+<li>Напишите скрипт, как в примере с флажками; в отличии от примера значения ассоциированных переменных должны отображаться в метке (Label) через запятую.</li>
+<li>Напишите программу, в которой пользователь может определить цвет рамки (Frame) c помощью шкалы (Scale).</li>
+</ol>
+  </div>
+    </div>
+  </body>
+</html>

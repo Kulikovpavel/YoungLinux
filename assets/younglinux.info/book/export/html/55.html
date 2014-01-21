@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Объект Меню (Menu) в GUI. Урок 10</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-55" class="section-2">
+  <h1 class="book-heading">Объект Меню (Menu) в GUI. Урок 10</h1>
+  <div style="text-align:center;">
+<h4>Методическая разработка урока<br />
+Элективный курс: Модуль tkinter. Создание графического интерфейса пользователя с помощью языка программирования Python<br />
+Уровень: Программирование для начинающих</h4>
+</div>
+<h2>Что такое меню</h2>
+<p>Меню — это объект, который присутствует во многих пользовательских приложениях. Находится оно под строкой заголовка и представляет собой выпадающие списки под словами; каждый такой список может содержать другой вложенный в него список. Каждый пункт списка представляет собой команду, запускающую какое-либо действие или открывающую диалоговое окно.<br />
+Создание меню в Tkinter</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+m = Menu<span style="color: black;">&#40;</span>root<span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;">#создается объект Меню на главном окне</span>
+root.<span style="color: black;">config</span><span style="color: black;">&#40;</span>menu=m<span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;">#окно конфигурируется с указанием меню для него</span>
+&nbsp;
+<span style="color: #dc143c;">fm</span> = Menu<span style="color: black;">&#40;</span>m<span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;">#создается пункт меню с размещением на основном меню (m)</span>
+m.<span style="color: black;">add_cascade</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;File&quot;</span>,menu=<span style="color: #dc143c;">fm</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;">#пункту располагается на основном меню (m)</span>
+<span style="color: #dc143c;">fm</span>.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Open...&quot;</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;">#формируется список команд пункта меню</span>
+<span style="color: #dc143c;">fm</span>.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;New&quot;</span><span style="color: black;">&#41;</span>
+<span style="color: #dc143c;">fm</span>.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Save...&quot;</span><span style="color: black;">&#41;</span>
+<span style="color: #dc143c;">fm</span>.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Exit&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+hm = Menu<span style="color: black;">&#40;</span>m<span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;">#второй пункт меню</span>
+m.<span style="color: black;">add_cascade</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Help&quot;</span>,menu=hm<span style="color: black;">&#41;</span>
+hm.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Help&quot;</span><span style="color: black;">&#41;</span>
+hm.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;About&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>Метод add_cascade добавляет новый пункт в меню, который указывается как значение опции menu.</p>
+<p>Метод add_command добавляет новую команду в пункт меню. Одна из опций данного метода (в примере выше ее пока нет) — command – связывает данную команду с функцией- обработчиком.</p>
+<p>Можно создать вложенное меню. Для этого создается еще одно меню и с помощью add_cascade привязать к родительскому пункту.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">nfm = Menu<span style="color: black;">&#40;</span><span style="color: #dc143c;">fm</span><span style="color: black;">&#41;</span>
+<span style="color: #dc143c;">fm</span>.<span style="color: black;">add_cascade</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Import&quot;</span>,menu=nfm<span style="color: black;">&#41;</span>
+nfm.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Image&quot;</span><span style="color: black;">&#41;</span>
+nfm.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Text&quot;</span><span style="color: black;">&#41;</span></pre></div> </p>
+<h2>Привязка функций к меню</h2>
+<p>Каждая команда меню обычно должна быть связана со своей функцией, выполняющей те или иные действия (выражения). Связь происходит с помощью опции command метода add_command. Функция обработчик до этого должна быть определена.</p>
+<p>Для примера выше далее приводятся исправленные строки добавления команд “About”, “New” и “Exit”, а также функции, вызываемые, когда пользователь щелкает левой кнопкой мыши по соответствующим пунктам подменю.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">def</span> new_win<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>:
+     win = Toplevel<span style="color: black;">&#40;</span>root<span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">def</span> close_win<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>:
+     root.<span style="color: black;">destroy</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">def</span> about<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>:
+     win = Toplevel<span style="color: black;">&#40;</span>root<span style="color: black;">&#41;</span>
+     lab = Label<span style="color: black;">&#40;</span>win,text=<span style="color: #483d8b;">&quot;Это просто программа-тест <span style="color: #000099; font-weight: bold;">\n</span> меню в Tkinter&quot;</span><span style="color: black;">&#41;</span>
+     lab.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> 
+&nbsp;
+….
+<span style="color: #dc143c;">fm</span>.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;New&quot;</span>,command=new_win<span style="color: black;">&#41;</span>
+….
+<span style="color: #dc143c;">fm</span>.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Exit&quot;</span>,command=close_win<span style="color: black;">&#41;</span>
+&nbsp;
+….
+<span style="color: black;">hm</span>.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;About&quot;</span>,command=about<span style="color: black;">&#41;</span> </pre></div></p>
+<h2>Практическая работа</h2>
+<p>Напишите приложение с меню, содержащим два пункта: Color и Size. Пункт Color должен содержать три команды (Red, Green и Blue), меняющие цвет рамки на главном окне. Пункт Size должен содержать две команды (500x500 и 700х400), изменяющие размер рамки.</p>
+<h2>Примерный ответ к практической работе</h2>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">def</span> colorR<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>:
+     fra.<span style="color: black;">config</span><span style="color: black;">&#40;</span>bg=<span style="color: #483d8b;">&quot;Red&quot;</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">def</span> colorG<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>:
+     fra.<span style="color: black;">config</span><span style="color: black;">&#40;</span>bg=<span style="color: #483d8b;">&quot;Green&quot;</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">def</span> colorB<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>:
+     fra.<span style="color: black;">config</span><span style="color: black;">&#40;</span>bg=<span style="color: #483d8b;">&quot;Blue&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">def</span> square<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>:
+     fra.<span style="color: black;">config</span><span style="color: black;">&#40;</span>width=500<span style="color: black;">&#41;</span>
+     fra.<span style="color: black;">config</span><span style="color: black;">&#40;</span>height=500<span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">def</span> rectangle<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>:
+     fra.<span style="color: black;">config</span><span style="color: black;">&#40;</span>width=<span style="color: #ff4500;">700</span><span style="color: black;">&#41;</span>
+     fra.<span style="color: black;">config</span><span style="color: black;">&#40;</span>height=<span style="color: #ff4500;">400</span><span style="color: black;">&#41;</span>
+&nbsp;
+fra = Frame<span style="color: black;">&#40;</span>root,width=<span style="color: #ff4500;">300</span>,height=<span style="color: #ff4500;">100</span>,bg=<span style="color: #483d8b;">&quot;Black&quot;</span><span style="color: black;">&#41;</span>
+fra.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+m = Menu<span style="color: black;">&#40;</span>root<span style="color: black;">&#41;</span>
+root.<span style="color: black;">config</span><span style="color: black;">&#40;</span>menu=m<span style="color: black;">&#41;</span>
+&nbsp;
+cm = Menu<span style="color: black;">&#40;</span>m<span style="color: black;">&#41;</span>
+m.<span style="color: black;">add_cascade</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Color&quot;</span>,menu=cm<span style="color: black;">&#41;</span>
+cm.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Red&quot;</span>,command=colorR<span style="color: black;">&#41;</span>
+cm.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Green&quot;</span>,command=colorG<span style="color: black;">&#41;</span>
+cm.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Blue&quot;</span>,command=colorB<span style="color: black;">&#41;</span>
+&nbsp;
+sm = Menu<span style="color: black;">&#40;</span>m<span style="color: black;">&#41;</span>
+m.<span style="color: black;">add_cascade</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Size&quot;</span>,menu=sm<span style="color: black;">&#41;</span>
+sm.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;500x500&quot;</span>,command=square<span style="color: black;">&#41;</span>
+sm.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;700x400&quot;</span>,command=rectangle<span style="color: black;">&#41;</span>
+&nbsp;
+root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div></p>
+  </div>
+    </div>
+  </body>
+</html>

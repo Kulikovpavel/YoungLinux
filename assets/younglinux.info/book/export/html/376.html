@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Урок 16. Организация динамических структур данных</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-376" class="section-2">
+  <h1 class="book-heading">Урок 16. Организация динамических структур данных</h1>
+  <p class="right">Особенности языка С. Учебное пособие</p>
+<p>Структуры одного типа можно объединять не только в массивы. Их можно связывать между собой, создавая так называемые динамические структуры данных. Связь между отдельными структурами может быть организована по-разному, и именно поэтому среди динамических данных выделяют списки, стеки, очереди, деревья, графы и др. Мы не будем рассматривать каждый тип. Цель этого урока — понять, что такое динамические данные, и как они создаются на языке программирования <span class="blue">C</span>.</p>
+<p>Для динамических данных память выделяется и освобождается в процессе выполнения программы, а не в момент ее запуска. Так, например, если в программе объявлен массив из 100 элементов, то при запуске программы резервируется память для всех ста элементов, даже если в процессе работы программы всего будут использованы первые 10 элементов массива. С другой стороны, при использовании в программе динамических типов память под них заранее не выделяется. Лишь когда поступают новые данные, вызывается специальная функция, которая выделяет память, куда эти данные записываются.</p>
+<p>Тут появляется проблема. Для динамических типов данных не объявляются переменные, иначе память бы выделялась под переменные. Как тогда обращаться к данным, записанным неизвестно где в памяти? Можно ввести переменные-указатели и при выделении памяти записывать адрес этой памяти в указатели. Но мы же не знаем, сколько памяти потребуется в процессе выполнения. Сколько вводить указателей? </p>
+<p>Проблема решается путем использования структур. Допустим, мы пишем программу, позволяющую вводить данные на сотрудников организации. Количество сотрудников неизвестно. Можно было бы создать массив записей с запасом. Однако, если данных о каждом сотруднике много, то каждая запись занимает много памяти; получается, что мы будем расходовать много памяти в пустую, если сотрудников мало. </p>
+<p>Идея заключается примерно в следующем:</p>
+<ol>
+<li>В программе определяем структурный тип данных с "кое-какой изюминкой" и создаем переменную указатель на него. В итоге при запуске программы память выделяется только под указатель. </li>
+<li>В процессе выполнения программы, в случае возникновения необходимости в создании структуры, с помощью специальной функции выделяем память под хранение данных (полей структуры).</li>
+<li>Присваиваем указателю адрес, по которому расположена только что созданная структура.</li>
+<li>Когда поступает команда на создание следующей структуры, снова с помощью функции выделяется память, а указателю присваивается адрес этой новой структуры.</li>
+<li>"Изюминка" определенного ранее структурного типа данных заключается в том, что одним из его полей является указатель на структуру этого же типа. </li>
+<li>В это поле-указатель записывается адрес на структуру, которая была создана перед данной структурой. </li>
+</ol>
+<p>Таким образом получается цепочка взаимосвязанных структур. Самая первая созданная структура не имеет ссылки на другую структуру. Ее поле-указатель имеет значение NULL. Вторая созданная структура ссылается на первую, третья на вторую и т.д. Адрес последней созданной структуры хранится в переменной-указателе, которая была объявлена в программе программистом.</p>
+<p>Чтобы извлечь данные из такого агломерата данных, надо пройтись по ссылкам начиная с переменной-указателя. Т.е. первой мы извлечем последнюю записанную структуру. Потом предпоследнюю и постепенно будем двигаться к структуре, которая была создана первой во времени. Такой динамический тип данных называется стеком. Объекты извлекаются из стека таким образом, что первым выбирается тот, который был помещен последним.<br />
+<img src="../../../img/c/stack3.png" width="654" height="68" alt="Стек - динамический тип данных" /><br />
+Стек — это не единственный способ организации динамических данных, но наиболее простой.<br />
+Если динамические данные больше не нужны, следует не забыть освободить память.</p>
+<p>В языке программирования <span class="blue">C</span> выделение памяти в процессе выполнения программы можно организовать с помощью функций <span class="geshifilter"><code class="c geshifilter-c">malloc<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> и <span class="geshifilter"><code class="c geshifilter-c">calloc<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>, освобождение памяти с помощью <span class="geshifilter"><code class="c geshifilter-c">free<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>. Объявление этих функций находится в заголовочных файлах stdlib.h и malloc.h. К исходному коду можно подключить любой из них.</p>
+<p>Функция <span class="geshifilter"><code class="c geshifilter-c">malloc<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> принимает в качестве параметра число, обозначающее объем памяти, который требуется выделить. Если свободная память есть, и <span class="geshifilter"><code class="c geshifilter-c">malloc<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> удается ее "захватить", то функция возвращает указатель на нее. Этот указатель не имеет типа, поэтому программист самостоятельно должен привести его к требуемому в программе типу данных. </p>
+<p>Функция <span class="geshifilter"><code class="c geshifilter-c">free<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> принимает указатель, и освобождает память по адресу, который он содержит.<br />
+Рассмотрим программу:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+<span style="color: #339933;">#include &lt;stdlib.h&gt;</span>
+&nbsp;
+<span style="color: #993333;">struct</span> stack <span style="color: #009900;">&#123;</span>
+       <span style="color: #993333;">int</span> data<span style="color: #339933;">;</span>
+       <span style="color: #993333;">struct</span> stack <span style="color: #339933;">*</span>next<span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span><span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #993333;">struct</span> stack <span style="color: #339933;">*</span>create<span style="color: #009900;">&#40;</span><span style="color: #993333;">struct</span> stack <span style="color: #339933;">*,</span> <span style="color: #993333;">int</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// присоединение элемента к голове, возврат адреса головы</span>
+<span style="color: #993333;">void</span> list<span style="color: #009900;">&#40;</span><span style="color: #993333;">struct</span> stack <span style="color: #339933;">*</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// просмотр стека</span>
+&nbsp;
+main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+       <span style="color: #993333;">int</span> i<span style="color: #339933;">,</span> n<span style="color: #339933;">;</span>
+       <span style="color: #993333;">struct</span> stack <span style="color: #339933;">*</span>head<span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// адрес, указывающий на голову стека</span>
+       head <span style="color: #339933;">=</span> NULL<span style="color: #339933;">;</span>
+&nbsp;
+       scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>n<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> 
+       <span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;=</span> n<span style="color: #339933;">;</span> i<span style="color: #339933;">+=</span>5<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+           head <span style="color: #339933;">=</span> create<span style="color: #009900;">&#40;</span>head<span style="color: #339933;">,</span>i<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+           <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d&lt;--&quot;</span><span style="color: #339933;">,</span> head<span style="color: #339933;">-&gt;</span>data<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+       <span style="color: #009900;">&#125;</span>
+       <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+       list<span style="color: #009900;">&#40;</span>head<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+       free<span style="color: #009900;">&#40;</span>head<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">struct</span> stack <span style="color: #339933;">*</span>create<span style="color: #009900;">&#40;</span><span style="color: #993333;">struct</span> stack <span style="color: #339933;">*</span>head<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> x<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+       <span style="color: #993333;">struct</span> stack <span style="color: #339933;">*</span>element<span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// указатель на новую структуру</span>
+       element <span style="color: #339933;">=</span> <span style="color: #009900;">&#40;</span><span style="color: #993333;">struct</span> stack <span style="color: #339933;">*</span><span style="color: #009900;">&#41;</span>malloc<span style="color: #009900;">&#40;</span><span style="color: #993333;">sizeof</span><span style="color: #009900;">&#40;</span><span style="color: #993333;">struct</span> stack<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// выделяем память</span>
+       element<span style="color: #339933;">-&gt;</span>next <span style="color: #339933;">=</span> head<span style="color: #339933;">;</span>
+       element<span style="color: #339933;">-&gt;</span>data <span style="color: #339933;">=</span> x<span style="color: #339933;">;</span>
+       <span style="color: #b1b100;">return</span> element<span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">void</span> list<span style="color: #009900;">&#40;</span><span style="color: #993333;">struct</span> stack <span style="color: #339933;">*</span>p<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#123;</span>
+     <span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span>p <span style="color: #339933;">!=</span> NULL<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span> <span style="color: #666666; font-style: italic;">// пока не конец стека    </span>
+           <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d--&gt;&quot;</span><span style="color: #339933;">,</span> p<span style="color: #339933;">-&gt;</span>data<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+           p <span style="color: #339933;">=</span> p<span style="color: #339933;">-&gt;</span>next<span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// продвижение по списку</span>
+     <span style="color: #009900;">&#125;</span>
+     <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<p>В процессе выполнения эта программа запрашивает целое число и сначала выводит числа от 0 до указанного числа, а затем выводит их же в обратном порядке — от указанного число до нуля:</p>
+<pre>
+60
+0&lt;--5&lt;--10&lt;--15&lt;--20&lt;--25&lt;--30&lt;--35&lt;--40&lt;--45&lt;--50&lt;--55&lt;--60&lt;--
+60-->55-->50-->45-->40-->35-->30-->25-->20-->15-->10-->5-->0-->
+</pre><p>
+Осталось выяснить почему она так делает.</p>
+<ol>
+<li>В программе определяется тип данных <span class="monoi">struct stack</span>, одним из полей которого является указатель на структуру типа <span class="monoi">struct stack</span>.</li>
+<li>В функции <span class="geshifilter"><code class="c geshifilter-c">main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> создается указатель (<span class="monoi">head</span>) на <span class="monoi">struct stack</span>, которому сначала присваивается NULL, т.к. он никуда не указывает. </li>
+<li>В цикле определенное количество раз вызывается функция <span class="geshifilter"><code class="c geshifilter-c">create<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>, которой передается текущее значение указателя (адрес) и какое-то число.</li>
+<li>В теле <span class="geshifilter"><code class="c geshifilter-c">create<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> создается новый указатель (<span class="monoi">element</span>) типа <span class="monoi">struct stack</span>.</li>
+<li>С помощью функции <span class="geshifilter"><code class="c geshifilter-c">malloc<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> выделяется память, необходимая под одну структуру. Объем этой памяти вычисляется с помощью функции <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #993333;">sizeof</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>. Возвращаемый <span class="geshifilter"><code class="c geshifilter-c">malloc<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> указатель приводится к типу <span class="monoi">struct stack</span>.</li>
+<li>Адрес выделенной памяти под новую структуру присваивается переменной-указателю <span class="monoi">element</span>.</li>
+<li>В поле <span class="monoi">next</span> новой структуры записывается адрес, который содержится в аргументе, переданном в функцию. При первом вызове <span class="geshifilter"><code class="c geshifilter-c">create<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> там содержится NULL. При последующих вызовах адрес памяти созданной в предыдущем вызове функции структуры. Таким образом в поле <span class="monoi">next</span> структуры, доступной по указателю <span class="monoi">element</span>, сохраняется адрес, содержащийся в <span class="monoi">head</span>. Следовательно <span class="monoi">head</span> в дальнейшем можно изменить, не потеряв связь с предыдущими данными.</li>
+<li>В поле <span class="monoi">data</span> записывается число (какие-то существенные для нас данные).</li>
+<li>Из функции <span class="geshifilter"><code class="c geshifilter-c">create<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> возвращается указатель на только что выделенную память с новой структурой, в которой сохранен адрес на предыдущую структуру. Этот указатель присваивается <span class="monoi">head</span>. В результате <span class="monoi">head</span> постоянно указывает на последнюю созданную структуру.</li>
+<li>На экран с помощью <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> выводится значение поля <span class="monoi">data</span> структуры, на которую указывает в данный момент <span class="monoi">head</span>. </li>
+<li>Функция <span class="geshifilter"><code class="c geshifilter-c">list<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> позволяется просмотреть стек, получив указатель на его последний (по времени создания) элемент. При вызове значение <span class="monoi">head</span> присваивается переменной <span class="monoi">p</span>. Обратите внимание, изменение <span class="monoi">p</span> в теле <span class="geshifilter"><code class="c geshifilter-c">list<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> не повлияет на значение <span class="monoi">head</span> в теле <span class="geshifilter"><code class="c geshifilter-c">main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>. Переменная <span class="monoi">p</span> получает копию адреса и далее изменяет лишь свое значение. </li>
+<li>В выражении <span class="geshifilter"><code class="c geshifilter-c">p <span style="color: #339933;">=</span> p<span style="color: #339933;">-&gt;</span>next</code></span> сначала изымается значение из поля <span class="monoi">next</span> структуры, на которую указывает <span class="monoi">p</span>. Там содержится адрес на предыдущую структуру, и этот адрес присваивается <span class="monoi">p</span>. Таким образом <span class="monoi">p</span> как бы перемещается по стеку, начиная с последней вошедшей в него структуры и заканчивая на той, которая была создана первой. Поле <span class="monoi">next</span> первой структуры содержит NULL, который служит условием выхода из цикла.</li>
+<li>В конце с помощью функции <span class="geshifilter"><code class="c geshifilter-c">free<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> освобождает память по адресу, на который указывает <span class="monoi">head</span>. (Освобождается ли при этом вся выделенная память или только та, что была отведена на последнюю структуру?)</li>
+</ol>
+<p>Преимущество этой программы в том, что память выделяется только под то количество структур, которое необходимо. Количество структур определяется в процессе выполнения программы. Однако приходится тратить память на указатели. Если структура содержит лишь одно значащее поле, как в примере выше, то такие затраты могут быть неоправданны. Проще было бы объявить массив с запасом. Но если структура сложная, содержит много полей, то организация динамических типов данных приносит существенный плюс.</p>
+<p><span class="blue"><strong>Задание</strong></span></p>
+<ol>
+<li><span class="blue">Напишите программу, аналогичную приведенной в уроке. При этом структурный тип данных должен быть более сложным и содержать как минимум три значащих поля (например, данные о сотрудниках: ФИ, сфера деятельности, стаж). Поля должны заполняться пользователем.</span> </li>
+<li><span class="blue">Напишите к вашей программе функцию, которая выводит значения полей указанной пользователем структуры. Например, пользователь пишет ФИ и получает остальные сведения о человеке.</span></li>
+<li><span class="blue">Напишите еще одну функцию, которая позволяет удалять последнюю записанную структуру.</span></li>
+<li><span class="blue">Подумайте над алгоритмом удаления структуры из любого места стека. Попробуйте его реализовать.</span></li>
+</ol>
+  </div>
+    </div>
+  </body>
+</html>

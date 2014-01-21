@@ -1,0 +1,87 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Метод bind модуля Tkinter. Урок 7</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-52" class="section-2">
+  <h1 class="book-heading">Метод bind модуля Tkinter. Урок 7</h1>
+  <p>Приложения с графическим интерфейсом пользователя (GUI) должны не просто красиво отображаться на экране, но и выполнять какие-либо действия, реализуя тем самым потребности пользователя. На прошлых уроках было рассказано как создать GUI, на этом уроке рассмотрим как добавить ему функциональность, т.е возможность совершать с его помощью те или иные действия.</p>
+<p>В отличие от консольных приложений, которые обычно выполняются при минимальных внешних воздействиях, графическое приложение обычно ждет каких-либо внешних воздействий (щелчков кнопкой мыши, нажатий клавиш на клавиатуре, изменения виджетов) и затем выполняет заложенное программистом действие. Из такого принципа работы можно вывести следующую схему настройки функциональности GUI: на виджет что-то «влияет» из вне ? выполняется какая-то функция (действие). Внешнее воздействие на графический компонент называется событием. Событий достаточно много (основной их перечень мы рассмотрим на следующем занятии). На этом занятии будем использовать лишь два вида событий: щелчок левой кнопкой мыши (<Button-1>) и нажатие клавиши Enter (<Return>).</return></button-1></p>
+<p>Одним из способов связывания виджета, события и функции (того, что должно происходить после события) является использование метода bind. Синтаксис связывания представлен на рисунке ниже.</p>
+<div style="text-align:center;"><img src="../../../img/tkinter/bind.png" width="514" height="284" alt="Связывание графического элемента, события и функции с помощью метода bind" /></div>
+<p>Рассмотрим различные примеры добавления функциональности GUI.</p>
+<p><strong>Пример 1.</strong><br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">def</span> output<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     s = ent.<span style="color: black;">get</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+     <span style="color: #ff7700;font-weight:bold;">if</span> s == <span style="color: #483d8b;">&quot;1&quot;</span>:
+          tex.<span style="color: black;">delete</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">1.0</span>,END<span style="color: black;">&#41;</span>
+          tex.<span style="color: black;">insert</span><span style="color: black;">&#40;</span>END,<span style="color: #483d8b;">&quot;Обслуживание клиентов на втором этаже&quot;</span><span style="color: black;">&#41;</span>
+     <span style="color: #ff7700;font-weight:bold;">elif</span> s == <span style="color: #483d8b;">&quot;2&quot;</span>:
+          tex.<span style="color: black;">delete</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">1.0</span>,END<span style="color: black;">&#41;</span>
+          tex.<span style="color: black;">insert</span><span style="color: black;">&#40;</span>END,<span style="color: #483d8b;">&quot;Пластиковые карты выдают в соседнем здании&quot;</span><span style="color: black;">&#41;</span>
+     <span style="color: #ff7700;font-weight:bold;">else</span>:
+          tex.<span style="color: black;">delete</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">1.0</span>,END<span style="color: black;">&#41;</span>
+          tex.<span style="color: black;">insert</span><span style="color: black;">&#40;</span>END,<span style="color: #483d8b;">&quot;Введите 1 или 2 в поле слева&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+ent = Entry<span style="color: black;">&#40;</span>root,width=<span style="color: #ff4500;">1</span><span style="color: black;">&#41;</span>
+but = Button<span style="color: black;">&#40;</span>root,text=<span style="color: #483d8b;">&quot;Вывести&quot;</span><span style="color: black;">&#41;</span>
+tex = Text<span style="color: black;">&#40;</span>root,width=<span style="color: #ff4500;">20</span>,height=<span style="color: #ff4500;">3</span>,font=<span style="color: #483d8b;">&quot;12&quot;</span>,wrap=WORD<span style="color: black;">&#41;</span>
+&nbsp;
+ent.<span style="color: black;">grid</span><span style="color: black;">&#40;</span>row=<span style="color: #ff4500;">0</span>,column=<span style="color: #ff4500;">0</span>,padx=<span style="color: #ff4500;">20</span><span style="color: black;">&#41;</span>
+but.<span style="color: black;">grid</span><span style="color: black;">&#40;</span>row=<span style="color: #ff4500;">0</span>,column=<span style="color: #ff4500;">1</span><span style="color: black;">&#41;</span>
+tex.<span style="color: black;">grid</span><span style="color: black;">&#40;</span>row=<span style="color: #ff4500;">0</span>,column=<span style="color: #ff4500;">2</span>,padx=<span style="color: #ff4500;">20</span>,pady=<span style="color: #ff4500;">10</span><span style="color: black;">&#41;</span>
+&nbsp;
+but.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;&lt;Button-1&gt;&quot;</span>,output<span style="color: black;">&#41;</span>
+&nbsp;
+root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>Рассмотрим код, начиная с 16-й строки.</p>
+<p>В строках 16-18 создаются три виджета: однострочное текстовое поле, кнопка и многострочное текстовое поле. В первое поле пользователь должен что-то ввести, затем нажать кнопку и получить ответ во втором поле.</p>
+<p>В строках 20-22 используется менеджер grid для размещения виджетов. Свойства padx и pady определяют количество пикселей от виджета до края рамки (или ячейки) по осям x и y соответственно.</p>
+<p>В стоке 24 как раз и происходит связывание кнопки с событием нажатия левой кнопки мыши и функцией output. Все эти три компонента (виджет, событие и функция) связываются с помощью метода bind. В данном случае, при нажатии левой кнопкой мыши по кнопке but будет вызвана функция output.</p>
+<p>Итак, если вдруг пользователь щелкнет левой кнопкой мыши по кнопке, то выполнится функция output (ни в каком другом случае она выполняться не будет). Данная функция (строки 1-11) выводит информацию во второе текстовое поле. Какую именно информацию, зависит от того, что пользователь ввел в первое текстовое поле. В качестве аргумента функции передается событие (в данном случае <Button-1>).</button-1></p>
+<p>Внутри веток if-elif-else используются методы delete и insert. Первый из них удаляет символы из текстового поля, второй — вставляет. 1.0 — обозначает первую строку, первый символ (нумерация символов начинается с нуля).</p>
+<p><strong>Пример 2.</strong><br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">li = <span style="color: black;">&#91;</span><span style="color: #483d8b;">&quot;red&quot;</span>,<span style="color: #483d8b;">&quot;green&quot;</span><span style="color: black;">&#93;</span>
+<span style="color: #ff7700;font-weight:bold;">def</span> color<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     fra.<span style="color: black;">configure</span><span style="color: black;">&#40;</span>bg=li<span style="color: black;">&#91;</span>0<span style="color: black;">&#93;</span><span style="color: black;">&#41;</span>
+     li<span style="color: black;">&#91;</span>0<span style="color: black;">&#93;</span>,li<span style="color: black;">&#91;</span>1<span style="color: black;">&#93;</span> = li<span style="color: black;">&#91;</span>1<span style="color: black;">&#93;</span>,li<span style="color: black;">&#91;</span>0<span style="color: black;">&#93;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">def</span> outgo<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     root.<span style="color: black;">destroy</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+fra = Frame<span style="color: black;">&#40;</span>root,width=<span style="color: #ff4500;">100</span>,height=<span style="color: #ff4500;">100</span><span style="color: black;">&#41;</span>
+but = Button<span style="color: black;">&#40;</span>root,text=<span style="color: #483d8b;">&quot;Выход&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+fra.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+but.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+root.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;&lt;Return&gt;&quot;</span>,color<span style="color: black;">&#41;</span>
+but.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;&lt;Button-1&gt;&quot;</span>,outgo<span style="color: black;">&#41;</span>
+&nbsp;
+root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div> </p>
+<p>Здесь создаются два виджета (строки 12, 13): фрейм и кнопка.</p>
+<p>Приложение реагирует на два события: нажатие клавиши Enter в пределах главного окна (строка 18) и нажатие левой кнопкой мыши по кнопке but (строка 19). В первом случае вызывается функция color, во втором — outgo.</p>
+<p>Функция color изменяет цвет фона (bg) фрейма (fra) с помощью метода configure, который предназначен для изменения значения свойств виджетов в процессе выполнения скрипта. В качестве значения опции bg подставляется первый элемент списка. Затем в списке два элемента меняются местами, чтобы при следующем нажатии Enter цвет фрейма снова изменился.</p>
+<p>В функции outgo вызывается метод destroy по отношению к главному окну. Данный метод предназначен для «разрушения» виджета (окно закроется).</p>
+<h2>Практическая работа</h2>
+<ol>
+<li>Создайте приложение, в котором меняется размер фрейма в зависимости от того, какая из трех объектов-кнопок была нажата.</li>
+<li>Напишите скрипт, генерирующий окно с меткой и текстовым полем. После ввода пользователем текста в поле и нажатия Enter, введенный текст должен отображаться в метке.</li>
+</ol>
+  </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>QML. Как сделать кнопку?</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-409" class="section-2">
+  <h1 class="book-heading">QML. Как сделать кнопку?</h1>
+  <p>Объект типа "Кнопка" должна обладать следующей функциональностью:</p>
+<ol>
+<li>Изменять свой вид при наведении курсора мыши.</li>
+<li>Восстанавливать исходное состояние при сведении курсора мыши.</li>
+<li>Изменять вид при нажатии на кнопку.</li>
+<li>Восстанавливать вид (2), когда кнопка отпущена.</li>
+<li>Вызывать какие-либо изменения.</li>
+</ol>
+<p>Напишем на QML такой интерфейс: две кнопки и белый прямоугольник, при щелчке на одной кнопке прямоугольник становится зеленым, по другой - голубым, при щелчке на самом прямоугольнике он снова становится белым.<br />
+<img src="../../../img/qt-qml/button.png" alt="Кнопки на QML" /></p>
+<p>Обычно кнопку делают из прямоугольника. Однако можно подозревать, что ее поведение можно реализовать и взяв за основу другой объект QML.</p>
+<p>Чтобы кнопка менялась при наведении и сведении мыши, в MouseArea следует установить значение свойства hoverEnabled в true, а также установить значения onEntered, onExited, например, так:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">hoverEnabled<span style="color: #339933;">:</span> <span style="color: #000000; font-weight: bold;">true</span>
+onEntered<span style="color: #339933;">:</span> parent.<span style="color: #202020;">border</span>.<span style="color: #202020;">color</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">&quot;gray&quot;</span>
+onExited<span style="color: #339933;">:</span> parent.<span style="color: #202020;">border</span>.<span style="color: #202020;">color</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">&quot;green&quot;</span></pre></div><br />
+(Для onExited указан цвет, который был задан для основного (1) состояния кнопки).</p>
+<p>Изменение кнопки при щелчке на ней задается следующим образом в свойстве color прямоугольника:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">color<span style="color: #339933;">:</span> button_green_mouse_area.<span style="color: #202020;">pressed</span> <span style="color: #339933;">?</span> <span style="color: #ff0000;">&quot;green&quot;</span> <span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;lightgreen&quot;</span></pre></div></p>
+<p>С помощью onClicked в MouseArea можно задать изменение свойства другого объекта:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">onClicked<span style="color: #339933;">:</span> rect_color_change.<span style="color: #202020;">color</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">&quot;lightgreen&quot;</span></pre></div></p>
+<p>Возникла сложность, не получается одновременно менять одно и тоже свойство прямоугольника. Если цвет заполнения меняется при нажатии, то при наведении получается менять только цвет рамки. Иначе изменение цвета при нажатии не срабатывает.</p>
+<p>Весь код интерфейса:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #666666; font-style: italic;">// import QtQuick 1.0 // to target S60 5th Edition or Maemo 5</span>
+import QtQuick 1.1
+&nbsp;
+Rectangle <span style="color: #009900;">&#123;</span>
+    width<span style="color: #339933;">:</span> <span style="color: #0000dd;">390</span>
+    height<span style="color: #339933;">:</span> <span style="color: #0000dd;">210</span>
+&nbsp;
+    Rectangle <span style="color: #009900;">&#123;</span>
+        id<span style="color: #339933;">:</span> button_green
+        x<span style="color: #339933;">:</span> <span style="color: #0000dd;">35</span>
+        y<span style="color: #339933;">:</span> <span style="color: #0000dd;">37</span>
+        width<span style="color: #339933;">:</span> <span style="color: #0000dd;">119</span>
+        height<span style="color: #339933;">:</span> <span style="color: #0000dd;">51</span>
+        color<span style="color: #339933;">:</span> button_green_mouse_area.<span style="color: #202020;">pressed</span> <span style="color: #339933;">?</span> <span style="color: #ff0000;">&quot;green&quot;</span> <span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;lightgreen&quot;</span>
+        radius<span style="color: #339933;">:</span> <span style="color: #0000dd;">7</span>
+        border.<span style="color: #202020;">width</span><span style="color: #339933;">:</span> <span style="color: #0000dd;">3</span>
+        border.<span style="color: #202020;">color</span><span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;green&quot;</span>
+        Text <span style="color: #009900;">&#123;</span>
+            id<span style="color: #339933;">:</span> button_green_label
+            x<span style="color: #339933;">:</span> <span style="color: #0000dd;">38</span>
+            y<span style="color: #339933;">:</span> <span style="color: #0000dd;">18</span>
+            text<span style="color: #339933;">:</span> qsTr<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Зеленый&quot;</span><span style="color: #009900;">&#41;</span>
+            anchors.<span style="color: #202020;">horizontalCenter</span><span style="color: #339933;">:</span> parent.<span style="color: #202020;">horizontalCenter</span>
+            anchors.<span style="color: #202020;">verticalCenter</span><span style="color: #339933;">:</span> parent.<span style="color: #202020;">verticalCenter</span>
+            font.<span style="color: #202020;">pixelSize</span><span style="color: #339933;">:</span> 16
+        <span style="color: #009900;">&#125;</span>
+        MouseArea <span style="color: #009900;">&#123;</span>
+            id<span style="color: #339933;">:</span> button_green_mouse_area
+            anchors.<span style="color: #202020;">fill</span><span style="color: #339933;">:</span> parent
+            hoverEnabled<span style="color: #339933;">:</span> <span style="color: #000000; font-weight: bold;">true</span>
+            onEntered<span style="color: #339933;">:</span> parent.<span style="color: #202020;">border</span>.<span style="color: #202020;">color</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">&quot;gray&quot;</span>
+            onExited<span style="color: #339933;">:</span> parent.<span style="color: #202020;">border</span>.<span style="color: #202020;">color</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">&quot;green&quot;</span>
+            onClicked<span style="color: #339933;">:</span> rect_color_change.<span style="color: #202020;">color</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">&quot;lightgreen&quot;</span>
+        <span style="color: #009900;">&#125;</span>
+    <span style="color: #009900;">&#125;</span>
+&nbsp;
+    Rectangle <span style="color: #009900;">&#123;</span>
+        id<span style="color: #339933;">:</span> button_blue
+        x<span style="color: #339933;">:</span> <span style="color: #0000dd;">35</span>
+        y<span style="color: #339933;">:</span> <span style="color: #0000dd;">118</span>
+        width<span style="color: #339933;">:</span> <span style="color: #0000dd;">119</span>
+        height<span style="color: #339933;">:</span> <span style="color: #0000dd;">51</span>
+        color<span style="color: #339933;">:</span> button_blue_mouse_area.<span style="color: #202020;">pressed</span> <span style="color: #339933;">?</span> <span style="color: #ff0000;">&quot;darkblue&quot;</span> <span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;lightblue&quot;</span>
+        radius<span style="color: #339933;">:</span> <span style="color: #0000dd;">7</span>
+        border.<span style="color: #202020;">width</span><span style="color: #339933;">:</span> <span style="color: #0000dd;">3</span>
+        border.<span style="color: #202020;">color</span><span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;darkblue&quot;</span>
+        Text <span style="color: #009900;">&#123;</span>
+            id<span style="color: #339933;">:</span> button_blue_label
+            x<span style="color: #339933;">:</span> <span style="color: #0000dd;">38</span>
+            y<span style="color: #339933;">:</span> <span style="color: #0000dd;">18</span>
+            text<span style="color: #339933;">:</span> qsTr<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Голубой&quot;</span><span style="color: #009900;">&#41;</span>
+            anchors.<span style="color: #202020;">horizontalCenter</span><span style="color: #339933;">:</span> parent.<span style="color: #202020;">horizontalCenter</span>
+            anchors.<span style="color: #202020;">verticalCenter</span><span style="color: #339933;">:</span> parent.<span style="color: #202020;">verticalCenter</span>
+            font.<span style="color: #202020;">pixelSize</span><span style="color: #339933;">:</span> 16
+        <span style="color: #009900;">&#125;</span>
+        MouseArea <span style="color: #009900;">&#123;</span>
+            id<span style="color: #339933;">:</span> button_blue_mouse_area
+            anchors.<span style="color: #202020;">fill</span><span style="color: #339933;">:</span> parent
+            hoverEnabled<span style="color: #339933;">:</span> <span style="color: #000000; font-weight: bold;">true</span>
+            onEntered<span style="color: #339933;">:</span> parent.<span style="color: #202020;">border</span>.<span style="color: #202020;">color</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">&quot;gray&quot;</span>
+            onExited<span style="color: #339933;">:</span> parent.<span style="color: #202020;">border</span>.<span style="color: #202020;">color</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">&quot;darkblue&quot;</span>
+            onClicked<span style="color: #339933;">:</span> rect_color_change.<span style="color: #202020;">color</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">&quot;lightblue&quot;</span>
+        <span style="color: #009900;">&#125;</span>
+    <span style="color: #009900;">&#125;</span>
+&nbsp;
+    Rectangle <span style="color: #009900;">&#123;</span>
+        id<span style="color: #339933;">:</span> rect_color_change
+        x<span style="color: #339933;">:</span> <span style="color: #0000dd;">186</span>
+        y<span style="color: #339933;">:</span> <span style="color: #0000dd;">30</span>
+        width<span style="color: #339933;">:</span> <span style="color: #0000dd;">167</span>
+        height<span style="color: #339933;">:</span> <span style="color: #0000dd;">148</span>
+        color<span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;#ffffff&quot;</span>
+        border.<span style="color: #202020;">width</span><span style="color: #339933;">:</span> <span style="color: #0000dd;">3</span>
+        border.<span style="color: #202020;">color</span><span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;#000000&quot;</span>
+        MouseArea <span style="color: #009900;">&#123;</span>
+            id<span style="color: #339933;">:</span> rect_color_change_mouse_area
+            anchors.<span style="color: #202020;">fill</span><span style="color: #339933;">:</span> parent
+            onEntered<span style="color: #339933;">:</span> rect_color_change.<span style="color: #202020;">color</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">&quot;white&quot;</span>
+        <span style="color: #009900;">&#125;</span>
+    <span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #009900;">&#125;</span></pre></div></p>
+  </div>
+    </div>
+  </body>
+</html>

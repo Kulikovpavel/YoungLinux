@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Условный оператор. Инструкция if. Урок 5</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-25" class="section-2">
+  <h1 class="book-heading">Условный оператор. Инструкция if. Урок 5</h1>
+  <p class="right">Основы программирования на Python</p>
+<p>Ход выполнения программы может быть линейным, т.е. таким, когда выражения выполняются, начиная с первого и заканчивая последним, по порядку, не пропуская ни одной строки кода. Но чаще бывает совсем не так. При выполнении программного кода некоторые его участки могут быть пропущены. Чтобы лучше понять почему, проведем аналогию с реальной жизнью. Допустим, человек живет по расписанию (можно сказать, расписание — это своеобразный "программный код", который следует выполнить). В его расписании в 18.00 стоит поход в бассейн. Однако человеку поступает информация, что воду слили, и бассейн не работает. Вполне логично отменить свое занятие по плаванию. Т.е. одним из условий посещения бассейна должно быть его функционирование, иначе должны выполняться другие действия.</p>
+<p>Похожая нелинейность действий может быть предусмотрена и в компьютерной программе. Например, часть кода должна выполняться лишь при определенном значении конкретной переменной. Обычно в языках программирования используется приблизительно такая конструкция: </p>
+<div style="text-align:center;"><img src="../../../img/python/if/if1.gif" width="700" height="127" alt="Пример схемы программного кода с инструкцией if" /></div>
+<p>Пример ее реализации на языке программирования Python:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">if</span> numbig <span style="color: #66cc66;">&lt;</span> <span style="color: #ff4500;">100</span>: <span style="color: #808080; font-style: italic;"># если значение переменной numbig меньше 100, то ...</span>
+    c = a<span style="color: #66cc66;">**</span>b     <span style="color: #808080; font-style: italic;"># возвести значение переменной a в степень b, </span>
+                 <span style="color: #808080; font-style: italic;"># результат присвоить c.</span></pre></div></p>
+<p>Первая строка конструкции <strong>if</strong> — это заголовок, в котором проверяется условие выполнения строк кода после двоеточия (тела конструкции). В примере выше тело содержит всего лишь одно выражение, однако чаще их бывает куда больше.</p>
+<p>Про Python говорят, что это язык программирования с достаточно ясным и легко читаемым кодом. Это связано с тем, что в нем сведены к минимуму вспомогательные элементы (скобки, точка с запятой), а для разделения синтаксических конструкций используются отступы от начала строки. Учитывая это, в конструкции <strong>if</strong> код, который выполняется при соблюдении условия, должен обязательно иметь отступ вправо. Остальной код (основная программа) должен иметь тот же отступ, что и слово <strong>if</strong>. Обычно отступ делается с помощью клавиши Tab.</p>
+<div style="text-align:center;"><img src="../../../img/python/if/block.gif" width="400" height="261" alt="Вложенный блок кода в языке программирования Python" /></div>
+<p>Можно изобразить блок-схему программы, содержащей инструкцию <strong>if</strong>, в таком виде:</p>
+<div style="text-align:center;"><img src="../../../img/python/if/if.png" width="300" height="403" alt="Блок-схема: if" /></div>
+<p>Встречается и более сложная форма ветвления: <strong>if–else</strong>. Если условие при инструкции <strong>if</strong> оказывается ложным, то выполняется блок кода при инструкции <strong>else</strong>. </p>
+<div style="text-align:center;"><img src="../../../img/python/if/if_else.png" width="400" height="367" alt="Блок-схема: if_else" /></div>
+<p>Пример кода с веткой <strong>else</strong> на языке программирования Python:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: #483d8b;">&quot;Привет&quot;</span>
+tovar1 = 50
+tovar2 = 32
+<span style="color: #ff7700;font-weight:bold;">if</span> tovar1+ tovar2 <span style="color: #66cc66;">&gt;</span> 99 :
+	<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: #483d8b;">&quot;Сумма не достаточна&quot;</span>
+<span style="color: #ff7700;font-weight:bold;">else</span>:
+	<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: #483d8b;">&quot;Чек оплачен&quot;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: #483d8b;">&quot;Пока&quot;</span></pre></div></p>
+<h3>Практическая работа</h3>
+<ol>
+<li>Напишите программный код, в котором в случае, если значение некой переменной больше 0, выводилось бы специальное сообщение (используйте функцию <strong>print</strong>). Один раз выполните программу при значении переменной больше 0, второй раз — меньше 0.</li>
+<li>Усовершенствуйте предыдущий код с помощью ветки <strong>else</strong> так, чтобы в зависимости от значения переменной, выводилась либо 1, либо -1. </li>
+<li>Самостоятельно придумайте программу, в которой бы использовалась инструкция <strong>if</strong> (желательно с веткой <strong>else</strong>). Вложенный код должен содержать не менее трех выражений.</li>
+</ol>
+  </div>
+    </div>
+  </body>
+</html>

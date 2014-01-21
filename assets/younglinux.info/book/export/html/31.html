@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Введение в словари. Урок 11</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-31" class="section-2">
+  <h1 class="book-heading">Введение в словари. Урок 11</h1>
+  <p class="right">Основы программирования на Python</p>
+<p>Одним из сложных типов данных (наряду со строками и списками) в языке программирования Python являются словари. <em>Словарь - это <strong>изменяемый</strong> (как список) <strong>неупорядоченный</strong> (в отличие от строк и списков) набор пар "ключ:значение".</em></p>
+<p>Чтобы представление о словаре стало более понятным, можно провести аналогию с обычным словарем, например, англо-русским. На каждое английское слово в таком словаре есть русское слово-перевод: cat – кошка, dog – собака, table – стол и т.д. Если англо-русский словарь описывать с помощью Python, то английские слова будут ключами, а русские — их значениями:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: black;">&#123;</span><span style="color: #483d8b;">'cat'</span>:<span style="color: #483d8b;">'кошка'</span>, <span style="color: #483d8b;">'dog'</span>:<span style="color: #483d8b;">'собака'</span>, <span style="color: #483d8b;">'bird'</span>:<span style="color: #483d8b;">'птица'</span>, <span style="color: #483d8b;">'mouse'</span>:<span style="color: #483d8b;">'мышь'</span><span style="color: black;">&#125;</span></pre></div><br />
+Обратите внимание на фигурные скобки, именно с их помощью определяется словарь. Синтаксис словаря на Питоне можно описать такой схемой:</p>
+<div style="text-align:center;"> <img src="../../../img/python/dict/dictionary.gif" width="600" height="38" alt="Синтаксис словаря на Python" /></div>
+<p>Если создать словарь в интерпретаторе Python, то после нажатия Enter можно наблюдать, что последовательность вывода пар "ключ:значение" не совпадает с тем, как было введено:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: black;">&#123;</span><span style="color: #483d8b;">'cat'</span>:<span style="color: #483d8b;">'кошка'</span>, <span style="color: #483d8b;">'dog'</span>:<span style="color: #483d8b;">'собака'</span>, <span style="color: #483d8b;">'bird'</span>:<span style="color: #483d8b;">'птица'</span>, <span style="color: #483d8b;">'mouse'</span>:<span style="color: #483d8b;">'мышь'</span><span style="color: black;">&#125;</span>
+<span style="color: black;">&#123;</span><span style="color: #483d8b;">'bird'</span>: <span style="color: #483d8b;">'птица'</span>, <span style="color: #483d8b;">'mouse'</span>: <span style="color: #483d8b;">'мышь'</span>, <span style="color: #483d8b;">'dog'</span>: <span style="color: #483d8b;">'собака'</span>, <span style="color: #483d8b;">'cat'</span>: <span style="color: #483d8b;">'кошка'</span><span style="color: black;">&#125;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> </pre></div></p>
+<p>Дело в том, что в словаре абсолютно не важен порядок пар, и интерпретатор выводит их в случайном порядке. Тогда как же получить доступ к определенному элементу, если индексация не возможна в принципе? Ответ: в словаре доступ к значениям осуществляется по ключам, которые заключаются в квадратные скобки (по аналогии с индексами строк и списков).<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> dic =<span style="color: black;">&#123;</span><span style="color: #483d8b;">'cat'</span>:<span style="color: #483d8b;">'кошка'</span>,<span style="color: #483d8b;">'dog'</span>:<span style="color: #483d8b;">'собака'</span>,<span style="color: #483d8b;">'bird'</span>:<span style="color: #483d8b;">'птица'</span>,<span style="color: #483d8b;">'mouse'</span>:<span style="color: #483d8b;">'мышь'</span><span style="color: black;">&#125;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> dic<span style="color: black;">&#91;</span><span style="color: #483d8b;">'cat'</span><span style="color: black;">&#93;</span>
+<span style="color: #483d8b;">'кошка'</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> dic<span style="color: black;">&#91;</span><span style="color: #483d8b;">'bird'</span><span style="color: black;">&#93;</span>
+<span style="color: #483d8b;">'птица'</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span></pre></div></p>
+<p>Словари, как и списки, являются изменяемым типом данных: можно изменять, добавлять и удалять элементы (пары "ключ:значение"). Изначально словарь можно создать пустым (например, d = {}) и лишь потом заполнить его элементами. Добавление и изменение имеет одинаковый синтаксис: словарь[ключ] = значение. Ключ может быть как уже существующим (тогда происходит изменение значения), так и новым (происходит добавление элемента словаря). Удаление элемента словаря осуществляется с помощью функции <strong>del()</strong>.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> dic =<span style="color: black;">&#123;</span><span style="color: #483d8b;">'cat'</span>:<span style="color: #483d8b;">'кошка'</span>,<span style="color: #483d8b;">'dog'</span>:<span style="color: #483d8b;">'собака'</span>,<span style="color: #483d8b;">'bird'</span>:<span style="color: #483d8b;">'птица'</span>,<span style="color: #483d8b;">'mouse'</span>:<span style="color: #483d8b;">'мышь'</span><span style="color: black;">&#125;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> dic<span style="color: black;">&#91;</span><span style="color: #483d8b;">'elephant'</span><span style="color: black;">&#93;</span> = <span style="color: #483d8b;">'бегемот'</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> dic<span style="color: black;">&#91;</span><span style="color: #483d8b;">'fox'</span><span style="color: black;">&#93;</span> = <span style="color: #483d8b;">'лиса'</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> dic
+<span style="color: black;">&#123;</span><span style="color: #483d8b;">'fox'</span>: <span style="color: #483d8b;">'лиса'</span>, <span style="color: #483d8b;">'dog'</span>: <span style="color: #483d8b;">'собака'</span>, <span style="color: #483d8b;">'cat'</span>: <span style="color: #483d8b;">'кошка'</span>, <span style="color: #483d8b;">'elephant'</span>: <span style="color: #483d8b;">'бегемот'</span>, <span style="color: #483d8b;">'mouse'</span>: <span style="color: #483d8b;">'мышь'</span>, <span style="color: #483d8b;">'bird'</span>: <span style="color: #483d8b;">'птица'</span><span style="color: black;">&#125;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> dic<span style="color: black;">&#91;</span><span style="color: #483d8b;">'elephant'</span><span style="color: black;">&#93;</span> = <span style="color: #483d8b;">'слон'</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #ff7700;font-weight:bold;">del</span><span style="color: black;">&#40;</span>dic<span style="color: black;">&#91;</span><span style="color: #483d8b;">'bird'</span><span style="color: black;">&#93;</span><span style="color: black;">&#41;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> dic
+<span style="color: black;">&#123;</span><span style="color: #483d8b;">'fox'</span>: <span style="color: #483d8b;">'лиса'</span>, <span style="color: #483d8b;">'dog'</span>: <span style="color: #483d8b;">'собака'</span>, <span style="color: #483d8b;">'cat'</span>: <span style="color: #483d8b;">'кошка'</span>, <span style="color: #483d8b;">'elephant'</span>: <span style="color: #483d8b;">'слон'</span>, <span style="color: #483d8b;">'mouse'</span>: <span style="color: #483d8b;">'мышь'</span><span style="color: black;">&#125;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span></pre></div> </p>
+<p>Тип данных ключей и значений словарей не обязательно должны быть строками. Значения словарей могут быть более сложными (содержать структуры данных, например, другие словари или списки).<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> d = <span style="color: black;">&#123;</span><span style="color: #ff4500;">1</span>:<span style="color: #483d8b;">'one'</span>,<span style="color: #ff4500;">2</span>:<span style="color: #483d8b;">'two'</span>,<span style="color: #ff4500;">3</span>:<span style="color: #483d8b;">'three'</span><span style="color: black;">&#125;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> d
+<span style="color: black;">&#123;</span><span style="color: #ff4500;">1</span>: <span style="color: #483d8b;">'one'</span>, <span style="color: #ff4500;">2</span>: <span style="color: #483d8b;">'two'</span>, <span style="color: #ff4500;">3</span>: <span style="color: #483d8b;">'three'</span><span style="color: black;">&#125;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> d = <span style="color: black;">&#123;</span><span style="color: #ff4500;">10</span>:<span style="color: black;">&#91;</span><span style="color: #ff4500;">3</span>,<span style="color: #ff4500;">2</span>,<span style="color: #ff4500;">8</span><span style="color: black;">&#93;</span>, <span style="color: #ff4500;">100</span>:<span style="color: black;">&#91;</span><span style="color: #ff4500;">1</span>,<span style="color: #ff4500;">10</span>,<span style="color: #ff4500;">5</span><span style="color: black;">&#93;</span>, <span style="color: #ff4500;">1000</span>:<span style="color: black;">&#91;</span><span style="color: #ff4500;">23</span>,<span style="color: #ff4500;">1</span>,<span style="color: #ff4500;">5</span><span style="color: black;">&#93;</span><span style="color: black;">&#125;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> d
+<span style="color: black;">&#123;</span><span style="color: #ff4500;">1000</span>: <span style="color: black;">&#91;</span><span style="color: #ff4500;">23</span>, <span style="color: #ff4500;">1</span>, <span style="color: #ff4500;">5</span><span style="color: black;">&#93;</span>, <span style="color: #ff4500;">10</span>: <span style="color: black;">&#91;</span><span style="color: #ff4500;">3</span>, <span style="color: #ff4500;">2</span>, <span style="color: #ff4500;">8</span><span style="color: black;">&#93;</span>, <span style="color: #ff4500;">100</span>: <span style="color: black;">&#91;</span><span style="color: #ff4500;">1</span>, <span style="color: #ff4500;">10</span>, <span style="color: #ff4500;">5</span><span style="color: black;">&#93;</span><span style="color: black;">&#125;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> d = <span style="color: black;">&#123;</span><span style="color: #ff4500;">1.1</span>:<span style="color: #ff4500;">2</span>, <span style="color: #ff4500;">1.2</span>:<span style="color: #ff4500;">0</span>, <span style="color: #ff4500;">1.3</span>:<span style="color: #ff4500;">8</span><span style="color: black;">&#125;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> d
+<span style="color: black;">&#123;</span><span style="color: #ff4500;">1.3</span>: <span style="color: #ff4500;">8</span>, <span style="color: #ff4500;">1.2</span>: <span style="color: #ff4500;">0</span>, <span style="color: #ff4500;">1.1</span>: <span style="color: #ff4500;">2</span><span style="color: black;">&#125;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> d = <span style="color: black;">&#123;</span><span style="color: #ff4500;">1.1</span>:<span style="color: #ff4500;">2</span>, <span style="color: #ff4500;">10</span>:<span style="color: #483d8b;">'apple'</span>, <span style="color: #483d8b;">'box'</span>:<span style="color: #ff4500;">100</span><span style="color: black;">&#125;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> d
+<span style="color: black;">&#123;</span><span style="color: #483d8b;">'box'</span>: <span style="color: #ff4500;">100</span>, <span style="color: #ff4500;">10</span>: <span style="color: #483d8b;">'apple'</span>, <span style="color: #ff4500;">1.1</span>: <span style="color: #ff4500;">2</span><span style="color: black;">&#125;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> </pre></div></p>
+<p>Словари — это широко используемый тип данных языка Python. Для работы с ними существует ряд встроенных функций. </p>
+<h3>Практическая работа</h3>
+<ol>
+<li>Создайте словарь, связав его с переменной school, и наполните его данными, которые бы отражали количество учащихся в десяти разных классах (например, 1а, 1б, 2б, 6а, 7в и т.д.).</li>
+<li>Узнайте сколько человек в каком-нибудь классе.</li>
+<li>Представьте, что в школе произошли изменения, внесите их в словарь:<br />
+- в трех классах изменилось количество учащихся;<br />
+- в школе появилось два новых класса;<br />
+- в школе расформировали один из классов.</li>
+<li>4. Выведите содержимое словаря на экран.</li>
+</ol>
+  </div>
+    </div>
+  </body>
+</html>

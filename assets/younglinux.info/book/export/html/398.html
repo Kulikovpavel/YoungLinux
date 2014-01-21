@@ -1,0 +1,75 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Сохранение динамической структуры в файле</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-398" class="section-2">
+  <h1 class="book-heading">Сохранение динамической структуры в файле</h1>
+  <p class="right">Решение задач на языке программирования C</p>
+<p>Пользователь вводит адреса сайтов и их ТИЦ. Данные о каждом сайте сохраняются в элементе динамической структуры. По команде пользователя данные записываются в файл, при этом память, выделенная под динамическую структуру, высвобождается. Далее пользователь может снова начать вводить информацию о сайтах, либо завершить выполнение программы.</p>
+<p><div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+<span style="color: #339933;">#include &lt;malloc.h&gt;</span>
+<span style="color: #339933;">#include &lt;string.h&gt;</span>
+&nbsp;
+<span style="color: #993333;">struct</span> site <span style="color: #009900;">&#123;</span>
+       <span style="color: #993333;">char</span> address<span style="color: #009900;">&#91;</span>25<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+       <span style="color: #993333;">unsigned</span> index<span style="color: #339933;">;</span>
+       <span style="color: #993333;">struct</span> site <span style="color: #339933;">*</span>next<span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span><span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #993333;">struct</span> site <span style="color: #339933;">*</span>add_site<span style="color: #009900;">&#40;</span><span style="color: #993333;">struct</span> site <span style="color: #339933;">*,</span> <span style="color: #993333;">char</span> <span style="color: #339933;">*</span>adds<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> tic<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// присоединение элемента к голове, возврат адреса головы</span>
+<span style="color: #993333;">void</span> save<span style="color: #009900;">&#40;</span><span style="color: #993333;">struct</span> site <span style="color: #339933;">*</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// сохранение стека</span>
+&nbsp;
+main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">char</span> adds<span style="color: #009900;">&#91;</span>25<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+	<span style="color: #993333;">unsigned</span> tic<span style="color: #339933;">;</span>
+	<span style="color: #993333;">struct</span> site <span style="color: #339933;">*</span>head<span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// адрес, указывающий на голову стека</span>
+&nbsp;
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span>1<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		head <span style="color: #339933;">=</span> NULL<span style="color: #339933;">;</span>
+		<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span>1<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		   <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Адрес сайта (s - stop): &quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		   scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s&quot;</span><span style="color: #339933;">,</span> adds<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		   <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>strcmp<span style="color: #009900;">&#40;</span>adds<span style="color: #339933;">,</span><span style="color: #ff0000;">&quot;s&quot;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">==</span> 0<span style="color: #009900;">&#41;</span> <span style="color: #000000; font-weight: bold;">break</span><span style="color: #339933;">;</span>
+		   <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Тиц %s: &quot;</span><span style="color: #339933;">,</span> adds<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		   scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%u&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>tic<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		   head <span style="color: #339933;">=</span> add_site<span style="color: #009900;">&#40;</span>head<span style="color: #339933;">,</span>adds<span style="color: #339933;">,</span>tic<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		<span style="color: #009900;">&#125;</span>
+		<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		save<span style="color: #009900;">&#40;</span>head<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		free<span style="color: #009900;">&#40;</span>head<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Продолжить? (y - yes): &quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s&quot;</span><span style="color: #339933;">,</span>adds<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>strcmp<span style="color: #009900;">&#40;</span>adds<span style="color: #339933;">,</span><span style="color: #ff0000;">&quot;y&quot;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> 0<span style="color: #009900;">&#41;</span> <span style="color: #000000; font-weight: bold;">break</span><span style="color: #339933;">;</span>
+	<span style="color: #009900;">&#125;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">struct</span> site <span style="color: #339933;">*</span>add_site<span style="color: #009900;">&#40;</span><span style="color: #993333;">struct</span> site <span style="color: #339933;">*</span>head<span style="color: #339933;">,</span> <span style="color: #993333;">char</span> <span style="color: #339933;">*</span>ch<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> tic<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">struct</span> site <span style="color: #339933;">*</span>element<span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// указатель на новую структуру		</span>
+	element <span style="color: #339933;">=</span> <span style="color: #009900;">&#40;</span><span style="color: #993333;">struct</span> site <span style="color: #339933;">*</span><span style="color: #009900;">&#41;</span>malloc<span style="color: #009900;">&#40;</span><span style="color: #993333;">sizeof</span><span style="color: #009900;">&#40;</span><span style="color: #993333;">struct</span> site<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// выделяем память</span>
+	element<span style="color: #339933;">-&gt;</span>next <span style="color: #339933;">=</span> head<span style="color: #339933;">;</span>
+	strcpy<span style="color: #009900;">&#40;</span>element<span style="color: #339933;">-&gt;</span>address<span style="color: #339933;">,</span> ch<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	element<span style="color: #339933;">-&gt;</span>index <span style="color: #339933;">=</span> tic<span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">return</span> element<span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">void</span> save<span style="color: #009900;">&#40;</span><span style="color: #993333;">struct</span> site <span style="color: #339933;">*</span>p<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#123;</span>
+	FILE <span style="color: #339933;">*</span>f<span style="color: #339933;">;</span>
+	f <span style="color: #339933;">=</span> fopen<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;sites.txt&quot;</span><span style="color: #339933;">,</span><span style="color: #ff0000;">&quot;a&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span>p <span style="color: #339933;">!=</span> NULL<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span> <span style="color: #666666; font-style: italic;">// пока не конец стека    </span>
+	   fprintf<span style="color: #009900;">&#40;</span>f<span style="color: #339933;">,</span><span style="color: #ff0000;">&quot;%s - %u<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> p<span style="color: #339933;">-&gt;</span>address<span style="color: #339933;">,</span> p<span style="color: #339933;">-&gt;</span>index<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	   p <span style="color: #339933;">=</span> p<span style="color: #339933;">-&gt;</span>next<span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// продвижение по списку</span>
+	<span style="color: #009900;">&#125;</span>
+	fclose<span style="color: #009900;">&#40;</span>f<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+  </div>
+    </div>
+  </body>
+</html>

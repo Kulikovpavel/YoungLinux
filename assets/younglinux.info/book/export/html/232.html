@@ -1,0 +1,115 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Урок 11. Случайные числа</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-232" class="section-2">
+  <h1 class="book-heading">Урок 11. Случайные числа</h1>
+  <p class="right">Тема: Язык программирования Logo </p>
+<p>	Когда программа выполняется, черепаха-исполнитель читает ее строки одна за другой сверху вниз. Исключение в этот порядок вносят изученные нами конструкции <strong>если, повтори, пока</strong>, а также некоторые другие, с которыми мы еще не знакомы. В этом случае части программы могут пропускаться, повторяться, или даже исполнитель-черепаха может перемещаться в другую часть кода (здесь имеются в виду подпрограммы).</p>
+<p>	Поведение программы может быть заранее известным, если извне она не получает никаких сведений. Например, на языке Лого, пользователь никак не влияет на ход программы, если в ней отсутствует команда <span class="mono">спроси</span>. Когда эта команда присутствует, то в зависимости от того, что ввел пользователь, можно организовать разный проход исполнителя-черепахи по коду (вспомните конструкцию <strong>если-иначе</strong>).</p>
+<p>	Однако существует еще один способ внести "неожиданность" в поведение черепахи. Можно использовать команду <span class="mono">случайное</span>, которая генерирует случайное число. Это случайное число можно присвоить переменной, а затем использовать переменную в вычислениях и конструкциях <strong>если, повтори, пока</strong>. Поэтому ход программы может быть разным.</p>
+<p>Случайные числа генерируются в определенном диапазоне, т.е. от какого-то значения, до какого-то другого значения. Например, если задан диапазон от 0 до 100, то генератор случайных чисел выдаст любое число, которое будет не меньше 0 и не больше 100. На языке программирования Logo желаемый диапазон указывается после команды <span class="mono">случайное</span>. Сначала пишется нижняя граница (например, 0), а после запятой — верхняя (например, 50). Числа-границы также входят в диапазон.</p>
+<p>	Рассмотрим такой пример.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">сброс
+&nbsp;
+повтори <span style="color: #ff4500;">15</span> <span style="color: black;">&#123;</span>
+	$x = случайное <span style="color: #ff4500;">20</span>, <span style="color: #ff4500;">380</span>
+	$y = случайное <span style="color: #ff4500;">20</span>, <span style="color: #ff4500;">380</span>
+	$r = случайное <span style="color: #ff4500;">0</span>, <span style="color: #ff4500;">255</span>
+	$g = случайное <span style="color: #ff4500;">0</span>, <span style="color: #ff4500;">255</span>
+	$b = случайное <span style="color: #ff4500;">0</span>, <span style="color: #ff4500;">255</span>	
+	цвет_пера $r, $g, $b
+	повтори <span style="color: #ff4500;">19</span> <span style="color: black;">&#123;</span>
+		иди $x, $y 
+		вперёд <span style="color: #ff4500;">20</span>
+		налево <span style="color: #ff4500;">20</span>
+<span style="color: black;">&#125;</span></pre></div></p>
+<div style="text-align:center;"><img src="../../../sites/default/files/images/random_11.png" width="421" height="420" alt="Использование генератора случайных чисел" /></div>
+<p>	Здесь внешний цикл повтори повторяется 15 раз. Все эти 15 раз случайно генерируются значения пяти переменных (<em>$x, $y, $r, $g, $b</em>), т.е. в каждом обороте цикла значения этих переменных создаются заново. После того, как переменные обретают свои новые значения, устанавливается цвет пера. Каждый раз он будет различным. Далее 19 раз черепаха возвращается в одну и ту же точку и рисует линию, после чего поворачивает на 20 градусов. В результате получается что-то вроде звездочки, состоящей из 19 лучей. Поскольку в программе происходит 15 "оборотов" внешнего цикла, то на холсте получается 15 звездочек в случайных местах и случайного цвета.</p>
+<p><strong>Задание 1</strong></p>
+<p>	Спишите приведенную выше программу. Посмотрите, как она работает. Измените ее так, чтобы на холсте отображалось всего 10 звездочек по 12 лучей, и все они были только в верхней половине холста.</p>
+<h2>Округление случайного числа</h2>
+<p>	Из предыдущего  примера должно стать понятно, что случайные числа генерируются. Однако мы не увидели их истинного значения. На самом деле полученные случайные числа представлены дробными величинами. Это видно из примера ниже.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">сброс
+&nbsp;
+$число = случайное <span style="color: #ff4500;">0</span>, <span style="color: #ff4500;">100</span>
+напиши $число
+&nbsp;
+иди <span style="color: #ff4500;">200</span>, <span style="color: #ff4500;">250</span>
+&nbsp;
+$число = округли $число
+напиши $число
+&nbsp;
+иди <span style="color: #ff4500;">200</span>, <span style="color: #ff4500;">300</span></pre></div></p>
+<p><strong>Задание 2</strong><br />
+Спишите код и посмотрите, что получится на холсте.	</p>
+<p>	Здесь, после того как случайное число было записано в переменную, его вывели на холст.  Далее выполнили команду <span class="mono">округли</span>, которая округляет дробное число до ближайшего целого. После чего на холсте будет отображено целое число. </p>
+<p>	А зачем вообще округлять числа, если до этого у нас и так все прекрасно работало. Дело в том, что бывают ситуации, когда непременно нужно получить случайное целое число. Например, в программе ниже сравниваются два целых числа: случайное и полученное от пользователя. Если бы одно из  них было дробным, а другое нет, то совпадение их значений было бы очень маловероятным.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">сброс 
+&nbsp;
+сообщение <span style="color: #483d8b;">&quot;Я компьютер. Сейчас загадаю число от 1 до 5&quot;</span>
+сообщение <span style="color: #483d8b;">&quot;Отгадай его!&quot;</span>
+&nbsp;
+$компьютерное_число = случайное <span style="color: #ff4500;">1</span>,<span style="color: #ff4500;">5</span>
+$компьютерное_число = округли $компьютерное_число
+&nbsp;
+$мое_число = спроси <span style="color: #483d8b;">&quot;Напиши число от 1 до 5&quot;</span>
+&nbsp;
+пока $компьютерное_число <span style="color: #66cc66;">!</span>= $мое_число <span style="color: black;">&#123;</span>
+	сообщение <span style="color: #483d8b;">&quot;Не угадал!&quot;</span>
+	$мое_число = спроси <span style="color: #483d8b;">&quot;Напиши число от 1 до 5&quot;</span>
+<span style="color: black;">&#125;</span>
+&nbsp;
+сообщение <span style="color: #483d8b;">&quot;Молодец. Угадал!&quot;</span></pre></div></p>
+<p><strong>Задание 3</strong><br />
+Объясните, что делает эта программа. Спишите и проверьте, как она работает.</p>
+<h2>Задание 4</h2>
+<p>	Придумайте и напишите программу, при выполнении которой черепаха рисует на холсте зеленый треугольник, синий квадрат или серый круг. Выбор фигуры должен происходить случайным образом.</p>
+<p><em>Подсказки:</em></p>
+<ol>
+<li>В какой-нибудь переменной храните случайно полученное число от 1 до 3.</li>
+<li>Используйте конструкцию если.</li>
+</ol>
+<h4>Примерный ответ к заданию 4:</h4>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">сброс 
+иди <span style="color: #ff4500;">150</span>,<span style="color: #ff4500;">200</span>
+&nbsp;
+$фигура = случайное <span style="color: #ff4500;">1</span>,<span style="color: #ff4500;">3</span>
+$фигура = округли $фигура
+&nbsp;
+если $фигура == <span style="color: #ff4500;">1</span> <span style="color: black;">&#123;</span>
+	цвет_пера <span style="color: #ff4500;">0</span>,<span style="color: #ff4500;">230</span>,<span style="color: #ff4500;">0</span>
+	направление -<span style="color: #ff4500;">90</span>
+	повтори <span style="color: #ff4500;">3</span> <span style="color: black;">&#123;</span>
+		назад <span style="color: #ff4500;">100</span>
+		налево <span style="color: #ff4500;">120</span>
+	<span style="color: black;">&#125;</span>
+<span style="color: black;">&#125;</span>
+&nbsp;
+если $фигура == <span style="color: #ff4500;">2</span> <span style="color: black;">&#123;</span>
+	цвет_пера <span style="color: #ff4500;">0</span>,<span style="color: #ff4500;">0</span>,<span style="color: #ff4500;">230</span>
+	повтори <span style="color: #ff4500;">4</span> <span style="color: black;">&#123;</span>
+		вперёд <span style="color: #ff4500;">100</span>
+		направо <span style="color: #ff4500;">90</span>
+	<span style="color: black;">&#125;</span>
+<span style="color: black;">&#125;</span>
+&nbsp;
+если $фигура == <span style="color: #ff4500;">3</span> <span style="color: black;">&#123;</span>
+	цвет_пера <span style="color: #ff4500;">70</span>,<span style="color: #ff4500;">70</span>,<span style="color: #ff4500;">70</span>
+	повтори <span style="color: #ff4500;">36</span> <span style="color: black;">&#123;</span>
+		вперёд <span style="color: #ff4500;">10</span>
+		направо <span style="color: #ff4500;">10</span>
+	<span style="color: black;">&#125;</span>
+<span style="color: black;">&#125;</span></pre></div></p>
+  </div>
+    </div>
+  </body>
+</html>

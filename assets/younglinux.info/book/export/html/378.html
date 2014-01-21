@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Урок 18. Аргументы программы (или функции main())</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-378" class="section-2">
+  <h1 class="book-heading">Урок 18. Аргументы программы (или функции main())</h1>
+  <p class="right">Особенности языка С. Учебное пособие</p>
+<p>Бывает, что данные в программу передаются из командной строки при ее вызове. Такие данные называются аргументами командной строки. Выглядит это так, например:</p>
+<pre>
+./a.out test.txt
+ls -lt /home/peter/
+</pre><p>
+Здесь вызываются программы a.out (из текущего каталога) и ls (из одного каталога, указанного в переменной окружения PATH). Первая программа из командной строки получает одно слово — test.txt, вторая — два: -lt и /home/peter/.</p>
+<p>Если программа написана на языке <span class="blue">C</span>, то при ее запуске управление сразу передается в функцию <span class="geshifilter"><code class="c geshifilter-c">main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>, следовательно, именно она получает аргументы командной строки, которые присваиваются ее переменным-параметрам. </p>
+<p>До этого мы определяли функцию <span class="geshifilter"><code class="c geshifilter-c">main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> так, как-будто она не принимает никакие параметры и ничего не возвращает. На самом деле в языке <span class="blue">C</span> любая функция по-умолчанию (если не определено ничего иного) возвращает целое число. В этом можно убедиться. Если записать код таким образом:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Hi<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">return</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<p>, то никакого предупреждения или ошибки при компиляции не возникнет. То же самое будет, если записать <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #993333;">int</span> main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>. Это доказывает, что функция по-умолчанию возвращает целое число, а не ничто (<span class="geshifilter"><code class="c geshifilter-c"><span style="color: #993333;">void</span></code></span>). Хотя то, что возвращает функция всегда можно "переопределить", например, <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #993333;">void</span> main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> или <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #993333;">float</span> main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>.</p>
+<p>При вызове программы из командной строки в нее всегда передается пара данных:</p>
+<ol>
+<li><strong>целое число</strong>, обозначающее количество слов (элементов, разделенных пробелами) в командной строке при вызове,</li>
+<li><strong>указатель на массив строк</strong>, где каждая строка — это отдельное слово из командной строки.</li>
+</ol>
+<p>Следует иметь в виду, что само имя программы также считается. Например, если вызов выглядит так:</p>
+<pre>./a.out 12 theme 2</pre><p>, то первый аргумент программы имеет значение 4, а массив строк определяется как {"./a.out", "12", "theme", "2"}. </p>
+<p>Обратите внимание на терминологию, есть всего два аргумента программы (число и массив), но сколько угодно аргументов командной строки. Аргументы командной строки "преобразуются" в аргументы программы (в аргументы функции <span class="geshifilter"><code class="c geshifilter-c">main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>).<br />
+Эти данные (число и указатель) передаются в программу даже тогда, когда она просто вызывается по имени без передачи в нее чего-либо: ./a.out. В таком случае первый аргумент имеет значение 1, а второй указывает на массив, состоящий всего из одной строки {"./a.out"}.</p>
+<p>То, что в программу передаются данные, вовсе не означает, что функция <span class="geshifilter"><code class="c geshifilter-c">main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> должна их принимать. Если функция <span class="geshifilter"><code class="c geshifilter-c">main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> определена без параметров, то получить доступ к аргументам командной строки невозможно. Хотя ничего вам не мешает их передавать. Ошибки не возникнет.</p>
+<p>Чтобы получить доступ к переданным в программу данным, их необходимо присвоить переменным. Поскольку аргументы сразу передаются в <span class="geshifilter"><code class="c geshifilter-c">main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>, то ее заголовок должен выглядеть таким образом:<br />
+<span class="geshifilter"><code class="c geshifilter-c">main <span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> n<span style="color: #339933;">,</span> <span style="color: #993333;">char</span> <span style="color: #339933;">*</span>arr<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span></code></span></p>
+<p>В первой переменной (<span class="monoi">n</span>) содержится количество слов, а во второй — указатель на массив строк. Часто второй параметр записывают в виде <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #339933;">**</span>arr</code></span>. Однако это то же самое. Вспомним, что сам массив строк, содержит в качестве своих элементов указатели на строки. А в функцию мы передаем указатель на первый элемент массива. Получается, что передаем указатель на указатель, т.е. <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #339933;">**</span>arr</code></span>.</p>
+<p><span class="blue"><strong>Задание</strong><br />
+Напишите такую программу:</span><br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+&nbsp;
+main<span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> argc<span style="color: #339933;">,</span> <span style="color: #993333;">char</span> <span style="color: #339933;">**</span>argv<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span> 
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> argc<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> argc<span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span>
+		puts<span style="color: #009900;">&#40;</span>argv<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<p><span class="blue">Она выводит количество слов в командной строке при ее вызове и каждое слово с новой строки. Вызовите ее без аргументов командной строки и с аргументами. </span></p>
+<p>В программе мы использовали переменные-параметры <span class="monoi">argc</span> и <span class="monoi">argv</span>. Принято использовать именно такие имена, но на самом деле они могут быть любыми. Лучше придерживаться этого стандарта, чтобы ваши программы были более понятны не только вам, но и другим программистам.</p>
+<h3>Практическое значение передачи данных в программу</h3>
+<p>Если у вас есть опыт работы в командной строке GNU/Linux, вы знаете, что у большинства команд есть ключи и аргументы. Например, при просмотре содержимого каталогов, копировании,  перемещении в качестве аргументов указываются объекты файловой системы,  над которыми выполняется команда. Особенности ее выполнения определяются с помощью ключей. Например, в команде </p>
+<pre>cp -r ../les_1 ../les_101 </pre><p>cp — это имя команды, -r — ключ, а ../les_1 и ../les_101 — аргументы команды.</p>
+<p>Вообще чаще всего в программы при их запуске передаются адреса файлов и "модификаторы" (это ключи) процесса выполнения программы. </p>
+<p>Напишем программу, которая открывает указанные пользователем в командной строке файлы на запись или добавление и записывает (добавляет) туда одну и туже информацию, которую пользователь вводит с клавиатуры в процессе выполнения программы:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+<span style="color: #339933;">#include &lt;string.h&gt;</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> argc<span style="color: #339933;">,</span> <span style="color: #993333;">char</span> <span style="color: #339933;">**</span>argv<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span> 
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">,</span> ch<span style="color: #339933;">;</span>
+	FILE <span style="color: #339933;">*</span>f<span style="color: #009900;">&#91;</span>5<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>argc <span style="color: #339933;">&lt;</span> 3 <span style="color: #339933;">||</span> argc <span style="color: #339933;">&gt;</span> <span style="color: #0000dd;">7</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		puts<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Неверное количество параметров&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		<span style="color: #b1b100;">return</span> <span style="color: #0000dd;">1</span><span style="color: #339933;">;</span>
+	<span style="color: #009900;">&#125;</span>
+&nbsp;
+	<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>strcmp<span style="color: #009900;">&#40;</span>argv<span style="color: #009900;">&#91;</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;-w&quot;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> <span style="color: #0000dd;">0</span> <span style="color: #339933;">&amp;&amp;</span> strcmp<span style="color: #009900;">&#40;</span>argv<span style="color: #009900;">&#91;</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;-a&quot;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> <span style="color: #0000dd;">0</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		puts<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Первый параметр может быть либо -w, либо -a&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		<span style="color: #b1b100;">return</span> <span style="color: #0000dd;">2</span><span style="color: #339933;">;</span>
+	<span style="color: #009900;">&#125;</span>
+&nbsp;
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> argc<span style="color: #339933;">-</span><span style="color: #0000dd;">2</span><span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#123;</span>
+		f<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> fopen<span style="color: #009900;">&#40;</span>argv<span style="color: #009900;">&#91;</span>i<span style="color: #339933;">+</span>2<span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> argv<span style="color: #009900;">&#91;</span>1<span style="color: #009900;">&#93;</span><span style="color: #339933;">+</span>1<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>f<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">==</span> NULL<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+			<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Файл %s нельзя открыть<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> argv<span style="color: #009900;">&#91;</span>i<span style="color: #339933;">+</span>2<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+			<span style="color: #b1b100;">return</span> <span style="color: #0000dd;">3</span><span style="color: #339933;">;</span>
+		<span style="color: #009900;">&#125;</span>
+	<span style="color: #009900;">&#125;</span>
+&nbsp;
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>ch <span style="color: #339933;">=</span> getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> EOF<span style="color: #009900;">&#41;</span>
+		<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> argc<span style="color: #339933;">-</span><span style="color: #0000dd;">2</span><span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span>
+			putc<span style="color: #009900;">&#40;</span>ch<span style="color: #339933;">,</span>f<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> argc<span style="color: #339933;">-</span><span style="color: #0000dd;">2</span><span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span>
+		fclose<span style="color: #009900;">&#40;</span>f<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">return</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<p>Пояснения к коду:</p>
+<ol>
+<li>Создается массив из пяти файловых указателей. Следовательно можно одновременно открыть не более пяти файлов. Файловый указатель первого файла будет хранится в элементе массива f[0], второго — в f[1] и т.д.</li>
+<li>Проверяется количество аргументов командной строки. Их должно быть не меньше трех, т.к. первый - это имя программы, второй — режим открытия файла, третий — первый или единственный файл, в который будет производится запись. Поскольку программа позволяет открыть только пять файлов, то общее число аргументов командной строки не может быть больше семи. Поэтому если количество аргументов меньше 3 или больше 7, то программа завершается, т.к. оператор <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">return</span></code></span> приводит к выходу из функции, даже если после него есть еще код. Возвращаемое из функции значение неравное 0, может быть интерпретировано родительским процессом, как сообщение о том, что программа завершилась с ошибкой.</li>
+<li>Проверяется корректность второго аргумента командной строки. Если он не равен ни "-w", ни "-a", то условное выражение во втором <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">if</span></code></span> возвращает 1 (true). Функция <span class="geshifilter"><code class="c geshifilter-c">strcmp<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> позволяет сравнивать строки и возвращает 0 в случае их равенства.</li>
+<li>В цикле <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">for</span></code></span> открываются файлы по указанным адресам, которые начинаются с третьего элемента массива <span class="monoi">argv</span>. Именно поэтому к <span class="monoi">i</span> прибавляется 2, чтобы получать элементы массива <span class="monoi">argv</span>, начиная с третьего. Выражение <span class="geshifilter"><code class="c geshifilter-c">argc<span style="color: #339933;">-</span><span style="color: #0000dd;">2</span></code></span> указывает на количество переданных имен файлов; т.к. в <span class="monoi">argc</span> хранится общее число аргументов командной строки, первые два из которых не являются именами файлов.</li>
+<li>Выражение <span class="geshifilter"><code class="c geshifilter-c">argv<span style="color: #009900;">&#91;</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">+</span><span style="color: #0000dd;">1</span></code></span> позволяет "вырезать" из строки "-w" (или "-a") подстроку "w" (или "a"), т.к. <span class="geshifilter"><code class="c geshifilter-c">argv<span style="color: #009900;">&#91;</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#93;</span></code></span> по сути указатель на первый элемент строки. Прибавляя к указателю единицу, мы смещаем его к следующему элементу массива.</li>
+<li>Если файл отрыть не удается, то функция <span class="geshifilter"><code class="c geshifilter-c">fopen<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> возвращает NULL. В таком случае программа завершается.</li>
+<li>Каждый символ, введенный пользователем с клавиатуры, записывается во все открытые файлы. </li>
+<li>В конце файлы закрываются.</li>
+</ol>
+<p><span class="blue"><strong>Задание</strong><br />
+Придумайте свой пример использования аргументов командной строки в программе. Реализуйте его.</span></p>
+  </div>
+    </div>
+  </body>
+</html>

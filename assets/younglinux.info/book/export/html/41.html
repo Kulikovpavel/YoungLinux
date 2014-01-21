@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Полиморфизм и переопределение методов в ООП на Python. Урок 5</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-41" class="section-2">
+  <h1 class="book-heading">Полиморфизм и переопределение методов в ООП на Python. Урок 5</h1>
+  <div style="text-align:center;">
+<h4>Методическая разработка урока<br />
+Элективный курс: Введение в объектно-ориентированное программирование на Python<br />
+Уровень: Программирование для начинающих</h4>
+</div>
+<h2>Полиморфизм</h2>
+<p>Парадигма объектно-ориентированного программирования помимо наследования включает еще одну важную особенность — полиморфизм. Слово «полиморфизм» можно перевести как «много форм». В ОО программировании этим термином обозначают возможность использования одного и того же имени операции или метода к объектам разных классов, при этом действия, совершаемые с объектами, могут существенно различаться. Поэтому можно сказать, что у одного и того же слова много форм. Например, два разных класса могут содержать метод total, однако инструкции в методах могут предусматривать совершенно разные операции: так в классе T1 – это прибавление 10 к аргументу, а в T2 – подсчет длины строки символов. В зависимости от того, к объекту какого класса применяется метод total, выполняются те или иные инструкции.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> T1:
+     n=10
+     <span style="color: #ff7700;font-weight:bold;">def</span> total<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,N<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">total</span> = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>.<span style="color: black;">n</span><span style="color: black;">&#41;</span> + <span style="color: #008000;">int</span><span style="color: black;">&#40;</span>N<span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">class</span> T2:
+     <span style="color: #ff7700;font-weight:bold;">def</span> total<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,s<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">total</span> = <span style="color: #008000;">len</span><span style="color: black;">&#40;</span><span style="color: #008000;">str</span><span style="color: black;">&#40;</span>s<span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+&nbsp;
+t1 = T1<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+t2 = T2<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+t1.<span style="color: black;">total</span><span style="color: black;">&#40;</span>45<span style="color: black;">&#41;</span>
+t2.<span style="color: black;">total</span><span style="color: black;">&#40;</span>45<span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>t1.<span style="color: black;">total</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># Вывод: 55</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>t2.<span style="color: black;">total</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># Вывод: 2</span></pre></div> </p>
+<p><strong>Задание.</strong> <em>Напишите программу, запрашивающую у пользователя ввод числа. Если число принадлежит диапазону от -100 до 100, то создается объект одного класса, во всех остальных случаях создается объект другого класса. В обоих классах должен быть метод-конструктор __init__, который в первом классе возводит число в квадрат, а во-втором - умножает на два.</em></p>
+<p>Ответ:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> One:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,a<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">a</span> = a <span style="color: #66cc66;">**</span> 2
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">class</span> Two:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,a<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">a</span> = a <span style="color: #66cc66;">*</span> 2
+&nbsp;
+a = <span style="color: #008000;">input</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;введите число &quot;</span><span style="color: black;">&#41;</span>
+a = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span>a<span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">if</span> -100 <span style="color: #66cc66;">&lt;</span> a <span style="color: #66cc66;">&lt;</span> 100:
+     obj = One<span style="color: black;">&#40;</span>a<span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">else</span>:
+     obj = Two<span style="color: black;">&#40;</span>a<span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>obj.<span style="color: black;">a</span><span style="color: black;">&#41;</span> </pre></div></p>
+<h2>Переопределение методов</h2>
+<p>Использование полиморфизма при наследовании классов позволяет переопределять методы суперклассов их подклассами. Например, может возникнуть ситуация, когда все подклассы реализуют определенный метод из суперкласса, и лишь один подкласс должен иметь его другую реализацию. В таком случае метод переопределяется в подклассе. Пример:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> Base:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,n<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">numb</span> = n
+     <span style="color: #ff7700;font-weight:bold;">def</span> out<span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #008000;">self</span>.<span style="color: black;">numb</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">class</span> One<span style="color: black;">&#40;</span>Base<span style="color: black;">&#41;</span>:
+     <span style="color: #ff7700;font-weight:bold;">def</span> multi<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,m<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">numb</span> <span style="color: #66cc66;">*</span>= m
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">class</span> Two<span style="color: black;">&#40;</span>Base<span style="color: black;">&#41;</span>:
+     <span style="color: #ff7700;font-weight:bold;">def</span> inlist<span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">inlist</span> = <span style="color: #008000;">list</span><span style="color: black;">&#40;</span><span style="color: #008000;">str</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>.<span style="color: black;">numb</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+     <span style="color: #ff7700;font-weight:bold;">def</span> out<span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          i = 0
+          <span style="color: #ff7700;font-weight:bold;">while</span> i <span style="color: #66cc66;">&lt;</span> <span style="color: #008000;">len</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>.<span style="color: black;">inlist</span><span style="color: black;">&#41;</span>:
+               <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #008000;">self</span>.<span style="color: black;">inlist</span><span style="color: black;">&#91;</span>i<span style="color: black;">&#93;</span><span style="color: black;">&#41;</span>
+               i += <span style="color: #ff4500;">1</span>
+&nbsp;
+obj1 = One<span style="color: black;">&#40;</span><span style="color: #ff4500;">45</span><span style="color: black;">&#41;</span>
+obj2 = Two<span style="color: black;">&#40;</span><span style="color: #483d8b;">'abc'</span><span style="color: black;">&#41;</span>
+&nbsp;
+obj1.<span style="color: black;">multi</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">2</span><span style="color: black;">&#41;</span>
+obj1.<span style="color: black;">out</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># Вывод числа 90</span>
+&nbsp;
+obj2.<span style="color: black;">inlist</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+obj2.<span style="color: black;">out</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># Вывод в столбик букв a, b, c </span></pre></div></p>
+<p>В данном случае объект obj1 использует метод out из cуперкласса Base, а obj2 – из своего класса Two. Атрибуты ищутся «снизу вверх»: сначала в классах, затем суперклассах. Поскольку для obj2 атрибут out уже был найден в классе Two, то из класса Base он не используется. Другими словами, класс Two переопределят атрибут суперкласса Base.</p>
+<h2>Расширение методов</h2>
+<p>При ООП может возникнуть ситуация, когда метод суперкласса в принципе подходит для реализации того или иного действия с объектами класса, однако требует небольших изменений. В таком случае можно использовать так называемое расширение метода, когда из тела метода класса вызывается метод суперкласса и дописываются дополнительные инструкции. В примере ниже в методе класса Subclass вызывается метод другого класса (в данном случае его суперкласса; однако может вызываться метод, не принадлежащий собственному суперклассу):</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> Base:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,N<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">numb</span> = N
+     <span style="color: #ff7700;font-weight:bold;">def</span> out<span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">numb</span> /= 2 
+          <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #008000;">self</span>.<span style="color: black;">numb</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">class</span> Subclass<span style="color: black;">&#40;</span>Base<span style="color: black;">&#41;</span>:
+     <span style="color: #ff7700;font-weight:bold;">def</span> out<span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>----&quot;</span><span style="color: black;">&#41;</span>
+          Base.<span style="color: black;">out</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>
+          <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;----<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+i = 0
+<span style="color: #ff7700;font-weight:bold;">while</span> i <span style="color: #66cc66;">&lt;</span> 10:
+     <span style="color: #ff7700;font-weight:bold;">if</span> 4 <span style="color: #66cc66;">&lt;</span> i <span style="color: #66cc66;">&lt;</span> 7:
+          obj = Subclass<span style="color: black;">&#40;</span>i<span style="color: black;">&#41;</span>
+     <span style="color: #ff7700;font-weight:bold;">else</span>:
+          obj = Base<span style="color: black;">&#40;</span>i<span style="color: black;">&#41;</span>
+     i += <span style="color: #ff4500;">1</span>
+     obj.<span style="color: black;">out</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div> </p>
+<h2>Вывод</h2>
+<p>Полиморфизм в объектно-ориентированном программировании дает возможность реализовывать так называемые единые интерфейсы для объектов различных классов. Имеется ввиду, что если есть методы с одинаковыми названиями (или операции, обозначаемая одинаковыми знаками, как будет показано в уроке №7) для всех объектов, то это позволяет писать более очевидный исходный код. Например, разные классы могут предусматривать различный способ вывода той или иной информации объектов. Однако единое название для всех объектов метода «вывода» позволит не запутать программу, сделать ее более очевидной.</p>
+<p>Переопределение методов в подклассах (а также их расширение) позволяет специализировать ранее написанный исходный код, не меняя его в суперклассах, где обычно требуется оставить код в неизменном виде для других подклассов.</p>
+<h2>Практическая работа</h2>
+<p>Напишите небольшую объектно-ориентированную программку, демонстрирующую такие свойства ООП как наследование и полиморфизм.</p>
+  </div>
+    </div>
+  </body>
+</html>

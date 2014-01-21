@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Демонстрационный пример. Указатели и массивы</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-391" class="section-2">
+  <h1 class="book-heading">Демонстрационный пример. Указатели и массивы</h1>
+  <p class="right">Решение задач на языке программирования C</p>
+<p>Этот пример поможет закрепить понимание, как работать с указателем на массив. В выводе программы обратите внимание, адреса различаются между собой на 4 байта, т.е. переменная типа <strong>int</strong> занимает 4 байта. Также из примера можно удостовериться, что элементы массива располагаются в памяти последовательно друг за другом.</p>
+<p><span class="geshifilter"><code class="python geshifilter-python"><span style="color: #66cc66;">&amp;</span></code></span> - операция взятия адреса переменной;<br />
+<span class="geshifilter"><code class="python geshifilter-python"><span style="color: #66cc66;">*</span></code></span> - операция извлечения значения по указанному адресу; применяется к переменным, содержащим адрес (т.е. к указателям).</p>
+<p>Когда переменная-указатель объявляется (например, <span class="geshifilter"><code class="python geshifilter-python"><span style="color: #008000;">int</span> <span style="color: #66cc66;">*</span>q</code></span>), перед ее именем также ставится знак *. Однако в данном контексте он просто сообщает, что данная переменная - это указатель, и знак * не имеет отношения к извлечению значения.</p>
+<p><div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #666666; font-style: italic;">// объявление массива и его инициализация</span>
+	<span style="color: #993333;">int</span> arr<span style="color: #009900;">&#91;</span>10<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #009900;">&#123;</span>101<span style="color: #339933;">,</span> 102<span style="color: #339933;">,</span> 103<span style="color: #339933;">,</span> 104<span style="color: #339933;">,</span> 105<span style="color: #339933;">,</span> 106<span style="color: #339933;">,</span> 107<span style="color: #339933;">,</span> 108<span style="color: #339933;">,</span> 109<span style="color: #339933;">,</span> 110<span style="color: #009900;">&#125;</span><span style="color: #339933;">;</span>
+	<span style="color: #993333;">int</span> <span style="color: #339933;">*</span>p<span style="color: #339933;">,</span> <span style="color: #339933;">*</span>q<span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// указатели на тип int</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Массив: &quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> <span style="color: #0000dd;">10</span><span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span>
+		<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot; [%d]=%d|&quot;</span><span style="color: #339933;">,</span> i<span style="color: #339933;">,</span> arr<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;<span style="color: #000099; font-weight: bold;">\n</span><span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #666666; font-style: italic;">// 1 ----------------------------------------------------------------------</span>
+	p <span style="color: #339933;">=</span> <span style="color: #339933;">&amp;</span>arr<span style="color: #009900;">&#91;</span>0<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Адрес 1-го элемента массива (p): %p<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> p<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Значение 1-го элемента массива (*p): %d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">*</span>p<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	q <span style="color: #339933;">=</span> p <span style="color: #339933;">+</span> <span style="color: #0000dd;">1</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Адрес 2-го элемента массива (q): %p<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> q<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Значение 2-го элемента массива (*q): %d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">*</span>q<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	q <span style="color: #339933;">=</span> q <span style="color: #339933;">+</span> <span style="color: #0000dd;">2</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Адрес 4-го элемента массива (q): %p<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> q<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Значение 4-го элемента массива (*q): %d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">*</span>q<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #666666; font-style: italic;">// 2 ---------------------------------------------------------------------</span>
+	<span style="color: #666666; font-style: italic;">// имя массива является указателем не его первый элемент</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Адрес 1-го элемента массива (arr): %p<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> arr<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Значение 1-го элемента массива (*arr): %d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">*</span>arr<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #666666; font-style: italic;">// Поэтому ...</span>
+	p <span style="color: #339933;">=</span> arr <span style="color: #339933;">+</span> <span style="color: #0000dd;">2</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// то же самое, что p = &amp;arr[0] + 2</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Адрес 3-го элемента массива (arr + 2): %p<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> p<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Значение 3-го элемента массива (*(arr+2)): %d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">*</span>p<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Адрес 6-го элемента массива (p + 3): %p<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> p<span style="color: #339933;">+</span>3<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Значение 6-го элемента массива (*(p+3)): %d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">*</span><span style="color: #009900;">&#40;</span>p<span style="color: #339933;">+</span>3<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #666666; font-style: italic;">// 3 --------------------------------------------------------------------</span>
+	<span style="color: #666666; font-style: italic;">// указатель можно употреблять в выражениях с индексом</span>
+	p <span style="color: #339933;">=</span> arr<span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Значение 10-го элемента массива (p[9]): %d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> p<span style="color: #009900;">&#91;</span>9<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+<span style="color: #666666; font-style: italic;">// 4 --------------------------------------------------------------------</span>
+	p <span style="color: #339933;">=</span> arr<span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// arr++ использовать нельзя, a p++ можно</span>
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> <span style="color: #0000dd;">10</span><span style="color: #339933;">;</span> i<span style="color: #339933;">++,</span> p<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span>
+		<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%2d-й: %p    %d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> i<span style="color: #339933;">+</span>1<span style="color: #339933;">,</span> p<span style="color: #339933;">,</span> <span style="color: #339933;">*</span>p<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<p>Вывод программы:</p>
+<pre>
+Массив:  [0]=101| [1]=102| [2]=103| [3]=104| [4]=105| [5]=106| [6]=107| [7]=108| [8]=109| [9]=110|
+
+Адрес 1-го элемента массива (p): 0x7fff5c4c0d60
+Значение 1-го элемента массива (*p): 101
+Адрес 2-го элемента массива (q): 0x7fff5c4c0d64
+Значение 2-го элемента массива (*q): 102
+Адрес 4-го элемента массива (q): 0x7fff5c4c0d6c
+Значение 4-го элемента массива (*q): 104
+
+Адрес 1-го элемента массива (arr): 0x7fff5c4c0d60
+Значение 1-го элемента массива (*arr): 101
+Адрес 3-го элемента массива (arr + 2): 0x7fff5c4c0d68
+Значение 3-го элемента массива (*(arr+2)): 103
+Адрес 6-го элемента массива (p + 3): 0x7fff5c4c0d74
+Значение 6-го элемента массива (*(p+3)): 106
+
+Значение 10-го элемента массива (p[9]): 110
+
+ 1-й: 0x7fff5c4c0d60    101
+ 2-й: 0x7fff5c4c0d64    102
+ 3-й: 0x7fff5c4c0d68    103
+ 4-й: 0x7fff5c4c0d6c    104
+ 5-й: 0x7fff5c4c0d70    105
+ 6-й: 0x7fff5c4c0d74    106
+ 7-й: 0x7fff5c4c0d78    107
+ 8-й: 0x7fff5c4c0d7c    108
+ 9-й: 0x7fff5c4c0d80    109
+10-й: 0x7fff5c4c0d84    110
+</pre>  </div>
+    </div>
+  </body>
+</html>

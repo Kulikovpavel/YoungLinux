@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Сравнение дат</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-394" class="section-2">
+  <h1 class="book-heading">Сравнение дат</h1>
+  <p class="right">Решение задач на языке программирования C</p>
+<p>Напишите программу, которая запрашивает у пользователя две даты в формате дд.мм.гггг. Дни, месяцы и года следует присвоить целочисленным переменным. Программа должна выводить на экран информацию о том, какая дата более ранняя, а какая более поздняя.</p>
+<p><div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+&nbsp;
+main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> dd1<span style="color: #339933;">,</span> dd2<span style="color: #339933;">,</span> mm1<span style="color: #339933;">,</span> mm2<span style="color: #339933;">,</span> yy1<span style="color: #339933;">,</span> yy2<span style="color: #339933;">;</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Enter first date (dd.mm.yyyy): &quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d.%d.%d&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>dd1<span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>mm1<span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>yy1<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Enter second date (dd.mm.yyyy): &quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d.%d.%d&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>dd2<span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>mm2<span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>yy2<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>yy1 <span style="color: #339933;">&gt;</span> yy2<span style="color: #009900;">&#41;</span> i <span style="color: #339933;">=</span> <span style="color: #0000dd;">1</span><span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">else</span> 
+		<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>yy1 <span style="color: #339933;">&lt;</span> yy2<span style="color: #009900;">&#41;</span> i <span style="color: #339933;">=</span> <span style="color: #0000dd;">2</span><span style="color: #339933;">;</span>
+		<span style="color: #b1b100;">else</span> <span style="color: #666666; font-style: italic;">// когда года равны</span>
+			<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>mm1 <span style="color: #339933;">&gt;</span> mm2<span style="color: #009900;">&#41;</span> i <span style="color: #339933;">=</span> <span style="color: #0000dd;">1</span><span style="color: #339933;">;</span>
+			<span style="color: #b1b100;">else</span>
+				<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>mm1 <span style="color: #339933;">&lt;</span> mm2<span style="color: #009900;">&#41;</span> i <span style="color: #339933;">=</span> <span style="color: #0000dd;">2</span><span style="color: #339933;">;</span>
+				<span style="color: #b1b100;">else</span> <span style="color: #666666; font-style: italic;">// когда равны года и месяцы</span>
+					<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>dd1 <span style="color: #339933;">&gt;</span> dd2<span style="color: #009900;">&#41;</span> i <span style="color: #339933;">=</span> <span style="color: #0000dd;">1</span><span style="color: #339933;">;</span>
+					<span style="color: #b1b100;">else</span> 
+						<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>dd1 <span style="color: #339933;">&lt;</span> dd2<span style="color: #009900;">&#41;</span> i <span style="color: #339933;">=</span> <span style="color: #0000dd;">2</span><span style="color: #339933;">;</span>
+						<span style="color: #b1b100;">else</span> <span style="color: #666666; font-style: italic;">// даты совпадают</span>
+							i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>i <span style="color: #339933;">==</span> 1<span style="color: #009900;">&#41;</span> <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Первая дата более поздняя<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">else</span> 
+		<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>i <span style="color: #339933;">==</span> 2<span style="color: #009900;">&#41;</span> <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Вторая дата более поздняя<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		<span style="color: #b1b100;">else</span> <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Даты совпадают<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>		
+<span style="color: #009900;">&#125;</span></pre></div></p>
+  </div>
+    </div>
+  </body>
+</html>

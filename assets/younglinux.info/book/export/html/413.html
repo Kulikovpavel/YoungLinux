@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>QML. Поворот градиента</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-413" class="section-2">
+  <h1 class="book-heading">QML. Поворот градиента</h1>
+  <p>По умолчанию делается только горизонтальный градиент. Чтобы получить под другим углом, надо повернуть всю фигуру (прямоугольник), т.к. свойство rotation отсутствует у Gradient.</p>
+<p>Круг можно получить установив у квадрата radius в 50.</p>
+<p>Если требуется вертикальный градиент для прямоугольника, то тогда при его создании следует поменять значения местами для требуемых ширины и высоты. После поворота на 90<sup>0</sup> высота станет шириной.</p>
+<p>Выходит, что получить градиетную заливку по диагонали и сохранить при этом прямоугольник не наклоненным, невозможно. Для круга такое возможно.</p>
+<p><img src="../../../img/qt-qml/gradient-rotation.png" width="400" height="406" alt="Поворот градиента в QML" /></p>
+<p><div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #666666; font-style: italic;">// import QtQuick 1.0 // to target S60 5th Edition or Maemo 5</span>
+import QtQuick 1.1
+&nbsp;
+Rectangle <span style="color: #009900;">&#123;</span>
+    width<span style="color: #339933;">:</span><span style="color: #0000dd;">500</span>
+    height<span style="color: #339933;">:</span><span style="color: #0000dd;">250</span>
+    gradient<span style="color: #339933;">:</span> Gradient <span style="color: #009900;">&#123;</span>
+        GradientStop <span style="color: #009900;">&#123;</span>
+            position<span style="color: #339933;">:</span> <span style="color: #0000dd;">0</span>
+            color<span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;#584d43&quot;</span>
+        <span style="color: #009900;">&#125;</span>
+&nbsp;
+        GradientStop <span style="color: #009900;">&#123;</span>
+            position<span style="color: #339933;">:</span> <span style="color:#800080;">0.250</span>
+            color<span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;#ecd2b9&quot;</span>
+        <span style="color: #009900;">&#125;</span>
+&nbsp;
+        GradientStop <span style="color: #009900;">&#123;</span>
+            position<span style="color: #339933;">:</span> <span style="color:#800080;">0.500</span>
+            color<span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;#584d43&quot;</span>
+        <span style="color: #009900;">&#125;</span>
+&nbsp;
+        GradientStop <span style="color: #009900;">&#123;</span>
+            position<span style="color: #339933;">:</span> <span style="color:#800080;">0.750</span>
+            color<span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;#ecd2b9&quot;</span>
+        <span style="color: #009900;">&#125;</span>
+&nbsp;
+        GradientStop <span style="color: #009900;">&#123;</span>
+            position<span style="color: #339933;">:</span> <span style="color: #0000dd;">1</span>
+            color<span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;#584d43&quot;</span>
+        <span style="color: #009900;">&#125;</span>
+    <span style="color: #009900;">&#125;</span>
+&nbsp;
+    Rectangle <span style="color: #009900;">&#123;</span>
+        x<span style="color: #339933;">:</span> <span style="color: #0000dd;">61</span>
+        y<span style="color: #339933;">:</span> <span style="color: #0000dd;">75</span>
+        width<span style="color: #339933;">:</span> <span style="color: #0000dd;">150</span>
+        height<span style="color: #339933;">:</span> <span style="color: #0000dd;">100</span>
+        radius<span style="color: #339933;">:</span> <span style="color: #0000dd;">0</span>
+        rotation<span style="color: #339933;">:</span> <span style="color: #0000dd;">45</span>
+        gradient<span style="color: #339933;">:</span> Gradient <span style="color: #009900;">&#123;</span>
+            GradientStop <span style="color: #009900;">&#123;</span>
+                position<span style="color: #339933;">:</span> <span style="color: #0000dd;">0</span>
+                color<span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;#251a38&quot;</span>
+            <span style="color: #009900;">&#125;</span>
+            GradientStop <span style="color: #009900;">&#123;</span>
+                position<span style="color: #339933;">:</span> <span style="color:#800080;">0.500</span>
+                color<span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;#ffffff&quot;</span>
+            <span style="color: #009900;">&#125;</span>
+            GradientStop <span style="color: #009900;">&#123;</span>
+                position<span style="color: #339933;">:</span> <span style="color: #0000dd;">1</span>
+                color<span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;#251a38&quot;</span>
+            <span style="color: #009900;">&#125;</span>
+        <span style="color: #009900;">&#125;</span>
+    <span style="color: #009900;">&#125;</span>
+&nbsp;
+    Rectangle <span style="color: #009900;">&#123;</span>
+        x<span style="color: #339933;">:</span> <span style="color: #0000dd;">344</span>
+        y<span style="color: #339933;">:</span> <span style="color: #0000dd;">75</span>
+        width<span style="color: #339933;">:</span> <span style="color: #0000dd;">100</span>
+        height<span style="color: #339933;">:</span> <span style="color: #0000dd;">100</span>
+        radius<span style="color: #339933;">:</span> <span style="color: #0000dd;">50</span>
+        rotation<span style="color: #339933;">:</span> <span style="color: #0000dd;">45</span>
+        gradient<span style="color: #339933;">:</span> Gradient <span style="color: #009900;">&#123;</span>
+            GradientStop <span style="color: #009900;">&#123;</span>
+                position<span style="color: #339933;">:</span> <span style="color: #0000dd;">0</span>
+                color<span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;#251a38&quot;</span>
+            <span style="color: #009900;">&#125;</span>
+            GradientStop <span style="color: #009900;">&#123;</span>
+                position<span style="color: #339933;">:</span> <span style="color:#800080;">0.500</span>
+                color<span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;#ffffff&quot;</span>
+            <span style="color: #009900;">&#125;</span>
+            GradientStop <span style="color: #009900;">&#123;</span>
+                position<span style="color: #339933;">:</span> <span style="color: #0000dd;">1</span>
+                color<span style="color: #339933;">:</span> <span style="color: #ff0000;">&quot;#251a38&quot;</span>
+            <span style="color: #009900;">&#125;</span>
+        <span style="color: #009900;">&#125;</span>
+    <span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #009900;">&#125;</span></pre></div></p>
+  </div>
+    </div>
+  </body>
+</html>

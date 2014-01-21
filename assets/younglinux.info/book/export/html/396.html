@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Соотношение гласных и согласных букв</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-396" class="section-2">
+  <h1 class="book-heading">Соотношение гласных и согласных букв</h1>
+  <p class="right">Решение задач на языке программирования C</p>
+<p>Напишите программу, которая определяет в процентном соотношении количество гласных и согласных букв в текстовом файле. Имя файла передается в программу через командную строку.</p>
+<p><div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+<span style="color: #339933;">#include &lt;string.h&gt;</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> argc<span style="color: #339933;">,</span> <span style="color: #993333;">char</span> <span style="color: #339933;">*</span>argv<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	FILE <span style="color: #339933;">*</span>f<span style="color: #339933;">;</span>
+	<span style="color: #993333;">char</span> ch<span style="color: #339933;">;</span>
+	<span style="color: #993333;">char</span> vowels<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">&quot;aeiouyAEIOUY&quot;</span><span style="color: #339933;">;</span>
+	<span style="color: #993333;">char</span> cons<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">&quot;bcdfghjklmnpqrstvwxzBCDFGHJKLMNPQRSTVWXZ&quot;</span><span style="color: #339933;">;</span>
+	<span style="color: #993333;">unsigned</span> v<span style="color: #339933;">=</span>0<span style="color: #339933;">,</span> c<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>
+&nbsp;
+	f <span style="color: #339933;">=</span> fopen<span style="color: #009900;">&#40;</span>argv<span style="color: #009900;">&#91;</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;r&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>f <span style="color: #339933;">==</span> NULL<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		puts<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Не удалось прочитать файл&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		<span style="color: #b1b100;">return</span> <span style="color: #0000dd;">1</span><span style="color: #339933;">;</span>
+	<span style="color: #009900;">&#125;</span>
+&nbsp;
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>ch <span style="color: #339933;">=</span> getc<span style="color: #009900;">&#40;</span>f<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> EOF<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>strchr<span style="color: #009900;">&#40;</span>vowels<span style="color: #339933;">,</span> ch<span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> NULL<span style="color: #009900;">&#41;</span> v<span style="color: #339933;">++;</span>
+		<span style="color: #b1b100;">else</span>
+			<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>strchr<span style="color: #009900;">&#40;</span>cons<span style="color: #339933;">,</span> ch<span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> NULL<span style="color: #009900;">&#41;</span> c<span style="color: #339933;">++;</span>
+	<span style="color: #009900;">&#125;</span>
+&nbsp;
+	fclose<span style="color: #009900;">&#40;</span>f<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Гласные: %.2f%%<span style="color: #000099; font-weight: bold;">\n</span>Согласные: %.2f%%<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span><span style="color: #993333;">float</span><span style="color: #009900;">&#41;</span>v<span style="color: #339933;">/</span><span style="color: #009900;">&#40;</span>v<span style="color: #339933;">+</span>c<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">*</span>100<span style="color: #339933;">,</span> <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span><span style="color: #993333;">float</span><span style="color: #009900;">&#41;</span>c<span style="color: #339933;">/</span><span style="color: #009900;">&#40;</span>v<span style="color: #339933;">+</span>c<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">*</span>100<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>	
+<span style="color: #009900;">&#125;</span></pre></div></p>
+  </div>
+    </div>
+  </body>
+</html>

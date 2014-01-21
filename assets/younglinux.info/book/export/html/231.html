@@ -1,0 +1,138 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Урок 10. Цикл «До тех пор пока … делать ...»</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-231" class="section-2">
+  <h1 class="book-heading">Урок 10. Цикл «До тех пор пока … делать ...»</h1>
+  <p class="right">Тема: Язык программирования Logo</p>
+<p><strong><br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">ПОКА утверждение правдиво ДЕЛАТЬ 
+    ряд действий
+КОНЕЦ</pre></div><br />
+</strong></p>
+<h2>Что значит "Утверждение правдиво"</h2>
+<p>	Допустим, у нас есть переменная <span class="mono">$число</span>, значение которой равно 16:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">$число = <span style="color: #ff4500;">16</span></pre></div></p>
+<p>	Утверждение, что данная переменная больше 4 будет верным (правдой), а вот утверждение, что переменная равна 6 будет ложью:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">$число <span style="color: #66cc66;">&gt;</span> <span style="color: #ff4500;">4</span>
+$число == <span style="color: #ff4500;">6</span></pre></div></p>
+<p>Мы уже сталкивались с подобными выражениями при изучении инструкции <strong>если</strong>.</p>
+<h3>Задание 1</h3>
+<p>	Переменная <span class="mono">$red</span> равна 150, а переменная <span class="mono">$blue</span> равна 250:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">$red = <span style="color: #ff4500;">150</span>
+$blue = <span style="color: #ff4500;">250</span></pre></div></p>
+<p>	Какие из следующих утверждений будут правдой, а какие — ложью?</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">$red <span style="color: #66cc66;">!</span>= <span style="color: #ff4500;">255</span>
+$blue <span style="color: #66cc66;">!</span>= <span style="color: #ff4500;">250</span>
+$red == <span style="color: #ff4500;">150</span>
+$red <span style="color: #66cc66;">&lt;</span> <span style="color: #ff4500;">150</span>
+$red <span style="color: #66cc66;">&lt;</span>= <span style="color: #ff4500;">150</span>
+$blue <span style="color: #66cc66;">&gt;</span> $red
+$red <span style="color: #66cc66;">&gt;</span> $blue</pre></div></p>
+<h2>Что такое "ряд действий"</h2>
+<p>	Ряд действий — это, в принципе, любые выражения и в любом количестве: хоть одно, хоть очень много. Например, ряд действий может состоять из одной команды <span class="mono">вперед 100</span> или из нескольких команд:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">вперёд $x 
+налево <span style="color: #ff4500;">30</span>
+вперёд $x – <span style="color: #ff4500;">10</span>
+$счетчик = $счетчик + <span style="color: #ff4500;">1</span></pre></div></p>
+<p>	Ряд действий, входящий в любую сложную конструкцию представляет собой тело конструкции и на языке Лого отделяется от остального кода фигурными скобками { и }, которые можно в уме заменять словами ДЕЛАТЬ и КОНЕЦ. Конструкция пока может выглядеть примерно так:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">$x = <span style="color: #ff4500;">10</span>
+пока $x <span style="color: #66cc66;">&lt;</span> <span style="color: #ff4500;">100</span> <span style="color: black;">&#123;</span> 
+	иди $x, <span style="color: #ff4500;">50</span>
+	назад <span style="color: #ff4500;">30</span>
+<span style="color: black;">&#125;</span></pre></div></p>
+<p>Ряд действий (выражений) в теле конструкции <strong>пока</strong> выполняется лишь тогда, когда утверждение в ее заголовке правдиво. Если утверждение возвращает ложь, то ряд действий в теле не выполняется. Он просто будет пропущен роботом-черепахой.</p>
+<p>	Цикл будет работать до тех пор, пока утверждение истинно. Когда выполняется последняя команда тела цикла, черепаха не выходит за его пределы, а снова проверяет утверждение в заголовке. Если оно истинно, то тело цикла снова выполняется. Такой круговорот происходит до тех пор, пока утверждение в заголовке остается истинным. Как только оно станет ложным, тело цикла перестанет выполняться, и черепаха сразу перейдет за закрывающую скобку цикла (вернется в основную ветку программы).</p>
+<p>	Бывает так, что тело цикла не выполняется ни разу. Так происходит, когда утверждение в заголовке цикла <strong>пока</strong> изначально было ложным.</p>
+<h2>Как все это работает</h2>
+<p>Давайте еще раз рассмотрим, особенности работы цикла пока.</p>
+<ol>
+<li>Если утверждение после слова <strong>пока</strong> возвращает правду, то черепаха выполняет действия внутри фигурных скобок.</li>
+<li>Но чем тогда отличается инструкция <strong>пока</strong>, от инструкции <strong>если</strong>? Дело в том, что после того как выполняется ряд действий и на пути черепахи встречается закрывающая фигурная скобка, ее дальнейшее поведение зависит от того, использовалась инструкция <strong>если</strong> или <strong>пока</strong>.</li>
+<li>При использовании инструкции <strong>если</strong> черепаха переходит на следующую команду после закрывающей скобки, т.е. покидает всю конструкцию <strong>если</strong>.</li>
+<li>При использовании инструкции <strong>пока</strong> черепаха после закрывающей скобки снова возвращается к утверждению и проверяет его на истинность (правдивость). Если утверждение по прежнему возвращает правду, то ряд действий в скобках снова выполняется. Потом черепаха снова идет к утверждению и снова проверяет его на истинность. Это будет длиться до тех пор, пока утверждение будет возвращать правду.</li>
+<li>Как только утверждение вернет ложь, черепаха сразу прыгнет за закрывающую скобку и начнет выполнять команды, не относящиеся к конструкции <strong>пока</strong>. </li>
+</ol>
+<p>	Конструкция <strong>пока</strong> является циклом, т.к. ряд действий (тело конструкции) может повторяться множество раз. </p>
+<h2>Опасная ошибка — зацикливание</h2>
+<p>	Давайте еще раз посмотрим на этот код:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">$x = <span style="color: #ff4500;">10</span>
+пока $x <span style="color: #66cc66;">&lt;</span> <span style="color: #ff4500;">100</span> <span style="color: black;">&#123;</span> 
+	иди $x, <span style="color: #ff4500;">50</span>
+	назад <span style="color: #ff4500;">30</span>
+<span style="color: black;">&#125;</span></pre></div></p>
+<p>	Проследим за похождениями черепахи, которая будет им руководствоваться: </p>
+<ol>
+<li>В ячейку памяти $x помещается число 10.</li>
+<li>10 &lt; 100 является правдой.</li>
+<li>Черепаха идет в точку с координатами 10x50 и рисует линию.</li>
+<li>Снова проверяется утверждение: 10 &lt; 100; оно опять правдиво.</li>
+<li>Черепаха идет в точку с координатами 10x50 и рисует линию.</li>
+<li>И т.д.</li>
+</ol>
+<p>	Это будет продолжаться до бесконечности. Программа является ошибочной, т. к. приводит к так называемому <strong>зацикливанию</strong>. Черепаха так никогда и не сможет выйти за пределы цикла.</p>
+<p>	Как избежать подобной ошибки? Очень просто:</p>
+<ol>
+<li>В теле цикла переменная, которая используется в утверждении после слова <strong>пока</strong>, должна изменяться.</li>
+<li>Эта переменная должна изменяться таким образом, что рано или поздно, утверждение после слова <strong>пока</strong> должно вернуть ложь.</li>
+</ol>
+<p>	Вот так, например, можно изменить предыдущую программу:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">$x = <span style="color: #ff4500;">10</span>
+пока $x <span style="color: #66cc66;">&lt;</span> <span style="color: #ff4500;">100</span> <span style="color: black;">&#123;</span> 
+	иди $x, <span style="color: #ff4500;">50</span>
+	назад <span style="color: #ff4500;">30</span>
+	$x = $x + <span style="color: #ff4500;">20</span>
+<span style="color: black;">&#125;</span></pre></div></p>
+<p>	Группа выражений <span class="mono">$x = $x + 20</span> означает, что к значению переменной <span class="mono">$x</span> прибавили 20 и полученный результат записали в переменную <span class="mono">$x</span>. При этом старое значение переменной утратилось.</p>
+<p>	При каждом "обороте" цикла переменная <span class="mono">$x</span> увеличивается следующим образом: после первого — 30, после второго — 50, после третьего — 70, после четвертого — 90, после пятого — 110. </p>
+<p>Утверждение 110 &lt; 100 является ложью, шестого «оборота» уже не будет — цикл прервется, а исполнитель-черепаха пойдет выполнять команды за пределами цикла (после закрывающей скобки).</p>
+<h2>Задание 2</h2>
+<p>Напишите программу по следующему алгоритмическому описанию:</p>
+<ol>
+<li>Сброс параметров</li>
+<li>Присвоить переменным $x и $y значение 0.</li>
+<li>Установить направление в -45 градусов.</li>
+<li>Пока значение переменной $x меньше 400 выполнять следующее:<br />
+a) переместить черепаху в точку с координатами $x , $y,<br />
+b) нарисовать линию в 20 точек задним ходом,<br />
+c) поднять перо,<br />
+d) нарисовать линию в 10 точек задним ходом,<br />
+e) опустить перо,<br />
+f) увеличить значение переменных $x и $y на 30.
+</li>
+</ol>
+<h2>Задание 3</h2>
+<p>	Напишите программу, которая предлагает пользователю решать пример до тех пор, пока он не даст правильный ответ. После этого черепаха выводит какую-нибудь надпись на холсте.</p>
+<h4>Ответ к заданию 2:</h4>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">сброс 
+$x = <span style="color: #ff4500;">0</span>
+$y = <span style="color: #ff4500;">0</span>
+направление -<span style="color: #ff4500;">45</span>
+пока $x <span style="color: #66cc66;">&lt;</span> <span style="color: #ff4500;">400</span> <span style="color: black;">&#123;</span>
+	иди $x, $y
+	назад <span style="color: #ff4500;">20</span>
+	перо_подними
+	назад <span style="color: #ff4500;">10</span>
+	перо_опусти
+	$x = $x + <span style="color: #ff4500;">30</span>
+	$y = $y + <span style="color: #ff4500;">30</span>
+<span style="color: black;">&#125;</span></pre></div></p>
+<h4>Примерный ответ к заданию 3:</h4>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">сброс
+$ответ = спроси <span style="color: #483d8b;">&quot;Сколько будет 300 - 25 * 2 + 38?&quot;</span>
+пока $ответ <span style="color: #66cc66;">!</span>= <span style="color: #ff4500;">288</span> <span style="color: black;">&#123;</span>
+	$ответ = спроси <span style="color: #483d8b;">&quot;Сколько будет 300 - 25 * 2 + 38?&quot;</span>
+<span style="color: black;">&#125;</span>
+напиши <span style="color: #483d8b;">&quot;Больше спрашивать не буду!&quot;</span></pre></div></p>
+  </div>
+    </div>
+  </body>
+</html>

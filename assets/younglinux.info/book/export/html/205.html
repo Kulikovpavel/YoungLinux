@@ -1,0 +1,190 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Резюме</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+                <div class="section-2">
+          
+    <div id="node-205" class="section-3">
+  <h1 class="book-heading">Резюме</h1>
+  <p>В UNIX, как и в Linux, все объекты, так или иначе, представлены в системе в виде файлов с соответствующими свойствами. Использование (предопределенных) адресных путей позволяет пользователям и системному администратору находить, читать файлы и управлять ими.</p>
+<p>Мы сделали первые шаги, чтобы стать экспертом: мы обсудили реальную и "поддельную" структуру файловой системы, и мы узнали о модели файловой безопасности Linux, а также ряде других мер предосторожности, существующих на каждой системе по умолчанию.</p>
+<p>Оболочка (shell) – самый важный инструмент для взаимодействия с системой. В этой главе мы познакомились с некоторыми командами, которые перечислены в таблице ниже.</p>
+<p><strong>Таблица 3.10. Новые команды из Главы 3: Файлы и файловая система</strong></p>
+<table class="il">
+<tr>
+<td width="250"><strong>Команда</strong></td>
+<td><strong>Значение</strong></td>
+</tr>
+<tr>
+<td><strong>bash </strong> <span class="mono"></span></td>
+<td>Программная оболочка проекта GNU</td>
+</tr>
+<tr>
+<td><strong>cat </strong> <span class="mono">file(s)</span></td>
+<td>Отправляет содержимое файла(ов) на стандартный вывод</td>
+</tr>
+<tr>
+<td><strong>cd </strong> <span class="mono">directory</span></td>
+<td>Переход в <span class="mono">directory</span>. <strong>cd </strong> является встроенной командой <strong>bash</strong></td>
+</tr>
+<tr>
+<td><strong>chgrp </strong> <span class="mono"><em>newgroup</em> file(s)</span></td>
+<td>Изменение группы владельцев <span class="mono">file(s)</span> на <em>newgroup</em></td>
+</tr>
+<tr>
+<td><strong>chmod </strong> <span class="mono"> <em>mode</em> file(s)</span></td>
+<td>Изменение прав доступа к <span class="mono">file(s)</span></td>
+</tr>
+<tr>
+<td align="left"><strong>chown </strong> <span class="mono"> <em>newowner</em><strong>[:[newgroup]]</strong> file(s)</span></td>
+<td>Изменение собственника файла и группы владельцев</td>
+</tr>
+<tr>
+<td><strong>cp </strong> <span class="mono">sourcefile targetfile</span></td>
+<td>Копирование <span class="mono">sourcefile</span> в <span class="mono">targetfile</span></td>
+</tr>
+<tr>
+<td><strong>df </strong> <span class="mono">file</span></td>
+<td>Отчеты о использовании дискового пространства  раздела, на котором находится файл</td>
+</tr>
+<tr>
+<td><strong>echo </strong> <span class="monoi">string</span></td>
+<td>Отображение строки текста</td>
+</tr>
+<tr>
+<td><strong>export </strong> <span class="mono"></span></td>
+<td>Часть <strong>bash</strong>, которая объявляет переменные и их значения в системе</td>
+</tr>
+<tr>
+<td><strong>file </strong> <span class="mono">filename</span></td>
+<td>Определить тип файла <span class="mono">filename</span></td>
+</tr>
+<tr>
+<td><strong>find </strong> <span class="monoi">path expression</span></td>
+<td>Поиск файлов в иерархии файловой системы</td>
+</tr>
+<tr>
+<td><strong>grep  </strong> <span class="monoi">PATTERN file</span></td>
+<td>Вывод строк файла, содержащих шаблон поиска</td>
+</tr>
+<tr>
+<td><strong> </strong> <span class="mono"></span></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>head  </strong> <span class="mono">file</span></td>
+<td>Отправить первую часть файла на стандартный вывод</td>
+</tr>
+<tr>
+<td><strong>id </strong> <span class="mono"></span></td>
+<td>Вывод имени пользователя и названий групп</td>
+</tr>
+<tr>
+<td><strong>info </strong> <span class="monoi">command</span></td>
+<td>Чтение документации о <strong>command</strong></td>
+</tr>
+<tr>
+<td><strong>less </strong> <span class="mono">file</span></td>
+<td>Просмотр файла с помощью специальной программы</td>
+</tr>
+<tr>
+<td><strong>ln </strong> <span class="mono">targetfile linkname</span></td>
+<td>Создание ссылки с именем <span class="mono">linkname</span> на <span class="mono">targetfile</span></td>
+</tr>
+<tr>
+<td><strong>locate  </strong> <span class="monoi">searchstring</span></td>
+<td>Вывод всех доступных файлов, соответствующих  шаблону поиска</td>
+</tr>
+<tr>
+<td><strong>ls </strong> <span class="mono">file(s)</span></td>
+<td>Вывод содержимого директории</td>
+</tr>
+<tr>
+<td><strong>man </strong> <span class="monoi">command</span></td>
+<td>Форматирует и отображает страницы системного руководства для <strong>command</strong></td>
+</tr>
+<tr>
+<td><strong>mkdir </strong> <span class="mono">newdir</span></td>
+<td>Создает новый пустой каталог</td>
+</tr>
+<tr>
+<td><strong>mv </strong> <span class="mono">oldfile newfile</span></td>
+<td>Переименовывает или перемещает <span class="mono">oldfile</span></td>
+</tr>
+<tr>
+<td><strong>newgrp </strong> <span class="monoi">groupname</span></td>
+<td>Вход в новую группу</td>
+</tr>
+<tr>
+<td><strong>pwd </strong> <span class="mono"></span></td>
+<td>Печать текущего рабочего каталога</td>
+</tr>
+<tr>
+<td><strong>quota </strong> <span class="mono"></span></td>
+<td>Показывает используемое дисковое пространство и ограничения</td>
+</tr>
+<tr>
+<td><strong>rm </strong> <span class="mono">file</span></td>
+<td>Удаление файлов и директорий</td>
+</tr>
+<tr>
+<td><strong>rmdir </strong> <span class="mono">file</span></td>
+<td>Удаление директорий</td>
+</tr>
+<tr>
+<td><strong>tail </strong> <span class="mono">file</span></td>
+<td>Вывод последней части <span class="mono">file</span></td>
+</tr>
+<tr>
+<td><strong>umask  </strong> <span class="monoi">[value]</span></td>
+<td>Отображает или изменяет режим создания новых файлов</td>
+</tr>
+<tr>
+<td><strong>wc </strong> <span class="mono">file</span></td>
+<td>Считает строки, слова и символы в <span class="mono">file</span></td>
+</tr>
+<tr>
+<td><strong>which </strong> <span class="monoi">command</span></td>
+<td>Показывает полный путь к команде</td>
+</tr>
+</table>
+<p>Мы также подчеркнули тот факт, что вы должны ЧИТАТЬ СТРАНИЦЫ MAN. Эта документация является вашей первой помощью и содержит ответы на многие вопросы. Упомянутый выше список содержит основные команды, которые вы будете использовать ежедневно, но они могут делать гораздо больше, чем выполнение тех задач, о которых мы говорили здесь. Чтение документации предоставит вам необходимый контроль.</p>
+<p>Последнее, но не менее значимое. Удобный обзор файловых разрешений:</p>
+<p><strong>Таблица 3.11. Файловые разрешения</strong></p>
+<table class="il">
+<tr>
+<td width="100"><strong>Кто\Что</strong></td>
+<td width="100"><strong>r(ead)</strong></td>
+<td width="100"><strong>w(rite)</strong></td>
+<td width="100"><strong>(e)x(ecute)</strong></td>
+</tr>
+<tr>
+<td>u(ser)</td>
+<td>4</td>
+<td>2</td>
+<td>1</td>
+</tr>
+<tr>
+<td>g(roup)</td>
+<td>4</td>
+<td>2</td>
+<td>1</td>
+</tr>
+<tr>
+<td>o(ther)</td>
+<td>4</td>
+<td>2</td>
+<td>1</td>
+</tr>
+</table>
+  </div>
+    </div></div>
+  </body>
+</html>

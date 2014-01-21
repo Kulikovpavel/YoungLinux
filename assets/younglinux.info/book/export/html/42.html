@@ -1,0 +1,83 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Композиционный подход в объектно-ориентированном программировании. Урок 7</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-42" class="section-2">
+  <h1 class="book-heading">Композиционный подход в объектно-ориентированном программировании. Урок 7</h1>
+  <div style="text-align:center;">
+<h4>Методическая разработка урока<br />
+Элективный курс: Введение в объектно-ориентированное программирование на Python<br />
+Уровень: Программирование для начинающих<br />
+</h4>
+</div>
+<p>Еще одной особенностью объектно-ориентированного программирования является возможность реализовывать так называемый композиционный подход. Заключается он в следующем: есть класс-контейнер, который включает в себя вызовы других классов. В результате получается, что создавая объект класса-контейнера, мы одновременно создаем и объекты включенных в него классов.</p>
+<p>Чтобы понять зачем нужна композиция в программировании, можно как всегда провести аналогию с реальным миром. Так подавляющее большинство природных, биологических и технических объектов состоят из других более простых частей, по своей сути, также являющихся объектами. Например, человек состоит из различный органов (сердце, кожа и др.), компьютер — из различного "железа" (процессор, ОЗУ, диск и т.д.).</p>
+<p>Следует понимать, что "композиция" и "наследование" - достаточно разные свойства реальных и виртуальных систем. Наследование предполагает принадлежность к какой-то общности (похожесть), а композиция — формирование целого из частей.</p>
+<p>Еще раз: при создании объекта, принадлежащего классу-контейнеру, автоматически создаются объекты-части, из которых он как бы состоит. Свойства и методы объектов частей определяются в их классах. Программисты могут создавать целые коллекции встраиваемых классов.</p>
+<p>Рассмотрим использование композиции при программировании на Python с помощью конкретного примера. </p>
+<h2>Описание задачи</h2>
+<p>Допустим, нам требуется написать программу, которая вычисляет площадь обоев для оклеивания комнаты определенных пользователем размеров. При этом необходимо учитывать, что окна, двери, пол и потолок оклеивать не надо. </p>
+<p>Для начала решим данную задачу логически. Комната — это прямоугольный параллелепипед, состоящий из шести прямоугольников. Его площадь представляет собой сумму площадей составляющих его прямоугольников. Площадь прямоугольника равна произведению его длины на ширину.</p>
+<div style="text-align:center;"><img src="../../../img/oopython/parallelepiped.png" width="340" height="143" alt="Параллелепипед" /></div>
+<p>Обои клеятся только на стены, следовательно площади верхнего и нижнего прямоугольников нам не нужны. Из рисунка можно заключить, что площадь одного прямоугольника равна x * z, второго – у * z. Противоположные прямоугольники равны, значит общая площадь четырех прямоугольников будет равна S = 2xz + 2уz = 2z(x+y). Потом из этой площади надо будет вычесть общую площадь дверей и окон. Двери и окна — это прямоугольники (как вычислить их площадь должно быть понятно).</p>
+<h2>Создание классов-частей</h2>
+<p>Теперь приступим к созданию программы. В соответствие с изучаемой темой написать ее надо используя объектно-ориентированную парадигму программирования, да еще и применяя "композиционный подход" (насколько он здесь уместен не обсуждается :b).</p>
+<p>Можно заметить, что фактически у нас есть три типа объектов - это объекты-окна, объекты-двери и объекты-комнаты. Получается три класса. Окна и двери являются частями помещения, а значит могут создаваться внутри класса «комнаты». Кроме того, для данной задачи существенное значение имеют только два свойства: длина и ширина. Поэтому классы «окна» и «двери» можно объединить в один. Понятно, что если для задачи были бы важны другие свойства (например, толщина стекла, материал), то возможно следовало бы создать два класса. </p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> Win_Door:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,x,y<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">square</span> = x <span style="color: #66cc66;">*</span> y </pre></div></p>
+<p>Здесь при вызове класса Win_Door будет автоматически создан атрибут square объекта, являющийся ссылкой на значение площади объекта.</p>
+<h2>Создание класса-контейнера</h2>
+<p>Можно по-разному реализовать класс-контейнер. Есть подозрение, что многое зависит от задачи, решаемой программистом, его мастерства и вкуса. Классы-части можно вызывать в методе __init__, тем самым объекты-части будут автоматически создаваться при создании объекта-контейнера. Однако в данной задаче мы пойдем другим путем: окна и двери будут создаваться специальным для этих целей методом (будем считать, что так интересней). Также класс должен содержать метод для вычисления площади требуемых обоев (wallpapers). В конце можно добавить метод, в котором реализован вывод тех или иных данных.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> Room:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,x,y,z<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">square</span> = 2 <span style="color: #66cc66;">*</span> z <span style="color: #66cc66;">*</span> <span style="color: black;">&#40;</span>x + y<span style="color: black;">&#41;</span>
+     <span style="color: #ff7700;font-weight:bold;">def</span> win_door<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>, d,e, f,g, m=1,n=1<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">window</span> = Win_Door<span style="color: black;">&#40;</span>d,e<span style="color: black;">&#41;</span>
+          <span style="color: #008000;">self</span>.<span style="color: black;">door</span> = Win_Door<span style="color: black;">&#40;</span>f,g<span style="color: black;">&#41;</span>
+          <span style="color: #008000;">self</span>.<span style="color: black;">numb_w</span> = m
+          <span style="color: #008000;">self</span>.<span style="color: black;">numb_d</span> = n
+     <span style="color: #ff7700;font-weight:bold;">def</span> wallpapers<span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">wallpapers</span> = <span style="color: #008000;">self</span>.<span style="color: black;">square</span> - \
+               <span style="color: #008000;">self</span>.<span style="color: black;">window</span>.<span style="color: black;">square</span> <span style="color: #66cc66;">*</span> <span style="color: #008000;">self</span>.<span style="color: black;">numb_w</span> \
+               - <span style="color: #008000;">self</span>.<span style="color: black;">door</span>.<span style="color: black;">square</span> <span style="color: #66cc66;">*</span> <span style="color: #008000;">self</span>.<span style="color: black;">numb_d</span>
+     <span style="color: #ff7700;font-weight:bold;">def</span> printer<span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Площадь стен комнаты равна &quot;</span>\
+          ,<span style="color: #008000;">str</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>.<span style="color: black;">square</span><span style="color: black;">&#41;</span>,<span style="color: #483d8b;">&quot; кв.м&quot;</span><span style="color: black;">&#41;</span>
+          <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Оклеиваемая площадь равна: &quot;</span>, \
+               <span style="color: #008000;">str</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>.<span style="color: black;">wallpapers</span><span style="color: black;">&#41;</span>, <span style="color: #483d8b;">&quot; кв.м&quot;</span><span style="color: black;">&#41;</span></pre></div> </p>
+<p>В методе __init__ создается атрибут square объекта представляющий собой площадь стен комнаты. Метод принимает три аргумента: длину, ширину и высоту помещения.</p>
+<p>В методе win_door создаются два объекта: window и door, а также атрибуты numb_w и numb_d (в последних будут содержаться значения о количестве окон и дверей). Если при вызове данного метода в программе не будет указано количество окон и дверей, то по умолчанию будут подставлены значения равные 1.</p>
+<p>Метод wallpapers вычисляет площадь_требуемых_обоев = площадь_комнаты — площадь_окна * количество_окон — площадь_двери * количество_дверей. В коде данная строка разбита на несколько строчек с помощью знака \ (так делают, если строка очень длинная). Также обратите внимание, как происходит обращение к свойствам square объектов-частей: указывается объект класса Room (в классе его заменяет self), далее объект-часть, и наконец, сам атрибут (свойство) объекта-части. </p>
+<p>Метод printer просто выводит данные.</p>
+<h2>Создание объектов</h2>
+<p>После того, как классы созданы, посмотрим как это все работает. </p>
+<p>1. Создаем объект класса Room:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">labor34 = Room<span style="color: black;">&#40;</span><span style="color: #ff4500;">5</span>,<span style="color: #ff4500;">4</span>,<span style="color: #ff4500;">2</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>2. Создаем в помещении labor34 окна и двери:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">labor34.<span style="color: black;">win_door</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">1.5</span>,<span style="color: #ff4500;">1.5</span>, <span style="color: #ff4500;">2</span>,<span style="color: #ff4500;">1</span>, <span style="color: #ff4500;">2</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>Обратите внимание, что количество дверей не указано, а значит их будет ровно 1.</p>
+<p>3. Вычисляем метры обоев:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">labor34.<span style="color: black;">wallpapers</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>4. Просим вывести, что получилось:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">labor34.<span style="color: black;">printer</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>В результате работы метода printer интерпретатор должен выдать что-то вроде этого:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">Площадь комнаты равна <span style="color: #ff4500;">36</span> кв.м
+Оклеиваемая площадь равна: <span style="color: #ff4500;">29.5</span> кв.м</pre></div></p>
+<p>Может показаться, что в программе всего один реальный объект — labor34. Однако это не так. Там есть еще объекты labor34.window и labor34.door. Чтобы в этом убедиться достаточно обратиться к их свойствам.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span>labor34.<span style="color: black;">window</span>.<span style="color: black;">square</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span>labor34.<span style="color: black;">door</span>.<span style="color: black;">square</span><span style="color: black;">&#41;</span></pre></div></p>
+<h2>Практическая работа</h2>
+<p>Попробуйте самостоятельно придумать задачу, для решения которой можно использовать композиционный подход. Напишите программу на Python.</p>
+  </div>
+    </div>
+  </body>
+</html>

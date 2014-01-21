@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Диалоговые окна в Tkinter. Урок 11</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-56" class="section-2">
+  <h1 class="book-heading">Диалоговые окна в Tkinter. Урок 11</h1>
+  <div style="text-align:center;">
+<h4>Методическая разработка урока<br />
+Элективный курс: Модуль tkinter. Создание графического интерфейса пользователя с помощью языка программирования Python<br />
+Уровень: Программирование для начинающих<br />
+Версии Python: 3.*</h4>
+</div>
+<p>Диалоговые окна, как элементы графического интерфейса, предназначены для вывода сообщений пользователю, получения от него какой-либо информации, а также управления.</p>
+<p>Диалоговые окна весьма разнообразны. В данном уроке будут рассмотрены лишь несколько.</p>
+<p>Рассмотрим, как запрограммировать с помощью Tkinter вызов диалоговых окон открытия и сохранения файлов и работу с ними. При этом требуется дополнительно импортировать "подмодуль" Tkinter - tkinter.filedialog, в котором описаны классы для окон данного типа.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+<span style="color: #ff7700;font-weight:bold;">from</span> tkinter.<span style="color: black;">filedialog</span> <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+&nbsp;
+root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+op = askopenfilename<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+sa = asksaveasfilename<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div> </p>
+<p>Здесь создаются два объекта (op и sa): один вызывает диалоговое окно "Открыть", а другой "Сохранить как...". При выполнении скрипта, они друг за другом выводятся на экран после появления главного окна. Если не создать root, то оно все-равно появится на экране, однако при попытке его закрытия в конце возникнет ошибка.</p>
+<p>Давайте теперь разместим многострочное текстовое поле на главном окне и в дальнейшем попробуем туда загружать содержимое небольших текстовых файлов. Поскольку окно сохранения файла нам пока не нужно, то закомментируем эту строчку кода или удалим. В результате должно получиться примерно так:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+<span style="color: #ff7700;font-weight:bold;">from</span> tkinter.<span style="color: black;">filedialog</span> <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+&nbsp;
+root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+txt = Text<span style="color: black;">&#40;</span>root,width=<span style="color: #ff4500;">40</span>,height=<span style="color: #ff4500;">15</span>,font=<span style="color: #483d8b;">&quot;12&quot;</span><span style="color: black;">&#41;</span>
+txt.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+op = askopenfilename<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>При запуске скрипта появляется окно с текстовым полем и сразу диалоговое окно "Открыть". Однако, если мы попытаемся открыть какой-нибудь текстовый файл, то в лучшем случае ничего не произойдет. Как же связать содержимое текстового файла с текстовым полем через диалог "Открыть"?</p>
+<p>Что если просто вставить содержимое переменной op в текстовое поле:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">txt.<span style="color: black;">insert</span><span style="color: black;">&#40;</span>END,op<span style="color: black;">&#41;</span></pre></div></p>
+<p>После запуска скрипта и попытки открытия файла в текстовом поле оказывается адрес файла. Значит содержимое файла надо прочитать каким-то методом (функцией). </p>
+<p>Метод input модуля fileinput может принимать в качестве аргумента адрес файла, читать его содержимое, формируя список строк. Далее с помощью цикла for можно извлекать строки последовательно и помещать их, например, в текстовое поле.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">.....
+<span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #dc143c;">fileinput</span>
+.....
+<span style="color: #ff7700;font-weight:bold;">for</span> i <span style="color: #ff7700;font-weight:bold;">in</span> <span style="color: #dc143c;">fileinput</span>.<span style="color: #008000;">input</span><span style="color: black;">&#40;</span>op<span style="color: black;">&#41;</span>:
+     txt.<span style="color: black;">insert</span><span style="color: black;">&#40;</span>END,i<span style="color: black;">&#41;</span>
+.....</pre></div> </p>
+<p>Обратите внимание на то, как происходит обращение к функции input модуля fileinput и его импорт. Дело в том, что в Python уже встроена своя функция input (ее назначение абсолютно иное) и во избежание "конфликта" требуется четко указать, какую именно функцию мы имеем ввиду. Поэтому вариант импорта 'from fileinput import input' здесь не подходит.</p>
+<p>Окно "Открыть" запускается сразу при выполнении скрипта. На самом деле так не должно быть. Необходимо связать запуск окна с каким-нибудь событием. Пусть это будет щелчок на пункте меню.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+<span style="color: #ff7700;font-weight:bold;">from</span> tkinter.<span style="color: black;">filedialog</span> <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+<span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #dc143c;">fileinput</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">def</span> _open<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>:
+     op = askopenfilename<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+     <span style="color: #ff7700;font-weight:bold;">for</span> l <span style="color: #ff7700;font-weight:bold;">in</span> <span style="color: #dc143c;">fileinput</span>.<span style="color: #008000;">input</span><span style="color: black;">&#40;</span>op<span style="color: black;">&#41;</span>:
+          txt.<span style="color: black;">insert</span><span style="color: black;">&#40;</span>END,l<span style="color: black;">&#41;</span>
+&nbsp;
+root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+m = Menu<span style="color: black;">&#40;</span>root<span style="color: black;">&#41;</span>
+root.<span style="color: black;">config</span><span style="color: black;">&#40;</span>menu=m<span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #dc143c;">fm</span> = Menu<span style="color: black;">&#40;</span>m<span style="color: black;">&#41;</span>
+m.<span style="color: black;">add_cascade</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;File&quot;</span>,menu=<span style="color: #dc143c;">fm</span><span style="color: black;">&#41;</span>
+<span style="color: #dc143c;">fm</span>.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Open...&quot;</span>,command=_open<span style="color: black;">&#41;</span>
+&nbsp;
+txt = Text<span style="color: black;">&#40;</span>root,width=<span style="color: #ff4500;">40</span>,height=<span style="color: #ff4500;">15</span>,font=<span style="color: #483d8b;">&quot;12&quot;</span><span style="color: black;">&#41;</span>
+txt.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>Теперь попробуем сохранять текст, набранный в текстовом поле. Добавим в код пункт меню и следующую функцию:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">def</span> _save<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>:
+     sa = asksaveasfilename<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+     letter = txt.<span style="color: black;">get</span><span style="color: black;">&#40;</span>1.0,END<span style="color: black;">&#41;</span>
+     f = <span style="color: #008000;">open</span><span style="color: black;">&#40;</span>sa,<span style="color: #483d8b;">&quot;w&quot;</span><span style="color: black;">&#41;</span>
+     f.<span style="color: black;">write</span><span style="color: black;">&#40;</span>letter<span style="color: black;">&#41;</span>
+     f.<span style="color: black;">close</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div> </p>
+<p>В переменной sa храниться адрес файла, куда будет производиться запись. В переменной letter – текст, "полученный" из текстового поля. Затем файл открывается для записи, в него записывается содержимое переменной letter, и файл закрывается (на всякий случай).</p>
+<p>Еще одна группа диалоговых окон описана в модуле tkinter.messagebox. Это достаточно простые диалоговые окна для вывода сообщений, предупреждений, получения от пользователя ответа "да" или "нет" и т. п.</p>
+<p>Дополним нашу программу пунктом Exit в подменю File и пунктом About program в подменю Help.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter.<span style="color: black;">messagebox</span> <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+….
+<span style="color: #ff7700;font-weight:bold;">def</span> close_win<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>:
+     <span style="color: #ff7700;font-weight:bold;">if</span> askyesno<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Exit&quot;</span>, <span style="color: #483d8b;">&quot;Do you want to quit?&quot;</span><span style="color: black;">&#41;</span>:
+          root.<span style="color: black;">destroy</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">def</span> about<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>:
+     showinfo<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Editor&quot;</span>, <span style="color: #483d8b;">&quot;This is text editor.<span style="color: #000099; font-weight: bold;">\n</span>(test version)&quot;</span><span style="color: black;">&#41;</span>
+...
+<span style="color: #dc143c;">fm</span>.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Exit&quot;</span>,command=close_win<span style="color: black;">&#41;</span>
+....
+<span style="color: black;">hm</span> = Menu<span style="color: black;">&#40;</span>m<span style="color: black;">&#41;</span>
+m.<span style="color: black;">add_cascade</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Help&quot;</span>,menu=hm<span style="color: black;">&#41;</span>
+hm.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;About&quot;</span>,command=about<span style="color: black;">&#41;</span>
+... </pre></div><br />
+В функции about происходит вызов окна showinfo, позволяющее выводить сообщение для пользователя с кнопкой OK. Первый аргумент — это то, что выведется в заголовке окна, а второй — то, что будет содержаться в теле сообщения. В функции close_win вызывается окно askyesno, которое позволяет получить от пользователя два ответа (true и false). В данном случае при положительном ответе сработает ветка if и главное окно будет закрыто. В случае нажатия пользователем кнопки "No" окно просто закроется (хотя можно было запрограммировать в ветке else какое-либо действие).</p>
+<h2>Практическая работа</h2>
+<ol>
+<li>Напишите программу, описанную в уроке. </li>
+<li>Измените программу: пусть после нажатия пункта Exit пользователю выводилось не окно с вопросом "выйти или нет", а окно с вопросом "сохранить или нет". В случае положительного ответа должна вызываться функция _save и только затем завершаться приложение.</li>
+<li>Если в текстовом поле что-то содержится, то при открытии файла оно не удаляется, а содержимое файла просто дописывается. Исправьте этот недостаток (перед открытием файла содержимое текстового поля должно удаляться).</li>
+</ol>
+  </div>
+    </div>
+  </body>
+</html>

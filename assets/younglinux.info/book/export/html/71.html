@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Числа Фибоначчи (вычисление с помощью цикла while и рекурсии)</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-71" class="section-2">
+  <h1 class="book-heading">Числа Фибоначчи (вычисление с помощью цикла while и рекурсии)</h1>
+  <p><strong>Числа Фибоначчи</strong> – это ряд чисел, в котором каждое последующее число равно сумме двух предыдущих: 1, 1, 2, 3, 5, 8, 13 и т.д.<br />
+<strong>Формула:</strong><br />
+F1 = 1<br />
+F2 = 1<br />
+Fn = Fn-1 + Fn-2<br />
+<strong>Пример вычисления:</strong><br />
+F3 = F2 + F1 = 1 + 1 = 2<br />
+F4 = F3 + F2 = 2 + 1 = 3<br />
+F5 = F4 + F3 = 3 + 2 = 5<br />
+F6 = F5 + F4 = 5 + 3 = 8<br />
+и т.д.</p>
+<h2>Вычисление n-го числа ряда Фибоначчи с помощью цикла</h2>
+<h3>Алгоритм</h3>
+<ol>
+<li>Ввести два начальных значения ряда (fib1 и fib2).</li>
+<li>Ввести номер определяемого элемента.</li>
+<li>Выполнять нижеследующие действия количество раз, равное по величине номеру определяемого элемента, уменьшенному на две единицы (т.к. первое и второе значение ряда уже известны).</li>
+<ol>
+<li type="a">Сложить fib1 и fib2, присвоив результат третьей переменной (fib_sum).</li>
+<li>Поменять начальные значения: fib1 = fib2, а fib2 = fib_sum</li>
+</ol>
+
+</ol>
+<h3>Код на Python</h3>
+<h3><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">fib1 = 1
+fib2 = 1
+&nbsp;
+n = <span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Значение какого элемента ряда <span style="color: #000099; font-weight: bold;">\</span>
+Фибоначчи вы хотите узнать? &quot;</span><span style="color: black;">&#41;</span>
+n = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span>n<span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># преобразование в целое число</span>
+&nbsp;
+i = 2 
+<span style="color: #ff7700;font-weight:bold;">while</span> i <span style="color: #66cc66;">&lt;</span> n:
+    fib_sum = fib2 + fib1
+    fib1 = fib2
+    fib2 = fib_sum
+    i += 1
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>fib_sum<span style="color: black;">&#41;</span></pre></div></h3>
+<h2>Рекурсивное вычисление n-го числа ряда Фибоначчи</h2>
+<h3>Алгоритм</h3>
+<ol>
+<li>Если n = 1 или n = 2, вернуть в вызывающую ветку единицу (т.к. первый и второй элементы ряда Фибоначчи равны единице).</li>
+<li>Во всех остальных случаях вызвать эту же функцию с аргументами n-1 и n-2. Результат двух вызовов сложить и вернуть в вызывающую ветку программы.</li>
+</ol>
+<h3>Код на Python</h3>
+<h3><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">def</span> fib<span style="color: black;">&#40;</span>n<span style="color: black;">&#41;</span>:
+    <span style="color: #ff7700;font-weight:bold;">if</span> n==1 <span style="color: #ff7700;font-weight:bold;">or</span> n==2:
+        <span style="color: #ff7700;font-weight:bold;">return</span> 1
+    <span style="color: #ff7700;font-weight:bold;">return</span> fib<span style="color: black;">&#40;</span>n-<span style="color: #ff4500;">1</span><span style="color: black;">&#41;</span> + fib<span style="color: black;">&#40;</span>n-<span style="color: #ff4500;">2</span><span style="color: black;">&#41;</span></pre></div></h3>
+  </div>
+    </div>
+  </body>
+</html>

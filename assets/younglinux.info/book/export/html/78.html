@@ -1,0 +1,123 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Объекты в Blender. Практическая работа &quot;Капля&quot;. Урок 6</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-78" class="section-2">
+  <h1 class="book-heading">Объекты в Blender. Практическая работа &quot;Капля&quot;. Урок 6</h1>
+  <div style="text-align:center;">
+<h4>Инструкционная карта<br />
+Версия Blender: 2.48</h4>
+</div>
+<style type="text/css">
+.table
+{
+border-style: solid;
+border-width: 1px 1px 0px 0px;
+padding-left: 10px;
+padding-right: 10px;
+}
+</style><table>
+<tr>
+<th class="table" style="border-width:1px 1px 0px 1px;">№</th>
+<th class="table">Задание</th>
+<th class="table">Способ выполнения</th>
+<th class="table">Иллюстрация</th>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">1</td>
+<td class="table">Запустив Blender, удалить куб.</td>
+<td class="table">X, затем Enter. <br />Или Delete, затем Enter.</td>
+<td class="table"></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">2</td>
+<td class="table">Добавить на сцену сферу.</td>
+<td class="table">Пробел. <br />Выбрать: Add -> Mesh -> UVSphere.<br />Окно "Add UV Sphere": нажать "OK".</td>
+<td class="table"></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">3</td>
+<td class="table">Переключиться на вид спереди.</td>
+<td class="table">1 на NumLock.</td>
+<td class="table"></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">4</td>
+<td class="table">Приблизить сферу.</td>
+<td class="table">Навести мышь на сферу и покрутить колесо мыши.</td>
+<td class="table"></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">5</td>
+<td class="table">Переключиться в режим редактирования.</td>
+<td class="table">Tab</td>
+<td class="table"><img src="../../../img/blender/drop/tab.gif" style="width:150px;height:141px;" alt="Сфера: вид спереди, режим редактирования" title="Сфера: вид спереди, режим редактирования" /></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">6</td>
+<td class="table">Сбросить выделение.</td>
+<td class="table">A</td>
+<td class="table"></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">7</td>
+<td class="table">Выделить самую верхнюю вершину сферы.</td>
+<td class="table">Щелчок правой кнопкой мыши по самой верхней точке сферы.</td>
+<td class="table"><img src="../../../img/blender/drop/up.gif" style="width:150px;height:100px;" alt="Сфера: режим редактирования, выделение верхней вершины" title="Сфера: режим редактирования, выделение верхней вершины" /></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">8</td>
+<td class="table">Включить прапорциональное редактирование переходов.</td>
+<td class="table">Нажать O (англ. буква "оу").</td>
+<td class="table"><img src="../../../img/blender/drop/falloff.gif" style="width:150px;height:35px;" alt="Иконка включенного пропорционального редактирования в меню 3D-окна" title="Иконка включенного пропорционального редактирования в меню 3D-окна" /></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">9</td>
+<td class="table">Переместить вершину вверх и, возможно, немного в сторону, предварительно отрегулировав количество передвигаемых вершин.</td>
+<td class="table">G - включение режима перемещения.<br />Колесо мыши - регулировка охваченных вершин (видна окружность).</td>
+<td class="table">
+<img src="../../../img/blender/drop/g.gif" style="width:151px;height:157px;" alt="Вытягивание сферы" title="Вытягивание сферы" /></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">10</td>
+<td class="table">Слегка переместить вверх нижнюю вершину.</td>
+<td class="table">Аналогично п.7 и п.9</td>
+<td class="table"></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">11</td>
+<td class="table">Переключиться в объектный режим</td>
+<td class="table">Tab</td>
+<td class="table"></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">12</td>
+<td class="table">Придать получившемуся объекту сглаженность.</td>
+<td class="table">Кнопка "Set Smooth" на панели редактирования (Editing).</td>
+<td class="table"></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">13</td>
+<td class="table">Переключиться на вид из камеры</td>
+<td class="table">0 на NumLock.</td>
+<td class="table"></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 1px 1px;">14</td>
+<td class="table" style="border-width:1px 1px 1px 0px;">Сохранить файл.</td>
+<td class="table" style="border-width:1px 1px 1px 0px;">F2</td>
+<td class="table" style="border-width:1px 1px 1px 0px;"></td>
+</tr>
+</table>
+  </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,80 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Особенности работы с виджетом Text модуля Tkinter. Урок 14</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-59" class="section-2">
+  <h1 class="book-heading">Особенности работы с виджетом Text модуля Tkinter. Урок 14</h1>
+  <div style="text-align:center;">
+<h4>Методическая разработка урока<br />
+Элективный курс: Модуль tkinter. Создание графического интерфейса пользователя с помощью языка программирования Python<br />
+Уровень: Программирование для начинающих</h4>
+</div>
+<p>Графический элемент Text предоставляет большие возможности для работы с текстовой информацией. Помимо разнообразных операций с текстом и его форматированием в экземпляр объекта Text можно вставлять другие виджеты (следует отметить, что такая же возможность существует и для Canvas). В данном уроке рассматриваются лишь некоторые возможности виджета Text на примере создания окна с текстовым полем, содержащим форматированный текст, кнопку и возможность добавления экземпляров холста.</p>
+<div style="text-align:center;"><img src="../../../img/tkinter/text_tk.gif" width="461" height="292" alt="Примет текстового поля, созданного с помощью библиотеки Tkinter" /></div>
+<p>1. Для начала создадим текстовое поле, установив при этом некоторые из его свойств:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #808080; font-style: italic;">#текстовое поле и его первоначальные настройки</span>
+tx = Text<span style="color: black;">&#40;</span>font=<span style="color: black;">&#40;</span><span style="color: #483d8b;">'times'</span>,<span style="color: #ff4500;">12</span><span style="color: black;">&#41;</span>,width=<span style="color: #ff4500;">50</span>,height=<span style="color: #ff4500;">15</span>,wrap=WORD<span style="color: black;">&#41;</span>
+tx.<span style="color: black;">pack</span><span style="color: black;">&#40;</span>expand=YES,fill=BOTH<span style="color: black;">&#41;</span> </pre></div></p>
+<p>2. Теперь допустим нам нужно добавить какой-нибудь текст. Сделать это можно с помощью метода insert, передав ему два обязательных аргумента: место, куда вставить, и объект, который следует вставить. Объектом может быть строка, переменная, ссылающаяся на строку или какой-либо другой объект. Место вставки может указываться несколькими способами. Один из них — это индексы. Они записываются в виде 'x.y', где x – это строка, а y – столбец. При этом нумерация строк начинается с единицы, а столбцов с нуля. Например, первый символ в первой строке имеет индекс '1.0', а десятый символ в пятой строке — '5.9'.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">tx.<span style="color: black;">insert</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">1.0</span>,<span style="color: #483d8b;">'Дзэн Питона<span style="color: #000099; font-weight: bold;">\n</span><span style="color: #000099; font-weight: bold;">\</span>
+Если интерпретатору Питона дать команду<span style="color: #000099; font-weight: bold;">\n</span><span style="color: #000099; font-weight: bold;">\</span>
+import this (&quot;импортировать это&quot;),<span style="color: #000099; font-weight: bold;">\n</span><span style="color: #000099; font-weight: bold;">\</span>
+то выведется так называемый &quot;Дзен Питона&quot;.<span style="color: #000099; font-weight: bold;">\n</span> Некоторые выражения:<span style="color: #000099; font-weight: bold;">\n</span><span style="color: #000099; font-weight: bold;">\</span>
+* Если реализацию сложно объяснить — это плохая идея.<span style="color: #000099; font-weight: bold;">\n</span><span style="color: #000099; font-weight: bold;">\</span>
+* Ошибки никогда не должны замалчиваться.<span style="color: #000099; font-weight: bold;">\n</span><span style="color: #000099; font-weight: bold;">\</span>
+* Явное лучше неявного.<span style="color: #000099; font-weight: bold;">\n</span><span style="color: #000099; font-weight: bold;">\n</span>'</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>Комбинация символов '\n' создает новую строку (т.е. при интерпретации последующий текст начнется с новой строки). Одиночный символ '\' никак не влияет на отображение текста при выполнении кода, его следует вставлять при переносе текста при написании скрипта.</p>
+<p>Когда содержимого текстового поля нет вообще, то единственный доступный индекс — '1.0'. В заполненном текстовом поле вставлять можно в любое место (где есть содержимое). </p>
+<p>Если выполнить скрипт, содержащий только данный код (+ импорт модуля Tkinter, + создание главного окна, + mainloop() в конце), то мы увидим текстовое поле с восемью строчками текста. Текст не оформлен.</p>
+<p>3. Теперь отформатируем разные области текста по-разному. Для этого сначала зададим теги для нужных нам областей, а затем для каждого тега установим настройки шрифта и др.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #808080; font-style: italic;">#установка тегов для областей текста</span>
+tx.<span style="color: black;">tag_add</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'title'</span>,<span style="color: #483d8b;">'1.0'</span>,<span style="color: #483d8b;">'1.end'</span><span style="color: black;">&#41;</span>
+tx.<span style="color: black;">tag_add</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'special'</span>,<span style="color: #483d8b;">'6.0'</span>,<span style="color: #483d8b;">'8.end'</span><span style="color: black;">&#41;</span>
+tx.<span style="color: black;">tag_add</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'special'</span>,<span style="color: #483d8b;">'3.0'</span>,<span style="color: #483d8b;">'3.11'</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #808080; font-style: italic;">#конфигурирование тегов</span>
+tx.<span style="color: black;">tag_config</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'title'</span>,foreground=<span style="color: #483d8b;">'red'</span>,
+          font=<span style="color: black;">&#40;</span><span style="color: #483d8b;">'times'</span>,<span style="color: #ff4500;">14</span>,<span style="color: #483d8b;">'underline'</span><span style="color: black;">&#41;</span>,justify=CENTER<span style="color: black;">&#41;</span>
+tx.<span style="color: black;">tag_config</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'special'</span>,background=<span style="color: #483d8b;">'grey85'</span>,font=<span style="color: black;">&#40;</span><span style="color: #483d8b;">'Dejavu'</span>,<span style="color: #ff4500;">10</span>,<span style="color: #483d8b;">'bold'</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span></pre></div> </p>
+<p>Добавление тега осуществляется с помощью метода tag_add. Первый атрибут — имя тега (произвольное), далее с помощью индексов указывается к какой области текстового поля он прикрепляется (начальный символ и конечный). Вариант записи как '1.end' говорит о том, что нужно взять текст до конца указанной строки. Разные области текста могут быть помечены одинаковым тегом. </p>
+<p>Метод tag_config применяет те или иные свойства к тегу, указанному в качестве первого аргумента.</p>
+<p>4. В многострочное текстовое поле можно добавлять не только текст, но и другие объекты. Например, вставим в поле кнопку (ну и функцию заодно).</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">def</span> erase<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>:
+     tx.<span style="color: black;">delete</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'1.0'</span>,END<span style="color: black;">&#41;</span>
+...
+<span style="color: #808080; font-style: italic;">#добавление кнопки</span>
+bt = Button<span style="color: black;">&#40;</span>tx,text=<span style="color: #483d8b;">'Стереть'</span>,command=erase<span style="color: black;">&#41;</span>
+tx.<span style="color: black;">window_create</span><span style="color: black;">&#40;</span>END,window=bt<span style="color: black;">&#41;</span> </pre></div></p>
+<p>Кнопка — это виджет. Виджеты добавляются в текстовое поле с помощью метода window_create, где в качестве первой опции указывается место добавления, а второй (window) — в качестве значения присваивается переменная, связанная с объектом.</p>
+<p>При щелчке ЛКМ (левой кнопкой мыши) по кнопке будет вызываться функция erase, в которой с помощью метода delete удаляется все содержимое поля (от '1.0' до END).</p>
+<p>5. А вот более интересный пример добавления виджета в поле Text:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">def</span> smiley<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     cv = Canvas<span style="color: black;">&#40;</span>height=<span style="color: #ff4500;">30</span>,width=<span style="color: #ff4500;">30</span><span style="color: black;">&#41;</span>
+     cv.<span style="color: black;">create_oval</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">1</span>,<span style="color: #ff4500;">1</span>,<span style="color: #ff4500;">29</span>,<span style="color: #ff4500;">29</span>,fill=<span style="color: #483d8b;">&quot;yellow&quot;</span><span style="color: black;">&#41;</span>
+     cv.<span style="color: black;">create_oval</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">9</span>,<span style="color: #ff4500;">10</span>,<span style="color: #ff4500;">12</span>,<span style="color: #ff4500;">12</span><span style="color: black;">&#41;</span>
+     cv.<span style="color: black;">create_oval</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">19</span>,<span style="color: #ff4500;">10</span>,<span style="color: #ff4500;">22</span>,<span style="color: #ff4500;">12</span><span style="color: black;">&#41;</span>
+     cv.<span style="color: black;">create_polygon</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">9</span>,<span style="color: #ff4500;">20</span>,<span style="color: #ff4500;">15</span>,<span style="color: #ff4500;">24</span>,<span style="color: #ff4500;">22</span>,<span style="color: #ff4500;">20</span><span style="color: black;">&#41;</span>
+     tx.<span style="color: black;">window_create</span><span style="color: black;">&#40;</span>CURRENT,window=cv<span style="color: black;">&#41;</span>
+…
+<span style="color: #808080; font-style: italic;">#ЛКМ -&gt; смайлик</span>
+tx.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'&lt;Button-1&gt;'</span>,smiley<span style="color: black;">&#41;</span></pre></div> </p>
+<p>Здесь при щелчке ЛКМ в любом месте текстового поля будет вызываться функция smiley. В теле данной функции создается объект холста, который в конце с помощью метода window_create добавляется на объект tx. Место вставки указано как CURRENT, т. е. "текущее" - это там, где был произведен щелчок мышью.</p>
+<h2>Практическая работа:</h2>
+<ol>
+<li>Напишите скрипт, описанный в данном уроке. Выполните его.</li>
+<li>Измените функцию erase таким образом, чтобы удалялся не весь текст, а только третья строка.</li>
+<li>Привяжите оставшуюся область текста к третьему тегу и с помощью метода tag_config измените шрифт.</li>
+<li>Добавьте еще какой-нибудь виджет в текстовое поле.</li>
+</ol>
+  </div>
+    </div>
+  </body>
+</html>

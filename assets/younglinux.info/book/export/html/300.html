@@ -1,0 +1,165 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Введение</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+                <div class="section-2">
+          
+    <div id="node-300" class="section-3">
+  <h1 class="book-heading">Введение</h1>
+  <p class="right">Introduction to Linux. A Hands on Guide —<br />
+Введение в Linux. Руководство по работе</p>
+<p>Хотя Linux является одной из самых безопасных операционных систем существующих на данный момент, и даже если он проектировался, чтобы быть еще более надежным, данные могут быть потеряны. К потере данных чаще всего приводят ошибки пользователей, но иногда причиной является неисправность системы, такая как сбой питания или выход из строя диска, так что неплохо всегда иметь дополнительные копии личных и/или важных данных.</p>
+<h3>Подготовка данных</h3>
+<h4>Архивирование с помощью tar</h4>
+<p>В большинстве случаев, сначала принято собирать все данные для резервного копирования в один архивный файл, который затем сжимают. Сам процесс архивирования представляет собой объединение всех перечисленных файлов и устранение бесполезных  пустот. В Linux для этого часто используют команду <strong>tar</strong>. Эта команда была первоначально создана для архивирования данных на ленты, но она также может создавать архивы, известные как тарболы (tarballs).</p>
+<p>У <strong>tar</strong> есть множество опций, наиболее важные из них приведены ниже:</p>
+<p><span class="mono">-v</span>: подробный вывод<br />
+<span class="mono">-t</span>: тест, показывающий содержимое архива<br />
+<span class="mono">-x</span>: извлечение архива<br />
+<span class="mono">-c</span>: создание архива<br />
+<span class="mono">-f archivedevice</span>: использование <span class="mono">archivedevice</span> в качестве источника/назначения для архива, устройство по умолчанию — первый накопитель на магнитной ленте (обычно <span class="mono">/dev/st0</span> или что-то подобное)<br />
+<span class="mono">-j</span>: фильтр через <strong>bzip2</strong>, см. Раздел "Обновление бэкапов с помощью tar"</p>
+<p>Перед опциями <strong>tar</strong> обычно пропускают штрих-префикс, что видно в примерах ниже.</p>
+<p class="note"><img src="../../../img/linuxintro/note.gif" alt="" /><strong>  Использование GNU tar для совместимости.</strong><br />
+Архивы, созданные с помощью проприетарной версии <strong>tar</strong> в одной системе, могут быть несовместимы с <strong>tar</strong> на другой проприетарной системе. Это может доставить головную боль, например, если архив может быть восстановлен только в системе, которая больше не существует. Используйте GNU-версию <strong>tar</strong> на всех системах, чтобы ваш системный администратор не рыдал. Linux всегда использует GNU tar. При работе на других машинах UNIX, введите <strong>tar <span class="mono">–help</span></strong>, чтобы выяснить, какую версию вы используете. Свяжитесь с системным администратором, если вы не заметите слова GNU.</p>
+<p>В приведенном ниже примере архив создается и распаковывается.</p>
+<pre>
+gaby:~> <strong>ls images/</strong>
+me+tux.jpg  nimf.jpg
+
+gaby:~> <strong>tar cvf images-in-a-dir.tar images/</strong>
+images/
+images/nimf.jpg
+images/me+tux.jpg
+
+gaby:~> <strong>cd images</strong>
+
+gaby:~/images> <strong>tar cvf images-without-a-dir.tar *.jpg</strong>
+me+tux.jpg
+nimf.jpg
+
+gaby:~/images> <strong>cd</strong>
+
+gaby:~> <strong>ls */*.tar</strong>
+images/images-without-a-dir.tar
+
+gaby:~> <strong>ls *.tar</strong>
+images-in-a-dir.tar 
+
+gaby:~> <strong>tar xvf images-in-a-dir.tar</strong> 
+images/
+images/nimf.jpg
+images/me+tux.jpg
+
+gaby:~> <strong>tar tvf images/images-without-dir.tar</strong> 
+-rw-r--r-- gaby/gaby  42888 1999-06-30 20:52:25 me+tux.jpg
+-rw-r--r-- gaby/gaby   7578 2000-01-26 12:58:46 nimf.jpg
+
+gaby:~> <strong>tar xvf images/images-without-a-dir.tar</strong> 
+me+tux.jpg
+nimf.jpg
+
+gaby:~> <strong>ls *.jpg</strong>
+me+tux.jpg  nimf.jpg
+</pre><p>
+Этот пример также иллюстрирует разницу между заархивированными каталогом и группой файлов. Желательно сжимать только каталоги, так как файлы могут не распаковаться вместе (архив может быть на другой системе, и вы можете не знать, какие файлы уже существовали, а какие те, которые из архива).</p>
+<p>Если магнитный накопитель подключен к вашей машине и настроен системным администратором, имена файлов, оканчивающиеся на .tar заменяются именем устройства, например:</p>
+<p><span class="mono"><strong>tar</strong> cvf /dev/tape mail/</span></p>
+<p>Каталог почты и все файлы, которые он содержит, сжимаются в файл, который записывается сразу на носитель. Содержание листинга отображается, потому что мы использовали соответствующую опцию.</p>
+<h4>Обновление бэкапов с помощью tar</h4>
+<p>Программа <strong>tar</strong> поддерживает создание дополняющихся резервных копий, с помощью опции <span class="mono">-N</span>. С помощью этой опции можно указать дату, и <strong>tar</strong> будет проверять время изменения всех указанных файлов от этой даты. Если файлы  будут изменены позже, они будут включены в бэкап. В приведенном ниже примере используется метка на предыдущий архив как значение даты. Сначала создается начальный архив и метка указывает на этот архивный файл. Затем создается новый файл, который принимает новую резервную копию, содержащую только этот новый файл:</p>
+<pre>
+jimmy:~> <strong>tar cvpf /var/tmp/javaproggies.tar java/*.java</strong>
+java/btw.java
+java/error.java
+java/hello.java
+java/income2.java
+java/income.java
+java/inputdevice.java
+java/input.java
+java/master.java
+java/method1.java
+java/mood.java
+java/moodywaitress.java
+java/test3.java
+java/TestOne.java
+java/TestTwo.java
+java/Vehicle.java
+
+jimmy:~> <strong>ls -l /var/tmp/javaproggies.tar</strong>
+-rw-rw-r-- 1 jimmy   jimmy   10240 Jan 21 11:58 /var/tmp/javaproggies.tar
+
+jimmy:~> <strong>touch java/newprog.java</strong>
+
+jimmy:~> <strong>tar -N /var/tmp/javaproggies.tar \
+-cvp /var/tmp/incremental1-javaproggies.tar java/*.java 2> /dev/null</strong>
+java/newprog.java
+
+jimmy:~> <strong>cd /var/tmp/</strong>
+
+jimmy:~> <strong>tar xvf incremental1-javaproggies.tar</strong>
+java/newprog.java
+</pre><p>
+Стандартные ошибки перенаправляются в <span class="mono">/dev/null</span>. Если вы не сделаете этого, <strong>tar</strong> будет выводить сообщение для каждого неизмеренного файла, сообщая вам, что он не будет сбрасываться.</p>
+<p>У такого способа работы есть неудобство, т.к. просматриваются метки на файлы. Скажем, вы загрузили архив в каталог, содержащий ваши бэкапы, и этот архив содержит файлы, которые были созданы два года назад. При сверке меток этих файлов с метками на начальный архив, новые файлы действительно окажутся старым для <strong>tar</strong> и не будут добавлены в резервную копию с помощью опции <span class="mono">-N</span>.</p>
+<p>Лучшим выбором будет опция <span class="mono">-g</span>, которая создаст список файлов для резервного копирования. При обновлении резервной копии, файлы сверяются с этим списком. Вот как это работает:</p>
+<pre>
+jimmy:~> <strong>tar cvpf work-20030121.tar -g snapshot-20030121 work/</strong>
+work/
+work/file1
+work/file2
+work/file3
+
+jimmy:~> <strong>file snapshot-20030121</strong>
+snapshot-20030121: ASCII text
+</pre><p>
+На следующий день, пользователь <em>jimmy</em> немного поработал с <span class="mono">file3</span> и создал <span class="mono">file4</span>. В конце дня он создает новый бэкап:</p>
+<pre>
+jimmy:~> <strong>tar cvpf work-20030122.tar -g snapshot-20030121 work/</strong>
+work/
+work/file3
+work/file4
+</pre><p>
+Это очень простые примеры, но вы также можете использовать этот вид команды в работе хрона (см. <a href="http://younglinux.info/#">Раздел "Cron и crontab"</a>), который указывает, например, снимок файла для еженедельного резервного копирования и один для ежедневного резервного копирования. Снимки файлов должны быть заменены, в случае, когда создается полная резервная копия.</p>
+<p>Более подробную информацию можно найти в документации к <strong>tar</strong>.</p>
+<p class="note"><img src="../../../img/linuxintro/tip.gif" alt="" /><strong>  Важно знать.</strong><br />
+Как вы могли, вероятно, заметить, <strong>tar</strong> хорошо работает, когда речь идет о простом каталоге с набором лежащих вместе файлов. Однако есть инструменты, которые легче в управлении, когда вам нужен архив целых разделов, дисков или больших проектов. Мы же рассказываем про tar потому, что это очень популярный инструмент для распространения архивов. Довольно часто бывает ситуация, когда вам необходимо установить программное обеспечение, входящее в так называемый "сжатый тарбол". См. <a href="http://younglinux.info/#">Раздел "Использование rsync"</a>, чтобы узнать более простой способ выполнять регулярное резервное копирование.</p>
+<h4>Сжатие и распаковка с помощью gzip и bzip2</h4>
+<p>Данные, в том числе архивы, могут быть сжаты с использованием инструментов zip. Команда <strong>gzip</strong> добавит суффикс <span class="mono">.gz</span> к имени файла и удаляет исходный файл.</p>
+<pre>
+jimmy:~> <strong>ls -la | grep tar</strong>
+-rw-rw-r-- 1 jimmy  jimmy    61440 Jun  6 14:08 images-without-dir.tar
+
+jimmy:~> <strong>gzip images-without-dir.tar</strong> 
+
+jimmy:~> <strong>ls -la images-without-dir.tar.gz </strong>
+-rw-rw-r-- 1 jimmy  jimmy    50562 Jun  6 14:08 images-without-dir.tar.gz
+</pre><p>
+Распаковываются сжатые файлы с помощью опции <span class="mono">-d</span>.</p>
+<p><strong>bzip2</strong> работает аналогично, но использует улучшенный алгоритм сжатия, поэтому файлы получаются меньшего размера. За дополнительной информацией обратитесь к info-страницам <strong>bzip2</strong>.</p>
+<p>Пакеты софта для Linux часто распространяются как сжатые архивы. После распаковки такого архива разумно найти <span class="mono">README</span> и прочитать его. Он обычно содержат руководство для установки пакета.</p>
+<p>Команда GNU tar понимает сжатые файлы. Используйте команду</p>
+<p><span class="mono"><strong>tar</strong> zxvf file.tar.gz</span> </p>
+<p>для распаковки файлов <span class="mono">tar.gz</span> или <span class="mono">.tgz</span>. Используйте</p>
+<p><span class="mono"><strong>tar</strong> jxvf file.tar.bz2</span></p>
+<p>для распаковки tar-архивов, которые были сжаты c помощью <strong>bzip2</strong>.</p>
+<h4>Архивы Java</h4>
+<p>Проект GNU предоставляет также <strong>jar</strong> для создания Java-архивов. Это приложение Java, которая объединяет несколько файлов в один архивный файл JAR. Хотя он поддерживает обычное архивирование и сжатие, основанное на ZIP и ZLIB форматах сжатия, <strong>jar</strong> в основном предназначен для облегчения упаковки кода Java, апплетов и/или приложений в один файл. Скомбинированные в одном архиве, компоненты приложения Java, могут быть скачаны гораздо быстрее.</p>
+<p>В отличие от <strong>tar, jar</strong> сжимает по умолчанию, независимо от других инструментов - потому что это в основном java-версия zip. Кроме того, <strong>jar</strong> позволяет на отдельные записи в архиве ставить подпись автора, что дает возможность проверять происхождение.<br />
+Синтаксис практически идентичен команде <strong>tar</strong>. Чтобы найти различия обратитесь к info-страницам <strong>jar</strong>.</p>
+<p class="note"><img src="../../../img/linuxintro/note.gif" alt="" /><strong>  tar, jar и символические ссылки.</strong><br />
+То, на что следует обратить внимание в упомянутой документации, <strong>jar</strong> следует по символьным ссылкам. Данные, к которым эти ссылки указывают, будут включены в архив. По умолчанию <strong>tar</strong> делает резервную копию самой символьной ссылки, но это поведение можно изменить с помощью опции <span class="mono">-h</span> для <strong>tar</strong>.</p>
+<h4>Транспортировка данных</h4>
+<p>Сохранение копии ваших данных на другом компьютере является наиболее надежным способом создания резервных копий. См. <a href="http://younglinux.info/#">Главу 10, Сеть</a> для дополнительной информации по <strong>scp, ftp</strong> и др.</p>
+<p>В следующем разделе мы обсудим иные устройства для резервного копирования.</p>
+  </div>
+    </div></div>
+  </body>
+</html>

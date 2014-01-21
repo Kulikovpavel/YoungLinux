@@ -1,0 +1,72 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Функции в программировании. Урок 13</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-33" class="section-2">
+  <h1 class="book-heading">Функции в программировании. Урок 13</h1>
+  <p class="right">Основы программирования на Python</p>
+<p>Функции в программировании можно представить как изолированный блок кода, обращение к которому в процессе выполнения программы может быть многократным. Зачем нужны такие блоки инструкций? В первую очередь, чтобы сократить объем исходного кода: рационально вынести часто повторяющиеся выражения в отдельный блок и, затем, по мере надобности, обращаться к нему.</p>
+<p>Представим себе следующую ситуацию. Требуется написать скрипт, который при выполнении должен три раза запрашивать у пользователя разные данные, но выполнять с ними одни и те же действия.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">a = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'Введите первое число: '</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+b = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'Введите второе число: '</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">if</span> a <span style="color: #66cc66;">&gt;</span> b:
+    <span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span>a-b<span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">else</span>:
+    <span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span>b-a<span style="color: black;">&#41;</span>
+&nbsp;
+c = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'Введите первое число: '</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+d = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'Введите второе число: '</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">if</span> c <span style="color: #66cc66;">&gt;</span> d:
+    <span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span>c-d<span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">else</span>:
+    <span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span>d-c<span style="color: black;">&#41;</span>
+&nbsp;
+e = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'Введите первое число: '</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+f = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'Введите второе число: '</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">if</span> e <span style="color: #66cc66;">&gt;</span> f:
+    <span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span>e-f<span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">else</span>:
+    <span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span>f-e<span style="color: black;">&#41;</span></pre></div></p>
+<p>Данная программа находит модуль разницы двух чисел. Очевидно, что такая запись исходного кода не рациональна: получаются три почти одинаковых блока кода. Почему бы не использовать цикл <strong>while</strong> для организации повторения?<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">i = 0
+<span style="color: #ff7700;font-weight:bold;">while</span> i <span style="color: #66cc66;">&lt;</span> 3:
+    a = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'Введите первое число: '</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+    b = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'Введите второе число: '</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+    <span style="color: #ff7700;font-weight:bold;">if</span> a <span style="color: #66cc66;">&gt;</span> b:
+        <span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span>a-b<span style="color: black;">&#41;</span>
+    <span style="color: #ff7700;font-weight:bold;">else</span>:
+        <span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span>b-a<span style="color: black;">&#41;</span>
+    i = i + <span style="color: #ff4500;">1</span></pre></div></p>
+<p>Однако, в этом случае есть один нюанс. Вводимые пользователем данные всегда связываются с переменными a и b. При каждом витке цикла прежние данные утрачиваются. Что же делать, если все шесть чисел, введенных пользователем надо сохранить для дальнейшего использования в программе? Рассмотрим решение этой задачи с использованием функции.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">def</span> diff<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>:
+    m = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'Введите первое число: '</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+    n = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'Введите второе число: '</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+    <span style="color: #ff7700;font-weight:bold;">if</span> m <span style="color: #66cc66;">&gt;</span> n:
+        <span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span>m-n<span style="color: black;">&#41;</span>
+    <span style="color: #ff7700;font-weight:bold;">else</span>:
+        <span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span>n-m<span style="color: black;">&#41;</span>
+    <span style="color: #ff7700;font-weight:bold;">return</span> m,n
+&nbsp;
+a,b = diff<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+c,d = diff<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+e,f = diff<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div><br />
+<strong>def</strong> – это инструкция (команда) языка программирования Python, позволяющая создавать функцию. diff – это имя функции, которое (так же как и имена переменных) может быть почти любым, но желательно осмысленным. После в скобках перечисляются параметры функции. Если их нет, то скобки остаются пустыми. Далее идет двоеточие, обозначающее окончание заголовка функции (аналогично с условиями и циклами). После заголовка с новой строки и с отступом следуют выражения тела функции. В конце тела функции присутствует инструкция <strong>return</strong> (может и не быть), которая возвращает значение(я) в основную ветку программы. В данном случае, если бы в функции не было инструкции <strong>return</strong>, то в основную программу ничего бы не возвращалось, и переменным a и b (c и d, а также e и f) числовые значения не присваивались бы.</p>
+<p>После функции идет, так называемая, основная ветка программы, в которой переменным попарно присваивается результат выполнения вызываемой функции. В иных ситуациях, когда функция не возвращает значений, ее вызов не связывается с переменной. </p>
+<p>Выражения тела функции выполняются лишь тогда, когда она вызывается в основной ветке программы. Так, например, если функция присутствует в исходном коде, но нигде не вызывается в нем, то содержащиеся в ней инструкции не будут выполнены ни разу.</p>
+<h3>Практическая работа</h3>
+<ol>
+<li>Напишите функцию, которая вычисляет сумму трех чисел и возвращает результат в основную ветку программы.</li>
+<li>Придумайте программу, в которой из одной функции вызывается вторая. При этом ни одна из них ничего не возвращает в основную ветку программы, обе должны выводить результаты своей работы с помощью функции <strong>print()</strong>.</li>
+</ol>
+  </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Шифрование</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+                <div class="section-2">
+          
+    <div id="node-306" class="section-3">
+  <h1 class="book-heading">Шифрование</h1>
+  <p class="right">Introduction to Linux. A Hands on Guide —<br />
+Введение в Linux. Руководство по работе</p>
+<h3>Общие замечания</h3>
+<h4>Почему вам следует шифровать данные?</h4>
+<p>Шифрование - это синоним секретности. Совместно с резервным копированием, шифрование может быть очень полезно, например, если вам нужно оставить зарезервированные данные в месте, где вы не можете контролировать доступ, допустим, на сервере вашего провайдера.</p>
+<p>Кроме того, шифрование может быть также применено к электронной почте: обычно, почта не шифруется и часто пересылается в открытом виде по местной сети или Интернет. Если ваше сообщение содержит конфиденциальную информацию, лучше его зашифровать.</p>
+<h4>GNU Privacy Guard </h4>
+<p>В операционных системах Linux вы найдете GnuPG, GNU Privacy Guard, который представляет собой набор программ, совместимых с инструментами PGP (Pretty Good Privacy), который имеется в продаже.</p>
+<p>В этом руководстве мы обсудим только очень простое использование инструментов шифрования и покажем, что вам следует делать, чтобы генерировать ключ шифрования и использовать его для шифрования данных, после чего вы сможет безопасно хранить их в общественном месте. Более сложные способы использования можно найти на man-страницах различных команд.</p>
+<h3>Генерирование ключа</h3>
+<p>Перед началом шифрования данных, необходимо создать пару ключей. Пара состоит из закрытого и открытого ключа. Вы можете отправить открытый ключ  корреспондентам, которые могут использовать его для шифрования данных для вас, которые вы будете расшифровывать вашим закрытым ключом. Вы всегда должны хранить закрытый ключ, никогда не делиться им с кем-то еще, иначе другие будут иметь возможность расшифровать данные, предназначенные только для вас. Просто чтобы была уверенность, что ничего не случится, закрытый ключ защищается паролем. Пара ключей создается с помощью следующей команды:</p>
+<pre>
+willy@ubuntu:~$ <strong>gpg --gen-key</strong>
+gpg (GnuPG) 1.4.2.2; Copyright (C) 2005 Free Software Foundation, Inc.
+This program comes with ABSOLUTELY NO WARRANTY.
+This is free software, and you are welcome to redistribute it
+under certain conditions.  See the file COPYING for details.
+
+gpg: directory `/home/willy.gnupg' created
+gpg: new configuration file `/home/willy/.gnupg/gpg.conf' created
+gpg: WARNING: options in `/home/willy/.gnupg/gpg.conf' are not yet
+ active during this run
+gpg: keyring `/home/willy/.gnupg/secring.gpg' created
+gpg: keyring `/home/willy/.gnupg/pubring.gpg' created
+Please select what kind of key you want:
+    (1) DSA and Elgamal (default)
+    (2) DSA (sign only)
+    (5) RSA (sign only)
+Your selection? <strong>1</strong>
+DSA keypair will have 1024 bits.
+ELG-E keys may be between 1024 and 4096 bits long.
+What keysize do you want? (2048) <strong>4096</strong>
+Requested keysize is 4096 bits
+Please specify how long the key should be valid.
+         0 = key does not expire
+      <n>  = key expires in n days
+      <n>w = key expires in n weeks
+      <n>m = key expires in n month
+      <n>y = key expires in n years
+Key is valid for? (0) <strong>0</strong>
+Key does not expire at all
+Is this correct? (y/N) <strong>y</strong>
+
+You need a user ID to identify your key; the software constructs the
+user ID from the Real Name, Comment and Email Address in this form:
+    "Heinrich Heine (Der Dichter) <heinrichh@duesseldorf.de>"
+
+Real name: <strong>Willy De Wandel</strong>
+Email address: <strong>wdw@mvg.vl</strong>
+Comment: <strong>Willem</strong>
+You selected this USER-ID:
+    "Willy De Wandel (Willem) <wdw@mvg.vl>"
+
+Change (N)ame, (C)omment, (E)mail or (O)kay/(Q)uit? <strong>O</strong>
+You need a Passphrase to protect your secret key.
+					 
+Passphrase:
+</wdw@mvg.vl></heinrichh@duesseldorf.de></n></n></n></n></pre><p>
+Теперь введите свой пароль. Это может быть фраза любой длины и содержания, единственным условием является то, что вы должны быть в состоянии запомнить ее навсегда. Для проверки необходимо ввести ту же фразу еще раз.</p>
+<p>Теперь пара ключей генерируется программой, которая порождает случайные числа, и эта деятельность, среди прочих факторов, обеспечивается текущей активностью системы. Так что хорошей идеей будет запуск в это время каких-нибудь программ, перемещение курсора мыши или ввод некоторых случайных символов в окне терминала. Это повысит шансы генерирования числа, которое содержит множество различных цифр, и ключ будет труднее взломать.</p>
+<h3>О вашем ключе</h3>
+<p>Когда ваш ключ будет создан, вы получите сообщение об "отпечатках пальцев". Это последовательность из 40 шестнадцатеричных чисел, которая представляет собой достаточно длинную последовательность, ее почти невозможно создать  дважды на любом компьютере. Вы можете быть в достаточной степени уверены, что это уникальная последовательность. Краткая форма этого ключа состоит из вашего имени, потом следуют последние 8 шестнадцатеричных чисел.</p>
+<p>Вы можете получить информацию о вашем ключе следующим образом:</p>
+<pre>
+willy@ubuntu:~$ <strong>gpg --list-keys</strong>
+/home/willy/.gnupg/pubring.gpg
+------------------------------
+pub     1024D/BF5C3DBB 2006-08-08
+uid                    Willy De Wandel (Willem) <wdw@mvg.vl>
+sub     4096g/A3449CF7 2006-08-08
+</wdw@mvg.vl></pre><p>Для данного ключа <em>key ID</em> имеет значение "BF5C3DBB". Вы можете отправить ваши <em>key ID</em> и имя на сервер ключей, таким образом другие люди смогут получить эту информацию о вас и использовать ее для шифрования данных для вас. Кроме того, вы можете непосредственно отправить ваш открытый ключ людям, которым он нужен. Открытая часть ключа представляет собой длинный ряд цифр, которые вы можете увидеть при использовании опции <span class="mono">--export</span> команды <strong>gpg</strong>:</p>
+<p><span class="mono">gpg --export -a</span></p>
+<p>Однако, мы считаем, что в пределах данного руководства вам потребуется только ключ для шифрования и дешифрования данных для себя. Читайте man-страницы команды <strong>gpg</strong>, если хотите знать больше.</p>
+<h3>Шифрование данных</h3>
+<p>Теперь вы можете шифровать архивы <span class="mono">.tar</span> или сжатые архивы, перед сохранением их на резервном носителе или транспортировке на сервер, предназначенный для бэкапов. Используйте команду <strong>gpg</strong> вот так:<br />
+<span class="mono">gpg -e -r (part of) uid archive</span></p>
+<p>Опция <span class="mono">-e</span> говорит <strong>gpg</strong> шифровать данные, опция <span class="mono">-r</span> указывает, для кого выполняется шифрование. Имейте в виду, что только пользователи, чьи имена  следуют после опции <span class="mono">-r</span> будут в состоянии расшифровать данные. Например:</p>
+<pre>
+willy@ubuntu:~$ <strong>gpg -e -r Willy /var/tmp/home-willy-20060808.tar</strong>
+</pre><h3>Расшифровка файлов</h3>
+<p>Используя опцию <span class="mono">-d</span>, вы можете расшифровать файлы, которые были зашифрованы для вас. Данные будут прокручиваться на экране, но зашифрованная копия останется на диске. Таким образом, для файлов, которые имеют отличный от обычного текста формат, вы захотите сохранить расшифрованные данные, чтобы посмотреть их соответствующей программой. Это делается с помощью опции <span class="mono">-o</span> команды <strong>gpg</strong>:</p>
+<pre>
+willy@ubuntu:~$ <strong>gpg -d -o /var/tmp/home-willy-decrypt.tar /var/tmp/home-willy-20060808.tar.gpg</strong>
+
+You need a passphrase to unlock the secret key for
+user: "Willy De Wandel (Willem) <wdw@mvg.vl>"
+4096 ELG-E key, ID A3449CF7, created 2006-08-08 (main key ID BF5C3DBB)
+
+gpg: encrypted with 4096-bit ELG-E key, ID A3449CF7, created 2006-08-08
+        "Willy De Wandel (Willem) <wdw@mvg.vl>"
+</wdw@mvg.vl></wdw@mvg.vl></pre><p class="note"><img src="../../../img/linuxintro/warning.gif" alt="" /><strong>    Нет пароля = нет данных</strong><br />
+Если вы не сможете вспомнить свой пароль, данные будут потеряны. И даже системный администратор не сможет расшифровать данные. Именно поэтому копии важных ключей иногда хранят в запечатанном сейфе в банке.</p>
+  </div>
+    </div></div>
+  </body>
+</html>

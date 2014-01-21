@@ -1,0 +1,22 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Проблема с установкой массы (Set Mass) в Blender Game Engine</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-459" class="section-2">
+  <h1 class="book-heading">Проблема с установкой массы (Set Mass) в Blender Game Engine</h1>
+  <p>Массу физического объекта можно установить на панели Physics. Например, в 1 ед.</p>
+<p>Если в процессе игры требуется поменять массу, то можно использовать активатор Edit_Object -> Dynamics -> Set Mass. </p>
+<p>Однако масса изменяется лишь однажды. Далее, если нажимать тот же сенсор или другой, меняющий массу, то происходит что-то странное: объект легчает (не смотря на указанную массу). Причем настолько, что после нескольких нажатий, взлетает.</p>
+<p>Проблема не решается, если добавить дополнительную пару контроллер-активатор, "обнуляющий массу", а затем снова установить массу. Т. е. проблема скорее всего именно в Set Mass.</p>
+  </div>
+    </div>
+  </body>
+</html>

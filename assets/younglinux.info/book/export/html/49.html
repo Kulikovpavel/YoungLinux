@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Введение в tkinter. Урок 1</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-49" class="section-2">
+  <h1 class="book-heading">Введение в tkinter. Урок 1</h1>
+  <p>В многообразии программ, которые пишут программисты, выделяют приложения с графическим пользовательским интерфейсом (GUI). При создании таких программ становятся важными не только алгоритмы обработки данных, но и разработка для пользователя программы удобного интерфейса, взаимодействуя с которым, он будет определять поведение приложения.</p>
+<p>Современный пользователь в основном взаимодействует с программой с помощью различных кнопок, меню, значков, вводя информацию в специальные поля, выбирая определенные значения в списках и т. д. Эти "изображения" в определенном смысле и формируют GUI, в дальнейшем мы их будем называть виджетами (от англ. widget - "штучка").</p>
+<p>Для языка программирования Python такие виджеты включены в специальную библиотеку — tkinter. Если ее импортировать в программу (скрипт), то можно пользоваться ее компонентами, создавая графический интерфейс. </p>
+<p>Последовательность шагов при создании графического приложения имеет свои особенности. Программа должна выполнять свое основное назначение, быть удобной для пользователя, реагировать на его действия. Мы не будем вдаваться в подробности разработки, а рассмотрим какие этапы приблизительно нужно пройти при программировании, чтобы получить программу с GUI:</p>
+<ol>
+<li>Импорт библиотеки</li>
+<li>Создание главного окна</li>
+<li>Создание виджет</li>
+<li>Установка их свойств</li>
+<li>Определение событий</li>
+<li>Определение обработчиков событий</li>
+<li>Расположение виджет на главном окне</li>
+<li>Отображение главного окна</li>
+</ol>
+<h2>1. Импорт модуля tkinter</h2>
+<p>Как и любой модуль, tkinter в Python можно импортировать двумя способами: командами import tkinter или from tkinter import *. В дальнейшем мы будем пользоваться только вторым способом, т. к. это позволит не указывать каждый раз имя модуля при обращении к объектам, которые в нем содержатся. Следует обратить внимание, что в версии Python 3 имя модуля пишется со строчной буквы (tkinter), хотя в более ранних версиях использовалась прописная (Tkinter). Итак, первая строчка программы должна выглядеть так:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span></pre></div></p>
+<h2>2. Создание главного окна</h2>
+<p>В современных операционных системах любое пользовательское приложение заключено в окно, которое можно назвать главным, т.к. в нем располагаются все остальные виджеты. Объект окна верхнего уровня создается при обращении к классу Tk модуля tkinter. Переменную связанную с объектом-окном принято называть root (хотя понятно, что можно назвать как угодно, но так уж принято). Вторая строчка кода:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div></p>
+<h2>3. Создание виджет</h2>
+<p>Допустим в окне будет располагаться всего одна кнопка. Кнопка создается при обращении к классу Button модуля tkinter. Объект кнопка связывается с какой-нибудь переменной. У класса Button (как и всех остальных классов, за исключением Tk) есть обязательный параметр — объект, которому кнопка принадлежит (кнопка не может "быть ничейной"). Пока у нас есть единственное окно (root), оно и будет аргументом, передаваемым в класс при создании объекта-кнопки:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">but = Button<span style="color: black;">&#40;</span>root<span style="color: black;">&#41;</span></pre></div></p>
+<h2>4. Установка свойств виджет</h2>
+<p>У кнопки много свойств: размер, цвет фона и надписи и др. Мы рассмотрим их на следующем уроке. Пока же установим всего одно свойство — текст надписи (text):<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">but<span style="color: black;">&#91;</span><span style="color: #483d8b;">&quot;text&quot;</span><span style="color: black;">&#93;</span> = <span style="color: #483d8b;">&quot;Печать&quot;</span></pre></div></p>
+<h2>5-6. Определение событий и их обработчиков</h2>
+<p>Многообразие событий и способов их обработки будет рассмотрено на следующих уроках. Здесь же просто коснемся данного вопроса в связи с потребностью.</p>
+<p>Что же будет делать кнопка и в какой момент она это будет делать? Предположим, что задача кнопки вывести какое-нибудь сообщение в поток вывода, используя функцию print. Делать она это будет при нажатии на нее левой кнопкой мыши.</p>
+<p>Действия (алгоритм), которые происходят при том или ином событии, могут быть достаточно сложным. Поэтому часто их оформляют в виде функции, а затем вызывают, когда они понадобятся. Пусть у нас печать на экран будет оформлена в виде функции printer:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">def</span> printer<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Как всегда очередной 'Hello World!'&quot;</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>Не забывайте, что функцию желательно (почти обязательно) размещать в начале кода. Параметр event – это какое-либо событие.</p>
+<p>Событие нажатия левой кнопкой мыши выглядит так: <span class="geshifilter"><code class="python geshifilter-python"><span style="color: #66cc66;">&lt;</span>Button-<span style="color: #ff4500;">1</span><span style="color: #66cc66;">&gt;</span></code></span>. Требуется связать это событие с обработчиком (функцией printer). Для связи предназначен метод bind. Синтаксис связывания события с обработчиком выглядит так:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">but.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;&lt;Button-1&gt;&quot;</span>,printer<span style="color: black;">&#41;</span></pre></div></p>
+<h2>7. Размещение виджет</h2>
+<p>Если вы заметите, то в любом приложении виджеты не разбросаны по окну как попало, а хорошо организованы, интерфейс продуман до мелочей и обычно подчинен определенным стандартам. До стандартов нам далеко, нужно просто кнопку как-то отобразить в окне. Самый простой способ — это использование метода pack.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">but.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>Если не вставить эту строчку кода, то кнопка в окне так и не появится, хотя она есть в программе. </p>
+<h2>8. Отображение главного окна</h2>
+<p>Ну и наконец, главное окно тоже не появится, пока не будет вызван специальный метод mainloop:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>Данная строчка кода должна быть всегда в конце скрипта!</p>
+<p>В итоге, код программы может выглядеть таким образом:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">def</span> printer<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Как всегда очередной 'Hello World!'&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+but = Button<span style="color: black;">&#40;</span>root<span style="color: black;">&#41;</span>
+but<span style="color: black;">&#91;</span><span style="color: #483d8b;">&quot;text&quot;</span><span style="color: black;">&#93;</span> = <span style="color: #483d8b;">&quot;Печать&quot;</span>
+but.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;&lt;Button-1&gt;&quot;</span>,printer<span style="color: black;">&#41;</span>
+&nbsp;
+but.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>При программировании графического интерфейса пользователя более эффективным оказывается объектно-ориентированный подход. Поэтому многие «вещи» оформляются в виде классов. В нашем примере также можно использовать класс:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">class</span> But_print:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">but</span> = Button<span style="color: black;">&#40;</span>root<span style="color: black;">&#41;</span>
+          <span style="color: #008000;">self</span>.<span style="color: black;">but</span><span style="color: black;">&#91;</span><span style="color: #483d8b;">&quot;text&quot;</span><span style="color: black;">&#93;</span> = <span style="color: #483d8b;">&quot;Печать&quot;</span>
+          <span style="color: #008000;">self</span>.<span style="color: black;">but</span>.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;&lt;Button-1&gt;&quot;</span>,<span style="color: #008000;">self</span>.<span style="color: black;">printer</span><span style="color: black;">&#41;</span>
+          <span style="color: #008000;">self</span>.<span style="color: black;">but</span>.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+     <span style="color: #ff7700;font-weight:bold;">def</span> printer<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,event<span style="color: black;">&#41;</span>:
+          <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Как всегда очередной 'Hello World!'&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+obj = But_print<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div> </p>
+<h2>Практическая работа</h2>
+<ol>
+<li>Импортируйте модуль tkinter, создайте объект главного окна, примените к нему метод mainloop. Затем выполните скрипт. Что вы видите?</li>
+<li>Добавьте кнопку на главное окно с помощью такой команды:</li>
+<p>but = Button(root, text="Печать")<br />
+В данном случае, при создании кнопки, в класс сразу передается и значение свойства text. Это наиболее часто используемый способ установки свойств (по-сравнению с тем, который приводится в уроке: but["text"] = "Печать").</p>
+<li>Расположите виджету на главном окне с помощью метода pack. Запустите скрипт. Что вы видите? Нажмите левой кнопкой мыши на кнопку в окне. Что-нибудь происходит? </li>
+<li>Создайте какую-нибудь функцию и свяжите ее с событием нажатия кнопки.</li>
+<li>Снова запустите скрипт и нажмите кнопку. По идее, должно что-то произойти.</li>
+</ol>
+  </div>
+    </div>
+  </body>
+</html>

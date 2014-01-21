@@ -1,0 +1,130 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>6. &quot;Продвинутый уровень&quot; работы в Dia</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-172" class="section-2">
+  <h1 class="book-heading">6. &quot;Продвинутый уровень&quot; работы в Dia</h1>
+  <h2>6.1. Layers (Слои)</h2>
+<h3>6.1.1. Simple case (Простой случай)</h3>
+<p>Предположим, у нас есть четыре UML "класса" объектов, и требуется нарисовать прямоугольник вокруг двух из них. Однако размещенный в последствии прямоугольник перекрывает вид двух «классов».</p>
+<p>Перекладывание прямоугольника назад решает эту проблему.</p>
+<p>Перемещение объекта на задний план выполняется за счет его выделения и затем:</p>
+<ol>
+<li>(длинный путь) выбрать команду <strong>Объекты ? Переместить на задний  план</strong> (или <strong>Переместить дальше</strong>).</li>
+<li>(быстро) Ctrl + Shift + B</li>
+</ol>
+<div style="text-align:center;"><img src="../../../img/dia/class.png" width="500" height="263" alt="взаимное расположение объектов при создании схемы" /></div>
+<h3>6.1.2. Full layering (Полное расслоение)</h3>
+<p>Теперь предположим, что у нас есть общий фон (например, логотип проекта) и требуется создать графику над ним. Мы хотим создать слои заранее и использовать их по мере необходимости.</p>
+<p>Если вы знакомы со слоями Gimp'а, то вы в деле – здесь такой же механизм. В противном случае, будьте внимательны.</p>
+<p>Когда вы начинаете создавать новую диаграмму, после установки свойств  страницы, следует отобразить окно работы со слоями (<strong>Вид ? Показать слои</strong>). В окне Dia справа появится такая панель:</p>
+<div style="text-align:center;"><img src="../../../img/dia/layers.png" width="204" height="198" alt="Использование слоев в Dia" /></div>
+<p>Нажмите на кнопку создания нового слоя (голубой плюс), и у вас будет "Новый слой". По умолчанию он разместится выше фонового слоя и будет выделен. Выделенный слой можно переместить относительно других слоев с помощью зеленых стрелок вверх и вниз. Конечно, вым следует оставить фоновый слой в нижней части стека.</p>
+<p>Щелчки на глазе рядом со слоем включают-отключают его видимость на диаграмме. Как правило, вы создаете каждый слой по отдельности, включив только его видимость, затем включаете видимость на всех слоях время от времени, чтобы проверить выравнивание.</p>
+<p>В нашем примере, мы помещаем текстовый объект со словом "DRAFT" на фоновый слой. Мы делаем этот текстовый объект серым с помощью селектора цвета. Затем переходим на новый слой и создаем диаграмму. Если оба слоя будут видимы, то  получится примерно следующее:</p>
+<div style="text-align:center;"><img src="../../../img/dia/draft.png" width="500" height="261" alt="Размещение объектов на слоях" /></div>
+<h2>	6.2. Alignment (Выравнивание)</h2>
+<p>Предположим, что у нас есть несколько небрежно выровненных объектов:</p>
+<div style="text-align:center;"><img src="../../../img/dia/align1.png" width="396" height="315" alt="Выравнивание объектов в Dia" /></div>
+<p>Мы могли бы очень осторожно перемещать их и сделать выровненными. Но лучше обратиться к использованию функций выравнивания. Выберите два левых круга и выполните команду <strong>Объекты ? Выравнивать ? По левому краю</strong> (Shift + Alt + L). Тоже самое нужно сделать для правых кругов. Затем следует выделить пары верхних и нижних и выровнять их по верху или низу.</p>
+<div style="text-align:center;"><img src="../../../img/dia/align2.png" width="353" height="273" alt="Выровненые круги" /></div>
+<h2>	6.3. Selection (Выделение)</h2>
+<p>Очевидными способами выделения являются:</p>
+<ol>
+<li>Щелчок указателем  на объекте.</li>
+<li>Щелчок указателем с зажатой кнопкой Shift на 1 или более объектов.</li>
+<li>Перемещение указателя с зажатой левой кнопкой мыши через объекты, которые требуется выделить. При перемещении видна штрих-линия.</li>
+</ol>
+<p>Но возможно вам захочется чего-нибудь фантастического. В таком случае следует обратить внимание на пункт меню <strong>Выделение</strong>:</p>
+<div style="text-align:center;"><img src="../../../img/dia/select.png" width="254" height="337" alt="Меню Выделение в Dia" /></div>
+<p>Например, применительно к этой схеме, после выделения объекта «А»:</p>
+<div style="text-align:center;"><img src="../../../img/dia/chart_for_select.png" width="444" height="335" alt="Пример схемы" /></div>
+<ul>
+<li><strong>Всё</strong>. Все боксы и линии будут выделены.</li>
+<li><strong>Нет</strong>. Ничего не будет выделено (выделение также снимается с А).</li>
+<li><strong>Обратить</strong>. Выделится всё, за исключением А.</li>
+<li><strong>Связанные</strong>. Выделятся А, L1 и L3, т.к. L1 и L3 непосредственно связаны с А.</li>
+<li><strong>Вложенные</strong>. A, B, C, D, и L1, L2, L3 выделятся, потому что последовательно соединены, вы можете перетягивать каждый из них. E остается не выделенным, т. к. не связан с ними.</li>
+<li><strong>Того же типа</strong>. A, B, C, D, E будут выделены, т.к. они одного и того же типа объектов  Dia (т.е. все они классы объектов UML).</li>
+</ul>
+<p>ПРИМЕЧАНИЕ: Если я когда-нибудь выясню, что делают радиокнопки, я дам вам знать.</p>
+<h2>6.4. Shape Libraries (Библиотеки элементов)</h2>
+<p>Dia поставляется с несколькими библиотеками уже готовых форм. Их также можно использовать для создания собственных.</p>
+<p>Эти библиотеки, конечно, предметно-ориентированные, так что их использование должно быть описано в других контекстах (например, UML должен обсуждаться в руководстве по разработке программного обеспечения). Здесь мы сосредоточимся на механизме использования элементов библиотек.</p>
+<p>Каждая библиотека сохранятся в отдельную директорию везде, где Dia может быть установлен. Например, если Dia расположен в /usr/bin/dia, то нам бы хотелось посмотреть /usr/share/dia.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">/usr/share/dia/
+  dia_logo.<span style="color: black;">png</span>         Dia<span style="color: #483d8b;">'s logo
+  shapes/
+    Flowchart/         objects, in paired files (icon and shape)
+      magdisk.xpm      icon
+      magdisk.shape    shape description
+      ...
+  sheets/      object descriptions in various languages (XML)
+    ER.sheet
+    Flowchart.sheet
+    UML.sheet
+    ...</span></pre></div></p>
+<p>Например, если нас интересует библиотека Flowchart (Блок-схема), в частности  объект magnetic disk, мы находим файл magdisk.shape:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&lt;?</span><span style="color: #dc143c;">xml</span> version=<span style="color: #483d8b;">&quot;1.0&quot;</span><span style="color: #66cc66;">?&gt;</span>
+&nbsp;
+<span style="color: #66cc66;">&lt;</span>shape xmlns=<span style="color: #483d8b;">&quot;http://www.daa.com.au/~james/dia-shape-ns&quot;</span>
+       xmlns:svg=<span style="color: #483d8b;">&quot;http://www.w3.org/TR/2000/03/WD-SVG-20000303/DTD/svg-20000303-stylable.dtd&quot;</span><span style="color: #66cc66;">&gt;</span>
+  <span style="color: #66cc66;">&lt;</span>name<span style="color: #66cc66;">&gt;</span>Flowchart - Magnetic Disk<span style="color: #66cc66;">&lt;</span>/name<span style="color: #66cc66;">&gt;</span>
+  <span style="color: #66cc66;">&lt;</span>description<span style="color: #66cc66;">&gt;</span>Magnetic Disk<span style="color: #66cc66;">&lt;</span>/description<span style="color: #66cc66;">&gt;</span>
+  <span style="color: #66cc66;">&lt;</span>icon<span style="color: #66cc66;">&gt;</span>magdisk.<span style="color: black;">xpm</span><span style="color: #66cc66;">&lt;</span>/icon<span style="color: #66cc66;">&gt;</span>
+  <span style="color: #66cc66;">&lt;</span>connections<span style="color: #66cc66;">&gt;</span>
+    <span style="color: #66cc66;">&lt;</span>point x=<span style="color: #483d8b;">&quot;0&quot;</span>   y=<span style="color: #483d8b;">&quot;2&quot;</span>/<span style="color: #66cc66;">&gt;</span>
+    <span style="color: #66cc66;">&lt;</span>point x=<span style="color: #483d8b;">&quot;2.5&quot;</span> y=<span style="color: #483d8b;">&quot;0.4375&quot;</span>/<span style="color: #66cc66;">&gt;</span>
+    <span style="color: #66cc66;">&lt;</span>point x=<span style="color: #483d8b;">&quot;5&quot;</span>   y=<span style="color: #483d8b;">&quot;0&quot;</span>/<span style="color: #66cc66;">&gt;</span>
+    <span style="color: #66cc66;">&lt;</span>point x=<span style="color: #483d8b;">&quot;7.5&quot;</span> y=<span style="color: #483d8b;">&quot;0.4375&quot;</span>/<span style="color: #66cc66;">&gt;</span>
+    <span style="color: #66cc66;">&lt;</span>point x=<span style="color: #483d8b;">&quot;10&quot;</span>  y=<span style="color: #483d8b;">&quot;0&quot;</span>/<span style="color: #66cc66;">&gt;</span>
+    <span style="color: #66cc66;">&lt;</span>point x=<span style="color: #483d8b;">&quot;0&quot;</span>   y=<span style="color: #483d8b;">&quot;2.5&quot;</span>/<span style="color: #66cc66;">&gt;</span>
+    <span style="color: #66cc66;">&lt;</span>point x=<span style="color: #483d8b;">&quot;0&quot;</span>   y=<span style="color: #483d8b;">&quot;7.5&quot;</span>/<span style="color: #66cc66;">&gt;</span>
+    <span style="color: #66cc66;">&lt;</span>point x=<span style="color: #483d8b;">&quot;0&quot;</span>   y=<span style="color: #483d8b;">&quot;5&quot;</span>/<span style="color: #66cc66;">&gt;</span>
+    <span style="color: #66cc66;">&lt;</span>point x=<span style="color: #483d8b;">&quot;0&quot;</span>   y=<span style="color: #483d8b;">&quot;10&quot;</span>/<span style="color: #66cc66;">&gt;</span>
+    <span style="color: #66cc66;">&lt;</span>point x=<span style="color: #483d8b;">&quot;10&quot;</span>  y=<span style="color: #483d8b;">&quot;2.5&quot;</span>/<span style="color: #66cc66;">&gt;</span>
+    <span style="color: #66cc66;">&lt;</span>point x=<span style="color: #483d8b;">&quot;10&quot;</span>  y=<span style="color: #483d8b;">&quot;5&quot;</span>/<span style="color: #66cc66;">&gt;</span>
+    <span style="color: #66cc66;">&lt;</span>point x=<span style="color: #483d8b;">&quot;10&quot;</span>  y=<span style="color: #483d8b;">&quot;7.5&quot;</span>/<span style="color: #66cc66;">&gt;</span>
+    <span style="color: #66cc66;">&lt;</span>point x=<span style="color: #483d8b;">&quot;10&quot;</span>  y=<span style="color: #483d8b;">&quot;10&quot;</span>/<span style="color: #66cc66;">&gt;</span>
+    <span style="color: #66cc66;">&lt;</span>point x=<span style="color: #483d8b;">&quot;2.5&quot;</span> y=<span style="color: #483d8b;">&quot;11.5625&quot;</span>/<span style="color: #66cc66;">&gt;</span>
+    <span style="color: #66cc66;">&lt;</span>point x=<span style="color: #483d8b;">&quot;5&quot;</span>   y=<span style="color: #483d8b;">&quot;12&quot;</span>/<span style="color: #66cc66;">&gt;</span>
+    <span style="color: #66cc66;">&lt;</span>point x=<span style="color: #483d8b;">&quot;7.5&quot;</span> y=<span style="color: #483d8b;">&quot;11.5625&quot;</span>/<span style="color: #66cc66;">&gt;</span>
+  <span style="color: #66cc66;">&lt;</span>/connections<span style="color: #66cc66;">&gt;</span>
+  <span style="color: #66cc66;">&lt;</span>textbox x1=<span style="color: #483d8b;">&quot;0&quot;</span> y1=<span style="color: #483d8b;">&quot;4&quot;</span> x2=<span style="color: #483d8b;">&quot;10&quot;</span> y2=<span style="color: #483d8b;">&quot;10&quot;</span>/<span style="color: #66cc66;">&gt;</span>
+  <span style="color: #66cc66;">&lt;</span>svg:svg width=<span style="color: #483d8b;">&quot;10&quot;</span> height=<span style="color: #483d8b;">&quot;12&quot;</span><span style="color: #66cc66;">&gt;</span>
+    <span style="color: #66cc66;">&lt;</span>svg:path d=<span style="color: #483d8b;">&quot;M 0,2 c 2,-1.5 3,-2 5,-2 s 3,0.5 5,2 v 8
+                 c -2,1.5 -3,2 -5,2 s -3,-0.5 -5,-2 v -8 z
+                 M 0,2 c 2,1.5 3,2 5,2 s 3,-0.5 5,-2&quot;</span> style=<span style="color: #483d8b;">&quot;fill: default&quot;</span>/<span style="color: #66cc66;">&gt;</span>
+  <span style="color: #66cc66;">&lt;</span>/svg:svg<span style="color: #66cc66;">&gt;</span>
+<span style="color: #66cc66;">&lt;</span>/shape<span style="color: #66cc66;">&gt;</span></pre></div></p>
+<p>Примечание:</p>
+<ul>
+<li>Название значений элементов описано в строках файла Flowchart.sheet</li>
+</ul>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&lt;</span>object name=<span style="color: #483d8b;">&quot;Flowchart - Magnetic Disk&quot;</span><span style="color: #66cc66;">&gt;</span>
+      <span style="color: #66cc66;">&lt;</span>description <span style="color: #dc143c;">xml</span>:lang=<span style="color: #483d8b;">&quot;no&quot;</span><span style="color: #66cc66;">&gt;</span>Magnetdisk<span style="color: #66cc66;">&lt;</span>/description<span style="color: #66cc66;">&gt;</span>
+      <span style="color: #66cc66;">&lt;</span>description <span style="color: #dc143c;">xml</span>:lang=<span style="color: #483d8b;">&quot;fr&quot;</span><span style="color: #66cc66;">&gt;</span>Disque Magnйtique<span style="color: #66cc66;">&lt;</span>/description<span style="color: #66cc66;">&gt;</span>
+      <span style="color: #66cc66;">&lt;</span>description <span style="color: #dc143c;">xml</span>:lang=<span style="color: #483d8b;">&quot;de&quot;</span><span style="color: #66cc66;">&gt;</span>Magnetdisk<span style="color: #66cc66;">&lt;</span>/description<span style="color: #66cc66;">&gt;</span>
+      <span style="color: #66cc66;">&lt;</span>description<span style="color: #66cc66;">&gt;</span>Magnetic Disk<span style="color: #66cc66;">&lt;</span>/description<span style="color: #66cc66;">&gt;</span>
+    <span style="color: #66cc66;">&lt;</span>/object<span style="color: #66cc66;">&gt;</span></pre></div></p>
+<p>Таким образом, мы получаем подсказки для каждого конкретного языка.</p>
+<ul>
+<li>Значение icon есть имя файла значка, отображаемого в главном окне программы.</li>
+<li>Форма описана на Scalable Vector Graphics (SVG): ширина/высота и путь.</li>
+<li>Местонахождение точек соединения дается в контексте ширины и высоты. Вы можете добавить другие точки соединения, если хотите.</li>
+<li>Связанное текстовое поле также определяется в контексте ширины и высоты. В оригинале оно находится под объектом magdisk. При желании вы можете ее передвинуть к центру объекта magdisk.</li>
+</ul>
+<p>Вы можете делать ваши собственные библиотеки и формы, следуя за приведенными выше шаблонами.</p>
+<p>Некоторые формы библиотек (например, UML) имеют связанную обработку и поэтому имеют не просто .shape-файл. Создание собственной библиотеки-с-обработкой требует разборки кода на языке C, что выходит за рамки этого руководства. (Возможно, встроенный Python будет поддерживаться в будущем, что упростит и это приключение.) <em>ПП: кажется это уже свершилось</em>.</p>
+  </div>
+    </div>
+  </body>
+</html>

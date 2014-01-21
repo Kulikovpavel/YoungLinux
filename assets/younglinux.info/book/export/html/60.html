@@ -1,0 +1,480 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Реализация известных алгоритмов на языке программирования Python</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+        
+    <div id="node-60" class="section-1">
+  <h1 class="book-heading">Реализация известных алгоритмов на языке программирования Python</h1>
+    <div id="node-61" class="section-2">
+  <h1 class="book-heading">Алгоритм Евклида (нахождение наибольшего общего делителя)</h1>
+  <p><strong>Алгоритм Евклида</strong> – это алгоритм нахождения наибольшего общего делителя (НОД) пары целых чисел.<br />
+<strong>Наибольший общий делитель (НОД)</strong> – это число, которое делит без остатка два числа и делится само без остатка на любой другой делитель данных двух чисел. Проще говоря, это самое большое число, на которое можно без остатка разделить два числа, для которых ищется НОД.</p>
+<h2>Описание алгоритма нахождения НОД делением</h2>
+<ol>
+<li>Большее число делим на меньшее.</li>
+<li>Если делится без остатка, то меньшее число и есть НОД (следует выйти из цикла).</li>
+<li>Если есть остаток, то большее число заменяем на остаток от деления.</li>
+<li>Переходим к пункту 1.</li>
+</ol>
+<p><strong>Пример:</strong><br />
+Найти НОД для 30 и 18.<br />
+30/18 = 1 (остаток 12)<br />
+18/12 = 1 (остаток 6)<br />
+12/6 = 2 (остаток 0). Конец: НОД – это делитель. НОД (30, 18) = 6</p>
+<h2>Исходный код на Python</h2>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">a = 50
+b = 130
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">while</span> a<span style="color: #66cc66;">!</span>=0 <span style="color: #ff7700;font-weight:bold;">and</span> b<span style="color: #66cc66;">!</span>=0:
+    <span style="color: #ff7700;font-weight:bold;">if</span> a <span style="color: #66cc66;">&gt;</span> b:
+        a = a <span style="color: #66cc66;">%</span> b
+    <span style="color: #ff7700;font-weight:bold;">else</span>:
+        b = b <span style="color: #66cc66;">%</span> a
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>a+b<span style="color: black;">&#41;</span></pre></div><br />
+<strong>Примечание к коду.</strong> В цикле в a или b записывается остаток от деления. Когда остатка нет (мы не знаем в а он или b, поэтому проверяем оба условия), то цикл завершается. В конце выводится сумма a и b, т.к. мы не знаем, в какой переменной записан НОД, а в одной из них в любом случае 0, который на результат суммы никак не влияет.</p>
+<h2>Описание алгоритма нахождения НОД вычитанием</h2>
+<ol>
+<li>Из большего числа вычитаем меньшее.</li>
+<li>Если получается 0, то значит, что числа равны друг другу и являются НОД (следует выйти из цикла).</li>
+<li>Если результат вычитания не равен 0, то большее число заменяем на результат вычитания.</li>
+<li>Переходим к пункту 1.</li>
+</ol>
+<p><strong>Пример:</strong><br />
+Найти НОД для 30 и 18.<br />
+30 - 18 = 12<br />
+18 - 12 = 6<br />
+12 - 6 = 6<br />
+6 – 6 = 0 Конец: НОД – это уменьшаемое или вычитаемое. НОД (30, 18) = 6</p>
+<h2>Исходный код на Python</h2>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">a = 50
+b = 130
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">while</span> a <span style="color: #66cc66;">!</span>= b:
+    <span style="color: #ff7700;font-weight:bold;">if</span> a <span style="color: #66cc66;">&gt;</span> b:
+        a = a - b
+    <span style="color: #ff7700;font-weight:bold;">else</span>:
+        b = b - a
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>a<span style="color: black;">&#41;</span></pre></div></p>
+<h2>Оформление кода в виде функции</h2>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">def</span> gcd<span style="color: black;">&#40;</span>a,b<span style="color: black;">&#41;</span>:
+    <span style="color: #ff7700;font-weight:bold;">while</span> a <span style="color: #66cc66;">!</span>= b:
+        <span style="color: #ff7700;font-weight:bold;">if</span> a <span style="color: #66cc66;">&gt;</span> b:
+            a = a - b
+        <span style="color: #ff7700;font-weight:bold;">else</span>:
+            b = b - a        
+    <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>a<span style="color: black;">&#41;</span></pre></div></p>
+<h2>Блок-схема "Алгоритм Евклида"</h2>
+<div style="text-align:center;"><img src="../../../img/algorithm/gcd.png" width="408" height="430" alt="Блок-схема к алгоритму `Алгоритм Евклида`" /></div>
+  </div>
+<div id="node-62" class="section-2">
+  <h1 class="book-heading">Анализ выборки</h1>
+  <h2>Описание задачи</h2>
+<p>Часто требуется проанализировать какой-то ряд значений и определить количество значений,  попавших  в каждый определенный диапазон. Например, дан список, содержащий 1000 значений натуральных чисел в диапазоне от 1 до 100. Требуется подсчитать, сколько значений попало в диапазоны от 1 до 20, от 21 до 30, от 31 до 40 и т.д. Полученный таким образом результат можно использовать для построения графиков и диаграмм частот встречаемости значений.</p>
+<h2>Пример исходного кода на Python</h2>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #808080; font-style: italic;">#анализируемый список (можно подставить другой)</span>
+a = <span style="color: black;">&#91;</span>3,5,7,3,8,1,8,0,7,3,2,4,6,8,5,4,3,3,6,5,7,8,9,5,3,2,3<span style="color: black;">&#93;</span>
+&nbsp;
+bottom = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;нижняя граница: &quot;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+top = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;верхняя граница: &quot;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+interval = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;интервал: &quot;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #808080; font-style: italic;">#количество интервалов</span>
+num_interval = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: black;">&#40;</span>top - bottom<span style="color: black;">&#41;</span> / interval<span style="color: black;">&#41;</span>
+&nbsp;
+top = bottom <span style="color: #808080; font-style: italic;">#опускаем верхнюю границу до нижней</span>
+<span style="color: #ff7700;font-weight:bold;">for</span> i <span style="color: #ff7700;font-weight:bold;">in</span> <span style="color: #008000;">range</span><span style="color: black;">&#40;</span>num_interval<span style="color: black;">&#41;</span>: <span style="color: #808080; font-style: italic;">#выполняется подсчет значений для каждого интервала</span>
+    bottom = top <span style="color: #808080; font-style: italic;">#сдвиг нижней границы к верхней</span>
+    top = top + interval <span style="color: #808080; font-style: italic;">#сдвиг верхней границы на величину интервала</span>
+    <span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;От&quot;</span>,bottom,<span style="color: #483d8b;">&quot;до&quot;</span>,top<span style="color: black;">&#41;</span>
+    calculator = <span style="color: #ff4500;">0</span> <span style="color: #808080; font-style: italic;">#счетчик для подсчета количества значений в текущем интервале</span>
+    <span style="color: #ff7700;font-weight:bold;">for</span> j <span style="color: #ff7700;font-weight:bold;">in</span> a: <span style="color: #808080; font-style: italic;">#проверяется каждый элемент в списка ...</span>
+        <span style="color: #ff7700;font-weight:bold;">if</span> bottom <span style="color: #66cc66;">&lt;</span>= j <span style="color: #66cc66;">&lt;</span> top: <span style="color: #808080; font-style: italic;">#на вхождение в текущий интервал, в случае успеха ...</span>
+            calculator += <span style="color: #ff4500;">1</span> <span style="color: #808080; font-style: italic;">#увеличение значения счетчика</span>
+    <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>calculator,<span style="color: #483d8b;">&quot;значений <span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: black;">&#41;</span></pre></div></p>
+  </div>
+<div id="node-63" class="section-2">
+  <h1 class="book-heading">Вычисление факториала на языке программирования Python</h1>
+  <p><strong>Факториалом числа</strong> называют произведение всех натуральных чисел до него включительно. Например, факториал числа 5 равен произведению 1*2*3*4*5 = 120. Формулу нахождения факториала можно записать следующим образом: <strong>n! = 1 * 2 * … * n</strong>, где n – это число, а n! – факториал этого числа.<br />
+Можно записать немного по-другому: <strong>n! = 1 * … * (n-2) * (n-1) * n</strong>, т.е. каждое предыдущее число меньше на единицу, чем последующее. Нахождение факториала числа по первой формуле можно реализовать с помощью цикла while, а по второй формуле – с помощью рекурсии.</p>
+<h2>Исходный код на Python с использованием цикла</h2>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">n = <span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Факториал числа &quot;</span><span style="color: black;">&#41;</span> 
+n = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span>n<span style="color: black;">&#41;</span> 
+fac = 1 
+i = 0 
+<span style="color: #ff7700;font-weight:bold;">while</span> i <span style="color: #66cc66;">&lt;</span> n:
+     i += 1
+     fac = fac <span style="color: #66cc66;">*</span> i 
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;равен&quot;</span>,fac<span style="color: black;">&#41;</span></pre></div><br />
+Предположим, что в переменная <span class="monoi">n</span> была связана с числом 5. Т.е. надо найти 5!.</p>
+<p>Первых проход по телу цикла <strong>while</strong> свяжет переменную <span class="monoi">fac</span> с произведением 1 * 1. Второй - 1 * 2, затем 2 * 3, 6 * 4, 24 * 5. Шестой раз цикл <strong>while</strong> выполняться не будет, т.к. значение переменной <span class="monoi">i</span> будет равно 5 и выражение i &lt; n вернет <strong>false</strong>.</p>
+<h2>Исходный код на Python с использованием рекурсии</h2>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">def</span> fac<span style="color: black;">&#40;</span>n<span style="color: black;">&#41;</span>:
+     <span style="color: #ff7700;font-weight:bold;">if</span> n == 0:
+          <span style="color: #ff7700;font-weight:bold;">return</span> 1
+     <span style="color: #ff7700;font-weight:bold;">return</span> fac<span style="color: black;">&#40;</span>n-<span style="color: #ff4500;">1</span><span style="color: black;">&#41;</span> <span style="color: #66cc66;">*</span> n</pre></div></p>
+<p>0 шаг. Вызов функции: fac(5)<br />
+1. fac(5) возвращает fac(4) * 5<br />
+2. fac(4) => fac(3) * 4<br />
+3. fac(3) => fac(2) * 3<br />
+4. fac(2) => fac(1) * 2<br />
+5. fac(1) => 1<br />
+6. 1 * 2 - возврат в вызов fac(2)<br />
+7. 2 * 3 - fac(3)<br />
+8. 6 * 4 - fac(4)<br />
+9. 24 * 5 – fac(5)<br />
+10. Возврат в основную ветку программы значения 120.</p>
+  </div>
+<div id="node-64" class="section-2">
+  <h1 class="book-heading">Двоичный (бинарный) поиск элемента в массиве</h1>
+  <p><strong>Двоичный поиск значения</strong> в списке (или массиве) используется для упорядоченных последовательностей (отсортированных по возрастанию или убыванию). Заключается такой поиск в определении, содержит ли массив определенное значение, а также определение места его нахождения.</p>
+<h2>Описание алгоритма</h2>
+<ol>
+<li>Находится средний элемент последовательности. Для этого первый и последний элементы связываются с переменными, а средний вычисляется.</li>
+<li>Средний элемент сравнивается с искомым значение. В зависимости от того, больше оно или меньше среднего элемента, дальнейший поиск будет происходить лишь в левой или правой половинах массива. Если значение среднего элемента окажется равным искомому, то поиск завершен.</li>
+<li>Одна из границ исследуемой последовательности становится равной предыдущему или последующему среднему элементу из п.2.</li>
+<li>Снова находится средний элемент, теперь уже в «выбранной» половине. Описанный выше алгоритм повторяется уже для данной последовательности.</li>
+</ol>
+<h2>Исходный код на Python</h2>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">li = <span style="color: black;">&#91;</span>0,3,5,7,10,20,28,30,45,56<span style="color: black;">&#93;</span>
+x = 45
+i = 0
+j = <span style="color: #008000;">len</span><span style="color: black;">&#40;</span>li<span style="color: black;">&#41;</span>-1
+m = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span>j/2<span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">while</span> li<span style="color: black;">&#91;</span>m<span style="color: black;">&#93;</span> <span style="color: #66cc66;">!</span>= x <span style="color: #ff7700;font-weight:bold;">and</span> i <span style="color: #66cc66;">&lt;</span> j:
+    <span style="color: #ff7700;font-weight:bold;">if</span> x <span style="color: #66cc66;">&gt;</span> li<span style="color: black;">&#91;</span>m<span style="color: black;">&#93;</span>:
+        i = m+1
+    <span style="color: #ff7700;font-weight:bold;">else</span>:
+        j = m-1
+    m = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: black;">&#40;</span>i+j<span style="color: black;">&#41;</span>/2<span style="color: black;">&#41;</span>
+&nbsp;
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">if</span> i <span style="color: #66cc66;">&gt;</span> j:
+    <span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'Элемент не найден'</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">else</span>:
+    <span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'Индекс элемента: '</span>, m<span style="color: black;">&#41;</span></pre></div></p>
+  </div>
+<div id="node-426" class="section-2">
+  <h1 class="book-heading">Замена элементов в списке</h1>
+  <p>Заменить в списке элементы с одним значением на другое. </p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #808080; font-style: italic;"># Замена элементов в списке.</span>
+<span style="color: #808080; font-style: italic;"># Демонстрация использования методов списка.</span>
+&nbsp;
+lst = <span style="color: black;">&#91;</span>10, 45, 24, 43, 89, 15, 16, 23, 89, 23, 35, 64, 21, 12, 45<span style="color: black;">&#93;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span>lst<span style="color: black;">&#41;</span>
+item = <span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'Еnter item: '</span><span style="color: black;">&#41;</span>
+item = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span>item<span style="color: black;">&#41;</span>
+item1 = <span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'Еnter new item: '</span><span style="color: black;">&#41;</span>
+item1 = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span>item1<span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #808080; font-style: italic;">#~ j = 0 </span>
+<span style="color: #808080; font-style: italic;">#~ for i in lst:</span>
+	<span style="color: #808080; font-style: italic;">#~ if i == item:</span>
+		<span style="color: #808080; font-style: italic;">#~ lst.remove(i)</span>
+		<span style="color: #808080; font-style: italic;">#~ lst.insert(j,item1)	</span>
+	<span style="color: #808080; font-style: italic;">#~ j += 1</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">for</span> i <span style="color: #ff7700;font-weight:bold;">in</span> lst:
+	<span style="color: #ff7700;font-weight:bold;">if</span> i == item:
+		j = lst.<span style="color: black;">index</span><span style="color: black;">&#40;</span>i<span style="color: black;">&#41;</span>
+		<span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span>j<span style="color: black;">&#41;</span>
+		lst.<span style="color: black;">remove</span><span style="color: black;">&#40;</span>i<span style="color: black;">&#41;</span>
+		lst.<span style="color: black;">insert</span><span style="color: black;">&#40;</span>j,item1<span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span>lst<span style="color: black;">&#41;</span></pre></div></p>
+  </div>
+<div id="node-66" class="section-2">
+  <h1 class="book-heading">Перевод чисел из десятичной системы счисления в двоичную</h1>
+  <p>Один из алгоритмов получения двоичного числа из десятичного можно описать следующим образом:</p>
+<ol>
+<li>Исходное десятичное число делится на два (основание двоичной системы счисления).</li>
+<li>В одну переменную записывается частное в виде целого числа, в другую – остаток в виде строки (если остатка нет, то записывается ноль).</li>
+<li>Если частное не было равно нулю, то оно снова делится на два. Переменная, связанная со старым частным связывается с новым (прежнее частное теряется). Новый остаток с помощью операции конкатенации добавляется в начало строковой переменной, где хранятся остатки. </li>
+<li>П. 3 продолжает повторяться до тех пор, пока частное не станет равно нулю.</li>
+<li>Остатки от деления, записанные в обратном порядке, представляют собой двоичное представление заданного десятичного числа.</li>
+</ol>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">x = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Введите натуральное число: &quot;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+n = <span style="color: #483d8b;">&quot;&quot;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">while</span> x <span style="color: #66cc66;">&gt;</span> 0:
+    y = <span style="color: #008000;">str</span><span style="color: black;">&#40;</span>x <span style="color: #66cc66;">%</span> 2<span style="color: black;">&#41;</span>
+    n = y + n
+    x = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span>x / 2<span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>n<span style="color: black;">&#41;</span></pre></div></p>
+  </div>
+<div id="node-67" class="section-2">
+  <h1 class="book-heading">Пересечение списков</h1>
+  <p>Если даны два списка и необходимо найти их совпадающие элементы (<strong>область пересечения списков</strong>), т.е. значения элементов, которые присутствуют в обоих списках, то это легко можно сделать с помощью цикла <strong>for</strong> языка программирования Python.</p>
+<p>Код ниже подходит для списков, содержащих неповторяющиеся значения в самих себе. Иначе в результирующем списке могут появиться одинаковые элементы.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">a = <span style="color: black;">&#91;</span><span style="color: #ff4500;">5</span>,<span style="color: black;">&#91;</span><span style="color: #ff4500;">1</span>,<span style="color: #ff4500;">2</span><span style="color: black;">&#93;</span>,<span style="color: #ff4500;">2</span>,<span style="color: #483d8b;">'r'</span>,<span style="color: #ff4500;">4</span>,<span style="color: #483d8b;">'ee'</span><span style="color: black;">&#93;</span>
+b = <span style="color: black;">&#91;</span><span style="color: #ff4500;">4</span>,<span style="color: #ff4500;">1</span>,<span style="color: #483d8b;">'we'</span>,<span style="color: #483d8b;">'ee'</span>,<span style="color: #ff4500;">2</span>,<span style="color: #483d8b;">'r'</span>,<span style="color: black;">&#91;</span>1,2<span style="color: black;">&#93;</span><span style="color: black;">&#93;</span>
+c = <span style="color: black;">&#91;</span><span style="color: black;">&#93;</span>
+<span style="color: #ff7700;font-weight:bold;">for</span> i <span style="color: #ff7700;font-weight:bold;">in</span> a:
+    <span style="color: #ff7700;font-weight:bold;">for</span> j <span style="color: #ff7700;font-weight:bold;">in</span> b:
+        <span style="color: #ff7700;font-weight:bold;">if</span> i == j:
+            c.<span style="color: black;">append</span><span style="color: black;">&#40;</span>i<span style="color: black;">&#41;</span>
+            <span style="color: #ff7700;font-weight:bold;">break</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>c<span style="color: black;">&#41;</span></pre></div></p>
+<p>Алгоритм поиска очень прост. Берется первый элемент первого списка (внешний цикл <strong>for</strong>) и последовательно сравнивается с каждым элементом второго списка (вложенный цикл <strong>for</strong>). В случае совпадения (равенства) значений элемент добавляется в третий список <span class="monoi">c</span>, который был создан до этого. Команда <strong>break</strong> служит для выхода из внутреннего цикла, т.к. в случае совпадения дальнейший поиск при данном значении <span class="monoi">i</span> бессмысленный.</p>
+<h3>Использование операций над множествами</h3>
+<p>	Другой, возможно более интересный, способ – это использование множеств. </p>
+<p>	Множества не могут содержать одинаковых элементов. Результатом операции пересечения двух множеств является множество, содержащее значения элементов, которые были и в первом и во втором операндах-множествах. Например, если первое множество было {1, 4, 9, 12}, а второе – {4, 6, 9, 14, 18}, то результатом операции пересечения будет {4, 9}.</p>
+<p>	Поскольку даны списки, то их можно преобразовать во множества с помощью функции <strong>set</strong>.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">a = <span style="color: black;">&#91;</span><span style="color: #ff4500;">5</span>,<span style="color: black;">&#91;</span><span style="color: #ff4500;">1</span>,<span style="color: #ff4500;">2</span><span style="color: black;">&#93;</span>,<span style="color: #ff4500;">2</span>,<span style="color: #483d8b;">'r'</span>,<span style="color: #ff4500;">4</span>,<span style="color: #483d8b;">'ee'</span><span style="color: black;">&#93;</span>
+b = <span style="color: black;">&#91;</span><span style="color: #ff4500;">4</span>,<span style="color: #ff4500;">1</span>,<span style="color: #483d8b;">'we'</span>,<span style="color: #483d8b;">'ee'</span>,<span style="color: #ff4500;">2</span>,<span style="color: #483d8b;">'r'</span>,<span style="color: black;">&#91;</span>1,2<span style="color: black;">&#93;</span><span style="color: black;">&#93;</span>
+a = <span style="color: #008000;">set</span><span style="color: black;">&#40;</span>a<span style="color: black;">&#41;</span>
+b = <span style="color: #008000;">set</span><span style="color: black;">&#40;</span>b<span style="color: black;">&#41;</span></pre></div></p>
+<p>При этом если в списках встречались одинаковые значения, то во множествах они будут уже представлены единственным вариантом. Поэтому в данном случае списки могут содержать одинаковые значения.</p>
+<p>	Если проверить тип данных, на которые ссылаются переменные <span class="monoi">a</span> и <span class="monoi">b</span> до использования функции <strong>set</strong>, то они, очевидно, будут типом <strong>list</strong>. После преобразования – уже типом <strong>set</strong>. Это можно проверить с помощью функции <strong>type</strong>.</p>
+<p>	После того, как списки были преобразованы во множества, над ними можно выполнить операцию пересечения, а результат связать с переменной.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">c = a <span style="color: #66cc66;">&amp;</span> b</pre></div></p>
+<p>	С помощью знака <strong>&amp;</strong> выполняется пересечение множеств. Кроме того, над множествами можно выполнять ряд других операций: <strong>|</strong> (объединение), <strong>-</strong> (разность), <strong>^</strong> (исключающее ИЛИ).</p>
+<p>	Переменная <span class="monoi">c</span> будет содержать только уникальные значения элементов, однако будет множеством. Требуется же получить список. Для этого можно использовать функцию <strong>list</strong>, выполняющую создание списка.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">c = <span style="color: #008000;">list</span><span style="color: black;">&#40;</span>c<span style="color: black;">&#41;</span></pre></div></p>
+<p>	Все вышесказанное можно записать короче:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">c = <span style="color: #008000;">list</span><span style="color: black;">&#40;</span><span style="color: #008000;">set</span><span style="color: black;">&#40;</span>a<span style="color: black;">&#41;</span> <span style="color: #66cc66;">&amp;</span> <span style="color: #008000;">set</span><span style="color: black;">&#40;</span>b<span style="color: black;">&#41;</span><span style="color: black;">&#41;</span></pre></div></p>
+  </div>
+<div id="node-68" class="section-2">
+  <h1 class="book-heading">Решето Эратосфена - алгоритм определения простых чисел</h1>
+  <h2>Описание алгоритма</h2>
+<p><strong>Решето Эратосфена</strong> – это алгоритм нахождения простых чисел до заданного числа n. В процессе выполнения данного алгоритма постепенно отсеиваются составные числа, кратные простым, начиная с 2. </p>
+<h2>Исходный код на Python</h2>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">n = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;вывод простых чисел до числа ... &quot;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span>
+a = <span style="color: black;">&#91;</span><span style="color: #ff4500;">0</span><span style="color: black;">&#93;</span> <span style="color: #66cc66;">*</span> n <span style="color: #808080; font-style: italic;"># создание массива с n количеством элементов</span>
+<span style="color: #ff7700;font-weight:bold;">for</span> i <span style="color: #ff7700;font-weight:bold;">in</span> <span style="color: #008000;">range</span><span style="color: black;">&#40;</span>n<span style="color: black;">&#41;</span>: <span style="color: #808080; font-style: italic;"># заполнение массива ...</span>
+    a<span style="color: black;">&#91;</span>i<span style="color: black;">&#93;</span> = i <span style="color: #808080; font-style: italic;"># значениями от 0 до n-1</span>
+&nbsp;
+<span style="color: #808080; font-style: italic;"># вторым элементом является единица, которую не считают простым числом</span>
+<span style="color: #808080; font-style: italic;"># забиваем ее нулем.</span>
+a<span style="color: black;">&#91;</span><span style="color: #ff4500;">1</span><span style="color: black;">&#93;</span> = <span style="color: #ff4500;">0</span>
+&nbsp;
+m = <span style="color: #ff4500;">2</span> <span style="color: #808080; font-style: italic;"># замена на 0 начинается с 3-го элемента (первые два уже нули)</span>
+<span style="color: #ff7700;font-weight:bold;">while</span> m <span style="color: #66cc66;">&lt;</span> n: <span style="color: #808080; font-style: italic;"># перебор всех элементов до заданного числа</span>
+    <span style="color: #ff7700;font-weight:bold;">if</span> a<span style="color: black;">&#91;</span>m<span style="color: black;">&#93;</span> <span style="color: #66cc66;">!</span>= <span style="color: #ff4500;">0</span>: <span style="color: #808080; font-style: italic;"># если он не равен нулю, то</span>
+        j = m <span style="color: #66cc66;">*</span> <span style="color: #ff4500;">2</span> <span style="color: #808080; font-style: italic;"># увеличить в два раза (текущий элемент простое число)</span>
+        <span style="color: #ff7700;font-weight:bold;">while</span> j <span style="color: #66cc66;">&lt;</span> n:
+            a<span style="color: black;">&#91;</span>j<span style="color: black;">&#93;</span> = <span style="color: #ff4500;">0</span> <span style="color: #808080; font-style: italic;"># заменить на 0</span>
+            j = j + m <span style="color: #808080; font-style: italic;"># перейти в позицию на m больше</span>
+    m += <span style="color: #ff4500;">1</span>
+&nbsp;
+<span style="color: #808080; font-style: italic;"># вывод простых чисел на экран (может быть реализован как угодно)</span>
+b = <span style="color: black;">&#91;</span><span style="color: black;">&#93;</span>
+<span style="color: #ff7700;font-weight:bold;">for</span> i <span style="color: #ff7700;font-weight:bold;">in</span> a:
+    <span style="color: #ff7700;font-weight:bold;">if</span> a<span style="color: black;">&#91;</span>i<span style="color: black;">&#93;</span> <span style="color: #66cc66;">!</span>= 0:
+        b.<span style="color: black;">append</span><span style="color: black;">&#40;</span>a<span style="color: black;">&#91;</span>i<span style="color: black;">&#93;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">del</span> a
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>b<span style="color: black;">&#41;</span></pre></div></p>
+<h2>Блок-схема</h2>
+<div style="text-align:center;"><img src="../../../img/algorithm/sieve.png" width="453" height="685" alt="Блок-схема к алгоритму `Решето Эратосфена`" /></div>
+  </div>
+<div id="node-69" class="section-2">
+  <h1 class="book-heading">Сортировка выбором (поиск минимума и перестановка)</h1>
+  <h2>Описание алгоритма</h2>
+<ol>
+<li>Найти наименьшее значение в исходном множестве.</li>
+<li>Записать его в начало множества, а первый элемент - на место наименьшего.</li>
+<li>Снова найти наименьший элемент в оставшемся множестве и переместить его на второе место. Второй элемент при этом перемещается на освободившееся место.</li>
+<li>Продолжать выполнять поиcк и обмен, пока не будет достигнут конец множества.</li>
+</ol>
+<h2>Исходный код на Python</h2>
+<p><strong>Как найти наименьшее значение в списке?</strong></p>
+<h3><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">s = <span style="color: black;">&#91;</span><span style="color: #ff4500;">2</span>,<span style="color: #ff4500;">4</span>,<span style="color: #ff4500;">1</span>,<span style="color: #ff4500;">3</span><span style="color: black;">&#93;</span>  <span style="color: #808080; font-style: italic;">#подопытный список </span>
+&nbsp;
+m = <span style="color: #ff4500;">0</span>   <span style="color: #808080; font-style: italic;">#индекс первого элемента</span>
+i = <span style="color: #ff4500;">1</span>     <span style="color: #808080; font-style: italic;">#индекс второго элемента </span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">while</span> i <span style="color: #66cc66;">&lt;</span> <span style="color: #008000;">len</span><span style="color: black;">&#40;</span>s<span style="color: black;">&#41;</span>: <span style="color: #808080; font-style: italic;">#пока индекс меньше длины строки</span>
+   <span style="color: #ff7700;font-weight:bold;">if</span> s<span style="color: black;">&#91;</span>i<span style="color: black;">&#93;</span> <span style="color: #66cc66;">&lt;</span> s<span style="color: black;">&#91;</span>m<span style="color: black;">&#93;</span>: <span style="color: #808080; font-style: italic;"># если значение под индексом i меньше, чем под m,</span>
+        m = i <span style="color: #808080; font-style: italic;"># то присвоить m индекс i</span>
+    i += <span style="color: #ff4500;">1</span> <span style="color: #808080; font-style: italic;"># увеличить i на единицу </span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>s<span style="color: black;">&#91;</span>m<span style="color: black;">&#93;</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># вывести значение элемента под индексом m</span></pre></div></h3>
+<p>Обратите внимание на строку while i &lt; len(s):. Не нужно писать &lt;=, т.к. индексация начинается с нуля. Это значит, что когда i равен 3, то мы обращаемся к 4-му элементу списка (в примере, это как раз конец строки).<br />
+<strong>Как поменять два значения в списке местами?</strong></p>
+<h3><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">s = <span style="color: black;">&#91;</span><span style="color: #ff4500;">2</span>,<span style="color: #ff4500;">4</span>,<span style="color: #ff4500;">9</span>,<span style="color: #ff4500;">1</span>,<span style="color: #ff4500;">3</span>,<span style="color: #ff4500;">7</span>,<span style="color: #ff4500;">5</span><span style="color: black;">&#93;</span>  <span style="color: #808080; font-style: italic;">#подопытный список</span>
+<span style="color: #808080; font-style: italic;"># требуется поменять местами первый и четвертый элементы</span>
+m = <span style="color: #ff4500;">0</span>   <span style="color: #808080; font-style: italic;">#индекс первого элемента</span>
+i = <span style="color: #ff4500;">3</span>   <span style="color: #808080; font-style: italic;">#индекс четвертого элемента </span>
+&nbsp;
+t = s<span style="color: black;">&#91;</span>m<span style="color: black;">&#93;</span> <span style="color: #808080; font-style: italic;"># сохраняется значение под индексом m</span>
+s<span style="color: black;">&#91;</span>m<span style="color: black;">&#93;</span> = s<span style="color: black;">&#91;</span>i<span style="color: black;">&#93;</span> <span style="color: #808080; font-style: italic;"># на его место записывается значение под индексом i</span>
+s<span style="color: black;">&#91;</span>i<span style="color: black;">&#93;</span> = t <span style="color: #808080; font-style: italic;"># на место значения под индексом i записывается ранее сохраненное значение под индексом m </span></pre></div></h3>
+<p><strong>Полный алгоритм сортировки выбором</strong></p>
+<h3><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">s = <span style="color: black;">&#91;</span>2,4,8,1,0,3,9,5,7,6<span style="color: black;">&#93;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>s<span style="color: black;">&#41;</span> 
+&nbsp;
+<span style="color: #808080; font-style: italic;">#в переменной k хранится индекс элемента, подлежащего обмену (двигаемся слева на право)</span>
+k = 0
+<span style="color: #ff7700;font-weight:bold;">while</span> k <span style="color: #66cc66;">&lt;</span> <span style="color: #008000;">len</span><span style="color: black;">&#40;</span>s<span style="color: black;">&#41;</span> - <span style="color: #ff4500;">1</span>: <span style="color: #808080; font-style: italic;">#-1, т.к. последний элемент обменивать уже не надо</span>
+    m = k <span style="color: #808080; font-style: italic;">#в m хранится минимальное значение</span>
+    i = k + <span style="color: #ff4500;">1</span> <span style="color: #808080; font-style: italic;">#откуда начинать поиск минимума (элемент следующий за k)</span>
+    <span style="color: #ff7700;font-weight:bold;">while</span> i <span style="color: #66cc66;">&lt;</span> <span style="color: #008000;">len</span><span style="color: black;">&#40;</span>s<span style="color: black;">&#41;</span>:
+        <span style="color: #ff7700;font-weight:bold;">if</span> s<span style="color: black;">&#91;</span>i<span style="color: black;">&#93;</span> <span style="color: #66cc66;">&lt;</span> s<span style="color: black;">&#91;</span>m<span style="color: black;">&#93;</span>:
+            m = i
+        i += <span style="color: #ff4500;">1</span>
+    t = s<span style="color: black;">&#91;</span>k<span style="color: black;">&#93;</span>
+    s<span style="color: black;">&#91;</span>k<span style="color: black;">&#93;</span> = s<span style="color: black;">&#91;</span>m<span style="color: black;">&#93;</span>
+    s<span style="color: black;">&#91;</span>m<span style="color: black;">&#93;</span> = t
+    k += <span style="color: #ff4500;">1</span> <span style="color: #808080; font-style: italic;">#переходим к следующему значению для обмена </span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span>s<span style="color: black;">&#41;</span> </pre></div></h3>
+<p><strong>Оформление  алгоритма в виде функции и пример использования цикла for</strong></p>
+<h3><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">def</span> mymin<span style="color: black;">&#40;</span>mylist<span style="color: black;">&#41;</span>:
+    <span style="color: #ff7700;font-weight:bold;">for</span> k <span style="color: #ff7700;font-weight:bold;">in</span> <span style="color: #008000;">range</span><span style="color: black;">&#40;</span><span style="color: #008000;">len</span><span style="color: black;">&#40;</span>mylist<span style="color: black;">&#41;</span> - 1<span style="color: black;">&#41;</span>:
+        m = k
+        i = k + 1
+        <span style="color: #ff7700;font-weight:bold;">while</span> i <span style="color: #66cc66;">&lt;</span> <span style="color: #008000;">len</span><span style="color: black;">&#40;</span>mylist<span style="color: black;">&#41;</span>:
+            <span style="color: #ff7700;font-weight:bold;">if</span> mylist<span style="color: black;">&#91;</span>i<span style="color: black;">&#93;</span> <span style="color: #66cc66;">&lt;</span> mylist<span style="color: black;">&#91;</span>m<span style="color: black;">&#93;</span>:
+                m = i
+            i += <span style="color: #ff4500;">1</span>
+        t = mylist<span style="color: black;">&#91;</span>k<span style="color: black;">&#93;</span>
+        mylist<span style="color: black;">&#91;</span>k<span style="color: black;">&#93;</span> = mylist<span style="color: black;">&#91;</span>m<span style="color: black;">&#93;</span>
+        mylist<span style="color: black;">&#91;</span>m<span style="color: black;">&#93;</span> = t</pre></div></h3>
+  </div>
+<div id="node-70" class="section-2">
+  <h1 class="book-heading">Сортировка методом пузырька</h1>
+  <h2>Описание алгоритма</h2>
+<ol>
+<li>Проход по неупорядоченному множеству (например, списку). При этом, если последующий элемент меньше предыдущего, то они меняются местами. В итоге, самый «тяжелый» элемент оказывается в конце множества. Пример: дано: 4, 7, 3, 6, 1 меняем: 7 и 3, затем 7 и 6, затем 7 и 1 результат: 4, 3, 6, 1, 7 </li>
+<li>Проход по множеству, исключая последний элемент, т.к. он уже отсортирован. При проходе обмен меньшего последующего на больший предыдущий.</li>
+<li>Количество проходов по множеству равно количеству элементов минус 1. Последний проход не нужен, т.к. остается один элемент, и его значение меньше остальных. Он «всплыл» в результате предыдущих проходов.</li>
+</ol>
+<h2>Исходный код на Python</h2>
+<h3><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">li = <span style="color: black;">&#91;</span>5,2,7,4,0,9,8,6<span style="color: black;">&#93;</span> 
+n = 1 
+<span style="color: #ff7700;font-weight:bold;">while</span> n <span style="color: #66cc66;">&lt;</span> <span style="color: #008000;">len</span><span style="color: black;">&#40;</span>li<span style="color: black;">&#41;</span>:
+     <span style="color: #ff7700;font-weight:bold;">for</span> i <span style="color: #ff7700;font-weight:bold;">in</span> <span style="color: #008000;">range</span><span style="color: black;">&#40;</span><span style="color: #008000;">len</span><span style="color: black;">&#40;</span>li<span style="color: black;">&#41;</span>-n<span style="color: black;">&#41;</span>:
+          <span style="color: #ff7700;font-weight:bold;">if</span> li<span style="color: black;">&#91;</span>i<span style="color: black;">&#93;</span> <span style="color: #66cc66;">&gt;</span> li<span style="color: black;">&#91;</span>i+<span style="color: #ff4500;">1</span><span style="color: black;">&#93;</span>:
+               li<span style="color: black;">&#91;</span>i<span style="color: black;">&#93;</span>,li<span style="color: black;">&#91;</span>i+<span style="color: #ff4500;">1</span><span style="color: black;">&#93;</span> = li<span style="color: black;">&#91;</span>i+<span style="color: #ff4500;">1</span><span style="color: black;">&#93;</span>,li<span style="color: black;">&#91;</span>i<span style="color: black;">&#93;</span>
+     n += <span style="color: #ff4500;">1</span></pre></div></h3>
+<p>Переменная <strong>n</strong> здесь служит для того, чтобы прервать проходы по списку, как только ее значение приблизится к размеру длины строки. Также цикл <strong>for</strong> благодаря <strong>n</strong> сокращается при каждом последующем проходе по <strong>while</strong>. Это оптимизирует алгоритм: последние элементы не просматриваются. Элементы меняются местами лишь в случае, если предыдущий элемент больше последующего.</p>
+  </div>
+<div id="node-298" class="section-2">
+  <h1 class="book-heading">Сумма и произведение цифр числа</h1>
+  <p><strong>Задача</strong><br />
+Дано число. Найти сумму и произведение его цифр.</p>
+<p><strong>Переменные</strong><br />
+<span class="mono">n</span> – число;<br />
+<span class="mono">suma</span> – сумма цифр;<br />
+<span class="mono">mult</span> – произведение цифр.</p>
+<p><strong>Алгоритм</strong>	</p>
+<ol>
+<li><span class="mono">suma</span> присвоить ноль.</li>
+<li><span class="mono">mult</span> присвоить единицу (при умножении на ноль результат будет нулевым).</li>
+<li>Пока <span class="mono">n</span> больше нуля
+<ol>
+<li>найти остаток от деления <span class="mono">n</span> на 10 (т.е. последнюю цифру числа), добавить его к сумме и увеличить произведение;</li>
+<li>избавиться от последнего разряда числа <span class="mono">n</span> путем деления нацело на число 10.</li>
+</ol>
+</li>
+</ol>
+<p><strong>Код программы</strong><br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">n = <span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'Enter number: '</span><span style="color: black;">&#41;</span>
+n = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span>n<span style="color: black;">&#41;</span>
+suma = 0
+mult = 1
+<span style="color: #ff7700;font-weight:bold;">while</span> n <span style="color: #66cc66;">&gt;</span> 0:
+    suma = suma + n <span style="color: #66cc66;">%</span> 10
+    mult = mult <span style="color: #66cc66;">*</span> <span style="color: black;">&#40;</span>n <span style="color: #66cc66;">%</span> 10<span style="color: black;">&#41;</span>
+    n = n // 10
+<span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'Sum of digits ='</span>, suma<span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'Multiplication of digits ='</span>, mult<span style="color: black;">&#41;</span></pre></div></p>
+  </div>
+<div id="node-65" class="section-2">
+  <h1 class="book-heading">Тестирование простоты числа   методом перебора делителей</h1>
+  <p>Перебор делителей – это алгоритм, применяемый для определения, какое число перед нами: простое или составное.</p>
+<p>Алгоритм заключается в последовательном делении заданного натурального числа на все целые числа, начиная с двойки и заканчивая значением меньшим или равным квадратному корню тестируемого числа. Если хотя бы один делитель делит тестируемое число без остатка, то оно является составным. Если у тестируемого числа нет ни одного делителя, делящего его без остатка, то такое число является простым.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">def</span> divider<span style="color: black;">&#40;</span>n<span style="color: black;">&#41;</span>:
+    i = <span style="color: #ff4500;">2</span>
+    j = <span style="color: #ff4500;">0</span> <span style="color: #808080; font-style: italic;"># флаг</span>
+    <span style="color: #ff7700;font-weight:bold;">while</span> i<span style="color: #66cc66;">**</span>2 <span style="color: #66cc66;">&lt;</span>= n <span style="color: #ff7700;font-weight:bold;">and</span> j <span style="color: #66cc66;">!</span>= 1:
+        <span style="color: #ff7700;font-weight:bold;">if</span> n<span style="color: #66cc66;">%</span>i == 0:
+            j = 1
+        i += 1
+    <span style="color: #ff7700;font-weight:bold;">if</span> j == 1:
+        <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Это составное число&quot;</span><span style="color: black;">&#41;</span>
+    <span style="color: #ff7700;font-weight:bold;">else</span>:
+        <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Это простое число&quot;</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>	При вызове этой функции на место параметра <span class="monoi">n</span> подставляется число, которое надо протестировать на простоту.</p>
+<p>	Значения переменной <span class="monoi">i</span> играют роль делителей. Первым значением делителя является 2, далее происходит увеличение за каждый оборот цикла <strong>while</strong> на единицу.</p>
+<p>	Выражение n % i возвращает остаток от деления первого числа на второе. Если остаток равен 0, т.е. первое число делится нацело на второе, то <span class="monoi">n</span> является составным числом. В этом случае переменная, играющая роль флага (<span class="monoi">j</span>) меняет свое значение, и цикл <strong>while</strong> больше не выполняется (из-за выражения j != 1).</p>
+<p>	Цикл <strong>while</strong> также прервется в том случае, если i<sup>2</sup> (на языке Python возведение в степень обозначается **) станет больше <span class="monoi">n</span>. </p>
+<p>	Конструкция <strong>if – else</strong> просто выполняет анализ значения, с которым связана флаг-переменная, в зависимости от ее состояния выводит соответствующий текст на экран.</p>
+<p>	Вызвать функцию <span class="monoi">divider</span> можно так:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">divider<span style="color: black;">&#40;</span><span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Введите число:&quot;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>	Или так:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">divider<span style="color: black;">&#40;</span><span style="color: #ff4500;">136</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>	В первом случае ввод пользователя преобразуется из строчного типа в целое число с помощью функции <strong>int</strong>. Полученное значение передается функции <span class="monoi">divider</span>. </p>
+<p>	Если требуется хранить значение проверяемого числа, то его следует связать с переменной:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">num = <span style="color: #ff4500;">149</span>
+divider<span style="color: black;">&#40;</span>num<span style="color: black;">&#41;</span></pre></div></p>
+<h2>Блок-схема</h2>
+<div style="text-align:center;"><img src="../../../img/algorithm/divider.png" width="412" height="610" alt="Блок-схема к алгоритму `Перебор делителей`" /></div>
+  </div>
+<div id="node-71" class="section-2">
+  <h1 class="book-heading">Числа Фибоначчи (вычисление с помощью цикла while и рекурсии)</h1>
+  <p><strong>Числа Фибоначчи</strong> – это ряд чисел, в котором каждое последующее число равно сумме двух предыдущих: 1, 1, 2, 3, 5, 8, 13 и т.д.<br />
+<strong>Формула:</strong><br />
+F1 = 1<br />
+F2 = 1<br />
+Fn = Fn-1 + Fn-2<br />
+<strong>Пример вычисления:</strong><br />
+F3 = F2 + F1 = 1 + 1 = 2<br />
+F4 = F3 + F2 = 2 + 1 = 3<br />
+F5 = F4 + F3 = 3 + 2 = 5<br />
+F6 = F5 + F4 = 5 + 3 = 8<br />
+и т.д.</p>
+<h2>Вычисление n-го числа ряда Фибоначчи с помощью цикла</h2>
+<h3>Алгоритм</h3>
+<ol>
+<li>Ввести два начальных значения ряда (fib1 и fib2).</li>
+<li>Ввести номер определяемого элемента.</li>
+<li>Выполнять нижеследующие действия количество раз, равное по величине номеру определяемого элемента, уменьшенному на две единицы (т.к. первое и второе значение ряда уже известны).</li>
+<ol>
+<li type="a">Сложить fib1 и fib2, присвоив результат третьей переменной (fib_sum).</li>
+<li>Поменять начальные значения: fib1 = fib2, а fib2 = fib_sum</li>
+</ol>
+
+</ol>
+<h3>Код на Python</h3>
+<h3><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">fib1 = 1
+fib2 = 1
+&nbsp;
+n = <span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Значение какого элемента ряда <span style="color: #000099; font-weight: bold;">\</span>
+Фибоначчи вы хотите узнать? &quot;</span><span style="color: black;">&#41;</span>
+n = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span>n<span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># преобразование в целое число</span>
+&nbsp;
+i = 2 
+<span style="color: #ff7700;font-weight:bold;">while</span> i <span style="color: #66cc66;">&lt;</span> n:
+    fib_sum = fib2 + fib1
+    fib1 = fib2
+    fib2 = fib_sum
+    i += 1
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>fib_sum<span style="color: black;">&#41;</span></pre></div></h3>
+<h2>Рекурсивное вычисление n-го числа ряда Фибоначчи</h2>
+<h3>Алгоритм</h3>
+<ol>
+<li>Если n = 1 или n = 2, вернуть в вызывающую ветку единицу (т.к. первый и второй элементы ряда Фибоначчи равны единице).</li>
+<li>Во всех остальных случаях вызвать эту же функцию с аргументами n-1 и n-2. Результат двух вызовов сложить и вернуть в вызывающую ветку программы.</li>
+</ol>
+<h3>Код на Python</h3>
+<h3><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">def</span> fib<span style="color: black;">&#40;</span>n<span style="color: black;">&#41;</span>:
+    <span style="color: #ff7700;font-weight:bold;">if</span> n==1 <span style="color: #ff7700;font-weight:bold;">or</span> n==2:
+        <span style="color: #ff7700;font-weight:bold;">return</span> 1
+    <span style="color: #ff7700;font-weight:bold;">return</span> fib<span style="color: black;">&#40;</span>n-<span style="color: #ff4500;">1</span><span style="color: black;">&#41;</span> + fib<span style="color: black;">&#40;</span>n-<span style="color: #ff4500;">2</span><span style="color: black;">&#41;</span></pre></div></h3>
+  </div>
+</div>
+    
+  </body>
+</html>

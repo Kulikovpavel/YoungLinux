@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Урок 6. Посимвольный ввод и вывод. Понятие буфера</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-366" class="section-2">
+  <h1 class="book-heading">Урок 6. Посимвольный ввод и вывод. Понятие буфера</h1>
+  <p class="right">Особенности языка С. Учебное пособие</p>
+<h3>putchar() и getchar()</h3>
+<p>В заголовочном файле stdio.h содержится объявление не только функции <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>, но и многих других, связанных с вводом-выводом. Среди них есть функции, которые обрабатывают по одному символу за вызов — <span class="geshifilter"><code class="c geshifilter-c">putchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> и <span class="geshifilter"><code class="c geshifilter-c">getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>.</p>
+<p>Функция <span class="geshifilter"><code class="c geshifilter-c">putchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> обычно принимает в качестве аргумента символ, либо символьную переменную и в результате своей работы выводит соответствующий символ на экран. Однако этой функции можно передать любое целое число, но, понятное дело, символа на экране вы можете не получить, если числу не соответствует ни один символ по таблице ASCII. Например:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">  <span style="color: #993333;">char</span> ch <span style="color: #339933;">=</span> <span style="color: #ff0000;">'c'</span><span style="color: #339933;">;</span>
+&nbsp;
+  putchar<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">'a'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  putchar<span style="color: #009900;">&#40;</span>98<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  putchar<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\n</span>'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  putchar<span style="color: #009900;">&#40;</span>ch<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>Результат:</p>
+<pre>
+ab 
+c
+</pre><p>
+Функции <span class="geshifilter"><code class="c geshifilter-c">putchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> и <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> в определенном смысле взаимозаменяемы, т.к., используя ту или другую, можно получить один и тот же результат. Хотя программный код будет выглядеть по-разному:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">  <span style="color: #993333;">char</span> str<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">&quot;Hello&quot;</span><span style="color: #339933;">;</span>
+  <span style="color: #993333;">int</span> i<span style="color: #339933;">;</span>
+&nbsp;
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> str<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// первое Hello</span>
+&nbsp;
+  <span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> str<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">!=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span> <span style="color: #666666; font-style: italic;">// второе Hello</span>
+    putchar<span style="color: #009900;">&#40;</span>str<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>В результате выполнения этого кода на экране будут напечатаны два слова "Hello", разделенные переходом на новую строку. С <span class="geshifilter"><code class="c geshifilter-c">putchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> это выглядит несколько сложнее. Как мы знаем, любая строка оканчивается нулевым по таблице ASCII символом, в данном случае этот символ служит сигналом для прекращения вывода на экран. Но если бы понадобилось вывести на экран строку, разделяя ее символы каким-нибудь другим символом (например, тире), то и в случае с <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> было бы не так все просто:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">  <span style="color: #993333;">char</span> str<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">&quot;Hello&quot;</span><span style="color: #339933;">;</span>
+  <span style="color: #993333;">int</span> i<span style="color: #339933;">;</span>
+&nbsp;
+  <span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> str<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">!=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span>
+    <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%c-&quot;</span><span style="color: #339933;">,</span>str<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%c%c %c&quot;</span><span style="color: #339933;">,</span><span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\b</span>'</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\n</span>'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+  <span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> str<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">!=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+    putchar<span style="color: #009900;">&#40;</span>str<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+    putchar<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">'-'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">&#125;</span>  
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%c%c %c&quot;</span><span style="color: #339933;">,</span><span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\b</span>'</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\n</span>'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>Результат:</p>
+<pre>
+H-e-l-l-o 
+H-e-l-l-o 
+</pre><p>
+Поэтому выбор в пользу той или иной функции зависит от ситуации и ваших предпочтений. </p>
+<p>В отличие от функции <span class="geshifilter"><code class="c geshifilter-c">putchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> функция <span class="geshifilter"><code class="c geshifilter-c">getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> не имеет параметром. Когда <span class="geshifilter"><code class="c geshifilter-c">getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> выполняется, она считывает их потока ввода один символ и возвращает его в программу. Полученный таким образом символ может быть присвоен переменной, участвовать в выражениях или выводиться на экран с помощью функций вывода.<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">  <span style="color: #993333;">int</span> a<span style="color: #339933;">;</span>
+&nbsp;
+  a <span style="color: #339933;">=</span> getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%c &quot;</span><span style="color: #339933;">,</span> a<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  putchar<span style="color: #009900;">&#40;</span>a<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+  putchar<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\n</span>'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>Если при выполнении этого кода ввести символ, то после нажатия Enter вы увидите два таких же символа на экране:</p>
+<pre>
+u 
+u u
+</pre><p>
+Первый — результат выполнения функции <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>, второй — <span class="geshifilter"><code class="c geshifilter-c">putchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>. Если вы перед нажатием Enter введете несколько символов, то прочитан будет только первый, остальные будут проигнорированы. Посмотрите вот на этот код:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">  <span style="color: #993333;">char</span> a<span style="color: #339933;">,</span> b<span style="color: #339933;">,</span> c<span style="color: #339933;">;</span>
+&nbsp;
+  a <span style="color: #339933;">=</span> getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  putchar<span style="color: #009900;">&#40;</span>a<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  b <span style="color: #339933;">=</span> getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  putchar<span style="color: #009900;">&#40;</span>b<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  c <span style="color: #339933;">=</span> getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  putchar<span style="color: #009900;">&#40;</span>c<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>Как вы думает, как он будет выполняться? По идее после ввода символа, он должен сразу отображаться на экране функцией <span class="geshifilter"><code class="c geshifilter-c">putchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> и запрашиваться следующий символ, потому что далее идет снова вызов <span class="geshifilter"><code class="c geshifilter-c">getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>. Если вы как корректный пользователь программы сначала введете первый символ и нажмете Enter, то символ отобразиться на экране. Потом вы введете второй символ и после Enter он тоже отобразиться. И тут программа завершится, не дав ввести вам третий символ. </p>
+<p><span class="blue"><strong>Задание</strong><br />
+Удостоверьтесь в этом сами.</span></p>
+<p>Прежде чем попытаться найти объяснение, изобразим "некорректного пользователя" и перед первым нажатием Enter введем несколько символов (больше двух). После Enter вы увидите три первых символа введенной вами строки, и программа завершиться. Хотя куда логичней было бы ожидать, что будет прочитан только первый символ, потом выведен на экран и потом запрошен следующий символ.</p>
+<p><span class="blue"><strong>Задание</strong><br />
+Проверьте это.</span></p>
+<p>Такое странное на первый взгляд поведение программы связано не с языком <span class="blue">C</span>, а с особенностью работы операционных систем, в которых реализован буферизованный ввод-вывод. При операциях ввода-вывода выделяется область временной памяти (буфер), куда и помещаются поступающие символы. Как только поступает специальный сигнал (например, переход на новую строку при нажатии Enter), данные из буфера передаются по месту своего назначения (на экран, в переменную и др.).</p>
+<p>Теперь, зная это, давайте посмотрим, что происходило в нашей программе, и сначала разберем второй случай с "некорректным пользователем", т.к. для понимания этот случай проще. Когда пользователь ввел первый символ, он попал в переменную <span class="monoi">a</span>, далее сработала функция <span class="geshifilter"><code class="c geshifilter-c">putchar<span style="color: #009900;">&#40;</span>a<span style="color: #009900;">&#41;</span></code></span> и символ попал в буфер. Т.к. Enter'а не было, то содержимое буфера на экране не было отображено. Пользователь ввел второй символ, переменная <span class="monoi">b</span> получила свое значение, а <span class="geshifilter"><code class="c geshifilter-c">putchar<span style="color: #009900;">&#40;</span>b<span style="color: #009900;">&#41;</span></code></span> отправила это значение в буфер. Аналогично с третьим символом. Как только пользователь нажал Enter, содержимое буфера было выведено на экран. Но символы, которые были выведены на экран, были выведены не программой, а операционной системой. Программа же выводила символы еще до того, как мы нажали Enter.</p>
+<p>Почему же в первом случае при выполнении программы мы смогли ввести и увидеть на экране только два символа? Когда был введен первый символ, то он был присвоен переменной <span class="monoi">a</span> и далее выведен в буфер. Затем был нажат Enter. Это сигнал для выброса данных их буфера, но это еще и символ перехода на новую строку. Этот символ '\n', наверное, и был благополучно записан в переменную <span class="monoi">b</span>. Тогда в буфере должен оказаться переход на новую строку, после этого введенный символ (уже помещенный в переменную <span class="monoi">c</span>). После нажатия Enter мы должны были бы увидеть переход  на новую строку от символа '\n' и букву. Однако печатается только буква. Почему?</p>
+<p>Во многих учебниках по языку <span class="blue">C</span> приводится пример считывания символов, вводимых пользователем, и их вывод на экран:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">  <span style="color: #993333;">int</span> a<span style="color: #339933;">;</span>
+&nbsp;
+  a <span style="color: #339933;">=</span> getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span>a <span style="color: #339933;">!=</span> <span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\n</span>'</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span> 
+    putchar<span style="color: #009900;">&#40;</span>a<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+    a <span style="color: #339933;">=</span> getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">&#125;</span>
+  putchar<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\n</span>'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div><br />
+В переменной <span class="monoi">a</span> всегда хранится последний введенный символ, но перед тем как присвоить a новое значение с помощью функции <span class="geshifilter"><code class="c geshifilter-c">putchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> старое значение сбрасывается в буфер. Как только поступает символ новой строки, работа программы прекращается, а также, поскольку была нажата клавиша Enter, происходит вывод содержимого буфер на экран. Если в условии цикла <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">while</span></code></span> будет не символ '\n', а какой-нибудь другой, то программа будет продолжать обрабатывать символы, даже после нажатия Enter. В результате чего мы можем вводить и выводить множество строк текста.</p>
+<p><span class="blue"><strong>Задание</strong><br />
+Напишите программу посимвольного ввода-вывода, используя в качестве признака окончания ввода любой символ, кроме '\n'. Протестируйте ее.</span></p>
+<p>При совместном использовании функций <span class="geshifilter"><code class="c geshifilter-c">putchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> и <span class="geshifilter"><code class="c geshifilter-c">getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> обычно пользуются более коротким способом записи. Например:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">  <span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>a <span style="color: #339933;">=</span> getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> <span style="color: #ff0000;">'~'</span><span style="color: #009900;">&#41;</span>
+    putchar<span style="color: #009900;">&#40;</span>a<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p><span class="blue"><strong>Задание</strong></span></p>
+<ol>
+<li><span class="blue">Объясните, почему сокращенный вариант записи посимвольного ввода-вывода работает правильно. Для этого опишите последовательность операций в условии цикла <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">while</span></code></span>.</span></li>
+<li><span class="blue">Перепишите вашу программу на более короткий вариант.</span></li>
+</ol>
+<h3>EOF</h3>
+<p>Как быть, если требуется "прочитать" с клавиатуры или файла неизвестный текст, в котором может быть абсолютно любой символ? Как сообщить программе, что ввод окончен, и при этом не использовать ни один из возможных символов?</p>
+<p>В операционных системах и языках программирования вводят специальное значение, которое служит признаком окончания потока ввода или признаком конца файла. Называется это значение EOF (end of file), а его конкретное значение может быть разным, но чаще всего это число -1. EOF представляет собой константу, в программном коде обычно используется именно имя (идентификатор) константы, а не число -1. EOF определена в файле stdio.h.</p>
+<p>В операционных системах GNU/Linux можно передать функции <span class="geshifilter"><code class="c geshifilter-c">getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> значение EOF, если нажать комбинацию клавиш Ctrl + D, в Windows – Ctrl + Z.</p>
+<p><span class="blue"><strong>Задание</strong><br />
+Исправьте вашу программу таким образом, чтобы считывание потока символов прерывалось признаком EOF.</span></p>
+<h3>Решение задач</h3>
+<p>Не смотря на свою кажущуюся примитивность, функции <span class="geshifilter"><code class="c geshifilter-c">getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> и <span class="geshifilter"><code class="c geshifilter-c">putchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> часто используются, т.к. посимвольный анализ данных при вводе-выводе не такая уж редкая задача. Используя только функцию <span class="geshifilter"><code class="c geshifilter-c">getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>, можно получить массив символов (строку) и при этом отсеять ненужные символы. Вот пример помещения в строку только цифр из потока ввода, в котором может быть набран абсолютно любой символ:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+&nbsp;
+<span style="color: #339933;">#define N 100</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>  
+  <span style="color: #993333;">char</span> ch<span style="color: #339933;">;</span>
+  <span style="color: #993333;">char</span> nums<span style="color: #009900;">&#91;</span>N<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+  <span style="color: #993333;">int</span> i<span style="color: #339933;">;</span>
+&nbsp;
+  i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>
+  <span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>ch <span style="color: #339933;">=</span> getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> EOF <span style="color: #339933;">&amp;&amp;</span> i <span style="color: #339933;">&lt;</span> N<span style="color: #339933;">-</span>1<span style="color: #009900;">&#41;</span>
+    <span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>ch <span style="color: #339933;">&gt;=</span> 48 <span style="color: #339933;">&amp;&amp;</span> ch <span style="color: #339933;">&lt;=</span> 57<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+      nums<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> ch<span style="color: #339933;">;</span>
+      i<span style="color: #339933;">++;</span>
+    <span style="color: #009900;">&#125;</span>
+&nbsp;
+  nums<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #339933;">;</span>
+&nbsp;
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> nums<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div><br />
+Здесь ввод символов может прекратиться не только при поступлении значения EOF, но и в случае, если массив заполнен (<span class="geshifilter"><code class="c geshifilter-c">i <span style="color: #339933;">&lt;</span> N<span style="color: #339933;">-</span><span style="color: #0000dd;">1</span></code></span>). В цикле <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">while</span></code></span> проверяется условие, что числовой код очередного символа принадлежит диапазону [48, 57]. Именно в этом диапазоне кодируются цифры (0-9). Если поступивший символ является символом-цифрой, то он помещается в массив по индексу <span class="monoi">i</span>, далее <span class="monoi">i</span> увеличивается на 1, указывая на следующий элемент массива. После завершения цикла к массиву символов добавляется нулевой символ, т.к. по условию задачи должна быть получена строка (именно для этого символа ранее резервируется одна ячейка массива – <span class="geshifilter"><code class="c geshifilter-c">N<span style="color: #339933;">-</span><span style="color: #0000dd;">1</span></code></span>). </p>
+<p><span class="blue"><strong>Задание</strong></span></p>
+<ol>
+<li><span class="blue">Напишите программу, которая считает количество введенных пользователем символов и строк.</span></li>
+<li><span class="blue">Напишите программу, которая подсчитывает количество слов в строке.</span></li>
+</ol>
+  </div>
+    </div>
+  </body>
+</html>

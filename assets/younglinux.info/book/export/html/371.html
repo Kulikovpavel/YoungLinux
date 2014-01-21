@@ -1,0 +1,104 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Урок 11. Особенности массивов при работе с указателями</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-371" class="section-2">
+  <h1 class="book-heading">Урок 11. Особенности массивов при работе с указателями</h1>
+  <p class="right">Особенности языка С. Учебное пособие</p>
+<h3>К указателям можно прибавлять целые числа</h3>
+<p>Рассмотрим программу:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+&nbsp;
+<span style="color: #339933;">#define N 5</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> arrI<span style="color: #009900;">&#91;</span>N<span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> i<span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i<span style="color: #339933;">&lt;</span>N<span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span>
+		<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%p<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>arrI<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<p>Создается массив <span class="monoi">arrI</span>, далее в цикле <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">for</span></code></span> выводятся значения адресов ячеек памяти каждого элемента массива. Результат выполнения программы будет выглядеть примерно так:</p>
+<pre>
+0x7ffffbff4050 
+0x7ffffbff4054 
+0x7ffffbff4058 
+0x7ffffbff405c 
+0x7ffffbff4060 
+</pre><p>Обратите внимание на то, что значение адреса каждого последующего элемента массива больше значения адреса предыдущего элемента на 4 единицы. В вашей системе эта разница может составлять 2 единицы. Такой результат вполне очевиден, если вспомнить, сколько байтов отводится на одно данное типа int, и что элементы массива сохраняются в памяти друг за другом.</p>
+<p>Теперь объявим указатель на целый тип и присвоим ему адрес первого элемента массива:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">	<span style="color: #993333;">int</span> <span style="color: #339933;">*</span>pI<span style="color: #339933;">;</span>
+&nbsp;
+	pI <span style="color: #339933;">=</span> <span style="color: #339933;">&amp;</span>arrI<span style="color: #009900;">&#91;</span>0<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>Цикл <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">for</span></code></span> изменим таким образом:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i<span style="color: #339933;">&lt;</span>N<span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span>
+		<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%p<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> pI <span style="color: #339933;">+</span> i<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>Здесь к значению <span class="monoi">pI</span>, которое является адресом ячейки памяти, прибавляется сначала 0, затем 1, 2, 3 и 4. Можно было бы предположить, что прибавление к <span class="monoi">pI</span> единицы в результате дает адрес следующего байта за тем, на который указывает <span class="monoi">pI</span>. А прибавление двойки вернет адрес байта, через один от исходного. Однако подобное предположение не верно. </p>
+<p>Вспомним, что тип указателя сообщает, на сколько байт простирается значение по адресу, на который он указывает. Таким образом, хотя <span class="monoi">pI</span> указывает только на один байт (первый), но "знает", что его "собственность" простирается на все четыре (или два). Когда мы прибавляем к указателю единицу, то получаем указатель на следующее значение, но никак не на следующий байт. А следующее значение начинается только через 4 байта (в данном случае). Поэтому результат выполнения приведенного цикла с указателем правильно отобразит адреса элементов массива.</p>
+<p><span class="blue"><strong>Задание</strong><br />
+Убедитесь в этом сами.</span></p>
+<p>Прибавляя к указателям (или вычитая из них) целые значения, мы имеем дело с так называемой адресной арифметикой.</p>
+<p><span class="blue"><strong>Задание</strong><br />
+Напишите программу, в которой объявлен массив вещественных чисел из десяти элементов. Присвойте указателю адрес четвертого элемента, затем, используя цикл, выведите на экран адреса 4, 5 и 6-ого элементов массива.</span></p>
+<h3>Имя массива содержит адрес его первого элемента</h3>
+<p>Да, это именно так, данный факт следует принять как аксиому. Вы можете убедиться в этом выполнив такое выражение:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%p = %p<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> arrI<span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>arrI<span style="color: #009900;">&#91;</span>0<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>Отсюда следует, что имя массива – это ничто иное, как указатель. (Хотя это немного особенный указатель, о чем будет упомянуто ниже.) Поэтому выражения <span class="geshifilter"><code class="c geshifilter-c">pI <span style="color: #339933;">=</span> <span style="color: #339933;">&amp;</span>arrI<span style="color: #009900;">&#91;</span>N<span style="color: #009900;">&#93;</span></code></span> и <span class="geshifilter"><code class="c geshifilter-c">pI <span style="color: #339933;">=</span> arrI</code></span> дают одинаковый результат: присваивают указателю <span class="monoi">pI</span> адрес первого элемента массива.</p>
+<p>Раз имя массива — это указатель, ничего не мешает получать адреса элементов вот так:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i<span style="color: #339933;">&lt;</span>N<span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span>
+		<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%p<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> arrI <span style="color: #339933;">+</span> i<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>Соответственно значения элементов массива можно получить так:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i<span style="color: #339933;">&lt;</span>N<span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span>
+		<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">*</span><span style="color: #009900;">&#40;</span>arrI <span style="color: #339933;">+</span> i<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>Примечание. Если массив был объявлен как автоматическая переменная (т.е. не глобальная и не статическая) и при этом не был инициализирован (не присваивались значения), то в нем будет содержаться "мусор" (случайные числа).</p>
+<p>Получается, что запись вида <span class="monoi">arrI[3]</span> является сокращенным (более удобным) вариантом выражения <span class="monoi">*(arr+3)</span>.</p>
+<h3>Взаимозаменяемость имени массива и указателя</h3>
+<p>Если имя массива является указателем, то почему бы не использовать обычный указатель в нотации обращения к элементам массива также, как при обращении через имя массива:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">	<span style="color: #993333;">int</span> arrI<span style="color: #009900;">&#91;</span>N<span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> i<span style="color: #339933;">;</span>
+	<span style="color: #993333;">int</span> <span style="color: #339933;">*</span>pI<span style="color: #339933;">;</span>
+&nbsp;
+	pI <span style="color: #339933;">=</span> arrI<span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i<span style="color: #339933;">&lt;</span>N<span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span>
+		<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> pI<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>Отсюда следуют выводы. Если <span class="monoi">arrI</span> — массив, а <span class="monoi">pI</span> — указатель на его первый элемент, то пары следующих выражений дают один и тот же результат:</p>
+<ul>
+<li><span class="geshifilter"><code class="c geshifilter-c">arrI<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span></code></span> и <span class="geshifilter"><code class="c geshifilter-c">pI<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span></code></span>;</li>
+<li><span class="geshifilter"><code class="c geshifilter-c"><span style="color: #339933;">&amp;</span>arrI<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span></code></span> и <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #339933;">&amp;</span>pI<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span></code></span>;</li>
+<li><span class="geshifilter"><code class="c geshifilter-c">arrI<span style="color: #339933;">+</span>i</code></span> и <span class="geshifilter"><code class="c geshifilter-c">pI<span style="color: #339933;">+</span>i</code></span>;</li>
+<li><span class="geshifilter"><code class="c geshifilter-c"><span style="color: #339933;">*</span><span style="color: #009900;">&#40;</span>arrI<span style="color: #339933;">+</span>i<span style="color: #009900;">&#41;</span></code></span> и <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #339933;">*</span><span style="color: #009900;">&#40;</span>pI<span style="color: #339933;">+</span>i<span style="color: #009900;">&#41;</span></code></span>.</li>
+</ul>
+<p><span class="blue"><strong>Задание</strong><br />
+Что получается в результате выполнения данных пар выражений: адреса или значения элементов массива? Если вы испытываете трудности при ответе на этот вопрос, перечитайте урок 7, этот урок, изучите другие источники.</span></p>
+<p>Указателю <span class="monoi">pI</span> можно присвоить адрес любого из элементов массива. Например, так <span class="geshifilter"><code class="c geshifilter-c">pI <span style="color: #339933;">=</span> <span style="color: #339933;">&amp;</span>arrI<span style="color: #009900;">&#91;</span><span style="color: #0000dd;">2</span><span style="color: #009900;">&#93;</span></code></span> или так <span class="geshifilter"><code class="c geshifilter-c">pI <span style="color: #339933;">=</span> arr<span style="color: #339933;">+</span><span style="color: #0000dd;">2</span></code></span>. В таком случае результат приведенных выше пар выражений совпадать не будет. Например, когда будет выполняться выражение <span class="geshifilter"><code class="c geshifilter-c">arrI<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span></code></span>, то будет возвращаться i-ый элемент массива. А вот выражение <span class="geshifilter"><code class="c geshifilter-c">pI<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span></code></span> уже вернет не i-ый элемент от начала массива, а i-ый элемент от того, адрес которого был присвоен <span class="monoi">pI</span>. Например, если <span class="monoi">pI</span> был присвоен адрес третьего элемента массива (<span class="geshifilter"><code class="c geshifilter-c">pI <span style="color: #339933;">=</span> arr<span style="color: #339933;">+</span><span style="color: #0000dd;">2</span></code></span>), то выражение <span class="geshifilter"><code class="c geshifilter-c">arrI<span style="color: #009900;">&#91;</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#93;</span></code></span> вернет значение второго элемента массива, а <span class="geshifilter"><code class="c geshifilter-c">pI<span style="color: #009900;">&#91;</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#93;</span></code></span> — четвертого.</p>
+<p><span class="blue"><strong>Задание</strong><br />
+Присвойте указателю (<span class="monoi">pI</span>) ссылку не на первый элемент массива (<span class="monoi">arrI</span>). В одном и том же цикле выводите результат выражений <span class="geshifilter"><code class="c geshifilter-c">arrI<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span></code></span> и <span class="geshifilter"><code class="c geshifilter-c">pI<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span></code></span>, где на каждой итерации цикла <span class="monoi">i</span> для обоих выражений имеет одинаковое значение. Объясните результат выполнения такой программы.</span></p>
+<h3>Имя массива — это указатель-константа</h3>
+<p>Несмотря на вышеописанную взаимозаменяемость имени массива определенного типа на указатель того же типа, между ними есть разница. Указатель может указывать на любой элемент массива, его значение можно изменять. Имя массива всегда указывает только на первый элемент массива, изменять его значение нельзя.</p>
+<p>Это значит, что выражение <span class="geshifilter"><code class="c geshifilter-c">pI <span style="color: #339933;">=</span> arrI</code></span> допустимо, а <span class="geshifilter"><code class="c geshifilter-c">arrI <span style="color: #339933;">=</span> pI</code></span> нет. Имя массива является константой. При этом не надо путать имя массива (адрес) и значения элементов массива. Последние константами не являются. Действительно, ведь для всех переменных мы не можем менять их адрес в процессе выполнения программы, можем менять лишь их значения. В этом смысле имя массива — это обычная переменная, хотя и содержащая адрес.</p>
+<p>Как следствие в программном коде выражения присваивания, инкрементирования и декрементирования допустимы для указателей, а для имени массива — запрещены.</p>
+<p><span class="blue"><strong>Задание</strong><br />
+Посмотрите на программу ниже. Что она делает? Почему? Проверьте ваши рассуждения опытным путем.</span><br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">char</span> str<span style="color: #009900;">&#91;</span>20<span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #339933;">*</span>ps <span style="color: #339933;">=</span> str<span style="color: #339933;">,</span> n<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;Enter word: &quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s&quot;</span><span style="color: #339933;">,</span> str<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">while</span><span style="color: #009900;">&#40;</span><span style="color: #339933;">*</span>ps<span style="color: #339933;">++</span> <span style="color: #339933;">!=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #009900;">&#41;</span> n<span style="color: #339933;">++;</span>
+&nbsp;
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> n<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+  </div>
+    </div>
+  </body>
+</html>

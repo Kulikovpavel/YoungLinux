@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>K&amp;R (41-43). Вывод самой длиной строки</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-384" class="section-2">
+  <h1 class="book-heading">K&amp;R (41-43). Вывод самой длиной строки</h1>
+  <p class="right">Решение задач на языке программирования C</p>
+<p>В книге в данном разделе опущен момент о том, как происходит обмен данными между функциями (хотя оговаривается перед этим об особенностях передачи массивов в качестве аргументов). Все переменные локальные и поэтому с первого взгляда не понятно, почему функция getline() меняет значение переменной line в функции main(), а copy() - значение longest. Массивы в качестве аргументов передаются не по значению. Переменные в getline() и copy() получают ссылки на массивы, определенные в main(), а не содержимое этих массивов.</p>
+<p><div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+<span style="color: #339933;">#define MAXLINE 1000</span>
+&nbsp;
+<span style="color: #808080; font-style: italic;">/* Не надо использовать getline, иначе будет сообщение о
+несовпадении типов. Видимо getline определена в stdio */</span>
+<span style="color: #993333;">int</span> getline2 <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> s<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #993333;">int</span> lim<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #993333;">void</span> copy<span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> to<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #993333;">char</span> from<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> len<span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// длина текущей строки</span>
+	<span style="color: #993333;">int</span> max<span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// максимальная длина</span>
+	<span style="color: #993333;">char</span> line<span style="color: #009900;">&#91;</span>MAXLINE<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// текущая строка</span>
+	<span style="color: #993333;">char</span> longest<span style="color: #009900;">&#91;</span>MAXLINE<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// самая длиная строка</span>
+&nbsp;
+	max <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// сначала макс.длина равна нулю</span>
+	<span style="color: #808080; font-style: italic;">/* Пока длина строки больше 0 вызывать getline2, передавать
+	ей в качестве аргументов массив символов для строки и 
+	максимально возможную длину строки. getline2 возвращает
+	целое число, которое записывается в len, а также по ходу
+	выполнения заполняет массив line. */</span>
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>len <span style="color: #339933;">=</span> getline2<span style="color: #009900;">&#40;</span>line<span style="color: #339933;">,</span> MAXLINE<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">&gt;</span> <span style="color: #0000dd;">0</span><span style="color: #009900;">&#41;</span>
+		<span style="color: #808080; font-style: italic;">/* copy будет вызываться только, если длина 
+		текущей строки больше значения в max */</span>
+		<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>len <span style="color: #339933;">&gt;</span> max<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+			max <span style="color: #339933;">=</span> len<span style="color: #339933;">;</span>
+			<span style="color: #808080; font-style: italic;">/* copy передается массив символов самой
+			длиной строки до этого и текущая строка */</span> 
+			copy <span style="color: #009900;">&#40;</span>longest<span style="color: #339933;">,</span> line<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		<span style="color: #009900;">&#125;</span>
+	<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>max <span style="color: #339933;">&gt;</span> 0<span style="color: #009900;">&#41;</span>
+		<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s&quot;</span><span style="color: #339933;">,</span> longest<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">return</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">int</span> getline2 <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> s<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #993333;">int</span> lim<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> c<span style="color: #339933;">,</span> i<span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// символ и счетчик массива</span>
+&nbsp;
+	<span style="color: #808080; font-style: italic;">/* Происходит заполнение массива символами текущей строки до тех
+	пор, пока не будет превышен лимит, встречен конец файла или 
+	конец строки. i - счетчик, который после каждой итерации цикла 
+	указывает на следующий элемент массива */</span>
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> lim <span style="color: #339933;">-</span> <span style="color: #0000dd;">1</span> <span style="color: #339933;">&amp;&amp;</span> <span style="color: #009900;">&#40;</span>c <span style="color: #339933;">=</span> getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> EOF <span style="color: #339933;">&amp;&amp;</span> c <span style="color: #339933;">!=</span> <span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\n</span>'</span><span style="color: #339933;">;</span> <span style="color: #339933;">++</span>i<span style="color: #009900;">&#41;</span>
+		s<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> c<span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// c - это введенный очередной символ</span>
+	<span style="color: #808080; font-style: italic;">/* Если цикл for был прерван из-за конца строки, то
+	записать символ конца строки в массив. */</span>
+	<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>c <span style="color: #339933;">==</span> <span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\n</span>'</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		s<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> c<span style="color: #339933;">;</span>
+		<span style="color: #339933;">++</span>i<span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// индекс надо увеличить для записи \0</span>
+	<span style="color: #009900;">&#125;</span>
+	s<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// обозначение конца строки в языке Си</span>
+	<span style="color: #b1b100;">return</span> i<span style="color: #339933;">;</span> <span style="color: #666666; font-style: italic;">// длина строки</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #808080; font-style: italic;">/* Переменная to связана с longest. Массивы в качестве аргументов
+передаются по ссылке, а не по значению. В результате происходит
+изменение longest. from связана с line. */</span>
+<span style="color: #993333;">void</span> copy <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> to<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #993333;">char</span> from<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">;</span>
+&nbsp;
+	i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>
+	<span style="color: #808080; font-style: italic;">/* Происходит перезапись и дозаполнение  to до тех пор, 
+	пока в from не встретится символ конца строки. Перед этим он
+	также копируется в to. */</span>
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>to<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> from<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #009900;">&#41;</span>
+		<span style="color: #339933;">++</span>i<span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+  </div>
+    </div>
+  </body>
+</html>

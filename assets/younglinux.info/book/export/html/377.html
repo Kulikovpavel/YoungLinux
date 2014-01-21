@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Урок 17. Ввод данных из файла и вывод в файл</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-377" class="section-2">
+  <h1 class="book-heading">Урок 17. Ввод данных из файла и вывод в файл</h1>
+  <p class="right">Особенности языка С. Учебное пособие</p>
+<h3>Открытие и закрытие файлов</h3>
+<p>До этого при вводе-выводе данных мы работали со стандартными потоками — клавиатурой и монитором. Теперь рассмотрим, как в языке <span class="blue">C</span> реализовано получение данных из файлов и запись их туда. Перед тем как выполнять эти операции, надо открыть файл и получить доступ к нему.</p>
+<p>В языке программирования <span class="blue">C</span> указатель на файл имеет тип FILE и его объявление выглядит так:<br />
+<span class="geshifilter"><code class="c geshifilter-c">FILE <span style="color: #339933;">*</span>myfile<span style="color: #339933;">;</span></code></span></p>
+<p>С другой стороны, функция <span class="geshifilter"><code class="c geshifilter-c">fopen<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> открывает файл по указанному в качестве первого аргумента адресу в режиме чтения ("r"), записи ("w") или добавления ("a") и возвращает в программу указатель на него. Поэтому процесс открытия файла и подключения его к программе выглядит примерно так:<br />
+<span class="geshifilter"><code class="c geshifilter-c">myfile <span style="color: #339933;">=</span> fopen <span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;hello.txt&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;r&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></code></span></p>
+<p>При чтении или записи данных в файл обращение к нему осуществляется посредством файлового указателя (в данном случае, <span class="monoi">myfile</span>).</p>
+<p>Если в силу тех или иных причин (нет файла по указанному адресу, запрещен доступ к нему) функция <span class="geshifilter"><code class="c geshifilter-c">fopen<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> не может открыть файл, то она возвращает NULL. В реальных программах почти всегда обрабатывают ошибку открытия файла в ветке <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">if</span></code></span>, мы же далее опустим это.</p>
+<p>Объявление функции <span class="geshifilter"><code class="c geshifilter-c">fopen<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> содержится в заголовочном файле stdio.h, поэтому требуется его подключение. Также в stdio.h объявлен тип-структура FILE.</p>
+<p>После того, как работа с файлом закончена, принято его закрывать, чтобы освободить буфер от данных и по другим причинам. Это особенно важно, если после работы с файлом программа продолжает выполняться. Разрыв связи между внешним файлом и указателем на него из программы выполняется с помощью функции <span class="geshifilter"><code class="c geshifilter-c">fclose<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>. В качестве параметра ей передается указатель на файл:<br />
+<span class="geshifilter"><code class="c geshifilter-c">fclose<span style="color: #009900;">&#40;</span>myfile<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></code></span></p>
+<p>В программе может быть открыт не один файл. В таком случае каждый файл должен быть связан со своим файловым указателем. Однако если программа сначала работает с одним файлом, потом закрывает его, то указатель можно использовать для открытия второго файла.</p>
+<h3>Чтение из текстового файла и запись в него</h3>
+<h4>fscanf()</h4>
+<p>Функция <span class="geshifilter"><code class="c geshifilter-c">fscanf<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> аналогична по смыслу функции <span class="geshifilter"><code class="c geshifilter-c">scanf<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>, но в отличии от нее осуществляет форматированный ввод из файла, а не стандартного потока ввода. Функция <span class="geshifilter"><code class="c geshifilter-c">fscanf<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> принимает параметры: файловый указатель, строку формата, адреса областей памяти для записи данных:<br />
+<span class="geshifilter"><code class="c geshifilter-c">fscanf <span style="color: #009900;">&#40;</span>myfile<span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;%s%d&quot;</span><span style="color: #339933;">,</span> str<span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>a<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></code></span></p>
+<p>Возвращает количество удачно считанных данных или EOF. Пробелы, символы перехода на новую строку учитываются как разделители данных.</p>
+<p>Допустим, у нас есть файл содержащий такое описание объектов:</p>
+<pre>
+apples 10 23.4 
+bananas 5 25.0 
+bread 1 10.3
+</pre><p>
+Тогда, чтобы считать эти данные, мы можем написать такую программу:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span> 
+	FILE <span style="color: #339933;">*</span>file<span style="color: #339933;">;</span>
+	<span style="color: #993333;">struct</span> food <span style="color: #009900;">&#123;</span>
+		<span style="color: #993333;">char</span> name<span style="color: #009900;">&#91;</span>20<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span> 
+		<span style="color: #993333;">unsigned</span> qty<span style="color: #339933;">;</span> 
+		<span style="color: #993333;">float</span> price<span style="color: #339933;">;</span> 
+	<span style="color: #009900;">&#125;</span><span style="color: #339933;">;</span>
+	<span style="color: #993333;">struct</span> food shop<span style="color: #009900;">&#91;</span>10<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+	<span style="color: #993333;">char</span> i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>
+&nbsp;
+	file <span style="color: #339933;">=</span> fopen<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;fscanf.txt&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;r&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span>fscanf <span style="color: #009900;">&#40;</span>file<span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;%s%u%f&quot;</span><span style="color: #339933;">,</span> shop<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span>.<span style="color: #202020;">name</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span><span style="color: #009900;">&#40;</span>shop<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span>.<span style="color: #202020;">qty</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span><span style="color: #009900;">&#40;</span>shop<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span>.<span style="color: #202020;">price</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> EOF<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s %u %.2f<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> shop<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span>.<span style="color: #202020;">name</span><span style="color: #339933;">,</span> shop<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span>.<span style="color: #202020;">qty</span><span style="color: #339933;">,</span> shop<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span>.<span style="color: #202020;">price</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> 
+		i<span style="color: #339933;">++;</span>
+	<span style="color: #009900;">&#125;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<p>В данном случае объявляется структура и массив структур. Каждая строка из файла соответствует одному элементу массива; элемент массива представляет собой структуру, содержащую строковое и два числовых поля. За одну итерацию цикл считывает одну строку. Когда встречается конец файла <span class="geshifilter"><code class="c geshifilter-c">fscanf<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> возвращает значение EOF и цикл завершается.</p>
+<h4>fgets()</h4>
+<p>Функция <span class="geshifilter"><code class="c geshifilter-c">fgets<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> аналогична функции <span class="geshifilter"><code class="c geshifilter-c">gets<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> и осуществляет построчный ввод из файла. Один вызов <span class="geshifilter"><code class="c geshifilter-c">fgets<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> позволят прочитать одну строку. При этом можно прочитать не всю строку, а лишь ее часть от начала. Параметры <span class="geshifilter"><code class="c geshifilter-c">fgets<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> выглядят таким образом:<br />
+<span class="geshifilter"><code class="c geshifilter-c">fgets <span style="color: #009900;">&#40;</span></code></span><span class="monoi">массив_символов, количество_считываемых_символов, указатель_на_файл</span><span class="geshifilter"><code class="c geshifilter-c"><span style="color: #009900;">&#41;</span></code></span></p>
+<p>Например:<br />
+<span class="geshifilter"><code class="c geshifilter-c">fgets <span style="color: #009900;">&#40;</span>str<span style="color: #339933;">,</span> <span style="color: #0000dd;">50</span><span style="color: #339933;">,</span> myfile<span style="color: #009900;">&#41;</span></code></span></p>
+<p>Такой вызов функции прочитает из файла, связанного с указателем <span class="monoi">myfile</span>, одну строку текста полностью, если ее длина меньше 50 символов с учетом символа '\n', который функция также сохранит в массиве. Последним (50-ым) элементом массива <span class="monoi">str</span> будет символ '\0', добавленный <span class="geshifilter"><code class="c geshifilter-c">fgets<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>. Если строка окажется длиннее, то функция прочитает 49 символов и в конце запишет '\0'. В таком случае '\n' в считанной строке содержаться не будет.<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+&nbsp;
+<span style="color: #339933;">#define N 80</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span> 
+	FILE <span style="color: #339933;">*</span>file<span style="color: #339933;">;</span>
+	<span style="color: #993333;">char</span> arr<span style="color: #009900;">&#91;</span>N<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+&nbsp;
+	file <span style="color: #339933;">=</span> fopen<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;fscanf.txt&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;r&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span>fgets <span style="color: #009900;">&#40;</span>arr<span style="color: #339933;">,</span> N<span style="color: #339933;">,</span> file<span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> NULL<span style="color: #009900;">&#41;</span>
+		<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s&quot;</span><span style="color: #339933;">,</span> arr<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	fclose<span style="color: #009900;">&#40;</span>file<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<p>В этой программе в отличие от предыдущей данные считываются строка за строкой в массив <span class="monoi">arr</span>. Когда считывается следующая строка, предыдущая теряется. Функция <span class="geshifilter"><code class="c geshifilter-c">fgets<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> возвращает NULL в случае, если не может прочитать следующую строку. </p>
+<h4>getc() или fgetc()</h4>
+<p>Функция <span class="geshifilter"><code class="c geshifilter-c">getc<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> или <span class="geshifilter"><code class="c geshifilter-c">fgetc<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> (работает и то и другое) позволяет получить из файла очередной один символ.<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>arr<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> fgetc <span style="color: #009900;">&#40;</span>file<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> EOF<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>arr<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">==</span> <span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\n</span>'</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+			arr<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #339933;">;</span>
+			<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span>arr<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+			i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>
+		<span style="color: #009900;">&#125;</span>
+		<span style="color: #b1b100;">else</span> i<span style="color: #339933;">++;</span>
+	<span style="color: #009900;">&#125;</span>
+	arr<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span>arr<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>Приведенный в качестве примера код выводит данные из файла на экран.</p>
+<h3>Запись в текстовый файл</h3>
+<p>Также как и ввод, вывод в файл может быть различным. </p>
+<ul>
+<li>Форматированный вывод. Функция <span class="geshifilter"><code class="c geshifilter-c">fprintf <span style="color: #009900;">&#40;</span></code></span><span class="monoi">файловый_указатель, строка_формата, переменные</span><span class="geshifilter"><code class="c geshifilter-c"><span style="color: #009900;">&#41;</span></code></span>.</li>
+<li>Посточный вывод. Функция <span class="geshifilter"><code class="c geshifilter-c">fputs <span style="color: #009900;">&#40;</span></code></span><span class="monoi">строка, файловый_указатель</span><span class="geshifilter"><code class="c geshifilter-c"><span style="color: #009900;">&#41;</span></code></span>.</li>
+<li>Посимвольный вывод. Функция <span class="geshifilter"><code class="c geshifilter-c">fputc<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> или <span class="geshifilter"><code class="c geshifilter-c">putc<span style="color: #009900;">&#40;</span></code></span><span class="monoi">символ, файловый_указатель</span><span class="geshifilter"><code class="c geshifilter-c"><span style="color: #009900;">&#41;</span></code></span>.</li>
+</ul>
+<p>Ниже приводятся примеры кода, в которых используются три способа вывода данных в файл.</p>
+<p>Запись в каждую строку файла полей одной структуры:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">	file <span style="color: #339933;">=</span> fopen<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;fprintf.txt&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;w&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span>scanf <span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s%u%f&quot;</span><span style="color: #339933;">,</span> shop<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span>.<span style="color: #202020;">name</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span><span style="color: #009900;">&#40;</span>shop<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span>.<span style="color: #202020;">qty</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span><span style="color: #009900;">&#40;</span>shop<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span>.<span style="color: #202020;">price</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> EOF<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		fprintf<span style="color: #009900;">&#40;</span>file<span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;%s %u %.2f<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> shop<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span>.<span style="color: #202020;">name</span><span style="color: #339933;">,</span> shop<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span>.<span style="color: #202020;">qty</span><span style="color: #339933;">,</span> shop<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span>.<span style="color: #202020;">price</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> 
+		i<span style="color: #339933;">++;</span>
+	<span style="color: #009900;">&#125;</span></pre></div></p>
+<p>Построчный вывод в файл (<span class="geshifilter"><code class="c geshifilter-c">fputs<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>, в отличие от <span class="geshifilter"><code class="c geshifilter-c">puts<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> сама не помещает в конце строки '\n'):<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span>gets <span style="color: #009900;">&#40;</span>arr<span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> NULL<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		fputs<span style="color: #009900;">&#40;</span>arr<span style="color: #339933;">,</span> file<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		fputs<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> file<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #009900;">&#125;</span></pre></div></p>
+<p>Пример посимвольного вывода:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#40;</span>i <span style="color: #339933;">=</span> getchar<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">!=</span> EOF<span style="color: #009900;">&#41;</span>
+		putc<span style="color: #009900;">&#40;</span>i<span style="color: #339933;">,</span> file<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<h3>Чтение из двоичного файла и запись в него</h3>
+<p>С файлом можно работать не как с последовательностью символов, а как с последовательностью байтов. В принципе, с нетекстовыми файлами работать по-другому не возможно. Однако так можно читать и писать и в текстовые файлы. Преимущество такого способа доступа к файлу заключается в скорости чтения-записи: за одно обращение можно считать/записать существенный блок информации.</p>
+<p>При открытии файла для двоичного доступа, вторым параметром функции <span class="geshifilter"><code class="c geshifilter-c">fopen<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> является строка "rb" или "wb".</p>
+<p>Тема о работе с двоичными файлами достаточно сложная, для ее изучения требуется отдельный урок. Здесь будут отмечены только особенности функций чтения-записи в файл, который рассматривается как поток байтов.</p>
+<p>Функции <span class="geshifilter"><code class="c geshifilter-c">fread<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> и <span class="geshifilter"><code class="c geshifilter-c">fwrite<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> принимают в качестве параметров:</p>
+<ol>
+<li>адрес области памяти, куда данные записываются или откуда считываются,</li>
+<li>размер одного данного какого-либо типа, </li>
+<li>количество считываемых данных указанного размера,</li>
+<li>файловый указатель.</li>
+</ol>
+<p>Эти функции возвращают количество успешно прочитанных или записанных данных. Т.е. можно "заказать" считывание 50 элементов данных, а получить только 10. Ошибки при этом не возникнет.</p>
+<p>Пример использования функций <span class="geshifilter"><code class="c geshifilter-c">fread<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> и <span class="geshifilter"><code class="c geshifilter-c">fwrite<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+<span style="color: #339933;">#include &lt;string.h&gt;</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	FILE <span style="color: #339933;">*</span>file<span style="color: #339933;">;</span>
+	<span style="color: #993333;">char</span> shelf1<span style="color: #009900;">&#91;</span>50<span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> shelf2<span style="color: #009900;">&#91;</span>100<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+	<span style="color: #993333;">int</span> n<span style="color: #339933;">,</span> m<span style="color: #339933;">;</span>
+&nbsp;
+	file <span style="color: #339933;">=</span> fopen<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;shelf1.txt&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;rb&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	n<span style="color: #339933;">=</span>fread<span style="color: #009900;">&#40;</span>shelf1<span style="color: #339933;">,</span> <span style="color: #993333;">sizeof</span><span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> 50<span style="color: #339933;">,</span> file<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	fclose<span style="color: #009900;">&#40;</span>file<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	file <span style="color: #339933;">=</span> fopen<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;shelf2.txt&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;rb&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	m<span style="color: #339933;">=</span>fread<span style="color: #009900;">&#40;</span>shelf2<span style="color: #339933;">,</span> <span style="color: #993333;">sizeof</span><span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> 50<span style="color: #339933;">,</span> file<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	fclose<span style="color: #009900;">&#40;</span>file<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>	
+&nbsp;
+	shelf1<span style="color: #009900;">&#91;</span>n<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #339933;">;</span>
+	shelf2<span style="color: #009900;">&#91;</span>m<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\n</span>'</span><span style="color: #339933;">;</span>
+	shelf2<span style="color: #009900;">&#91;</span>m<span style="color: #339933;">+</span><span style="color: #0000dd;">1</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #339933;">;</span>
+&nbsp;
+	file <span style="color: #339933;">=</span> fopen<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;shop.txt&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;wb&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	fwrite<span style="color: #009900;">&#40;</span>strcat<span style="color: #009900;">&#40;</span>shelf2<span style="color: #339933;">,</span>shelf1<span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> <span style="color: #993333;">sizeof</span><span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">,</span> n<span style="color: #339933;">+</span>m<span style="color: #339933;">,</span> file<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	fclose<span style="color: #009900;">&#40;</span>file<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>	
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<p>Здесь осуществляется попытка чтения из первого файла 50-ти символов. В <span class="monoi">n</span> сохраняется количество реально считанных символов. Значение <span class="monoi">n</span> может быть равно 50 или меньше. Данные помещаются в строку. То же самое происходит со вторым файлом. Далее первая строка присоединяется ко второй, и данные сбрасываются в третий файл.</p>
+<h3>Решение задач</h3>
+<p><span class="blue"><strong>Задание</strong></span></p>
+<ol>
+<li><span class="blue">Напишите программу, которая запрашивает у пользователя имя (адрес) текстового файла, далее открывает его и считает в нем количество символов и строк.</span></li>
+<li><span class="blue">Напишите программу, которая записывает в файл данные, полученные из другого файла и так или иначе измененные перед записью. Каждая строка данных, полученная из файла, должна помещаться в структуру.</span></li>
+</ol>
+  </div>
+    </div>
+  </body>
+</html>

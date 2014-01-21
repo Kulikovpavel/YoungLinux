@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Сортировка выбором (поиск минимума и перестановка)</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-69" class="section-2">
+  <h1 class="book-heading">Сортировка выбором (поиск минимума и перестановка)</h1>
+  <h2>Описание алгоритма</h2>
+<ol>
+<li>Найти наименьшее значение в исходном множестве.</li>
+<li>Записать его в начало множества, а первый элемент - на место наименьшего.</li>
+<li>Снова найти наименьший элемент в оставшемся множестве и переместить его на второе место. Второй элемент при этом перемещается на освободившееся место.</li>
+<li>Продолжать выполнять поиcк и обмен, пока не будет достигнут конец множества.</li>
+</ol>
+<h2>Исходный код на Python</h2>
+<p><strong>Как найти наименьшее значение в списке?</strong></p>
+<h3><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">s = <span style="color: black;">&#91;</span><span style="color: #ff4500;">2</span>,<span style="color: #ff4500;">4</span>,<span style="color: #ff4500;">1</span>,<span style="color: #ff4500;">3</span><span style="color: black;">&#93;</span>  <span style="color: #808080; font-style: italic;">#подопытный список </span>
+&nbsp;
+m = <span style="color: #ff4500;">0</span>   <span style="color: #808080; font-style: italic;">#индекс первого элемента</span>
+i = <span style="color: #ff4500;">1</span>     <span style="color: #808080; font-style: italic;">#индекс второго элемента </span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">while</span> i <span style="color: #66cc66;">&lt;</span> <span style="color: #008000;">len</span><span style="color: black;">&#40;</span>s<span style="color: black;">&#41;</span>: <span style="color: #808080; font-style: italic;">#пока индекс меньше длины строки</span>
+   <span style="color: #ff7700;font-weight:bold;">if</span> s<span style="color: black;">&#91;</span>i<span style="color: black;">&#93;</span> <span style="color: #66cc66;">&lt;</span> s<span style="color: black;">&#91;</span>m<span style="color: black;">&#93;</span>: <span style="color: #808080; font-style: italic;"># если значение под индексом i меньше, чем под m,</span>
+        m = i <span style="color: #808080; font-style: italic;"># то присвоить m индекс i</span>
+    i += <span style="color: #ff4500;">1</span> <span style="color: #808080; font-style: italic;"># увеличить i на единицу </span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>s<span style="color: black;">&#91;</span>m<span style="color: black;">&#93;</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># вывести значение элемента под индексом m</span></pre></div></h3>
+<p>Обратите внимание на строку while i &lt; len(s):. Не нужно писать &lt;=, т.к. индексация начинается с нуля. Это значит, что когда i равен 3, то мы обращаемся к 4-му элементу списка (в примере, это как раз конец строки).<br />
+<strong>Как поменять два значения в списке местами?</strong></p>
+<h3><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">s = <span style="color: black;">&#91;</span><span style="color: #ff4500;">2</span>,<span style="color: #ff4500;">4</span>,<span style="color: #ff4500;">9</span>,<span style="color: #ff4500;">1</span>,<span style="color: #ff4500;">3</span>,<span style="color: #ff4500;">7</span>,<span style="color: #ff4500;">5</span><span style="color: black;">&#93;</span>  <span style="color: #808080; font-style: italic;">#подопытный список</span>
+<span style="color: #808080; font-style: italic;"># требуется поменять местами первый и четвертый элементы</span>
+m = <span style="color: #ff4500;">0</span>   <span style="color: #808080; font-style: italic;">#индекс первого элемента</span>
+i = <span style="color: #ff4500;">3</span>   <span style="color: #808080; font-style: italic;">#индекс четвертого элемента </span>
+&nbsp;
+t = s<span style="color: black;">&#91;</span>m<span style="color: black;">&#93;</span> <span style="color: #808080; font-style: italic;"># сохраняется значение под индексом m</span>
+s<span style="color: black;">&#91;</span>m<span style="color: black;">&#93;</span> = s<span style="color: black;">&#91;</span>i<span style="color: black;">&#93;</span> <span style="color: #808080; font-style: italic;"># на его место записывается значение под индексом i</span>
+s<span style="color: black;">&#91;</span>i<span style="color: black;">&#93;</span> = t <span style="color: #808080; font-style: italic;"># на место значения под индексом i записывается ранее сохраненное значение под индексом m </span></pre></div></h3>
+<p><strong>Полный алгоритм сортировки выбором</strong></p>
+<h3><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">s = <span style="color: black;">&#91;</span>2,4,8,1,0,3,9,5,7,6<span style="color: black;">&#93;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>s<span style="color: black;">&#41;</span> 
+&nbsp;
+<span style="color: #808080; font-style: italic;">#в переменной k хранится индекс элемента, подлежащего обмену (двигаемся слева на право)</span>
+k = 0
+<span style="color: #ff7700;font-weight:bold;">while</span> k <span style="color: #66cc66;">&lt;</span> <span style="color: #008000;">len</span><span style="color: black;">&#40;</span>s<span style="color: black;">&#41;</span> - <span style="color: #ff4500;">1</span>: <span style="color: #808080; font-style: italic;">#-1, т.к. последний элемент обменивать уже не надо</span>
+    m = k <span style="color: #808080; font-style: italic;">#в m хранится минимальное значение</span>
+    i = k + <span style="color: #ff4500;">1</span> <span style="color: #808080; font-style: italic;">#откуда начинать поиск минимума (элемент следующий за k)</span>
+    <span style="color: #ff7700;font-weight:bold;">while</span> i <span style="color: #66cc66;">&lt;</span> <span style="color: #008000;">len</span><span style="color: black;">&#40;</span>s<span style="color: black;">&#41;</span>:
+        <span style="color: #ff7700;font-weight:bold;">if</span> s<span style="color: black;">&#91;</span>i<span style="color: black;">&#93;</span> <span style="color: #66cc66;">&lt;</span> s<span style="color: black;">&#91;</span>m<span style="color: black;">&#93;</span>:
+            m = i
+        i += <span style="color: #ff4500;">1</span>
+    t = s<span style="color: black;">&#91;</span>k<span style="color: black;">&#93;</span>
+    s<span style="color: black;">&#91;</span>k<span style="color: black;">&#93;</span> = s<span style="color: black;">&#91;</span>m<span style="color: black;">&#93;</span>
+    s<span style="color: black;">&#91;</span>m<span style="color: black;">&#93;</span> = t
+    k += <span style="color: #ff4500;">1</span> <span style="color: #808080; font-style: italic;">#переходим к следующему значению для обмена </span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span>s<span style="color: black;">&#41;</span> </pre></div></h3>
+<p><strong>Оформление  алгоритма в виде функции и пример использования цикла for</strong></p>
+<h3><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">def</span> mymin<span style="color: black;">&#40;</span>mylist<span style="color: black;">&#41;</span>:
+    <span style="color: #ff7700;font-weight:bold;">for</span> k <span style="color: #ff7700;font-weight:bold;">in</span> <span style="color: #008000;">range</span><span style="color: black;">&#40;</span><span style="color: #008000;">len</span><span style="color: black;">&#40;</span>mylist<span style="color: black;">&#41;</span> - 1<span style="color: black;">&#41;</span>:
+        m = k
+        i = k + 1
+        <span style="color: #ff7700;font-weight:bold;">while</span> i <span style="color: #66cc66;">&lt;</span> <span style="color: #008000;">len</span><span style="color: black;">&#40;</span>mylist<span style="color: black;">&#41;</span>:
+            <span style="color: #ff7700;font-weight:bold;">if</span> mylist<span style="color: black;">&#91;</span>i<span style="color: black;">&#93;</span> <span style="color: #66cc66;">&lt;</span> mylist<span style="color: black;">&#91;</span>m<span style="color: black;">&#93;</span>:
+                m = i
+            i += <span style="color: #ff4500;">1</span>
+        t = mylist<span style="color: black;">&#91;</span>k<span style="color: black;">&#93;</span>
+        mylist<span style="color: black;">&#91;</span>k<span style="color: black;">&#93;</span> = mylist<span style="color: black;">&#91;</span>m<span style="color: black;">&#93;</span>
+        mylist<span style="color: black;">&#91;</span>m<span style="color: black;">&#93;</span> = t</pre></div></h3>
+  </div>
+    </div>
+  </body>
+</html>

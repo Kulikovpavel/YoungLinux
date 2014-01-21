@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Перегрузка операторов в ООП. Урок 10</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-45" class="section-2">
+  <h1 class="book-heading">Перегрузка операторов в ООП. Урок 10</h1>
+  <div style="text-align:center;">
+<h4>Методическая разработка урока<br />
+Элективный курс: Введение в объектно-ориентированное программирование на Python<br />
+Уровень: Программирование для начинающих</h4>
+</div>
+<p>До этого мы говорили только о классах и объектах, которые создает программист (пользовательские классы). Однако Python настолько объектно-ориентированный язык, что в нем любые строка, число, список и др. являются по сути объектами, принадлежащими встроенным классам (типам данных): строкам, числам и др. Т. е. типы данных — это встроенные классы, а любые данные — это объекты.</p>
+<p>Объектно-ориентированное программирование подразумевает не только наличие объектов, но и их взаимодействие между собой. Поэтому важно, чтобы к объектам разных классов можно было применить одну и туже операцию (например, сложение). </p>
+<p>Для пользовательских классов предусмотрены специальные методы, позволяющие объектам данных классов участвовать в таких привычных операциях как сложение, вычитание, умножение, деление (+ - * /), а также во многих других. Другими словами, смысл (то, что он делает) знака + (или любого другого оператора) зависит от того, к каким объектам он применяется. Это называется <strong>перегрузкой операторов</strong>. В классах перегруженные операторы описываются с помощью специальных зарезервированных методов, которые в начале и в конце имеют по два знака подчеркивания. В уроке рассматриваются лишь некоторые из них. Кроме того, ранее был уже рассмотрен один такой метод — конструктор <strong>__init__</strong>, который автоматически вызывается при создании объектов класса. </p>
+<p>Рассмотрим пример перегрузки операторов. </p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> Newclass:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>, base<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">base</span> = base
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__add__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>, a<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">base</span> = <span style="color: #008000;">self</span>.<span style="color: black;">base</span> + a
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__str__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          <span style="color: #ff7700;font-weight:bold;">return</span> <span style="color: #483d8b;">&quot;%s !!! &quot;</span> <span style="color: #66cc66;">%</span> <span style="color: #008000;">self</span>.<span style="color: black;">base</span>
+&nbsp;
+a = Newclass<span style="color: black;">&#40;</span>10<span style="color: black;">&#41;</span>
+a + 20
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>a<span style="color: black;">&#41;</span>
+&nbsp;
+b = Newclass<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;yes&quot;</span><span style="color: black;">&#41;</span>
+b + <span style="color: #483d8b;">&quot;terday&quot;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>b<span style="color: black;">&#41;</span>
+&nbsp;
+c = Newclass<span style="color: black;">&#40;</span><span style="color: black;">&#91;</span>2,6,3<span style="color: black;">&#93;</span><span style="color: black;">&#41;</span>
+c + <span style="color: black;">&#91;</span>7, 1<span style="color: black;">&#93;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>c<span style="color: black;">&#41;</span></pre></div> </p>
+<p>В данном примере используется два метода (исключая <strong>__init__</strong>) перегрузки операторов: <strong>__add__</strong> и <strong>__str__</strong>. Метод <strong>__add__</strong> вызывается в том случае, когда объект данного класса участвует в операции сложения (для чисел), конкатенации (для строк) и объединения (для списков). Метод <strong>__str__</strong> вызывается, когда объект передается в качестве аргумента встроенной функции <strong>print</strong> (на самом деле не только ей) и представляет данные в виде строки.</p>
+<p>Результат работы скрипта представленного выше будет таким:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff4500;">30</span> <span style="color: #66cc66;">!!!</span> 
+yesterday <span style="color: #66cc66;">!!!</span> 
+<span style="color: black;">&#91;</span><span style="color: #ff4500;">2</span>, <span style="color: #ff4500;">6</span>, <span style="color: #ff4500;">3</span>, <span style="color: #ff4500;">7</span>, <span style="color: #ff4500;">1</span><span style="color: black;">&#93;</span> <span style="color: #66cc66;">!!!</span> </pre></div></p>
+<p><strong>Задание.</strong> Спешите пример, посмотрите как он работает. Дополните класс методами <strong>__mul__</strong> (вызывается при использовании объекта в операциях умножения) и <strong>__sub__</strong> (вычитание). Вызовите данные методы с помощью соответствующих операций с объектами. Для каких объектов невозможно использовать метод <strong>__sub__</strong>?</p>
+<h2>__call__ - перегрузка вызова функции</h2>
+<p>Метод <strong>__call__</strong> автоматически вызывается, когда к объекту обращаются как к функции. Например, здесь во второй строке произойдет вызов метода <strong>__call__</strong> некогоКласса:</p>
+<div style="text-align:center;"><strong>объект = некийКласс()<br />
+объект([возможные аргументы])</strong></div>
+<p>Другими словами, метод <strong>__call__</strong> позволяет объектам вести себя как функции.</p>
+<p>Пример:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> Changeable:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>, color<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">color</span> = color
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__call__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span>, newcolor<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">color</span> = newcolor
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__str__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          <span style="color: #ff7700;font-weight:bold;">return</span> <span style="color: #483d8b;">&quot;%s&quot;</span> <span style="color: #66cc66;">%</span> <span style="color: #008000;">self</span>.<span style="color: black;">color</span>
+&nbsp;
+canvas = Changeable<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;green&quot;</span><span style="color: black;">&#41;</span>
+frame = Changeable<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;blue&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+canvas<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;red&quot;</span><span style="color: black;">&#41;</span>
+frame<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;yellow&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>canvas, frame<span style="color: black;">&#41;</span></pre></div> </p>
+<p>В этом примере с помощью конструктора класса при создании объектов устанавливается их цвет. Если требуется его поменять, то достаточно обратиться к объекту как к функции и в качестве аргумента передать новый цвет. Такой обращение автоматически вызовет метод <strong>__call__</strong> (который, в данном случае, изменит атрибут color объекта).</p>
+<p><strong>Задание.</strong> <em>Создайте класс с методом <strong>__call__</strong>, принимающим два параметра и производящим над ними те или иные математические операции. Создайте несколько объектов класса и, затем, обратитесь к ним как к функциям.</em></p>
+<p>Рассмотренные в этом уроке методы перегрузки операторов лишь малая часть из существующих. Фактически все, что можно делать со встроенными типами (числами, словарями и др.), можно реализовать и для пользовательских типов (классов). Можно сказать, что перегрузка операторов обеспечивает единый интерфейс для встроенных и пользовательских типов (классов). Так, в первом примере можно видеть как "складываются" объект-число и объект класса Newclass.</p>
+  </div>
+    </div>
+  </body>
+</html>

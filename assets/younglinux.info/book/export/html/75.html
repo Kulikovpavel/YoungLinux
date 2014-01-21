@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Ориентация в 3D-пространстве, перемещение и изменение объектов в Blender. Практическая работа. Урок 3</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-75" class="section-2">
+  <h1 class="book-heading">Ориентация в 3D-пространстве, перемещение и изменение объектов в Blender. Практическая работа. Урок 3</h1>
+  <style type="text/css">
+.table
+{
+border-style: solid;
+border-width: 1px 1px 0px 0px;
+padding-left: 10px;
+padding-right: 10px;
+}
+</style><div style="text-align:center;">
+<h4>Инструкционная карта</h4>
+</div>
+<table>
+<tr>
+<th class="table" style="border-width:1px 1px 0px 1px;">№</th>
+<th class="table">Задание</th>
+<th class="table">Способ выполнения</th>
+<th class="table">Иллюстрация</th>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">1</td>
+<td class="table">Сделайте окно 3D вида полноэкранным.</td>
+<td class="table">Shift + Space (пробел). <br />При этом курсор должен находиться в окне 3D-вида.</td>
+<td class="table"></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">2</td>
+<td class="table">Попробуйте перемещать 3D-курсор.</td>
+<td class="table">Щелчок левой клавишей мыши в любое место 3D-окна.</td>
+<td class="table"></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">3</td>
+<td class="table">Поочередно выделяйте камеру, лампу и куб.</td>
+<td class="table">Щелчок правой клавишей мыши по тому или иному объекту.</td>
+<td class="table"><img src="../../../img/blender/blenderpractical1/blender1.gif" style="width:159px;height:172px;" alt="Вид сверху в 3D-окне Blender. Выделена лампа" longdesc="Вид сверху в 3D-окне Blender. Выделена лампа" /></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">4</td>
+<td class="table">Выделите три объекта вместе (групповое выделение).</td>
+<td class="table">Щелчки правой клавишей мыши по кубу, камере и лампе при зажатой клавише Shift.</td>
+<td class="table"><img src="../../../img/blender/blenderpractical1/blender2.gif" style="width:159px;height:145px;" alt="Выделены три объекта: куб, лампа и камера" longdesc="Выделены три объекта: куб, лампа и камера" /></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">5</td>
+<td class="table">Измените тип окна на вид спереди, затем сбоку и, наконец, вид из камеры.</td>
+<td class="table">Нажатие на NumPad'е 1, затем 3 и 0.</td>
+<td class="table"><img src="../../../img/blender/blenderpractical1/blender3.gif" style="width:159px;height:150px;" alt="Вид из камеры в Blender" longdesc="Вид из камеры в Blender" /></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">6</td>
+<td class="table">Выделите один куб.</td>
+<td class="table">Щелчок правой кнопкой по объекту.</td>
+<td class="table"></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">7</td>
+<td class="table">Переместите куб по оси X на -2 единицы.</td>
+<td class="table">Зажав Ctrl, потянуть за красную ось назад (при этом наблюдать за изменением значения<br />
+в нижнем левом углу 3D-окна).</td>
+<td class="table"><img src="../../../img/blender/blenderpractical1/blender4.gif" style="width:156px;height:64px;" alt="Нижний левый угол 3D-окна Blender" longdesc="Нижний левый угол 3D-окна Blender" /></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">8</td>
+<td class="table">Переместите куб по оси Y на 3 единицы.</td>
+<td class="table">Потянуть за зеленую ось вправо.</td>
+<td class="table"></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">9</td>
+<td class="table">Переместите куб по оси Z на -1 единицу.</td>
+<td class="table">Потянуть за синюю ось вниз.</td>
+<td class="table"></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">10</td>
+<td class="table">Увеличьте куб по оси X в 3 раза.</td>
+<td class="table">Нажать S на клавиатуре, затем X. Зажать Ctrl и двигать мышью, добиваясь в нижнем левом углу 3D-окна<br />
+значения в 3 целых. Примечание: чем ближе курсор мыши к объекту, тем сильнее влияет движение мыши на изменение объекта.</td>
+<td class="table"></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">11</td>
+<td class="table">Увеличьте куб по оси Y в 1.3 раза.</td>
+<td class="table">S, затем Y.</td>
+<td class="table"></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">12</td>
+<td class="table">Уменьшите куб по оси Z в 2 раза.</td>
+<td class="table">S, затем Z. Тянуть до значения в 0.5.</td>
+<td class="table"><img src="../../../img/blender/blenderpractical1/blender5.gif" style="width:159px;height:124px;" alt="Брусок, получившийся из куба" longdesc="Брусок, получившийся из куба" /></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">13</td>
+<td class="table">Поверните брусок по оси X на -15 градусов</td>
+<td class="table">N. В появившемся плавающем окне в поле RotX ввести значение -15. Нажать Enter.</td>
+<td class="table"></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">14</td>
+<td class="table">Поверните брусок по оси Y на -10 градусов</td>
+<td class="table">В поле RotY ввести значение -10. Нажать Enter.</td>
+<td class="table"></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">15</td>
+<td class="table">Посмотрите получившееся изображение.</td>
+<td class="table">F12</td>
+<td class="table"></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 1px 1px;">16</td>
+<td class="table" style="border-width:1px 1px 1px 0px;">Сохраните его, обратив внимание, что сохраняется не файл сцены с расширением .blend,<br />
+а именно картинка (в формате JPEG). </td>
+<td class="table" style="border-width:1px 1px 1px 0px;">F3</td>
+<td class="table" style="border-width:1px 1px 1px 0px;"></td>
+</tr>
+</table>
+  </div>
+    </div>
+  </body>
+</html>

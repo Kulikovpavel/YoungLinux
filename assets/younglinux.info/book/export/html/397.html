@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Случайные четные и нечетные числа</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-397" class="section-2">
+  <h1 class="book-heading">Случайные четные и нечетные числа</h1>
+  <p class="right">Решение задач на языке программирования C</p>
+<p>Напишите функцию, которая принимает указатели на два массива. Функция должна заполнять один массив 25-ю случайными четными числами, а другой — 25 нечетными. Продемонстрируйте ее работу.</p>
+<p><div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+<span style="color: #339933;">#include &lt;time.h&gt;</span>
+&nbsp;
+<span style="color: #339933;">#define N 25</span>
+&nbsp;
+<span style="color: #993333;">void</span> arrs_make<span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> even<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> <span style="color: #993333;">int</span> odd<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #993333;">void</span> arr_print<span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> <span style="color: #339933;">*</span>arr<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> n<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> arr1<span style="color: #009900;">&#91;</span>N<span style="color: #009900;">&#93;</span><span style="color: #339933;">,</span> arr2<span style="color: #009900;">&#91;</span>N<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+&nbsp;
+	arrs_make<span style="color: #009900;">&#40;</span>arr1<span style="color: #339933;">,</span> arr2<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	arr_print<span style="color: #009900;">&#40;</span>arr1<span style="color: #339933;">,</span> N<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	arr_print<span style="color: #009900;">&#40;</span>arr2<span style="color: #339933;">,</span> N<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>  
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">void</span> arrs_make<span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> <span style="color: #339933;">*</span>even<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> <span style="color: #339933;">*</span>odd<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">,</span>j<span style="color: #339933;">,</span>k<span style="color: #339933;">;</span>
+&nbsp;
+	srand<span style="color: #009900;">&#40;</span>time<span style="color: #009900;">&#40;</span>NULL<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>j<span style="color: #339933;">=</span>0<span style="color: #339933;">,</span> k<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> j<span style="color: #339933;">&lt;</span>N <span style="color: #339933;">||</span> k<span style="color: #339933;">&lt;</span>N<span style="color: #339933;">;</span> <span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		i <span style="color: #339933;">=</span> rand<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">%</span> <span style="color: #009900;">&#40;</span>100<span style="color: #009900;">&#41;</span> <span style="color: #339933;">+</span> <span style="color: #0000dd;">250</span><span style="color: #339933;">;</span>
+		<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>i<span style="color: #339933;">%</span>2 <span style="color: #339933;">==</span> 0 <span style="color: #339933;">&amp;&amp;</span> j <span style="color: #339933;">&lt;</span> N<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+			even<span style="color: #009900;">&#91;</span>j<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> i<span style="color: #339933;">;</span>
+			j<span style="color: #339933;">++;</span>
+		<span style="color: #009900;">&#125;</span> <span style="color: #b1b100;">else</span> 
+			<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>k <span style="color: #339933;">&lt;</span> N<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+				odd<span style="color: #009900;">&#91;</span>k<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> i<span style="color: #339933;">;</span>
+				k<span style="color: #339933;">++;</span>
+			<span style="color: #009900;">&#125;</span>
+	<span style="color: #009900;">&#125;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">void</span> arr_print<span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> <span style="color: #339933;">*</span>arr<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> n<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i<span style="color: #339933;">&lt;</span>n<span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span>
+		<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d &quot;</span><span style="color: #339933;">,</span> arr<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+  </div>
+    </div>
+  </body>
+</html>

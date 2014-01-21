@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Двоичный (бинарный) поиск элемента в массиве</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-64" class="section-2">
+  <h1 class="book-heading">Двоичный (бинарный) поиск элемента в массиве</h1>
+  <p><strong>Двоичный поиск значения</strong> в списке (или массиве) используется для упорядоченных последовательностей (отсортированных по возрастанию или убыванию). Заключается такой поиск в определении, содержит ли массив определенное значение, а также определение места его нахождения.</p>
+<h2>Описание алгоритма</h2>
+<ol>
+<li>Находится средний элемент последовательности. Для этого первый и последний элементы связываются с переменными, а средний вычисляется.</li>
+<li>Средний элемент сравнивается с искомым значение. В зависимости от того, больше оно или меньше среднего элемента, дальнейший поиск будет происходить лишь в левой или правой половинах массива. Если значение среднего элемента окажется равным искомому, то поиск завершен.</li>
+<li>Одна из границ исследуемой последовательности становится равной предыдущему или последующему среднему элементу из п.2.</li>
+<li>Снова находится средний элемент, теперь уже в «выбранной» половине. Описанный выше алгоритм повторяется уже для данной последовательности.</li>
+</ol>
+<h2>Исходный код на Python</h2>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">li = <span style="color: black;">&#91;</span>0,3,5,7,10,20,28,30,45,56<span style="color: black;">&#93;</span>
+x = 45
+i = 0
+j = <span style="color: #008000;">len</span><span style="color: black;">&#40;</span>li<span style="color: black;">&#41;</span>-1
+m = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span>j/2<span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">while</span> li<span style="color: black;">&#91;</span>m<span style="color: black;">&#93;</span> <span style="color: #66cc66;">!</span>= x <span style="color: #ff7700;font-weight:bold;">and</span> i <span style="color: #66cc66;">&lt;</span> j:
+    <span style="color: #ff7700;font-weight:bold;">if</span> x <span style="color: #66cc66;">&gt;</span> li<span style="color: black;">&#91;</span>m<span style="color: black;">&#93;</span>:
+        i = m+1
+    <span style="color: #ff7700;font-weight:bold;">else</span>:
+        j = m-1
+    m = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: black;">&#40;</span>i+j<span style="color: black;">&#41;</span>/2<span style="color: black;">&#41;</span>
+&nbsp;
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">if</span> i <span style="color: #66cc66;">&gt;</span> j:
+    <span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'Элемент не найден'</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">else</span>:
+    <span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'Индекс элемента: '</span>, m<span style="color: black;">&#41;</span></pre></div></p>
+  </div>
+    </div>
+  </body>
+</html>

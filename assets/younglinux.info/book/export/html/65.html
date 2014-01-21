@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Тестирование простоты числа   методом перебора делителей</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-65" class="section-2">
+  <h1 class="book-heading">Тестирование простоты числа   методом перебора делителей</h1>
+  <p>Перебор делителей – это алгоритм, применяемый для определения, какое число перед нами: простое или составное.</p>
+<p>Алгоритм заключается в последовательном делении заданного натурального числа на все целые числа, начиная с двойки и заканчивая значением меньшим или равным квадратному корню тестируемого числа. Если хотя бы один делитель делит тестируемое число без остатка, то оно является составным. Если у тестируемого числа нет ни одного делителя, делящего его без остатка, то такое число является простым.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">def</span> divider<span style="color: black;">&#40;</span>n<span style="color: black;">&#41;</span>:
+    i = <span style="color: #ff4500;">2</span>
+    j = <span style="color: #ff4500;">0</span> <span style="color: #808080; font-style: italic;"># флаг</span>
+    <span style="color: #ff7700;font-weight:bold;">while</span> i<span style="color: #66cc66;">**</span>2 <span style="color: #66cc66;">&lt;</span>= n <span style="color: #ff7700;font-weight:bold;">and</span> j <span style="color: #66cc66;">!</span>= 1:
+        <span style="color: #ff7700;font-weight:bold;">if</span> n<span style="color: #66cc66;">%</span>i == 0:
+            j = 1
+        i += 1
+    <span style="color: #ff7700;font-weight:bold;">if</span> j == 1:
+        <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Это составное число&quot;</span><span style="color: black;">&#41;</span>
+    <span style="color: #ff7700;font-weight:bold;">else</span>:
+        <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Это простое число&quot;</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>	При вызове этой функции на место параметра <span class="monoi">n</span> подставляется число, которое надо протестировать на простоту.</p>
+<p>	Значения переменной <span class="monoi">i</span> играют роль делителей. Первым значением делителя является 2, далее происходит увеличение за каждый оборот цикла <strong>while</strong> на единицу.</p>
+<p>	Выражение n % i возвращает остаток от деления первого числа на второе. Если остаток равен 0, т.е. первое число делится нацело на второе, то <span class="monoi">n</span> является составным числом. В этом случае переменная, играющая роль флага (<span class="monoi">j</span>) меняет свое значение, и цикл <strong>while</strong> больше не выполняется (из-за выражения j != 1).</p>
+<p>	Цикл <strong>while</strong> также прервется в том случае, если i<sup>2</sup> (на языке Python возведение в степень обозначается **) станет больше <span class="monoi">n</span>. </p>
+<p>	Конструкция <strong>if – else</strong> просто выполняет анализ значения, с которым связана флаг-переменная, в зависимости от ее состояния выводит соответствующий текст на экран.</p>
+<p>	Вызвать функцию <span class="monoi">divider</span> можно так:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">divider<span style="color: black;">&#40;</span><span style="color: #008000;">int</span><span style="color: black;">&#40;</span><span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Введите число:&quot;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>	Или так:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">divider<span style="color: black;">&#40;</span><span style="color: #ff4500;">136</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>	В первом случае ввод пользователя преобразуется из строчного типа в целое число с помощью функции <strong>int</strong>. Полученное значение передается функции <span class="monoi">divider</span>. </p>
+<p>	Если требуется хранить значение проверяемого числа, то его следует связать с переменной:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">num = <span style="color: #ff4500;">149</span>
+divider<span style="color: black;">&#40;</span>num<span style="color: black;">&#41;</span></pre></div></p>
+<h2>Блок-схема</h2>
+<div style="text-align:center;"><img src="../../../img/algorithm/divider.png" width="412" height="610" alt="Блок-схема к алгоритму `Перебор делителей`" /></div>
+  </div>
+    </div>
+  </body>
+</html>

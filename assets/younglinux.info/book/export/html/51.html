@@ -1,0 +1,79 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Виджеты (графические объекты) и их свойства. Часть 2. Урок 3</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-51" class="section-2">
+  <h1 class="book-heading">Виджеты (графические объекты) и их свойства. Часть 2. Урок 3</h1>
+  <p>На этом уроке продолжим рассматривать графические объекты (виджеты), содержащихся в библиотеке Tkinter. Это будут рамка (frame), шкала (scale), полоса прокрутки (scrollbar), окно верхнего уровня (toplevel).</p>
+<h2>Frame (рамка)</h2>
+<p>Как выяснится позже, рамки (фреймы) хороший инструмент для организации остальных виджет в группы внутри окна, а также оформления. </p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+&nbsp;
+root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+fra1 = Frame<span style="color: black;">&#40;</span>root,width=<span style="color: #ff4500;">500</span>,height=<span style="color: #ff4500;">100</span>,bg=<span style="color: #483d8b;">&quot;darkred&quot;</span><span style="color: black;">&#41;</span>
+fra2 = Frame<span style="color: black;">&#40;</span>root,width=<span style="color: #ff4500;">300</span>,height=<span style="color: #ff4500;">200</span>,bg=<span style="color: #483d8b;">&quot;green&quot;</span>,bd=<span style="color: #ff4500;">20</span><span style="color: black;">&#41;</span>
+fra3 = Frame<span style="color: black;">&#40;</span>root,width=<span style="color: #ff4500;">500</span>,height=<span style="color: #ff4500;">150</span>,bg=<span style="color: #483d8b;">&quot;darkblue&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+fra1.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+fra2.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+fra3.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>Данный скрипт создает три фрейма разного размера. Свойство bd (сокращение от boderwidth) определяет расстояния от края рамки до заключенных в нее виджетов (если они есть). </p>
+<p>На фреймах также можно размещать виджеты как на основном окне (root). Здесь текстовое поле находится на рамке fra2.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">ent1 = Entry<span style="color: black;">&#40;</span>fra2,width=<span style="color: #ff4500;">20</span><span style="color: black;">&#41;</span>
+ent1.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> </pre></div></p>
+<h2>Scale (шкала)</h2>
+<p>Назначение шкалы — это предоставление пользователю выбора какого-то значения из определенного диапазона. Внешне шкала представляет собой горизонтальную или вертикальную полосу с разметкой, по которой пользователь может передвигать движок, осуществляя тем самым выбор значения.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">sca1 = Scale<span style="color: black;">&#40;</span>fra3,orient=HORIZONTAL,length=<span style="color: #ff4500;">300</span>,
+          from_=<span style="color: #ff4500;">0</span>,to=<span style="color: #ff4500;">100</span>,tickinterval=<span style="color: #ff4500;">10</span>,resolution=<span style="color: #ff4500;">5</span><span style="color: black;">&#41;</span>
+sca2 = Scale<span style="color: black;">&#40;</span>root,orient=VERTICAL,length=<span style="color: #ff4500;">400</span>,
+          from_=<span style="color: #ff4500;">1</span>,to=<span style="color: #ff4500;">2</span>,tickinterval=<span style="color: #ff4500;">0.1</span>,resolution=<span style="color: #ff4500;">0.1</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>Свойства: </p>
+<ul>
+<li>orient определяет направление шкалы;</li>
+<li>length – длина шкалы в пикселях; </li>
+<li>from_ и to – с какого значения шкала начинается и каким заканчивается (т. е. диапазон значений); </li>
+<li>tickinterval – интервал, через который отображаются метки для шкалы;</li>
+<li>resolution - минимальная длина отрезка, на которую пользователь может передвинуть движок.</li>
+</ul>
+<h2>Scrollbar (полоса прокрутки)</h2>
+<p>Данный виджет позволяет прокручивать содержимое другого виджета (например, текстового поля или списка). Прокрутка может быть как по горизонтали, так и по вертикали.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+&nbsp;
+root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+tx = Text<span style="color: black;">&#40;</span>root,width=<span style="color: #ff4500;">40</span>,height=<span style="color: #ff4500;">3</span>,font=<span style="color: #483d8b;">'14'</span><span style="color: black;">&#41;</span>
+scr = Scrollbar<span style="color: black;">&#40;</span>root,command=tx.<span style="color: black;">yview</span><span style="color: black;">&#41;</span>
+tx.<span style="color: black;">configure</span><span style="color: black;">&#40;</span>yscrollcommand=scr.<span style="color: #008000;">set</span><span style="color: black;">&#41;</span>
+&nbsp;
+tx.<span style="color: black;">grid</span><span style="color: black;">&#40;</span>row=<span style="color: #ff4500;">0</span>,column=<span style="color: #ff4500;">0</span><span style="color: black;">&#41;</span>
+scr.<span style="color: black;">grid</span><span style="color: black;">&#40;</span>row=<span style="color: #ff4500;">0</span>,column=<span style="color: #ff4500;">1</span><span style="color: black;">&#41;</span>
+root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>В примере сначала создается текстовое поле (tx), затем полоса прокрутки (scr), которая привязывается с помощью опции command к полю tx по вертикальной оси (yview). Далее поле tx изменяется (конфигурируется) с помощью метода configure: устанавливается значение опции yscrollcommand.</p>
+<p>Здесь используется незнакомый нам пока еще метод grid, представляющий собой другой способ расположения виджет на окне.</p>
+<h2>Toplevel (окно верхнего уровня)</h2>
+<p>С помощью класс Toplevel создаются дочерние окна, на которых также могут располагаться виджеты. Следует отметить, что при закрытии главного окна (или родительского), окно Toplevel также закрывается. С другой стороны, закрытие дочернего окна не приводит к закрытию главного.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">win = Toplevel<span style="color: black;">&#40;</span>root,relief=SUNKEN,bd=<span style="color: #ff4500;">10</span>,bg=<span style="color: #483d8b;">&quot;lightblue&quot;</span><span style="color: black;">&#41;</span>
+win.<span style="color: black;">title</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Дочернее окно&quot;</span><span style="color: black;">&#41;</span>
+win.<span style="color: black;">minsize</span><span style="color: black;">&#40;</span>width=<span style="color: #ff4500;">400</span>,height=<span style="color: #ff4500;">200</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>Метод title определяет заголовок окна. Метод minsize конфигурирует минимальный размер окна (есть метод maxsize, определяющий максимальный размер окна). Если значение аргументов minsize будет таким же как у maxsize, то пользователь не сможет менять размеры окна. </p>
+<h2>практическая работа<br />
+</h2>
+<p>1. Создайте два скрипта на языке программирования Python и с использованием модуля Tkinter генерирующие шаблоны представленные ниже. </p>
+<div style="text-align:center;"><img src="../../../img/tkinter/tkinter3.1.gif" width="346" height="188" alt="Создание графического интерфейса: рамки (frame) и шкала (scale)" /></div>
+<div style="text-align:center;"><img src="../../../img/tkinter/tkinter3.2.gif" width="302" height="72" alt="Создание графического интерфейса: текстовое поле с полосой прокрутки" /></div>
+<p>2. Создайте приложение, состоящее из главного и двух дочерних окон. На каждом из трех окон должны располагаться один или два любых графических объекта.</p>
+  </div>
+    </div>
+  </body>
+</html>

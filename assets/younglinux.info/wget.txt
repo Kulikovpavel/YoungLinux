@@ -1,0 +1,2 @@
+wget --adjust-extension --span-hosts --convert-links --page-requisites http://younglinux.info/book/export/html/{1..1000}
+

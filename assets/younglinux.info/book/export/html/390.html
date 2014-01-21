@@ -1,0 +1,63 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>K&amp;R (124). Пример использования массива указателей</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-390" class="section-2">
+  <h1 class="book-heading">K&amp;R (124). Пример использования массива указателей</h1>
+  <p class="right">Решение задач на языке программирования C</p>
+<p>Массив <span class="geshifilter"><code class="python geshifilter-python">months</code></span> представляет собой массив указателей на первые символы строк. Например, <span class="geshifilter"><code class="python geshifilter-python">months<span style="color: black;">&#91;</span><span style="color: #ff4500;">3</span><span style="color: black;">&#93;</span></code></span> содержит адрес на символ 'M', который можно получить так: <span class="geshifilter"><code class="python geshifilter-python"><span style="color: #66cc66;">*</span>months<span style="color: black;">&#91;</span><span style="color: #ff4500;">3</span><span style="color: black;">&#93;</span></code></span>.</p>
+<p>Функция <span class="geshifilter"><code class="python geshifilter-python">month_name</code></span> возвращает указатель на первый символ строки. Но как ее получить всю по данному адресу? Ее можно считать в строку (массив символов), инкреминируя указатель, или просто посимвольно вывести на экран. Самый простой способ - это указать формат вывода "строка" (<span class="geshifilter"><code class="python geshifilter-python"><span style="color: #66cc66;">%</span>s</code></span>) для указателя на первый символ. </p>
+<p><div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+&nbsp;
+<span style="color: #993333;">char</span> <span style="color: #339933;">*</span>month_name <span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> n<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> m<span style="color: #339933;">,</span> i<span style="color: #339933;">;</span>
+	<span style="color: #993333;">char</span> <span style="color: #339933;">*</span>ch<span style="color: #339933;">;</span>
+	<span style="color: #993333;">char</span> str<span style="color: #009900;">&#91;</span>20<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+<span style="color: #666666; font-style: italic;">// 1 ---------------------------------------------</span>
+	scanf<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>m<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	ch <span style="color: #339933;">=</span> month_name<span style="color: #009900;">&#40;</span>m<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	i <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span><span style="color: #339933;">*</span>ch <span style="color: #339933;">!=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		str<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #339933;">*</span>ch<span style="color: #339933;">;</span>
+		ch<span style="color: #339933;">++;</span>
+		i<span style="color: #339933;">++;</span>
+	<span style="color: #009900;">&#125;</span>
+	str<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> str<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #666666; font-style: italic;">// 2 ---------------------------------------------</span>
+	scanf <span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>m<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	ch <span style="color: #339933;">=</span> month_name<span style="color: #009900;">&#40;</span>m<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span><span style="color: #339933;">*</span>ch <span style="color: #339933;">!=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #009900;">&#41;</span>
+		<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%c&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">*</span>ch<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #666666; font-style: italic;">// 3 --------------------------------------------</span>
+	scanf <span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">&amp;</span>m<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	ch <span style="color: #339933;">=</span> month_name<span style="color: #009900;">&#40;</span>m<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span> <span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> ch<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">char</span> <span style="color: #339933;">*</span>month_name <span style="color: #009900;">&#40;</span><span style="color: #993333;">int</span> n<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">static</span> <span style="color: #993333;">char</span> <span style="color: #339933;">*</span>months<span style="color: #009900;">&#91;</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #009900;">&#123;</span>
+		<span style="color: #ff0000;">&quot;Illegal month&quot;</span><span style="color: #339933;">,</span>
+		<span style="color: #ff0000;">&quot;January&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;February&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;March&quot;</span><span style="color: #339933;">,</span>
+		<span style="color: #ff0000;">&quot;April&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;May&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;June&quot;</span><span style="color: #339933;">,</span>
+		<span style="color: #ff0000;">&quot;July&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;August&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;September&quot;</span><span style="color: #339933;">,</span>
+		<span style="color: #ff0000;">&quot;October&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;November&quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;December&quot;</span>
+	<span style="color: #009900;">&#125;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">return</span> <span style="color: #009900;">&#40;</span>n <span style="color: #339933;">&lt;</span> 1 <span style="color: #339933;">||</span> n <span style="color: #339933;">&gt;</span> 12<span style="color: #009900;">&#41;</span> <span style="color: #339933;">?</span> months<span style="color: #009900;">&#91;</span>0<span style="color: #009900;">&#93;</span> <span style="color: #339933;">:</span> months<span style="color: #009900;">&#91;</span>n<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+  </div>
+    </div>
+  </body>
+</html>

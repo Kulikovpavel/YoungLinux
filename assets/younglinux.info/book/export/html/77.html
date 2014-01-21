@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Объекты в Blender. Практическая работа &quot;Молекула воды&quot;. Урок 5</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-77" class="section-2">
+  <h1 class="book-heading">Объекты в Blender. Практическая работа &quot;Молекула воды&quot;. Урок 5</h1>
+  <style type="text/css">
+.table
+{
+border-style: solid;
+border-width: 1px 1px 0px 0px;
+padding-left: 10px;
+padding-right: 10px;
+}
+</style><div style="text-align:center;">
+<h4>Инструкционная карта<br />
+Версия Blender: 2.48.</h4>
+</div>
+<table>
+<tr>
+<th class="table" style="border-width:1px 1px 0px 1px;">№</th>
+<th class="table">Задание</th>
+<th class="table">Способ выполнения</th>
+<th class="table">Иллюстрация</th>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">1</td>
+<td class="table">Запустив Blender, удалить куб.</td>
+<td class="table">X, затем Enter. <br />Или Delete, затем Enter.</td>
+<td class="table"></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">2</td>
+<td class="table">Добавить на сцену цилиндр.</td>
+<td class="table">Пробел. <br />Выбрать: Add -> Mesh -> Cylinder.<br />Окно "Add Cylinder": нажать "OK".</td>
+<td class="table"></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">3</td>
+<td class="table">Удостоверьтесь, что вы находитесь в объектном режиме.</td>
+<td class="table"></td>
+<td class="table"><img src="../../../img/blender/water/objmode.gif" style="width:147px;height:41px;" alt="Выбор объектного режима в меню 3D-окна" title="Выбор объектного режима в меню 3D-окна" /></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">4</td>
+<td class="table">Уменьшить цилиндр по всем осям до 0.3 от прежних размеров.</td>
+<td class="table">Нажать S, затем, зажав Ctrl, двигать мышью пока значения в левом ниженем углу 3D-окна не станут равны 0.3. <br /><br />
+Закрепить, щелкнув левой клавишей мыши.</td>
+<td class="table"><img src="../../../img/blender/water/scale.gif" style="width:147px;height:41px;" alt="Левый нижний угол 3D-окна в момент изменения объекта" title="Левый нижний угол 3D-окна в момент изменения объекта" /></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">5</td>
+<td class="table">Вид спереди.</td>
+<td class="table">1 на NumLock.</td>
+<td class="table"></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">6</td>
+<td class="table">Увеличить цилиндр по оси Z в 7.5 раза.</td>
+<td class="table">Нажать S, затем Z, и, зажав Ctrl, двигать мышью пока значения в левом нижнем углу 3D-окна не станет равно 7.5. <br /><br />
+Закрепить, щелкнув левой клавишей мыши.</td>
+<td class="table"></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">7</td>
+<td class="table">Повернуть цилиндр на 90 градусов по оси Y.</td>
+<td class="table">Нажать R, затем Y, и, зажав Ctrl, двигать мышью пока значения в левом нижнем углу 3D-окна не станет равно 90. <br /><br />
+Закрепить, щелкнув левой клавишей мыши.</td>
+<td class="table"></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">8</td>
+<td class="table">Продублировать цилиндр. Копию переместить по оси X так, чтобы два цилиндра касались друг друга</td>
+<td class="table">Дублирование: Shift + D. <br /> X, затем перемещение с помощью мыши.</td>
+<td class="table"><img src="../../../img/blender/water/copy.gif" style="width:200px;height:25px;" alt="Цилиндр и его копия, смещенная по оси X" title="Цилиндр и его копия, смещенная по оси X" /></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">9</td>
+<td class="table">Поскольку в молекуле воды угол связи H-O-H равен 104.5 градусов, то следует развернуть второй цилиндр<br />
+по оси Y на 75.5 градусов (180-104.5).</td>
+<td class="table">R, затем Y</td>
+<td class="table"></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">10</td>
+<td class="table">Совместить концы цилиндров.</td>
+<td class="table">Перемещать с помощью мыши за красную и синюю стрелки-оси.</td>
+<td class="table">
+<img src="../../../img/blender/water/angle.gif" style="width:200px;height:159px;" alt="Расположение двух цилиндров под углом друг к другу" title="Расположение двух цилиндров под углом друг к другу" /></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">11</td>
+<td class="table">Разместить 3D-курсор в точке соединения двух цилиндров</td>
+<td class="table">Щелчек левой клавишей мыши</td>
+<td class="table"></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">12</td>
+<td class="table">Добавить сферу (которая будет служить моделью атома кислорода</td>
+<td class="table">Пробел. <br />Выбрать: Add -> Mesh -> UVSphere.<br />Окно "Add UV Sphere": нажать "OK".&lt;</td>
+<td class="table"></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">13</td>
+<td class="table">Два раза продублировать сферу, а дубликаты перенести на концы цилиндров.</td>
+<td class="table">Дублирование: Shift + D. <br />Перемещение с помощью мыши.</td>
+<td class="table"><img src="../../../img/blender/water/water.gif" style="width:200px;height:159px;" alt="Модель молекулы воды" title="Модель молекулы воды" /></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">14</td>
+<td class="table">Уменьшить крайние шары до значения 0.8 от первоначального.</td>
+<td class="table">S. Перемещение мыши при зажатом Ctrl.</td>
+<td class="table"><img src="../../../img/blender/water/water.gif" style="width:200px;height:159px;" alt="Модель молекулы воды" title="Модель молекулы воды" /></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">15</td>
+<td class="table">Объединить все элементы модели.</td>
+<td class="table">Выделение группы элементов: поочередный щелчок правой кнопкой мыши при зажатой клавише Shift. <br /><br />
+Объединение: Ctrl + J.</td>
+<td class="table"></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">16</td>
+<td class="table">Переключиться на вид из камеры</td>
+<td class="table">0 на NumLock.</td>
+<td class="table"></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 0px 1px;">17</td>
+<td class="table">Откорректировать размещение модели на сцене</td>
+<td class="table">С помощью инструментов перемещения и поворота</td>
+<td class="table"><img src="../../../img/blender/water/scalerot.gif" style="width:198px;height:110px;" alt="Инструменты перемещения и поворота в меню 3D-окна" title="Инструменты перемещения и поворота в меню 3D-окна" /></td>
+</tr>
+<tr>
+<td class="table" style="border-width:1px 1px 1px 1px;">18</td>
+<td class="table" style="border-width:1px 1px 1px 0px;">Сохранить файл.</td>
+<td class="table" style="border-width:1px 1px 1px 0px;">F2</td>
+<td class="table" style="border-width:1px 1px 1px 0px;"></td>
+</tr>
+</table>
+  </div>
+    </div>
+  </body>
+</html>

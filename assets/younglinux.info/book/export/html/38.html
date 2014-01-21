@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Создание классов и объектов. Урок 2</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-38" class="section-2">
+  <h1 class="book-heading">Создание классов и объектов. Урок 2</h1>
+  <div style="text-align:center;">
+<h4>Методическая разработка урока<br />
+Элективный курс: Введение в объектно-ориентированное программирование на Python<br />
+Уровень: Программирование для начинающих</h4>
+</div>
+<p>Итак, программа, написанная с использованием парадигмы объектно-ориентированного программирования, должна состоять из </p>
+<ul>
+<li>объектов, </li>
+<li>классов (описания объектов), </li>
+<li>взаимодействий объектов между собой, в результате которых меняются их свойства.</li>
+</ul>
+<p>Объект в программе можно создать лишь на основе какого-нибудь класса. Поэтому, первым делом, ООП должно начинаться с проектирования и создания классов. Классы могут располагаться или вначале кода программы, или импортироваться из других файлов-модулей (также в начале кода). </p>
+<h2>Создание классов:</h2>
+<p>Для создания классов предусмотрена <strong>инструкция class</strong>. Это составная инструкция, которая состоит из строки заголовка и тела. Заголовок состоит из ключевого слова class, имени класса и, возможно, названий суперклассов в скобках. Суперклассов может и не быть, в таком случае скобки не требуются. Тело класса состоит из блока различных инструкций. Тело должно иметь отступ (как и любые вложенные конструкции в языке Python).</p>
+<p>Схематично класс можно представить следующим образом:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> ИМЯКЛАССА:
+     ПЕРЕМЕННАЯ = ЗНАЧЕНИЕ
+     …
+     <span style="color: #ff7700;font-weight:bold;">def</span> ИМЯМЕТОДА<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>, ...<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.ПЕРЕМЕННАЯ = ЗНАЧЕНИЕ
+          …
+     … </pre></div><br />
+Данная схема не является полной. Например, в заголовке после имени класса могут быть указаны суперклассы (в скобках), а методы могут быть более сложными. </p>
+<p>Следует помнить, что методы в классах — это те же функции, за одним небольшим исключением. Они принимают один обязательный параметр — <strong>self</strong> (с англ. можно перевести как "собственная личность"). Он нужен для связи с конкретным объектом.</p>
+<p>Атрибуты класса — это имена переменных вне функций и имена функций. Эти атрибуты наследуются всеми объектами, созданными на основе данного класса. Атрибуты обеспечивают свойства и поведение объекта. Объекты могут иметь атрибуты, которые создаются в теле метода, если данный метод будет вызван для конкретного объекта.</p>
+<h2>Создание объектов:</h2>
+<p>Объекты создаются так:</p>
+<p><span class="geshifilter"><code class="python geshifilter-python">ПЕРЕМЕННАЯ = ИМЯКЛАССА<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></code></span></p>
+<p>Здесь скобки обязательны! После такой инструкции в программе появляется объект, доступ к которому можно получить по имени переменной, связанной с ним. При создании объект получает атрибуты его класса, т. е. объекты обладают характеристиками, определенными в их классах.</p>
+<p>Количество объектов, которые можно создать на основе того или иного класса, не ограничено.</p>
+<p>Объекты одного класса имеют схожий набор атрибутов, а вот значения атрибутов могут быть разными. Другими словами, объекты одного класса похожи, но индивидуально различимы. Чтобы понять это, можно сравнить отношения объектов одного класса в программировании со следующем высказыванием: "Все млекопитающие принадлежат одному классу и обычно имеют по два глаза, однако у каждого животного (объекта) глаза имеют свои особенности".</p>
+<h2>Self:</h2>
+<p>Можно сказать, что методы класса — это небольшие программки, предназначенные для работы с объектами. Методы могут создавать новые свойства (данные) объекта, изменять существующие, выполнять другие действия над объектами.</p>
+<p>Методу необходимо "знать", данные какого объекта ему предстоит обрабатывать. Для этого ему в качестве первого (а иногда и единственного) аргумента передается имя переменной, связанной с объектом (можно сказать, передается сам объект). Чтобы в описании класса указать передаваемый в дальнейшем объект, используется параметр <strong>self</strong>. (Посмотрите на схему класса вверху.)</p>
+<p>С другой стороны, вызов метода для конкретного объекта в основном блоке программы выглядит следующим образом:</p>
+<p><span class="geshifilter"><code class="python geshifilter-python">ОБЪЕКТ.ИМЯМЕТОДА<span style="color: black;">&#40;</span>…<span style="color: black;">&#41;</span></code></span></p>
+<p>Здесь под словом ОБЪЕКТ имеется ввиду переменная, связанная с ним. Это выражение преобразуется в классе, к которому относится объект, в </p>
+<p><span class="geshifilter"><code class="python geshifilter-python">ИМЯМЕТОДА<span style="color: black;">&#40;</span>ОБЪЕКТ, …<span style="color: black;">&#41;</span></code></span></p>
+<p>Т. е. конкретный объект подставляется вместо параметра self.</p>
+<h2>Первая ОО-программа:</h2>
+<p>Попробуем на основе имеющихся уже знаний написать небольшую ОО-программу. Допустим, это будет класс с одним атрибутом вне метода и одним методом, который выводит с небольшим изменением значение этого атрибута на экран: </p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> First:
+     color = <span style="color: #483d8b;">&quot;red&quot;</span>
+     <span style="color: #ff7700;font-weight:bold;">def</span> out<span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #008000;">self</span>.<span style="color: black;">color</span> + <span style="color: #483d8b;">&quot;!&quot;</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>Теперь создадим пару объектов данного класса:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">obj1 = First<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+obj2 = First<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>Оба этих объекта (obj1 и obj2) имею два одинаковых атрибута: color (в виде свойства) и out (в виде метода). Это легко проверить:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>obj1.<span style="color: black;">color</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>obj2.<span style="color: black;">color</span><span style="color: black;">&#41;</span>
+obj1.<span style="color: black;">out</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+obj2.<span style="color: black;">out</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>В результате выполнения данного скрипта получается вывод двух надписей red и двух red!. Первые две надписи red – это результат применения встроенной функции print по отношению к свойствам объектов. Вторые две надписи red! - результат применения метода out к объектам. </p>
+<h2>Усложняем программу:<br />
+</h2>
+<p>В предыдущей программе оба созданных объекта абсолютно одинаковы. Класс, на основе которого они созданы, слишком прост и не предполагает того, что объекты могут иметь различные значения свойств. Исправим это. </p>
+<p>Пусть теперь в классе с помощью атрибутов вне функции устанавливаются два свойства объектов: красный цвет и круглая форма. А методы могут менять эти свойства в зависимости от пожеланий тех, кто создает объекты.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">class</span> Second:
+     color = <span style="color: #483d8b;">&quot;red&quot;</span>
+     form = <span style="color: #483d8b;">&quot;circle&quot;</span>
+     <span style="color: #ff7700;font-weight:bold;">def</span> changecolor<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,newcolor<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">color</span> = newcolor
+     <span style="color: #ff7700;font-weight:bold;">def</span> changeform<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,newform<span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">form</span> = newform
+&nbsp;
+obj1 = Second<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+obj2 = Second<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>obj1.<span style="color: black;">color</span>, obj1.<span style="color: black;">form</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># вывод на экран &quot;red circle&quot;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>obj2.<span style="color: black;">color</span>, obj2.<span style="color: black;">form</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># вывод на экран &quot;red circle&quot;</span>
+&nbsp;
+obj1.<span style="color: black;">changecolor</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;green&quot;</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># изменение цвета первого объекта</span>
+obj2.<span style="color: black;">changecolor</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;blue&quot;</span><span style="color: black;">&#41;</span>  <span style="color: #808080; font-style: italic;"># изменение цвет второго объекта</span>
+obj2.<span style="color: black;">changeform</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;oval&quot;</span><span style="color: black;">&#41;</span>   <span style="color: #808080; font-style: italic;"># изменение формы второго объекта</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>obj1.<span style="color: black;">color</span>, obj1.<span style="color: black;">form</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># вывод на экран &quot;green circle&quot;</span>
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span>obj2.<span style="color: black;">color</span>, obj2.<span style="color: black;">form</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># вывод на экран &quot;blue oval&quot;</span></pre></div></p>
+<p>В данной программе по-умолчанию любой созданный объект имеет красный цвет и круглую форму. Однако в дальнейшем с помощью методов данного класса можно поменять и цвет и форму любого объекта. В результате объекты перестают быть одинаковыми (красными и круглыми), хотя сохраняют тот же набор свойств (цвет и форму).</p>
+<p>Как же происходят изменения? Дело в том, что методы помимо параметра self, могут иметь и другие параметры, в которых передаются данные для обработки их этим методом. Так, в примере выше, метод changecolor имеет дополнительный параметр newcolor, с помощью которого в метод можно передать данные о желаемом цвете фигуры. Далее метод меняет цвет с помощью соответствующих инструкций. </p>
+<h2>Практическая работа:</h2>
+<ol>
+<li>Напишите два скрипта представленных выше. Посмотрите, как они работают. Во второй программу добавьте еще одно свойство и один метод, позволяющий его менять. Создайте третий объект и измените все его свойства.</li>
+<li>Напишите программу в стиле ООП, удовлетворяющую следующим условиям: в программе должны быть два класса и два объекта, принадлежащих разным классам; один объект с помощью метода своего класса должен так или иначе изменять данные другого объекта.</li>
+</ol>
+  </div>
+    </div>
+  </body>
+</html>

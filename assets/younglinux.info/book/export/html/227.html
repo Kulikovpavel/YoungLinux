@@ -1,0 +1,70 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Фильтры</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+                <div class="section-2">
+          
+    <div id="node-227" class="section-3">
+  <h1 class="book-heading">Фильтры</h1>
+  <p class="right">Introduction to Linux. A Hands on Guide —<br />
+Введение в Linux. Руководство по работе</p>
+<p>Когда программа выполняет операции с вводом и записывает результат в стандартный вывод, она называется фильтром. Одним из наиболее распространенных видов использования фильтров является использование по реогранизованному выводу. Ниже мы обсудим несколько наиболее важных фильтров.</p>
+<h2>Дополнительная информация о grep</h2>
+<p>Как мы уже видели в <a href="http://younglinux.info/#">разделе "Команда grep"</a>, <strong>grep</strong> сканирует строку вывода через строку поиска по определенным шаблонам. Все строки, содержащие шаблон будут распечатаны на стандартном выводе. Такое поведение может быть отменено путем использования опции <span class="mono">-v</span>.</p>
+<p>Некоторые примеры: допустим, мы хотим знать, какие файлы в определенной директории были изменены в феврале:</p>
+<pre>
+jenny:~> <strong>ls -la | grep Feb</strong>
+</pre><p>
+Команда <strong>grep</strong>, как и большинство команд, учитывает регистр. Используйте опцию <span class="mono">-i</span>, чтобы не учитывать различие между верхним и нижним регистром. Также доступны многие расширения GNU, например <span class="mono">--color</span>, который полезен для подсветки терминов поиска в длинных строках, и <span class="mono">--after-context</span>, который печатает число строк после последней совпавшей строки. Вы можете оформить рекурсивных <strong>grep</strong>, который ищет во всех подкаталогах встречающихся каталогов, с помощью опции <span class="mono">-r</span>. Как обычно, опции могут быть объединены.</p>
+<p>Регулярные выражения могут быть использованы для более подробной детализации совпадений, которые вы хотите выбрать из всех строк ввода. Лучшим способом познакомиться с регулярными выражениями является чтение документации по <strong>grep</strong>. Отличная глава включена в info-страницу <strong>grep</strong>. Поскольку обсуждение вводов и выводов регулярных выражений завело бы нас слишком далеко, настоятельно рекомендуется начать с документации, если вы хотите знать о них больше.</p>
+<p>Поиграйте немного с <strong>grep</strong>, это займет у вас какое-то время для изучения этой самой базовой, но очень мощной команды фильтрации. Упражнения в конце этой главы помогут вам начать работу, см. <a href="http://younglinux.info/#">раздел 5.5. "Упражнения"</a>.</p>
+<h2>Фильтрация вывода</h2>
+<p>Команда <strong>sort</strong> по умолчанию сортирует строки в алфавитном порядке:</p>
+<pre>
+thomas:~> <strong>cat people-I-like | sort</strong>
+Auntie Emmy
+Boyfriend
+Dad
+Grandma
+Mum
+My boss
+</pre><p>
+Но есть множество другого, что <strong>sort</strong> может делать. Просмотр размера файла, например. С помощью этой команды, содержимое каталога сортируется от  наименьших файлов в начале, до самых больших в конце:</p>
+<p><span class="mono">ls -la | sort -nk 5</span></p>
+<p class="note"><img src="../../../img/linuxintro/note.gif" alt="" /><strong> Старый синтаксис sort. </strong><br />
+Вы можете получить тот же результат с <strong>ls</strong> <span class="mono">-la |</span> <strong>sort</strong> <span class="mono">+4n</span>, но это старая форма, которая не соответствует текущим стандартам.
+</p>
+<p>Команда <strong>sort</strong> также используется в сочетании с программой <strong>uniq</strong> (или <strong>sort</strong> <span class="mono">-u</span>) для сортировки вывода и отфильтровывания двойных записей:</p>
+<pre>
+thomas:~> <strong>cat itemlist</strong>
+1
+4
+2
+5
+34
+567
+432
+567
+34
+555
+
+thomas:~> <strong>sort itemlist | uniq</strong>
+1
+2
+34
+4
+432
+5
+555
+567
+</pre>  </div>
+    </div></div>
+  </body>
+</html>

@@ -1,0 +1,146 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Урок 19. Препроцессор языка С</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-379" class="section-2">
+  <h1 class="book-heading">Урок 19. Препроцессор языка С</h1>
+  <p class="right">Особенности языка С. Учебное пособие</p>
+<p>В компилятор языка программирования <span class="blue">C</span> входит так называем препроцессор, который осуществляет подготовку программы к компиляции. Среди прочего он, например, включает содержимое одних файлов в другие, заменяет в тексте исходного кода имена констант на их значения, удаляет символы конца строки (которые нужны только программисту, чтобы код можно было легко читать, но не нужны компилятору). Что-то препроцессор делает по-умолчанию, а какие-то его действия программируются с помощью специальных директив в исходном коде. Директивы препроцессора начинаются со знака # и заканчиваются переходом на новую строку. В отличие от законченного выражения на языке <span class="blue">C</span>, в конце директив не надо ставить точку с запятой. Ниже рассматриваются наиболее распространенные директивы препроцессора и некоторые его свойства, но это далеко не все, что может делать препроцессор.</p>
+<h3>Директива #include</h3>
+<p>С этой директивой мы уже не раз встречались, подключая заголовочные файлы стандартной библиотеки языка, содержащие объявления (прототипы) функций. Когда препроцессор встречает такую директиву, то понимает, что после нее идет имя файла, и включает все содержимое указанного файла в исходный код программы. Поэтому объем кода вашей программы после обработки ее препроцессором может сильно увеличиться. </p>
+<p>Если имя файла после директивы <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #339933;">#include</span></code></span> заключено в угловые скобки (например, <stdio.h>), то поиск заголовочного файла производится в стандартном (специально оговоренном системой) каталоге. Однако в тексте программы может встречаться и такая запись:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &quot;ext.h&quot;</span></pre></div></stdio.h></p>
+<p>В таком случае заголовочный файл в первую очередь будет искаться в текущем каталоге. Таким образом, программист сам может определять заголовочные файлы для своих проектов. Кроме того, можно указывать адрес заголовочного файла:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &quot;/home/iam/project10/const.h&quot;</span></pre></div></p>
+<h3>Директива #define</h3>
+<h4>Символические константы</h4>
+<p>С директивой препроцессора <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #339933;">#define</span></code></span> мы также уже знакомы. С ее помощью объявляются и определяются так называемые символические константы. Например:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#define N 100</span>
+<span style="color: #339933;">#define HELLO &quot;Hello. Answer the next questions, please.&quot;</span></pre></div></p>
+<p>Когда перед компиляцией исходный код будет обработан препроцессором, то все символьные константы (в примере это <span class="monoi">N</span> и <span class="monoi">HELLO</span>) в тексте исходного кода на языке <span class="blue">C</span> будут заменены на соответствующие им числовые или строковые константы.</p>
+<p>Символические константы можно определять в любом месте исходного кода. Однако чтобы переопределить их (изменить значение), необходимо отменить предыдущее определение. Иначе возникнет если не ошибка, то предупреждение. Для удаления символической константы используют директиву <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #339933;">#undef</span></code></span>:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+&nbsp;
+<span style="color: #339933;">#define HELLO &quot;Hello. Answer the next questions, please.\n&quot;</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span>HELLO<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #339933;">#undef HELLO</span>
+	<span style="color: #339933;">#define HELLO &quot;Good day. Tell us about you.\n&quot;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span>HELLO<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<p>Если в этом примере убрать строку <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #339933;">#undef HELLO</span></code></span>, то при компиляции в GNU/Linux появляется предупреждение: "HELLO" переопределён.</p>
+<p>Символические константы принято писать заглавными буквами. Это только соглашение для удобства чтения кода.</p>
+<h4>Макросы как усложненные символьные константы</h4>
+<p>С помощью директивы <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #339933;">#define</span></code></span> можно заменять символьными константами не только числовые и строковые константы, но почти любую часть кода:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+&nbsp;
+<span style="color: #339933;">#define N 100</span>
+<span style="color: #339933;">#define PN printf(&quot;\n&quot;)</span>
+<span style="color: #339933;">#define SUM for(i=0; i&lt;N; i++) sum += i</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">,</span> sum <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>
+&nbsp;
+	SUM<span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d&quot;</span><span style="color: #339933;">,</span> sum<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	PN<span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<p>Здесь в теле функции <span class="geshifilter"><code class="c geshifilter-c">main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> <span class="monoi">PN</span> заменяется препроцессором на <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span></code></span>, а <span class="monoi">SUM</span> на цикл <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">for</span></code></span>. Такие макроопределения (макросы) в первую очередь удобны, когда в программе часто встречается один и тот же код, но выносить его в отдельную функцию нет смысла. </p>
+<p>В примере выше <span class="monoi">PN</span> и <span class="monoi">SUM</span> являются макросами без аргументов. Однако препроцессор языка программирования <span class="blue">C</span> позволяет определять макросы с аргументами:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+&nbsp;
+<span style="color: #339933;">#define DIF(a,b) (a) &gt; (b) ? (a)-(b) : (b)-(a)</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>	
+	<span style="color: #993333;">int</span> x <span style="color: #339933;">=</span> 10<span style="color: #339933;">,</span> y <span style="color: #339933;">=</span> <span style="color: #0000dd;">30</span><span style="color: #339933;">;</span>	
+&nbsp;
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> DIF<span style="color: #009900;">&#40;</span>67<span style="color: #339933;">,</span>90<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> DIF<span style="color: #009900;">&#40;</span>876<span style="color: #339933;">-</span>x<span style="color: #339933;">,</span>90<span style="color: #339933;">+</span>y<span style="color: #009900;">&#41;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<p>Вызов макроса <span class="geshifilter"><code class="c geshifilter-c">DIV<span style="color: #009900;">&#40;</span><span style="color: #0000dd;">67</span><span style="color: #339933;">,</span><span style="color: #0000dd;">90</span><span style="color: #009900;">&#41;</span></code></span> в тексте программы приводит к тому, что при обработке программы препроцессором туда подставляется такое выражение <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #009900;">&#40;</span><span style="color: #0000dd;">67</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">&gt;</span> <span style="color: #009900;">&#40;</span><span style="color: #0000dd;">90</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">?</span> <span style="color: #009900;">&#40;</span><span style="color: #0000dd;">67</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">-</span><span style="color: #009900;">&#40;</span><span style="color: #0000dd;">90</span><span style="color: #009900;">&#41;</span> <span style="color: #339933;">:</span> <span style="color: #009900;">&#40;</span><span style="color: #0000dd;">90</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">-</span><span style="color: #009900;">&#40;</span><span style="color: #0000dd;">67</span><span style="color: #009900;">&#41;</span></code></span>. В этом выражении вычисляется разница между двумя числами с помощью условного выражения (см. урок 3). В данном случае скобки не нужны. Однако при таком разворачивании <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #009900;">&#40;</span><span style="color: #0000dd;">876</span><span style="color: #339933;">-</span>x<span style="color: #009900;">&#41;</span> <span style="color: #339933;">&gt;</span> <span style="color: #009900;">&#40;</span><span style="color: #0000dd;">90</span><span style="color: #339933;">+</span>y<span style="color: #009900;">&#41;</span> <span style="color: #339933;">?</span> <span style="color: #009900;">&#40;</span><span style="color: #0000dd;">876</span><span style="color: #339933;">-</span>x<span style="color: #009900;">&#41;</span><span style="color: #339933;">-</span><span style="color: #009900;">&#40;</span><span style="color: #0000dd;">90</span><span style="color: #339933;">+</span>y<span style="color: #009900;">&#41;</span> <span style="color: #339933;">:</span> <span style="color: #009900;">&#40;</span><span style="color: #0000dd;">90</span><span style="color: #339933;">+</span>y<span style="color: #009900;">&#41;</span><span style="color: #339933;">-</span><span style="color: #009900;">&#40;</span><span style="color: #0000dd;">876</span><span style="color: #339933;">-</span>x<span style="color: #009900;">&#41;</span></code></span> скобки подчеркивают порядок операций. Если бы вместо сложения и вычитания фигурировали операции умножения или деления, то наличие скобок было бы принципиальным.<br />
+Обратите внимание, что в имени макроса не должно быть пробелов: <span class="geshifilter"><code class="c geshifilter-c">DIF<span style="color: #009900;">&#40;</span>a<span style="color: #339933;">,</span>b<span style="color: #009900;">&#41;</span></code></span>. Первый пробел после идентификатора означает конец символической константы и начало выражения для подстановки.</p>
+<p><span class="blue"><strong>Задание</strong></span></p>
+<ol>
+<li><span class="blue">Напишите программу, содержащую пару макросов: один вычисляет сумму элементов массива, другой выводит элементы массива на экран.</span></li>
+<li><span class="blue">Напишите программу, содержащую макросы с аргументами, вычисляющие площади различных геометрических фигур (например, квадрата, прямоугольника, окружности).</span></li>
+</ol>
+<h3>Директивы условной компиляции</h3>
+<p>Так называемая условная компиляция позволяет компилировать или не компилировать части кода в зависимости от наличия символьных констант или их значения.</p>
+<p>Условное выражение для препроцессора выглядит в сокращенном варианте так:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#if …</span>
+	…
+<span style="color: #339933;">#endif</span></pre></div></p>
+<p>То, что находится между <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #339933;">#if</span></code></span> и <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #339933;">#endif</span></code></span> выполняется, если выражение при <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #339933;">#if</span></code></span> возвращает истину. Находится там могут как директивы препроцессора так и исходный код на языке <span class="blue">C</span>. </p>
+<p>Следует знать, что условное включение может быть расширено за счет веток <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #339933;">#else</span></code></span> и <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #339933;">#elif</span></code></span>.</p>
+<p>Рассмотрим несколько примеров.</p>
+<p>Если в программе константа <span class="monoi">N</span> не равна 0, то цикл <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">for</span></code></span> выполнится, и массив <span class="monoi">arr</span> заполнится нулями. Если <span class="monoi">N</span> определена и равна 0, или не определена вообще, то цикл выполняться не будет:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+&nbsp;
+<span style="color: #339933;">#define N 10</span>
+&nbsp;
+main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">,</span> arr<span style="color: #009900;">&#91;</span>100<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #339933;">#if N</span>
+		<span style="color: #b1b100;">for</span><span style="color: #009900;">&#40;</span>i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i<span style="color: #339933;">&lt;</span>N<span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+			arr<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #0000dd;">0</span><span style="color: #339933;">;</span>
+			<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d &quot;</span><span style="color: #339933;">,</span> arr<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		<span style="color: #009900;">&#125;</span>		
+	<span style="color: #339933;">#endif</span>
+&nbsp;
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<p>Если нужно выполнить какой-то код в зависимости от наличия символьной константы, а не ее значения, то директива <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #339933;">#if</span></code></span> будет выглядеть так:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#if defined(N)</span></pre></div></p>
+<p>Или сокращенно (что тоже самое):<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#ifdef N</span></pre></div></p>
+<p>Когда нет уверенности, была ли определена ранее символьная константа, то можно использовать такой код:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#if !defined(N)</span>
+	<span style="color: #339933;">#define N 100	</span>
+<span style="color: #339933;">#endif</span></pre></div></p>
+<p>Таким образом мы определим константу <span class="monoi">N</span>, если она не была определена ранее. Такие проверки могут встречаться в многофайловых проектах. Выражение препроцессора <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #339933;">#if !defined(N)</span></code></span> может быть сокращено так:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#ifndef N</span></pre></div></p>
+<p>Следует знать, что условную компиляцию иногда используют при отладке программного кода, а также с ее помощью компилируют программы под конкретные операционные системы.</p>
+<p>Помните, что препроцессор обрабатывает программу до компиляции. В двоичном коде уже отсутствуют какие-либо условные выражения для препроцессора. Поэтому в логическом выражении "препроцессорного if" не должно содержаться переменных, значение которых определяется в момент выполнения программы.</p>
+<p><span class="blue"><strong>Задание</strong><br />
+Придумайте и напишите программу, которая может быть скомпилирована по-разному в зависимости от того, определена или нет в ней какая-либо символьная константа.</span></p>
+<h3>Константы, определенные препроцессором</h3>
+<p>Препроцессор самостоятельно определяет пять констант. От обычных (определенных программистом) они отличаются наличием пары символов подчеркивания в начале и конце их имени. </p>
+<ul>
+<li>__DATE__ - дата компиляции;</li>
+<li>__FILE__ - имя компилируемого файла;</li>
+<li>__LINE__ - номер текущей строки исходного текста программы;</li>
+<li>__STDC__ - равна 1, если компилятор работает по стандарту ANSI для языка <span class="blue">C</span>;</li>
+<li>__TIME__ - время компиляции.</li>
+</ul>
+<p>Если эти константы встречаются в тексте программы, то заменяются на соответствующие строки или числа. Т.к. это происходит до компиляции, то, например, мы видим дату компиляции, а не дату запуска программы на выполнение. Программа ниже выводит значение предопределенных препроцессором имен на экран:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+&nbsp;
+<span style="color: #339933;">#define NL printf(&quot;\n&quot;)</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span>__DATE__<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> NL<span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d&quot;</span><span style="color: #339933;">,</span>__LINE__<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> NL<span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span>__FILE__<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> NL<span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span>__TIME__<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> NL<span style="color: #339933;">;</span>
+	<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d&quot;</span><span style="color: #339933;">,</span>__STDC__<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span> NL<span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span>
+Результат<span style="color: #339933;">:</span>
+Mar <span style="color: #0000dd;">22</span> <span style="color: #0000dd;">2012</span> 
+<span style="color: #0000dd;">7</span> 
+macronames.<span style="color: #202020;">c</span> 
+<span style="color: #0000dd;">10</span><span style="color: #339933;">:</span>07<span style="color: #339933;">:</span>04 
+<span style="color: #0000dd;">1</span> </pre></div></p>
+  </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Цикл for в языке программирования Python. Урок 12</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-32" class="section-2">
+  <h1 class="book-heading">Цикл for в языке программирования Python. Урок 12</h1>
+  <p class="right">Основы программирования на Python</p>
+<p>В седьмом уроке был рассмотрен цикл <strong>while</strong>. Однако это не единственный способ организации в языке Python повторения группы выражений. В программах, написанных на Питоне, широко применяется цикл <strong>for</strong>, который представляет собой цикл обхода заданного множества элементов (символов строки, объектов списка или словаря) и выполнения в своем теле различных операций над ними. Например, если имеется список чисел, и необходимо увеличить значение каждого элемента на две единицы, то можно перебрать список с помощью цикла <strong>for</strong>, выполнив над каждым его элементом соответствующее действие.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> spisok = <span style="color: black;">&#91;</span>0,10,20,30,40,50,60,70,80,90<span style="color: black;">&#93;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> i = 0
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #ff7700;font-weight:bold;">for</span> element <span style="color: #ff7700;font-weight:bold;">in</span> spisok:
+	spisok<span style="color: black;">&#91;</span>i<span style="color: black;">&#93;</span> = element + <span style="color: #ff4500;">2</span>
+	i = i + <span style="color: #ff4500;">1</span>
+&nbsp;
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> spisok
+<span style="color: black;">&#91;</span><span style="color: #ff4500;">2</span>, <span style="color: #ff4500;">12</span>, <span style="color: #ff4500;">22</span>, <span style="color: #ff4500;">32</span>, <span style="color: #ff4500;">42</span>, <span style="color: #ff4500;">52</span>, <span style="color: #ff4500;">62</span>, <span style="color: #ff4500;">72</span>, <span style="color: #ff4500;">82</span>, <span style="color: #ff4500;">92</span><span style="color: black;">&#93;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span></pre></div> </p>
+<p>В примере переменная i нужна для того, чтобы записать изменившееся значение элемента в список. В ней хранится значение индекса очередного элемента списка. В то время, как переменная element связывается со значением очередного элемента данных. В заголовке цикла <strong>for</strong> происходит обращение очередному элементу списка. В теле цикла элементу с индексом i присваивается сумма значения текущего (обрабатываемого) элемента и двойки. Далее индекс увеличивается на единицу, а поток выполнения программы переходит снова в заголовок цикла <strong>for</strong>, где происходит обращение к следующему элементу списка. Когда все элементы обработаны цикл <strong>for</strong> заканчивает свою работу. Отсутствие очередного элемента является условием завершения работы цикла <strong>for</strong> (для сравнения: в цикле <strong>while</strong> условием завершения служит результат <strong>false</strong> логического выражения в заголовке). Еще один момент: если счетчик не увеличивать на единицу (выражение i = i + 1), то не смотря на то, что все элементы списка будут обработаны, результат все время будет присваиваться первому элементу списка (с индексом 0).</p>
+<p>С таким же успехом перебирать можно и строки, если не пытаться их при этом изменять:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> stroka = <span style="color: #483d8b;">&quot;привет&quot;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #ff7700;font-weight:bold;">for</span> bukva <span style="color: #ff7700;font-weight:bold;">in</span> stroka:
+	<span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span>bukva, end=<span style="color: #483d8b;">' * '</span><span style="color: black;">&#41;</span>
+&nbsp;
+&nbsp;
+п <span style="color: #66cc66;">*</span> р <span style="color: #66cc66;">*</span> и <span style="color: #66cc66;">*</span> в <span style="color: #66cc66;">*</span> е <span style="color: #66cc66;">*</span> т <span style="color: #66cc66;">*</span> 
+<span style="color: #66cc66;">&gt;&gt;&gt;</span></pre></div></p>
+<p>Цикл <strong>for</strong> используется и для работы со словарями:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> d = <span style="color: black;">&#123;</span><span style="color: #ff4500;">1</span>:<span style="color: #483d8b;">'one'</span>,<span style="color: #ff4500;">2</span>:<span style="color: #483d8b;">'two'</span>,<span style="color: #ff4500;">3</span>:<span style="color: #483d8b;">'three'</span>,<span style="color: #ff4500;">4</span>:<span style="color: #483d8b;">'four'</span><span style="color: black;">&#125;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #ff7700;font-weight:bold;">for</span> key <span style="color: #ff7700;font-weight:bold;">in</span> d:
+	d<span style="color: black;">&#91;</span>key<span style="color: black;">&#93;</span> = d<span style="color: black;">&#91;</span>key<span style="color: black;">&#93;</span> + <span style="color: #483d8b;">'!'</span>
+&nbsp;
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> d
+<span style="color: black;">&#123;</span><span style="color: #ff4500;">1</span>: <span style="color: #483d8b;">'one!'</span>, <span style="color: #ff4500;">2</span>: <span style="color: #483d8b;">'two!'</span>, <span style="color: #ff4500;">3</span>: <span style="color: #483d8b;">'three!'</span>, <span style="color: #ff4500;">4</span>: <span style="color: #483d8b;">'four!'</span><span style="color: black;">&#125;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> </pre></div></p>
+<p>Цикл <strong>for</strong> широко используется в языке программирования Python, т.к. является важным инструментом при обработки структур данных. Также следует запомнить, что цикл <strong>for</strong> в Питоне особенный. Он не является аналогом циклов <strong>for</strong> во многих других языках программирования, где представляет собой, так называемый, цикл со счетчиком.</p>
+<h3>Практическая работа</h3>
+<ol>
+<li>Создайте список, состоящий из четырех строк. Затем, с помощью цикла <strong>for</strong>, выведите строки поочередно на экран.</li>
+<li>Измените предыдущую программу так, чтобы в конце каждой буквы строки добавлялось тире. (Подсказка: цикл <strong>for</strong> может быть вложен в другой цикл.)</li>
+<li>Создайте список, содержащий элементы целочисленного типа, затем с помощью цикла перебора измените тип данных элементов на числа с плавающей точкой. (Подсказка: используйте встроенную функцию <strong>float()</strong>.)</li>
+</ol>
+<h4>Пример выполнения практической работы</h4>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #808080; font-style: italic;"># задание 1</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> list1 = <span style="color: black;">&#91;</span><span style="color: #483d8b;">'hi'</span>,<span style="color: #483d8b;">'hello'</span>,<span style="color: #483d8b;">'good morning'</span>,<span style="color: #483d8b;">'how do you do'</span><span style="color: black;">&#93;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #ff7700;font-weight:bold;">for</span> i <span style="color: #ff7700;font-weight:bold;">in</span> list1:
+	<span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span>i<span style="color: black;">&#41;</span>
+&nbsp;
+hi
+hello
+good morning
+how do you do
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #808080; font-style: italic;"># задание 2</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #ff7700;font-weight:bold;">for</span> i <span style="color: #ff7700;font-weight:bold;">in</span> list1:
+	<span style="color: #ff7700;font-weight:bold;">for</span> j <span style="color: #ff7700;font-weight:bold;">in</span> i:
+		<span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span>j,end=<span style="color: #483d8b;">'.'</span><span style="color: black;">&#41;</span>
+	<span style="color: #ff7700;font-weight:bold;">print</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+&nbsp;
+h.<span style="color: black;">i</span>.
+<span style="color: black;">h</span>.<span style="color: black;">e</span>.<span style="color: black;">l</span>.<span style="color: black;">l</span>.<span style="color: black;">o</span>.
+<span style="color: black;">g</span>.<span style="color: black;">o</span>.<span style="color: black;">o</span>.<span style="color: black;">d</span>. .<span style="color: black;">m</span>.<span style="color: black;">o</span>.<span style="color: black;">r</span>.<span style="color: black;">n</span>.<span style="color: black;">i</span>.<span style="color: black;">n</span>.<span style="color: black;">g</span>.
+<span style="color: black;">h</span>.<span style="color: black;">o</span>.<span style="color: black;">w</span>. .<span style="color: black;">d</span>.<span style="color: black;">o</span>. .<span style="color: black;">y</span>.<span style="color: black;">o</span>.<span style="color: black;">u</span>. .<span style="color: black;">d</span>.<span style="color: black;">o</span>.
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #808080; font-style: italic;"># задание 3</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> list2 = <span style="color: black;">&#91;</span>56,78,45,23<span style="color: black;">&#93;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> i = 0
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> <span style="color: #ff7700;font-weight:bold;">for</span> a <span style="color: #ff7700;font-weight:bold;">in</span> list2:
+	list2<span style="color: black;">&#91;</span>i<span style="color: black;">&#93;</span> = <span style="color: #008000;">float</span><span style="color: black;">&#40;</span>a<span style="color: black;">&#41;</span>
+	i = i + <span style="color: #ff4500;">1</span>
+&nbsp;
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> list2
+<span style="color: black;">&#91;</span><span style="color: #ff4500;">56.0</span>, <span style="color: #ff4500;">78.0</span>, <span style="color: #ff4500;">45.0</span>, <span style="color: #ff4500;">23.0</span><span style="color: black;">&#93;</span>
+<span style="color: #66cc66;">&gt;&gt;&gt;</span> </pre></div></p>
+  </div>
+    </div>
+  </body>
+</html>

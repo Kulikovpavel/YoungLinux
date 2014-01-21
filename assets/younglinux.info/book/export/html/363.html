@@ -1,0 +1,150 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Урок 3. Операторы ветвления</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-363" class="section-2">
+  <h1 class="book-heading">Урок 3. Операторы ветвления</h1>
+  <p class="right">Особенности языка С. Учебное пособие</p>
+<h3>if-else</h3>
+<p>В языке программирования <span class="blue">C</span> синтаксис оператора ветвления <span class="geshifilter"><code class="c geshifilter-c">if<span style="color: #339933;">-</span><span style="color: #b1b100;">else</span></code></span> выглядит так:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>логич_выражение<span style="color: #009900;">&#41;</span> 
+	выражение<span style="color: #0000dd;">1</span><span style="color: #339933;">;</span>
+<span style="color: #b1b100;">else</span> 
+	выражение<span style="color: #0000dd;">2</span><span style="color: #339933;">;</span></pre></div></p>
+<p>Как и в других языках ветка <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">else</span></code></span> не является обязательной.</p>
+<p>В языке <span class="blue">С</span> в простых логических выражениях используются следующие знаки операторов: >, &lt;, >=, &lt;=, ==, !=.</p>
+<p>В случае если тело той или иной ветки состоит из нескольких законченных выражений, разделяемых точкой с запятой, то тело заключается в фигурные скобки:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>логич_выражение<span style="color: #009900;">&#41;</span>  <span style="color: #009900;">&#123;</span>
+	выражение<span style="color: #0000dd;">1</span><span style="color: #339933;">;</span>
+	выражение<span style="color: #0000dd;">2</span><span style="color: #339933;">;</span>
+	…
+<span style="color: #009900;">&#125;</span>
+<span style="color: #b1b100;">else</span> <span style="color: #009900;">&#123;</span>
+	выражениеN<span style="color: #339933;">;</span>
+	…
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<p><span class="blue"><strong>Задание</strong><br />
+Напишите любую программу на языке C, в которой бы использовалась конструкция <span class="geshifilter"><code class="c geshifilter-c">if<span style="color: #339933;">-</span><span style="color: #b1b100;">else</span></code></span>.</span></p>
+<p>В <span class="blue">C</span> можно использовать вложенные конструкции <span class="geshifilter"><code class="c geshifilter-c">if<span style="color: #339933;">-</span><span style="color: #b1b100;">else</span></code></span>. При этом рекомендуют вкладывать во внешнюю ветку <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">else</span></code></span>, а не <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">if</span></code></span>, т.к. это позволяет избегать неоднозначности толкования инструкции. Посмотрите на такую конструкцию:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>…<span style="color: #009900;">&#41;</span>
+	<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>…<span style="color: #009900;">&#41;</span>
+		…<span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">else</span>
+		…<span style="color: #339933;">;</span>
+<span style="color: #b1b100;">else</span>
+	<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>…<span style="color: #009900;">&#41;</span>
+		…<span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">else</span>
+		…<span style="color: #339933;">;</span></pre></div></p>
+<p>Для более легкого восприятия человеком отступами подчеркнуто, что куда вложено. Однако для компилятора с языка <span class="blue">C</span> отступы никакой роли не играют, и принадлежность первой ветки <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">else</span></code></span> не очевидна. Ее можно было бы ошибочно отнести к первому <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">if</span></code></span>, в результате чего второе <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">else</span></code></span> было бы вообще неуместным, т.к. не относилось бы ни к какому <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">if</span></code></span>. В данном случае такой ошибки не будет, т.к. компилятор руководствуется правилом: ветка <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">else</span></code></span> относится к ближайшему к ней сверху <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">if</span></code></span>, у которого еще нет ветки <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">else</span></code></span>. Именно поэтому здесь первое <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">else</span></code></span> относится ко второму <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">if</span></code></span> (т.к. оно к нему ближе), а второе <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">else</span></code></span> к первому <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">if</span></code></span>, т.к. второе <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">if</span></code></span> уже "покрыто" предыдущим <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">else</span></code></span>. Теперь посмотрите вот на такую конструкцию:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>…<span style="color: #009900;">&#41;</span>
+	<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>…<span style="color: #009900;">&#41;</span>
+		….<span style="color: #339933;">;</span>
+<span style="color: #b1b100;">else</span>
+	<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>…<span style="color: #009900;">&#41;</span>
+		….<span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">else</span>
+		….<span style="color: #339933;">;</span>
+<span style="color: #339933;">&lt;</span>c<span style="color: #339933;">&gt;</span>
+Программист отступами показал<span style="color: #339933;">,</span> что он хочет<span style="color: #339933;">,</span> чтобы первое <span style="color: #339933;">&lt;</span>c<span style="color: #339933;">&gt;</span>else</pre></div> относилось к внешнему <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">if</span></code></span>. Однако компилятор, руководствуясь правилом отнесения веток <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">else</span></code></span>, расценит программу вот так (если перевести на удобство чтения ее программистом):<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>…<span style="color: #009900;">&#41;</span>
+	<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>…<span style="color: #009900;">&#41;</span>
+		….<span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">else</span>
+		<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>…<span style="color: #009900;">&#41;</span>
+			….<span style="color: #339933;">;</span>
+		<span style="color: #b1b100;">else</span>
+			….<span style="color: #339933;">;</span></pre></div></p>
+<p>При этом программа будет делать не то, что хотел программист: если в  выражении при первом <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">if</span></code></span> будет возвращаться ложь, то ни один <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">else</span></code></span> просто не сработает. Однако в таких сложных случаях есть выход — это использование фигурных скобок, даже если тело условной инструкции состоит всего из одного законченного выражения:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>…<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>…<span style="color: #009900;">&#41;</span>
+		….<span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span>
+<span style="color: #b1b100;">else</span>
+	<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>…<span style="color: #009900;">&#41;</span>
+		….<span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">else</span>
+		….<span style="color: #339933;">;</span></pre></div></p>
+<p>В таком случае программа будет восприниматься компилятором именно так, как задумал программист. </p>
+<p><span class="blue"><strong>Задание</strong><br />
+Придумайте и напишите программу, в которой бы использовалась вложенная конструкция <span class="geshifilter"><code class="c geshifilter-c">if<span style="color: #339933;">-</span><span style="color: #b1b100;">else</span></code></span>.</span></p>
+<h3>Условное выражение</h3>
+<p>В языке программирования <span class="blue">C</span> существует сокращенная запись инструкции <span class="geshifilter"><code class="c geshifilter-c">if<span style="color: #339933;">-</span><span style="color: #b1b100;">else</span></code></span> в виде условного выражения, результат которого может быть присвоен переменной:<br />
+<span class="geshifilter"><code class="python geshifilter-python"><span style="color: black;">&#40;</span>логич_выражение<span style="color: black;">&#41;</span> <span style="color: #66cc66;">?</span> выражение<span style="color: #ff4500;">1</span> : выражение<span style="color: #ff4500;">2</span></code></span></p>
+<p>Переводится это так. Если <span class="monoi">логич_выражение</span> вернуло истину, то все выражение возвращает <span class="monoi">выражение1</span>; если <span class="monoi">логич_выражение</span> вернуло ложь, то все выражение возвращает <span class="monoi">выражение2</span>. Например:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">x <span style="color: #339933;">=</span> <span style="color: #0000dd;">12</span><span style="color: #339933;">;</span>
+y <span style="color: #339933;">=</span> <span style="color: #0000dd;">16</span><span style="color: #339933;">;</span>
+z <span style="color: #339933;">=</span> <span style="color: #009900;">&#40;</span>x <span style="color: #339933;">&gt;</span> y<span style="color: #009900;">&#41;</span> <span style="color: #339933;">?</span> x <span style="color: #339933;">-</span> 1 <span style="color: #339933;">:</span> y <span style="color: #339933;">-</span> <span style="color: #0000dd;">1</span><span style="color: #339933;">;</span> </pre></div><br />
+Здесь <span class="monoi">z</span> получит значение 15. Такое условное выражение бывает очень удобно, однако область его применения ограничена простейшими случаями ветвления, т.к. невозможно создавать сложные "тела" в такой конструкции.</p>
+<p><span class="blue"><strong>Задание</strong><br />
+Напишите программу, в которой бы использовалось условное выражение.</span></p>
+<h3>Операторы И (&amp;&) и ИЛИ (||)</h3>
+<p>Как известно логическое выражение может быть сложным. Логические операторы И и ИЛИ в языке программирования <span class="blue">C</span> обозначаются соответственно парными знаками амперсанда (&amp;&) и вертикальной черты (||). Их приоритет меньше, чем у простых логических операторов, поэтому простые логические операции при их объединении в сложные логические выражения можно не заключать в скобки. Пример сложного логического выражения на языке <span class="blue">C</span>:<br />
+<span class="geshifilter"><code class="c geshifilter-c">a <span style="color: #339933;">&gt;</span> <span style="color: #0000dd;">100</span> <span style="color: #339933;">&amp;&amp;</span> b <span style="color: #339933;">!=</span> <span style="color: #0000dd;">0</span></code></span></p>
+<p><strong><span class="blue">Задания</span></strong></p>
+<ol>
+<li><span class="blue">Напишите программу, в которой при <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">if</span></code></span> использовалось бы сложное логическое выражение.</span></li>
+<li><span class="blue">Проверьте и объясните, что выводит функция <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>, если ей передать простые или сложные логические выражения. Например:</span></li>
+</ol>
+<p><div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> a <span style="color: #339933;">==</span> b <span style="color: #339933;">&amp;&amp;</span> c <span style="color: #339933;">&lt;</span> d<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> c <span style="color: #339933;">&lt;</span> d<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<h3>Оператор switch</h3>
+<p>При организации множественного выбора бывает удобно использовать не вложенные <span class="geshifilter"><code class="c geshifilter-c">if<span style="color: #339933;">-</span><span style="color: #b1b100;">else</span></code></span>, а оператор <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">switch</span></code></span>. Его синтаксис можно описать так:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #b1b100;">switch</span> <span style="color: #009900;">&#40;</span>целая_переменная<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #b1b100;">case</span> константа1<span style="color: #339933;">:</span>
+		операции<span style="color: #339933;">;</span>
+	<span style="color: #b1b100;">case</span> константа2<span style="color: #339933;">:</span>
+		операции<span style="color: #339933;">;</span>
+	….
+	<span style="color: #b1b100;">default</span><span style="color: #339933;">:</span> 
+		опрации<span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div><br />
+Это приблизительное, а не точное описание. В скобках после слова <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">switch</span></code></span> может стоять не только переменная, но и выражение, результат выполнения которого возвращает целое значение (может быть символ). Константы при <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">case</span></code></span> также могут быть результатом выполнения выражений. Константы можно группировать в одном <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">case</span></code></span> (например, <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">case</span> <span style="color: #0000dd;">12</span><span style="color: #339933;">,</span> <span style="color: #0000dd;">13</span><span style="color: #339933;">,</span> <span style="color: #0000dd;">18</span></code></span>). Ветка <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">default</span></code></span> не обязательна.</p>
+<p>При выполнении оператора <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">switch</span></code></span>, заданное значение в круглых скобках сравнивается с константами. Как только совпадение будет найдено, все последующие вложенные во все <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">case</span></code></span> операции начинают выполняться. Т.е. происходит нечто странное: выполняются операции веток <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">case</span></code></span> (и <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">default</span></code></span> тоже), константы которых не совпадают со значением при <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">switch</span></code></span>. Например, в результате выполнения вот такой программы:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">  <span style="color: #993333;">int</span> a<span style="color: #339933;">=</span><span style="color: #0000dd;">1</span><span style="color: #339933;">;</span>
+&nbsp;
+  <span style="color: #b1b100;">switch</span> <span style="color: #009900;">&#40;</span>a<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+    <span style="color: #b1b100;">case</span> 0<span style="color: #339933;">:</span> 
+      <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d &quot;</span><span style="color: #339933;">,</span> 0<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+    <span style="color: #b1b100;">case</span> 1<span style="color: #339933;">:</span> 
+      <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d &quot;</span><span style="color: #339933;">,</span> 1<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+    <span style="color: #b1b100;">case</span> 2<span style="color: #339933;">:</span> 
+      <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d &quot;</span><span style="color: #339933;">,</span> 2<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+    <span style="color: #b1b100;">default</span><span style="color: #339933;">:</span> 
+      <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d &quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">-</span>1<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">&#125;</span>
+&nbsp;
+  <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>на экране будет выведено:</p>
+<pre>1 2 -1</pre><p>, т.к. как только совпадение было обнаружено, все нижеследующие инструкции были выполнены.</p>
+<p>Чтобы этого не происходило, в конце операций, принадлежащих определенному <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">case</span></code></span>, дописывают оператор <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #000000; font-weight: bold;">break</span></code></span>, который осуществляет принудительный выход из всей конструкции (в данном случае <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">switch</span></code></span>). Например:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;">  <span style="color: #993333;">int</span> a<span style="color: #339933;">=</span><span style="color: #0000dd;">1</span><span style="color: #339933;">;</span>
+&nbsp;
+  <span style="color: #b1b100;">switch</span> <span style="color: #009900;">&#40;</span>a<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+    <span style="color: #b1b100;">case</span> 0<span style="color: #339933;">:</span> 
+      <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> 0<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+      <span style="color: #000000; font-weight: bold;">break</span><span style="color: #339933;">;</span>
+    <span style="color: #b1b100;">case</span> 1<span style="color: #339933;">:</span> 
+      <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> 1<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+      <span style="color: #000000; font-weight: bold;">break</span><span style="color: #339933;">;</span>
+    <span style="color: #b1b100;">case</span> 2<span style="color: #339933;">:</span> 
+      <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> 2<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+      <span style="color: #000000; font-weight: bold;">break</span><span style="color: #339933;">;</span>
+    <span style="color: #b1b100;">default</span><span style="color: #339933;">:</span> 
+      <span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%d<span style="color: #000099; font-weight: bold;">\n</span>&quot;</span><span style="color: #339933;">,</span> <span style="color: #339933;">-</span>1<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+  <span style="color: #009900;">&#125;</span></pre></div><br />
+выведет только единицу, т.к. выполнение всей инструкции <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">switch</span></code></span> прервется после выполнения инструкции <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #000000; font-weight: bold;">break</span></code></span> при <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">case</span> <span style="color: #0000dd;">1</span></code></span>.</p>
+<p><span class="blue"><strong>Задание</strong><br />
+Придумайте свою программу с использованием оператора <span class="geshifilter"><code class="c geshifilter-c"><span style="color: #b1b100;">switch</span></code></span>.</span></p>
+  </div>
+    </div>
+  </body>
+</html>

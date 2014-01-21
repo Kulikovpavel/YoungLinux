@@ -1,0 +1,460 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Ваше текстовое окружение</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+                <div class="section-2">
+          
+    <div id="node-265" class="section-3">
+  <h1 class="book-heading">Ваше текстовое окружение</h1>
+  <p class="right">Introduction to Linux. A Hands on Guide —<br />
+Введение в Linux. Руководство по работе</p>
+<h2>Переменные окружения</h2>
+<h3>Главное</h3>
+<p>Мы уже упоминали несколько переменных окружения, таких как <span class="mono">PATH</span> и <span class="mono">HOME</span>. До сих пор мы видели только примеры, в которых они используются в оболочке для определенной цели. Но в Linux существует множество других утилит, для нормальной работы которых необходима информация о вас.</p>
+<p>Какая еще информация нужна программам, кроме путей и домашних каталогов?</p>
+<p>Многим программам необходима информация о том, какой терминал вы используете; эта информация хранится в переменной <span class="mono">TERM</span>. В текстовом режиме, это будет эмуляция терминала <em>linux</em>, в графическом режиме, скорее всего, вы используете <em>xterm</em>. Многим программам требуется информация о предпочитаемом вами редакторе на случай, если они должны будут запускать редактор как дочерний процесс. Оболочка, которую вы используете, хранится в переменной <span class="mono">SHELL</span>, тип операционной системы - в <span class="mono">OS</span> и так далее. Список всех текущих переменных, определенных для вашей сессии, можно посмотреть, введя команду  <strong>printenv</strong>.</p>
+<p>Переменные окружения управляются оболочкой. В отличие от регулярных переменных оболочки, переменные окружения наследуются любой программой, которую вы запускаете, в том числе другой оболочкой. Новым процессам присваиваются копии этих переменных; процессы могут их читать, изменять и, в свою очередь, передавать собственным дочерним процессам.</p>
+<p>В именах переменных нет ничего особенного, за исключением того, что по соглашению используют прописные буквы. Вы можете придумать любое имя, какое захотите, хотя существуют стандартные переменные, которые являются достаточно важными, поэтому они одинаковы во всех системах Linux, например <span class="mono">PATH</span> и <span class="mono">HOME</span>.</p>
+<h3>Экспорт переменных</h3>
+<p>Содержимое отдельных переменной обычно отображается с помощью команды <strong>echo</strong>, как в этих примерах:</p>
+<pre>
+debby:~> <strong>echo $PATH</strong>
+/usr/bin:/usr/sbin:/bin:/sbin:/usr/X11R6/bin:/usr/local/bin
+
+debby:~> <strong>echo $MANPATH</strong>
+/usr/man:/usr/share/man/:/usr/local/man:/usr/X11R6/man
+</pre><p>
+Если вы хотите изменить содержимое переменной таким, чтобы она была полезна для других программ, вам следует экспортировать новое значение из вашего окружения в окружение, которое запускают эти программы. Типичным примером является экспорт переменной <span class="mono">PATH</span>. Вы можете объявить ее добавлением  очередного пути, например, с тем чтобы иметь возможность играть в симулятор полетов, который находится в <span class="mono">/opt/FlightGear/bin</span>:</p>
+<pre>
+debby:~> PATH=$PATH:/opt/FlightGear/bin
+</pre><p>
+Такая запись указывает оболочке искать программ не только в текущем пути <span class="mono">$PATH</span>, но и в дополнительном каталоге  <span class="mono">/opt/FlightGear/bin</span>.</p>
+<p>Но если новое значение переменной <span class="mono">PATH</span> не известно окружению, то работать ничего не будет:</p>
+<pre>
+debby:~> runfgfs
+bash: runfgfs: command not found
+</pre><p>
+В Bash мы обычно делаем это с помощью одного элегантного шага:</p>
+<p><span class="mono">export VARIABLE=value</span></p>
+<p>Тот же самый способ используется для переменной <span class="mono">MANPATH</span>, которая сообщает команде <strong>man</strong>, где искать сжатые man-страницы. Когда новые программы устанавливаются в новые или необычные каталоги, документация для них, вероятно, также будет в нестандартных каталогах. Если вы хотите прочитать справочные страницы этих новых программ, расширьте переменную <span class="mono">MANPATH</span>:</p>
+<pre>
+debby:~> <strong>export MANPATH=$MANPATH:/opt/FlightGear/man</strong>
+
+debby:~> <strong>echo $MANPATH</strong>
+/usr/man:/usr/share/man:/usr/local/man:/usr/X11R6/man:/opt/FlightGear/man
+</pre><p>
+Вы можете избежать повторного ввода этой команды в каждом окне, которое вы открываете, добавив эту строку в один из ваших установочных файлов оболочки, см. <a href="http://younglinux.info/#">Раздел "Установочные файлы shell"</a>.</p>
+<h3>Зарезервированные переменные</h3>
+<p>Следующая таблица дает обзор наиболее распространенных предопределенных переменных:</p>
+<p><strong>Таблица. Стандартные переменные окружения</strong></p>
+<table class="il">
+<tr>
+<td width="200"><strong>Имя переменной</strong></td>
+<td><strong>Хранимая информация</strong></td>
+</tr>
+<tr>
+<td>DISPLAY</td>
+<td>используется системой X Window для определения сервера, который отображает на дисплей</td>
+</tr>
+<tr>
+<td>DOMAIN</td>
+<td>доменное имя</td>
+</tr>
+<tr>
+<td>EDITOR</td>
+<td>хранит предпочитаемый вами редактор</td>
+</tr>
+<tr>
+<td>HISTSIZE</td>
+<td>размер файла истории shell (в количестве строк)</td>
+</tr>
+<tr>
+<td>HOME</td>
+<td>адресный путь вашего домашнего каталога</td>
+</tr>
+<tr>
+<td>HOSTNAME</td>
+<td>имя локального хоста</td>
+</tr>
+<tr>
+<td>INPUTRC</td>
+<td>определяет местоположение файлов устройств ввода, например, клавиатуры</td>
+</tr>
+<tr>
+<td>LANG</td>
+<td>предпочитаемый язык</td>
+</tr>
+<tr>
+<td>LOGNAME</td>
+<td>логин</td>
+</tr>
+<tr>
+<td>MAIL</td>
+<td>местонахождение вашей папки для входящей почты</td>
+</tr>
+<tr>
+<td>MANPATH</td>
+<td>пути поиска для man-страниц</td>
+</tr>
+<tr>
+<td>OS</td>
+<td>строка, описывающая операционную систему</td>
+</tr>
+<tr>
+<td>OSTYPE</td>
+<td>дополнительные сведения о версии и т.п.</td>
+</tr>
+<tr>
+<td>PAGER</td>
+<td>используется программами, такими как <strong>man</strong>, которым требуется знать, что делать в случае, если вывод больше, чем окно терминала</td>
+</tr>
+<tr>
+<td>PATH</td>
+<td>поиск путей для команд </td>
+</tr>
+<tr>
+<td>PS1</td>
+<td>первоначальное приглашение</td>
+</tr>
+<tr>
+<td>PS2</td>
+<td>вторичное приглашение</td>
+</tr>
+<tr>
+<td>PWD</td>
+<td>текущий рабочий каталог</td>
+</tr>
+<tr>
+<td>SHELL</td>
+<td>текущая оболочка</td>
+</tr>
+<tr>
+<td>TERM</td>
+<td>тип терминала</td>
+</tr>
+<tr>
+<td>UID</td>
+<td>ID пользователя</td>
+</tr>
+<tr>
+<td>USER(NAME)</td>
+<td>имя пользователя</td>
+</tr>
+<tr>
+<td>VISUAL</td>
+<td>ваш предпочитаемый полноэкранный редактор</td>
+</tr>
+<tr>
+<td>XENVIRONMENT</td>
+<td>местонахождение ваших личных настроек поведения X</td>
+</tr>
+<tr>
+<td>XFILESEARCHPATH</td>
+<td>пути поиска графических библиотек</td>
+</tr>
+</table>
+<p>Многие переменные не только предопределены, но также их значения  устанавливаются заранее, при этом используются конфигурационные файлы. Мы обсудим это в следующем разделе.</p>
+<h2>Установочные файлы shell</h2>
+<p>При вводе команды <strong>ls <span class="monoi">-al</span></strong> для получения расширенного списка всех файлов, в том числе начинающихся с точки, содержащихся в вашем домашнем каталоге, вы увидите один или несколько файлов, начинающихся с . и заканчивающихся на <em>rc</em>. Для Bash это будет <span class="mono">.bashrc</span>. Это копия общесистемного конфигурационного файла <span class="mono">/etc/bashrc</span>.</p>
+<p>При входе логина в shell, <strong>login</strong> выполнит идентификацию, установит окружение и запустит вашу оболочку. В случае <strong>bash</strong> следующим шагом будет чтение общего профиля из <span class="mono">/etc</span>, если такой файл существует. Затем <strong>bash</strong> ищет <span class="mono">~/.bash_profile, ~/.bash_login</span> и <span class="mono">~/.profile</span> в указанном порядке, читает и выполняет команды из первого, который существует и который можно прочитать. Если таких файлов нет, то используется <span class="mono">/etc/bashrc</span>.</p>
+<p>Когда происходит выход их оболочки, <strong>bash</strong> считывает и выполняет команды из файла <span class="mono">~/.bash_logout</span>, если он существует.</p>
+<p>Эта процедура подробно описана в man-страницах <strong>login</strong> и <strong>bash</strong>.</p>
+<h2>Стандартный набор установочных файлов</h2>
+<h3>Пример /etc/profile</h3>
+<p>Давайте посмотрим на некоторые из этих конфигурационных файлов. Первый для чтения — это <span class="mono">/etc/profile</span>, в котором устанавливаются такие важные переменные, как <span class="mono">PATH, USER</span> и <span class="mono">HOSTNAME</span>:</p>
+<pre>
+debby:~> <strong>cat /etc/profile</strong>
+# /etc/profile
+
+# System wide environment and startup programs, for login setup
+# Functions and aliases go in /etc/bashrc
+
+
+# Path manipulation
+if [ `id -u` = 0 ] && ! echo $PATH | /bin/grep -q "/sbin" ; then
+    PATH=/sbin:$PATH
+fi
+
+if [ `id -u` = 0 ] && ! echo $PATH | /bin/grep -q "/usr/sbin" ; then
+    PATH=/usr/sbin:$PATH
+fi
+
+if [ `id -u` = 0 ] && ! echo $PATH | /bin/grep -q "/usr/local/sbin"
+    then
+    PATH=/usr/local/sbin:$PATH
+fi
+
+if ! echo $PATH | /bin/grep -q "/usr/X11R6/bin" ; then
+    PATH="$PATH:/usr/X11R6/bin"
+fi
+</pre><p>
+Эти строки проверяют устанавливаемые пути: если root открывает оболочку (ID пользователя 0), проверяется пути <span class="mono">/sbin, /usr/sbin</span> и <span class="mono">/usr/local/sbin</span>. Если нет, то они добавляются. Для всех проверяется путь <span class="mono">/usr/X11R6/bin</span>.</p>
+<pre>
+# No core files by default
+ulimit -S -c 0 > /dev/null 2>&1
+</pre><p>
+Все, что не нужно отправляется в <span class="mono">/dev/null</span>, если пользователь не меняет эту настройку.</p>
+<pre>
+USER=`id -un`
+LOGNAME=$USER
+MAIL="/var/spool/mail/$USER"
+
+HOSTNAME=`/bin/hostname`
+HISTSIZE=1000
+</pre><p>
+Здесь общим переменным назначаются их стандартные значения.</p>
+<pre>
+if [ -z "$INPUTRC" -a ! -f "$HOME/.inputrc" ]; then
+    INPUTRC=/etc/inputrc
+fi
+</pre><p>
+Если переменная <span class="mono">INPUTRC</span> не установлена, и нет <span class="mono">.inputrc</span> в домашнем каталоге пользователя, то будет загружен файл, отвечающий за ввод по умолчанию.</p>
+<pre>
+export PATH USER LOGNAME MAIL HOSTNAME HISTSIZE INPUTRC
+</pre><p>
+Все переменные экспортируются, поэтому они доступны для других программ, запрашивающих информацию о вашем окружении.</p>
+<h3>Каталог profile.d</h3>
+<pre>
+for i in /etc/profile.d/*.sh ; do
+    if [ -r $i ]; then
+    	. $i
+    fi
+done
+unset i
+</pre><p>
+Все читаемые скрипты shell из каталога <span class="mono">/etc/profile.d</span> читаются и выполняются. Это то, что делает возможным <em>color-ls</em>, похожесть <strong>vi</strong> на <strong>vim</strong>, локальные настройки и т.д. Временная переменная <em>i</em> не устанавливается для предотвращения неадекватного поведения оболочки позже.</p>
+<h3>Пример .bash_profile</h3>
+<p>Затем bash ищет <span class="mono">.bash_profile</span> в домашнем каталоге пользователя:</p>
+<pre>
+debby:~> cat .bash_profile 
+#####################################################
+#                                                   #
+#   .bash_profile file                              #
+#                                                   #
+#   Executed from the bash shell when you log in.   #
+#                                                   #
+#####################################################
+
+source ~/.bashrc
+source ~/.bash_login
+</pre><p>
+В файле содержаться указания оболочке сначала прочитать <span class="mono">~/.bashrc</span>, потом <span class="mono">~/.bash_login</span>. При работе с окружением оболочки вы будете сталкиваться с встроенной в shell командой <strong>source</strong> достаточно часто: она используется для  применения изменений конфигурации к текущему окружению.</p>
+<h3>Пример .bash_login</h3>
+<p>Файл <span class="mono">~/.bash_login</span> определяет по умолчанию защиту файлов, устанавливая значение <strong>umask</strong>, см. <a href="http://younglinux.info/#">Раздел "Вступление в другую группу"</a>. Файл <span class="mono">~/.bashrc</span> используется для определения группы пользовательских псевдонимов, функции и личные переменных окружения. Сначала читается <span class="mono">/etc/bashrc</span>, который описывает стандартное приглашение (<span class="mono">PS1</span>) и значение по умолчанию umask. После этого вы можете добавить собственные настройки. Если нет <span class="mono">~/.bashrc</span>, то по умолчанию читается <span class="mono">/etc/bashrc</span>.</p>
+<h3>Пример /etc/bashrc</h3>
+<p>Ваш файл <span class="mono">/etc/bashrc</span> может выглядеть следующим образом:</p>
+<pre>
+debby:~> cat /etc/bashrc
+# /etc/bashrc
+
+# System wide functions and aliases
+# Environment stuff goes in /etc/profile
+
+# by default, we want this to get set.
+# Even for non-interactive, non-login shells.
+if [ `id -gn` = `id -un` -a `id -u` -gt 99 ]; then
+	umask 002
+else
+	umask 022
+fi
+</pre><p>
+Эти строки устанавливают значение <strong>umask</strong>. Затем, в зависимости от типа shell, устанавливается приглашение:</p>
+<pre>
+# are we an interactive shell?
+if [ "$PS1" ]; then
+  if [ -x /usr/bin/tput ]; then
+    if [ "x`tput kbs`" != "x" ]; then 
+# We can't do this with "dumb" terminal
+      stty erase `tput kbs`
+    elif [ -x /usr/bin/wc ]; then
+      if [ "`tput kbs|wc -c `" -gt 0 ]; then 
+# We can't do this with "dumb" terminal
+        stty erase `tput kbs`
+      fi
+    fi
+  fi
+  case $TERM in
+	xterm*)
+	if [ -e /etc/sysconfig/bash-prompt-xterm ]; then
+		PROMPT_COMMAND=/etc/sysconfig/bash-prompt-xterm
+	else
+   PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME%%.*}:\
+${PWD/$HOME/~}\007"'
+	fi
+    ;;
+	*)
+   [ -e /etc/sysconfig/bash-prompt-default ] && PROMPT_COMMAND=\
+/etc/sysconfig/bash-prompt-default
+	    ;;
+    esac
+    [ "$PS1" = "\\s-\\v\\\$ " ] && PS1="[\u@\h \W]\\$ "
+    
+    if [ "x$SHLVL" != "x1" ]; then # We're not a login shell
+        for i in /etc/profile.d/*.sh; do
+	    if [ -x $i ]; then
+	        . $i
+	    fi
+	done
+    fi
+fi
+</pre><h3>Пример .bash_logout</h3>
+<p>Во время выхода из системы, выполняются команды из <span class="mono">~/.bash_logout</span>, которые могут, например, очищать терминал, так что у вас появляется чистое окно при входе из удаленного сеанса или при выходе из системной консоли:</p>
+<pre>
+debby:~> <strong>cat .bash_logout</strong>
+# ~/.bash_logout
+
+clear
+</pre><p>
+Давайте ближе рассмотрим, как эти скрипты работают в следующем разделе. Храните <strong>info <span class="monoi">bash</span></strong> под рукой.</p>
+<h2>Приглашение Bash</h2>
+<h3>Введение</h3>
+<p>Приглашение Bash может делать гораздо больше, чем отображение такой простой информации, как имя пользователя, имя машины и некоторое указание на текущий рабочий каталог. Мы можем добавить другую информацию, такую как дата и время, количество подключенных пользователей и т.д.</p>
+<p>Однако, прежде чем мы начнем, сохраним наше текущее приглашение в другую переменную окружения:</p>
+<pre>
+[jerry@nowhere jerry]$ <strong>MYPROMPT=$PS1</strong>
+
+[jerry@nowhere jerry]$ <strong>echo $MYPROMPT</strong>
+[\u@\h \W]\$
+
+[jerry@nowhere jerry]$
+</pre><p>
+Когда мы теперь будем изменять строку приглашения, например, с помощью команды <span class="mono">PS1="->"</span>, то всегда сможем получить нашу оригинальную строку обратно с помощью команды <span class="mono">PS1=$MYPROMPT</span>. Конечно, вы получите ее обратно, и когда  подключитесь снова; так будет до тех пор, пока вы возитесь с приглашением в командной строке и не вставляете его в файл конфигурации оболочки.</p>
+<h3>Некоторые примеры</h3>
+<p>Для того, чтобы понять эти приглашения и используемые управляющие последовательности, обратитесь к info- и man-страницам Bash.</p>
+<ul>
+<li><strong>export <span class="mono">PS1="[\t \j] "</span></strong></li>
+</ul>
+<p>Отображает время и количество выполняемых заданий.</p>
+<ul>
+<li><strong>export <span class="mono">PS1="[\d][\u@\h \w] : "</span></strong></li>
+</ul>
+<p>Отображает дату, имя пользователя, название хоста и текущую рабочую директорию. Заметьте, что \W отображает только конечные имена текущего каталога.</p>
+<ul>
+<li><strong>export <span class="mono">PS1="{\!} "</span></strong></li>
+</ul>
+<p>Отображает номер каждой команды в истории.</p>
+<ul>
+<li><strong>export <span class="mono">PS1="\[\033[1;35m\]\u@\h\[\033[0m\] "</span></strong></li>
+</ul>
+<p>Делает user@host розовым.</p>
+<ul>
+<li><strong>export <span class="mono">PS1="\[\033[1;35m\]\u\[\033[0m\] \[\033[1;34m\]\w\[\033[0m\] "</span></strong></li>
+</ul>
+<p>Раскрашивает имя пользователя в розовый цвет, а рабочий каталог в голубой.</p>
+<ul>
+<li><strong>export <span class="mono">PS1="\[\033[1;44m\]$USER is in \w\[\033[0m\] "</span></strong></li>
+</ul>
+<p>Приглашение для людей, которым трудно видеть разницу между приглашением и тем, что они вводят.</p>
+<ul>
+<li><strong>export <span class="mono">PS1="\[\033[4;34m\]\u@\h \w \[\033[0m\]"</span></strong></li>
+</ul>
+<p>Подчеркнутое приглашение.</p>
+<ul>
+<li><strong>export <span class="mono">PS1="\[\033[7;34m\]\u@\h \w \[\033[0m\] "</span></strong></li>
+</ul>
+<p>Белые символы на синем фоне.</p>
+<ul>
+<li><strong>export <span class="mono">PS1="\[\033[3;35m\]\u@\h \w \[\033[0m\]\a"</span></strong></li>
+</ul>
+<p>Розовая строка иным шрифтом, которая предупреждает вас, когда ваши команды закончили работу.</p>
+<ul>
+<li><strong>export <span class="mono">PS1=...</span></strong></li>
+</ul>
+<p>Переменные экспортируются, так что впоследствии выполняющиеся команды также будут знать об окружении. Для конфигурации строки приглашения лучше изменить конфигурационный файл оболочки, <span class="mono">~/.bashrc</span>.</p>
+<p>Если вам захочется, то приглашения могут выполнять shell-скрипты и вести себя по-разному в зависимости от условий. У вас может даже строка приглашения играть мелодию при выполнении команды, хотя это вам быстро надоест. Более подробную информацию можно найти в <noindex><a href="http://www.tldp.org/HOWTO/Bash-Prompt-HOWTO/">Bash-Prompt HOWTO</a></noindex>.</p>
+<h2>Сценарии оболочки</h2>
+<h3>Что такое сценарии?</h3>
+<p>Скрипт оболочки, как мы видели в примерах конфигурации shell, представляет собой текстовый файл, содержащий команды оболочки. Когда такой файл используется в качестве первого аргумента без опции при вызове Bash, и без опций <span class="mono">-c</span> или <span class="mono">-s</span>, Bash считывает и выполняет команды из файла, затем выходит. Этот режим работы создает неинтерактивную оболочку. Когда Bash запускает shell-скрипт, он устанавливает специальный параметр 0 к имени файла, а не имя к оболочке, и позиционные параметры (все, что следует за именем скрипта) устанавливаются в остальные аргументы, если таковые задаются. Если  дополнительные аргументы не задаются, позиционные параметры не включаются.</p>
+<p>Скрипт оболочки можно сделать исполняемым с помощью команды <strong>chmod</strong> за счет включения бита исполнения. Когда Bash находит такой файл при поиске в <span class="mono">PATH</span> по отношению к команде, он порождает подоболочку для его выполнения. Другими словами, выполнение</p>
+<p><span class="mono">filename <em>ARGUMENTS</em> </span><br />
+эквивалентно выполнению<br />
+<span class="mono">bash <em>filename ARGUMENTS</em></span></p>
+<p>если "filename" представляет собой исполняемый скрипт. Эта подоболочка  инициализирует себя, так что эффект такой, как если бы новая оболочка интерпретировала сценарий, с тем исключением, что места команд, запомненные родителем (см. <strong>hash</strong> в info-страницах), сохраняются ребенком.</p>
+<p>Большинство версий UNIX наделяют эту часть команд операционной системы исполняемым механизмом. Если первая строка сценария начинается с двух символов "#!", оставшаяся часть строки указывает интерпретатор для программы. Таким образом, вы можете указать <strong>bash, awk, perl</strong> или другой интерпретатор или оболочку и писать остальную часть файла сценария на этом языке.</p>
+<p>Аргументы для интерпретатора состоят из одного дополнительного аргумента, который следует за именем интерпретатора в первой строке файла сценария, после следует имя файла сценария, а затем остальные аргументы. Bash будет выполнять это действие на операционных системах, которые не обрабатывают это самостоятельно.</p>
+<p>Сценарии Bash часто начинаются с</p>
+<p><span class="mono">#! /bin/bash</span></p>
+<p>(предполагая, что Bash была установлена в <span class="mono">/bin</span>), так как это гарантирует использование Bash для интерпретации сценариев, даже если скрипт выполняется под другой оболочкой.</p>
+<h3>Некоторые простые примеры</h3>
+<p>Очень простой скрипт, состоящий только из одной команды, которая приветствует пользователя, выполняется так:</p>
+<pre>
+[jerry@nowhere ~] <strong>cat hello.sh</strong>
+#!/bin/bash
+echo "Hello $USER"
+</pre><p>
+Сценарий фактически состоит только из одной команды <strong>echo</strong>, которая использует значение (<em>$</em>) переменной окружения <span class="mono">USER</span>, чтобы напечатать строку, настроенную на пользователя, который вызывает скрипт.</p>
+<p>Другой однострочный пример, используемый для отображения подключенных пользователей:</p>
+<pre>
+#!/bin/bash
+who | cut -d " " -f 1 | sort -u
+</pre><p>
+Вот скрипт, состоящий из несколько строк, которые я использую, чтобы создать резервные копии всех файлов в каталоге. Сначала скрипт создает список всех файлов в текущем каталоге и помещает его в переменную <span class="mono">LIST</span>. Затем он устанавливает имя копии для каждого файла, и затем копирует файл. Для каждого файла выводится сообщение:</p>
+<pre>
+tille:~> <strong>cat bin/makebackupfiles.sh</strong>
+#!/bin/bash
+# make copies of all files in a directory
+LIST=`ls`
+for i in $LIST; do
+	ORIG=$i
+	DEST=$i.old
+	cp $ORIG $DEST
+	echo "copied $i"
+done
+</pre><p>Просто ввод строки подобной <strong>mv</strong> <span class="monoi">* *.old</span> не будет работать, как вы заметите при попытке выполнить это на ряд тестовых файлов. Команда <strong>echo</strong> была добавлена для отображения какой-либо деятельности. <strong>echo</strong> обычно полезна, когда сценарий не  работает: постепенно просматривая код, вы найдете ошибку в кратчайшие сроки.</p>
+<p>Каталог <span class="mono">/etc/rc.d/init.d</span> содержит множество примеров. Давайте посмотрим на этот сценарий, который управляет фиктивным сервером IcanSeeYou:</p>
+<pre>
+#!/bin/sh
+# description: ICanSeeYou allows you to see networked people
+
+# process name: ICanSeeYou
+# pidfile: /var/run/ICanSeeYou/ICanSeeYou.pid
+# config: /etc/ICanSeeYou.cfg
+
+# Source function library.
+. /etc/rc.d/init.d/functions
+
+# See how (with which arguments) we were called.
+case "$1" in
+	start)
+		echo -n "Starting ICanSeeYou: "
+		daemon ICanSeeYou
+		echo
+		touch /var/lock/subsys/ICanSeeYou
+		;;
+	stop)
+		echo -n "Shutting down ICanSeeYou: "
+		killproc ICanSeeYou
+		echo
+		rm -f /var/lock/subsys/ICanSeeYou
+		rm -f /var/run/ICanSeeYou/ICanSeeYou.pid
+		;;
+	status)
+		status ICanSeeYou
+		;;
+	restart)
+		$0 stop
+		$0 start
+		;;
+	*)
+		echo "Usage: $0 {start|stop|restart|status}"
+		exit 1
+esac
+
+exit 0
+</pre><p>
+Во-первых, размещается . (точка), которая управляет множеством функций оболочки и используется практически во всех скриптах в <span class="mono">/etc/rc.d/init.d</span>. Затем размещается команда <strong>case</strong>, которая определяет 4 различных способа выполнения сценария. Например, это может быть <strong>ICanSeeYou</strong> <span class="monoi">start</span>. Решением в этом случае будет чтение (первого) аргумента сценария с выражением <em>$1</em>.</p>
+<p>Когда дается не совместимый вход, то срабатывает код, отмеченный звездочкой, в котором скрипт выдает сообщение об ошибке. Список <strong>case</strong> заканчивается инструкцией <strong>esac</strong>. В случае <em>start</em> программа сервера запускается как демон, и назначаются ID процесса и шлюз. В случае <em>stop</em> процесс сервера сходит на нет и останавливается, шлюз и PID удаляются. Опции, такие как опции <span class="mono">daemon</span> и функции как <span class="mono">killproc</span> определены в файле <span class="mono">/etc/rc.d/init.d/functions</span>. Эта установка специфична для дистрибутива,  используемого в этом примере. Запускающие скрипты в вашей системе могут использовать другие функции, определенные в других файлах, или вообще никакие.</p>
+<p>В случае успеха сценарий возвращает код выхода нуля к его родителю.<br />
+Этот сценарий является прекрасным примером использования функций, которые позволяют легче читать сценарий и делать работу быстрее. Заметьте, что здесь используется <strong>sh</strong> вместо <strong>bash</strong>, чтобы сделать их полезными для более широкого круга систем. В системе Linux, вызывая <strong>bash</strong> как <strong>sh</strong>, результаты в оболочке работают в POSIX-совместимом режиме.</p>
+<p>Man-страницы <strong>bash</strong> содержат больше информации об объединении команд, <strong>for-</strong> и <strong>while</strong>-петлях, регулярных выражений, а также примеры. Понятный Bash для системных администраторов и опытных пользователей, с упражнениями, от того же автора, как "Введение в руководство Linux", находится на <noindex>http://tille.garrels.be/training/bash/. Подробное описание особенностей Bash и приложений есть в справочном руководстве <a href="http://tldp.org/LDP/abs/html/index.html">"Продвинутые сценарии Bash"</a></noindex>.</p>
+  </div>
+    </div></div>
+  </body>
+</html>

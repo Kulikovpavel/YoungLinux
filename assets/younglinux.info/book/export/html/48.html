@@ -1,0 +1,864 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Создание GUI на Python с помощью библиотеки Tkinter. Программирование для начинающих</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+        
+    <div id="node-48" class="section-1">
+  <h1 class="book-heading">Создание GUI на Python с помощью библиотеки Tkinter. Программирование для начинающих</h1>
+  <p><img src="../../../bg/tkinter.gif" width="50" height="50" align="left" style="padding:10px;" /></p>
+<p>Цикл практических уроков по программированию для начинающих "Создание GUI на Python с помощью библиотеки Tkinter" знакомит с особенностями разработки графического интерфейса пользователя на основе языка программирования Python(создание виджет и обработчиков событий, связывание с событиями и др.).</p>
+<p>Курс требует наличия начальных знаний по основам программирования и синтаксису Python (достаточен уровень понимания структурного программирования).</p>
+<p>На данный момент курс включает 14 уроков, три из которых (4-й, 5-й и 6-й), знакомящие с менеджерами расположения, можно выделить из статьи <a href="http://rus-linux.net/lib.php?name=MyLDP/algol/geom_manag.html" rel="nofollow" title="Менеджеры расположения Tkinter: grid, place и pack.">"Применение управляющих размещениями Tkinter"</a></p>
+<p>По идеи данный курс должен сформировать у обучающихся базовые понятия построения графического интерфейса пользователя (GUI), а также расширить знания о программировании.</p>
+<p><strong>Примечание.</strong> В Python ветки 2.x.x при импорте модуля Tkinter, он пишется в большой буквы (иначе возникает ошибка). При импорте tkinter в версиях 3.x.x Питона имя модуля пишется с маленькой буквы.</p>
+  <div id="node-49" class="section-2">
+  <h1 class="book-heading">Введение в tkinter. Урок 1</h1>
+  <p>В многообразии программ, которые пишут программисты, выделяют приложения с графическим пользовательским интерфейсом (GUI). При создании таких программ становятся важными не только алгоритмы обработки данных, но и разработка для пользователя программы удобного интерфейса, взаимодействуя с которым, он будет определять поведение приложения.</p>
+<p>Современный пользователь в основном взаимодействует с программой с помощью различных кнопок, меню, значков, вводя информацию в специальные поля, выбирая определенные значения в списках и т. д. Эти "изображения" в определенном смысле и формируют GUI, в дальнейшем мы их будем называть виджетами (от англ. widget - "штучка").</p>
+<p>Для языка программирования Python такие виджеты включены в специальную библиотеку — tkinter. Если ее импортировать в программу (скрипт), то можно пользоваться ее компонентами, создавая графический интерфейс. </p>
+<p>Последовательность шагов при создании графического приложения имеет свои особенности. Программа должна выполнять свое основное назначение, быть удобной для пользователя, реагировать на его действия. Мы не будем вдаваться в подробности разработки, а рассмотрим какие этапы приблизительно нужно пройти при программировании, чтобы получить программу с GUI:</p>
+<ol>
+<li>Импорт библиотеки</li>
+<li>Создание главного окна</li>
+<li>Создание виджет</li>
+<li>Установка их свойств</li>
+<li>Определение событий</li>
+<li>Определение обработчиков событий</li>
+<li>Расположение виджет на главном окне</li>
+<li>Отображение главного окна</li>
+</ol>
+<h2>1. Импорт модуля tkinter</h2>
+<p>Как и любой модуль, tkinter в Python можно импортировать двумя способами: командами import tkinter или from tkinter import *. В дальнейшем мы будем пользоваться только вторым способом, т. к. это позволит не указывать каждый раз имя модуля при обращении к объектам, которые в нем содержатся. Следует обратить внимание, что в версии Python 3 имя модуля пишется со строчной буквы (tkinter), хотя в более ранних версиях использовалась прописная (Tkinter). Итак, первая строчка программы должна выглядеть так:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span></pre></div></p>
+<h2>2. Создание главного окна</h2>
+<p>В современных операционных системах любое пользовательское приложение заключено в окно, которое можно назвать главным, т.к. в нем располагаются все остальные виджеты. Объект окна верхнего уровня создается при обращении к классу Tk модуля tkinter. Переменную связанную с объектом-окном принято называть root (хотя понятно, что можно назвать как угодно, но так уж принято). Вторая строчка кода:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div></p>
+<h2>3. Создание виджет</h2>
+<p>Допустим в окне будет располагаться всего одна кнопка. Кнопка создается при обращении к классу Button модуля tkinter. Объект кнопка связывается с какой-нибудь переменной. У класса Button (как и всех остальных классов, за исключением Tk) есть обязательный параметр — объект, которому кнопка принадлежит (кнопка не может "быть ничейной"). Пока у нас есть единственное окно (root), оно и будет аргументом, передаваемым в класс при создании объекта-кнопки:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">but = Button<span style="color: black;">&#40;</span>root<span style="color: black;">&#41;</span></pre></div></p>
+<h2>4. Установка свойств виджет</h2>
+<p>У кнопки много свойств: размер, цвет фона и надписи и др. Мы рассмотрим их на следующем уроке. Пока же установим всего одно свойство — текст надписи (text):<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">but<span style="color: black;">&#91;</span><span style="color: #483d8b;">&quot;text&quot;</span><span style="color: black;">&#93;</span> = <span style="color: #483d8b;">&quot;Печать&quot;</span></pre></div></p>
+<h2>5-6. Определение событий и их обработчиков</h2>
+<p>Многообразие событий и способов их обработки будет рассмотрено на следующих уроках. Здесь же просто коснемся данного вопроса в связи с потребностью.</p>
+<p>Что же будет делать кнопка и в какой момент она это будет делать? Предположим, что задача кнопки вывести какое-нибудь сообщение в поток вывода, используя функцию print. Делать она это будет при нажатии на нее левой кнопкой мыши.</p>
+<p>Действия (алгоритм), которые происходят при том или ином событии, могут быть достаточно сложным. Поэтому часто их оформляют в виде функции, а затем вызывают, когда они понадобятся. Пусть у нас печать на экран будет оформлена в виде функции printer:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">def</span> printer<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Как всегда очередной 'Hello World!'&quot;</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>Не забывайте, что функцию желательно (почти обязательно) размещать в начале кода. Параметр event – это какое-либо событие.</p>
+<p>Событие нажатия левой кнопкой мыши выглядит так: <span class="geshifilter"><code class="python geshifilter-python"><span style="color: #66cc66;">&lt;</span>Button-<span style="color: #ff4500;">1</span><span style="color: #66cc66;">&gt;</span></code></span>. Требуется связать это событие с обработчиком (функцией printer). Для связи предназначен метод bind. Синтаксис связывания события с обработчиком выглядит так:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">but.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;&lt;Button-1&gt;&quot;</span>,printer<span style="color: black;">&#41;</span></pre></div></p>
+<h2>7. Размещение виджет</h2>
+<p>Если вы заметите, то в любом приложении виджеты не разбросаны по окну как попало, а хорошо организованы, интерфейс продуман до мелочей и обычно подчинен определенным стандартам. До стандартов нам далеко, нужно просто кнопку как-то отобразить в окне. Самый простой способ — это использование метода pack.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">but.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>Если не вставить эту строчку кода, то кнопка в окне так и не появится, хотя она есть в программе. </p>
+<h2>8. Отображение главного окна</h2>
+<p>Ну и наконец, главное окно тоже не появится, пока не будет вызван специальный метод mainloop:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>Данная строчка кода должна быть всегда в конце скрипта!</p>
+<p>В итоге, код программы может выглядеть таким образом:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">def</span> printer<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Как всегда очередной 'Hello World!'&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+but = Button<span style="color: black;">&#40;</span>root<span style="color: black;">&#41;</span>
+but<span style="color: black;">&#91;</span><span style="color: #483d8b;">&quot;text&quot;</span><span style="color: black;">&#93;</span> = <span style="color: #483d8b;">&quot;Печать&quot;</span>
+but.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;&lt;Button-1&gt;&quot;</span>,printer<span style="color: black;">&#41;</span>
+&nbsp;
+but.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>При программировании графического интерфейса пользователя более эффективным оказывается объектно-ориентированный подход. Поэтому многие «вещи» оформляются в виде классов. В нашем примере также можно использовать класс:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">class</span> But_print:
+     <span style="color: #ff7700;font-weight:bold;">def</span> <span style="color: #0000cd;">__init__</span><span style="color: black;">&#40;</span><span style="color: #008000;">self</span><span style="color: black;">&#41;</span>:
+          <span style="color: #008000;">self</span>.<span style="color: black;">but</span> = Button<span style="color: black;">&#40;</span>root<span style="color: black;">&#41;</span>
+          <span style="color: #008000;">self</span>.<span style="color: black;">but</span><span style="color: black;">&#91;</span><span style="color: #483d8b;">&quot;text&quot;</span><span style="color: black;">&#93;</span> = <span style="color: #483d8b;">&quot;Печать&quot;</span>
+          <span style="color: #008000;">self</span>.<span style="color: black;">but</span>.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;&lt;Button-1&gt;&quot;</span>,<span style="color: #008000;">self</span>.<span style="color: black;">printer</span><span style="color: black;">&#41;</span>
+          <span style="color: #008000;">self</span>.<span style="color: black;">but</span>.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+     <span style="color: #ff7700;font-weight:bold;">def</span> printer<span style="color: black;">&#40;</span><span style="color: #008000;">self</span>,event<span style="color: black;">&#41;</span>:
+          <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Как всегда очередной 'Hello World!'&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+obj = But_print<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div> </p>
+<h2>Практическая работа</h2>
+<ol>
+<li>Импортируйте модуль tkinter, создайте объект главного окна, примените к нему метод mainloop. Затем выполните скрипт. Что вы видите?</li>
+<li>Добавьте кнопку на главное окно с помощью такой команды:</li>
+<p>but = Button(root, text="Печать")<br />
+В данном случае, при создании кнопки, в класс сразу передается и значение свойства text. Это наиболее часто используемый способ установки свойств (по-сравнению с тем, который приводится в уроке: but["text"] = "Печать").</p>
+<li>Расположите виджету на главном окне с помощью метода pack. Запустите скрипт. Что вы видите? Нажмите левой кнопкой мыши на кнопку в окне. Что-нибудь происходит? </li>
+<li>Создайте какую-нибудь функцию и свяжите ее с событием нажатия кнопки.</li>
+<li>Снова запустите скрипт и нажмите кнопку. По идее, должно что-то произойти.</li>
+</ol>
+  </div>
+<div id="node-50" class="section-2">
+  <h1 class="book-heading">Виджеты (графические объекты) и их свойства. Часть 1. Урок 2</h1>
+  <p>На этом уроке рассмотрим часть графических объектов (виджет), содержащихся в библиотеке Tkinter: кнопки, поля для ввода, метки, флажки, переключатели и списки. Следует понимать, что графический интерфейс пользователя достаточно стандартен, и поэтому любые подобные библиотеки-модули (в том числе и Tkinter) содержат приблизительно одинаковые виджеты.</p>
+<p>Каждый класс виджет имеет определенные свойства, значения которых можно задавать при их создании, а также программировать их изменение при действии пользователя и в результате выполнения программы.</p>
+<h2>Кнопки</h2>
+<p>Объект-кнопка создается вызовом класса Button модуля tkinter. При этом обязательным аргументом является лишь родительский виджет (например, окно верхнего уровня). Другие свойства могут указываться при создании кнопки или задаваться (изменяться) позже. Синтаксис:</p>
+<div style="text-align:center;"><strong>переменная = Button (родит_виджет, [свойство=значение, … ….]) </strong></div>
+<p>У кнопки много свойств, в примере ниже указаны лишь некоторые из них.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+&nbsp;
+root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+but = Button<span style="color: black;">&#40;</span>root,
+          text=<span style="color: #483d8b;">&quot;Это кнопка&quot;</span>, <span style="color: #808080; font-style: italic;">#надпись на кнопке</span>
+          width=<span style="color: #ff4500;">30</span>,height=<span style="color: #ff4500;">5</span>, <span style="color: #808080; font-style: italic;">#ширина и высота</span>
+          bg=<span style="color: #483d8b;">&quot;white&quot;</span>,fg=<span style="color: #483d8b;">&quot;blue&quot;</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;">#цвет фона и надписи</span>
+&nbsp;
+but.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div> </p>
+<p>bg и fg – это сокращения от background (фон) и foreground (передний план). Ширина и высота измеряются в знакоместах (количество символов).</p>
+<h2>Метки</h2>
+<p>Метки (или надписи) — это достаточно простые виджеты, содержащие строку (или несколько строк) текста и служащие в основном для информирования пользователя.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">lab = Label<span style="color: black;">&#40;</span>root, text=<span style="color: #483d8b;">&quot;Это метка! <span style="color: #000099; font-weight: bold;">\n</span> Из двух строк.&quot;</span>, font=<span style="color: #483d8b;">&quot;Arial 18&quot;</span><span style="color: black;">&#41;</span></pre></div></p>
+<h2>Однострочное текстовое поле</h2>
+<p>Такое поле создается вызовом класса Entry модуля tkinter. В него пользователь может ввести только одну строку текста.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">ent = Entry<span style="color: black;">&#40;</span>root,width=<span style="color: #ff4500;">20</span>,bd=<span style="color: #ff4500;">3</span><span style="color: black;">&#41;</span></pre></div></p>
+<p>bd – это сокращение от borderwidth (ширина границы).</p>
+<h2>Многострочное текстовое поле</h2>
+<p>Text предназначен для предоставления пользователю возможности ввода не одной строки текста, а существенно больше. </p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">tex = Text<span style="color: black;">&#40;</span>root,width=<span style="color: #ff4500;">40</span>,
+          font=<span style="color: #483d8b;">&quot;Verdana 12&quot;</span>,
+          wrap=WORD<span style="color: black;">&#41;</span> </pre></div></p>
+<p>Последнее свойство (wrap) в зависимости от своего значения позволяет переносить текст, вводимый пользователем либо по символам, либо по словам, либо вообще не переносить, пока пользователь не нажмет Enter.</p>
+<h2>Радиокнопки (переключатели)</h2>
+<p>Объект-радиокнопка никогда не используется по одному. Их используют группами, при этом в одной группе может быть «включена» лишь одна кнопка. </p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">var=IntVar<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+var.<span style="color: #008000;">set</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">1</span><span style="color: black;">&#41;</span>
+rad0 = Radiobutton<span style="color: black;">&#40;</span>root,text=<span style="color: #483d8b;">&quot;Первая&quot;</span>,
+          variable=var,value=<span style="color: #ff4500;">0</span><span style="color: black;">&#41;</span>
+rad1 = Radiobutton<span style="color: black;">&#40;</span>root,text=<span style="color: #483d8b;">&quot;Вторая&quot;</span>,
+          variable=var,value=<span style="color: #ff4500;">1</span><span style="color: black;">&#41;</span>
+rad2 = Radiobutton<span style="color: black;">&#40;</span>root,text=<span style="color: #483d8b;">&quot;Третья&quot;</span>,
+          variable=var,value=<span style="color: #ff4500;">2</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>Одна группа определяет значение одной переменной, т. е. если в примере будет выбрана радиокнопка rad2, то значение переменной будет var будет 2. Изначально также требуется установить значение переменной (выражение var.set(1) задает значение переменной var равное 1).</p>
+<h2>Флажки</h2>
+<p>Объект checkbutton предназначен для выбора не взаимоисключающих пунктов в окне (в группе можно активировать один, два или более флажков или не один). В отличие от радиокнопок, значение каждого флажка привязывается к своей переменной, значение которой определяется опциями onvalue (включено) и offvalue (выключено) в описании флажка.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">c1 = IntVar<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+c2 = IntVar<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+che1 = Checkbutton<span style="color: black;">&#40;</span>root,text=<span style="color: #483d8b;">&quot;Первый флажок&quot;</span>,
+          variable=c1,onvalue=<span style="color: #ff4500;">1</span>,offvalue=<span style="color: #ff4500;">0</span><span style="color: black;">&#41;</span>
+che2 = Checkbutton<span style="color: black;">&#40;</span>root,text=<span style="color: #483d8b;">&quot;Второй флажок&quot;</span>,
+          variable=c2,onvalue=<span style="color: #ff4500;">2</span>,offvalue=<span style="color: #ff4500;">0</span><span style="color: black;">&#41;</span> </pre></div></p>
+<h2>Списки</h2>
+<p>Вызов класса Listbox создает объект, в котором пользователь может выбрать один или несколько пунктов в зависимости от значения опции selectmode. В примере ниже значение SINGLE позволяет выбирать лишь один пункт из списка.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">r = <span style="color: black;">&#91;</span><span style="color: #483d8b;">'Linux'</span>,<span style="color: #483d8b;">'Python'</span>,<span style="color: #483d8b;">'Tk'</span>,<span style="color: #483d8b;">'Tkinter'</span><span style="color: black;">&#93;</span>
+lis = Listbox<span style="color: black;">&#40;</span>root,selectmode=SINGLE,height=4<span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">for</span> i <span style="color: #ff7700;font-weight:bold;">in</span> r:
+     lis.<span style="color: black;">insert</span><span style="color: black;">&#40;</span>END,i<span style="color: black;">&#41;</span> </pre></div></p>
+<p>Изначально список (Listbox) пуст. С помощью цикла for в него добавляются пункты из списка (тип данных) r. Добавление происходит с помощью специального метода класса Listbox — insert. Данный метод принимает два параметра: куда добавить и что добавить. </p>
+<p>Большинство методов различных виджет мы рассмотрим по ходу изучения данного курса.</p>
+<h2>Практическая работа</h2>
+<p>Создайте два скрипта на языке программирования Python и с использованием модуля Tkinter генерирующие шаблоны представленные ниже.</p>
+<div style="text-align:center;"><img src="../../../img/tkinter/tkinter2.1.gif" width="259" height="261" alt="Создание графического интерфейса: текстовые поля и кнопка" /></div>
+<div style="text-align:center;"><img src="../../../img/tkinter/tkinter2.2.gif" width="172" height="300" alt="Создание графического интерфейса: радиокнопки и флажки" /></div>
+  </div>
+<div id="node-51" class="section-2">
+  <h1 class="book-heading">Виджеты (графические объекты) и их свойства. Часть 2. Урок 3</h1>
+  <p>На этом уроке продолжим рассматривать графические объекты (виджеты), содержащихся в библиотеке Tkinter. Это будут рамка (frame), шкала (scale), полоса прокрутки (scrollbar), окно верхнего уровня (toplevel).</p>
+<h2>Frame (рамка)</h2>
+<p>Как выяснится позже, рамки (фреймы) хороший инструмент для организации остальных виджет в группы внутри окна, а также оформления. </p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+&nbsp;
+root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+fra1 = Frame<span style="color: black;">&#40;</span>root,width=<span style="color: #ff4500;">500</span>,height=<span style="color: #ff4500;">100</span>,bg=<span style="color: #483d8b;">&quot;darkred&quot;</span><span style="color: black;">&#41;</span>
+fra2 = Frame<span style="color: black;">&#40;</span>root,width=<span style="color: #ff4500;">300</span>,height=<span style="color: #ff4500;">200</span>,bg=<span style="color: #483d8b;">&quot;green&quot;</span>,bd=<span style="color: #ff4500;">20</span><span style="color: black;">&#41;</span>
+fra3 = Frame<span style="color: black;">&#40;</span>root,width=<span style="color: #ff4500;">500</span>,height=<span style="color: #ff4500;">150</span>,bg=<span style="color: #483d8b;">&quot;darkblue&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+fra1.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+fra2.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+fra3.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>Данный скрипт создает три фрейма разного размера. Свойство bd (сокращение от boderwidth) определяет расстояния от края рамки до заключенных в нее виджетов (если они есть). </p>
+<p>На фреймах также можно размещать виджеты как на основном окне (root). Здесь текстовое поле находится на рамке fra2.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">ent1 = Entry<span style="color: black;">&#40;</span>fra2,width=<span style="color: #ff4500;">20</span><span style="color: black;">&#41;</span>
+ent1.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> </pre></div></p>
+<h2>Scale (шкала)</h2>
+<p>Назначение шкалы — это предоставление пользователю выбора какого-то значения из определенного диапазона. Внешне шкала представляет собой горизонтальную или вертикальную полосу с разметкой, по которой пользователь может передвигать движок, осуществляя тем самым выбор значения.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">sca1 = Scale<span style="color: black;">&#40;</span>fra3,orient=HORIZONTAL,length=<span style="color: #ff4500;">300</span>,
+          from_=<span style="color: #ff4500;">0</span>,to=<span style="color: #ff4500;">100</span>,tickinterval=<span style="color: #ff4500;">10</span>,resolution=<span style="color: #ff4500;">5</span><span style="color: black;">&#41;</span>
+sca2 = Scale<span style="color: black;">&#40;</span>root,orient=VERTICAL,length=<span style="color: #ff4500;">400</span>,
+          from_=<span style="color: #ff4500;">1</span>,to=<span style="color: #ff4500;">2</span>,tickinterval=<span style="color: #ff4500;">0.1</span>,resolution=<span style="color: #ff4500;">0.1</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>Свойства: </p>
+<ul>
+<li>orient определяет направление шкалы;</li>
+<li>length – длина шкалы в пикселях; </li>
+<li>from_ и to – с какого значения шкала начинается и каким заканчивается (т. е. диапазон значений); </li>
+<li>tickinterval – интервал, через который отображаются метки для шкалы;</li>
+<li>resolution - минимальная длина отрезка, на которую пользователь может передвинуть движок.</li>
+</ul>
+<h2>Scrollbar (полоса прокрутки)</h2>
+<p>Данный виджет позволяет прокручивать содержимое другого виджета (например, текстового поля или списка). Прокрутка может быть как по горизонтали, так и по вертикали.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+&nbsp;
+root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+tx = Text<span style="color: black;">&#40;</span>root,width=<span style="color: #ff4500;">40</span>,height=<span style="color: #ff4500;">3</span>,font=<span style="color: #483d8b;">'14'</span><span style="color: black;">&#41;</span>
+scr = Scrollbar<span style="color: black;">&#40;</span>root,command=tx.<span style="color: black;">yview</span><span style="color: black;">&#41;</span>
+tx.<span style="color: black;">configure</span><span style="color: black;">&#40;</span>yscrollcommand=scr.<span style="color: #008000;">set</span><span style="color: black;">&#41;</span>
+&nbsp;
+tx.<span style="color: black;">grid</span><span style="color: black;">&#40;</span>row=<span style="color: #ff4500;">0</span>,column=<span style="color: #ff4500;">0</span><span style="color: black;">&#41;</span>
+scr.<span style="color: black;">grid</span><span style="color: black;">&#40;</span>row=<span style="color: #ff4500;">0</span>,column=<span style="color: #ff4500;">1</span><span style="color: black;">&#41;</span>
+root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>В примере сначала создается текстовое поле (tx), затем полоса прокрутки (scr), которая привязывается с помощью опции command к полю tx по вертикальной оси (yview). Далее поле tx изменяется (конфигурируется) с помощью метода configure: устанавливается значение опции yscrollcommand.</p>
+<p>Здесь используется незнакомый нам пока еще метод grid, представляющий собой другой способ расположения виджет на окне.</p>
+<h2>Toplevel (окно верхнего уровня)</h2>
+<p>С помощью класс Toplevel создаются дочерние окна, на которых также могут располагаться виджеты. Следует отметить, что при закрытии главного окна (или родительского), окно Toplevel также закрывается. С другой стороны, закрытие дочернего окна не приводит к закрытию главного.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">win = Toplevel<span style="color: black;">&#40;</span>root,relief=SUNKEN,bd=<span style="color: #ff4500;">10</span>,bg=<span style="color: #483d8b;">&quot;lightblue&quot;</span><span style="color: black;">&#41;</span>
+win.<span style="color: black;">title</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Дочернее окно&quot;</span><span style="color: black;">&#41;</span>
+win.<span style="color: black;">minsize</span><span style="color: black;">&#40;</span>width=<span style="color: #ff4500;">400</span>,height=<span style="color: #ff4500;">200</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>Метод title определяет заголовок окна. Метод minsize конфигурирует минимальный размер окна (есть метод maxsize, определяющий максимальный размер окна). Если значение аргументов minsize будет таким же как у maxsize, то пользователь не сможет менять размеры окна. </p>
+<h2>практическая работа<br />
+</h2>
+<p>1. Создайте два скрипта на языке программирования Python и с использованием модуля Tkinter генерирующие шаблоны представленные ниже. </p>
+<div style="text-align:center;"><img src="../../../img/tkinter/tkinter3.1.gif" width="346" height="188" alt="Создание графического интерфейса: рамки (frame) и шкала (scale)" /></div>
+<div style="text-align:center;"><img src="../../../img/tkinter/tkinter3.2.gif" width="302" height="72" alt="Создание графического интерфейса: текстовое поле с полосой прокрутки" /></div>
+<p>2. Создайте приложение, состоящее из главного и двух дочерних окон. На каждом из трех окон должны располагаться один или два любых графических объекта.</p>
+  </div>
+<div id="node-52" class="section-2">
+  <h1 class="book-heading">Метод bind модуля Tkinter. Урок 7</h1>
+  <p>Приложения с графическим интерфейсом пользователя (GUI) должны не просто красиво отображаться на экране, но и выполнять какие-либо действия, реализуя тем самым потребности пользователя. На прошлых уроках было рассказано как создать GUI, на этом уроке рассмотрим как добавить ему функциональность, т.е возможность совершать с его помощью те или иные действия.</p>
+<p>В отличие от консольных приложений, которые обычно выполняются при минимальных внешних воздействиях, графическое приложение обычно ждет каких-либо внешних воздействий (щелчков кнопкой мыши, нажатий клавиш на клавиатуре, изменения виджетов) и затем выполняет заложенное программистом действие. Из такого принципа работы можно вывести следующую схему настройки функциональности GUI: на виджет что-то «влияет» из вне ? выполняется какая-то функция (действие). Внешнее воздействие на графический компонент называется событием. Событий достаточно много (основной их перечень мы рассмотрим на следующем занятии). На этом занятии будем использовать лишь два вида событий: щелчок левой кнопкой мыши (<Button-1>) и нажатие клавиши Enter (<Return>).</return></button-1></p>
+<p>Одним из способов связывания виджета, события и функции (того, что должно происходить после события) является использование метода bind. Синтаксис связывания представлен на рисунке ниже.</p>
+<div style="text-align:center;"><img src="../../../img/tkinter/bind.png" width="514" height="284" alt="Связывание графического элемента, события и функции с помощью метода bind" /></div>
+<p>Рассмотрим различные примеры добавления функциональности GUI.</p>
+<p><strong>Пример 1.</strong><br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">def</span> output<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     s = ent.<span style="color: black;">get</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+     <span style="color: #ff7700;font-weight:bold;">if</span> s == <span style="color: #483d8b;">&quot;1&quot;</span>:
+          tex.<span style="color: black;">delete</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">1.0</span>,END<span style="color: black;">&#41;</span>
+          tex.<span style="color: black;">insert</span><span style="color: black;">&#40;</span>END,<span style="color: #483d8b;">&quot;Обслуживание клиентов на втором этаже&quot;</span><span style="color: black;">&#41;</span>
+     <span style="color: #ff7700;font-weight:bold;">elif</span> s == <span style="color: #483d8b;">&quot;2&quot;</span>:
+          tex.<span style="color: black;">delete</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">1.0</span>,END<span style="color: black;">&#41;</span>
+          tex.<span style="color: black;">insert</span><span style="color: black;">&#40;</span>END,<span style="color: #483d8b;">&quot;Пластиковые карты выдают в соседнем здании&quot;</span><span style="color: black;">&#41;</span>
+     <span style="color: #ff7700;font-weight:bold;">else</span>:
+          tex.<span style="color: black;">delete</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">1.0</span>,END<span style="color: black;">&#41;</span>
+          tex.<span style="color: black;">insert</span><span style="color: black;">&#40;</span>END,<span style="color: #483d8b;">&quot;Введите 1 или 2 в поле слева&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+ent = Entry<span style="color: black;">&#40;</span>root,width=<span style="color: #ff4500;">1</span><span style="color: black;">&#41;</span>
+but = Button<span style="color: black;">&#40;</span>root,text=<span style="color: #483d8b;">&quot;Вывести&quot;</span><span style="color: black;">&#41;</span>
+tex = Text<span style="color: black;">&#40;</span>root,width=<span style="color: #ff4500;">20</span>,height=<span style="color: #ff4500;">3</span>,font=<span style="color: #483d8b;">&quot;12&quot;</span>,wrap=WORD<span style="color: black;">&#41;</span>
+&nbsp;
+ent.<span style="color: black;">grid</span><span style="color: black;">&#40;</span>row=<span style="color: #ff4500;">0</span>,column=<span style="color: #ff4500;">0</span>,padx=<span style="color: #ff4500;">20</span><span style="color: black;">&#41;</span>
+but.<span style="color: black;">grid</span><span style="color: black;">&#40;</span>row=<span style="color: #ff4500;">0</span>,column=<span style="color: #ff4500;">1</span><span style="color: black;">&#41;</span>
+tex.<span style="color: black;">grid</span><span style="color: black;">&#40;</span>row=<span style="color: #ff4500;">0</span>,column=<span style="color: #ff4500;">2</span>,padx=<span style="color: #ff4500;">20</span>,pady=<span style="color: #ff4500;">10</span><span style="color: black;">&#41;</span>
+&nbsp;
+but.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;&lt;Button-1&gt;&quot;</span>,output<span style="color: black;">&#41;</span>
+&nbsp;
+root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>Рассмотрим код, начиная с 16-й строки.</p>
+<p>В строках 16-18 создаются три виджета: однострочное текстовое поле, кнопка и многострочное текстовое поле. В первое поле пользователь должен что-то ввести, затем нажать кнопку и получить ответ во втором поле.</p>
+<p>В строках 20-22 используется менеджер grid для размещения виджетов. Свойства padx и pady определяют количество пикселей от виджета до края рамки (или ячейки) по осям x и y соответственно.</p>
+<p>В стоке 24 как раз и происходит связывание кнопки с событием нажатия левой кнопки мыши и функцией output. Все эти три компонента (виджет, событие и функция) связываются с помощью метода bind. В данном случае, при нажатии левой кнопкой мыши по кнопке but будет вызвана функция output.</p>
+<p>Итак, если вдруг пользователь щелкнет левой кнопкой мыши по кнопке, то выполнится функция output (ни в каком другом случае она выполняться не будет). Данная функция (строки 1-11) выводит информацию во второе текстовое поле. Какую именно информацию, зависит от того, что пользователь ввел в первое текстовое поле. В качестве аргумента функции передается событие (в данном случае <Button-1>).</button-1></p>
+<p>Внутри веток if-elif-else используются методы delete и insert. Первый из них удаляет символы из текстового поля, второй — вставляет. 1.0 — обозначает первую строку, первый символ (нумерация символов начинается с нуля).</p>
+<p><strong>Пример 2.</strong><br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">li = <span style="color: black;">&#91;</span><span style="color: #483d8b;">&quot;red&quot;</span>,<span style="color: #483d8b;">&quot;green&quot;</span><span style="color: black;">&#93;</span>
+<span style="color: #ff7700;font-weight:bold;">def</span> color<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     fra.<span style="color: black;">configure</span><span style="color: black;">&#40;</span>bg=li<span style="color: black;">&#91;</span>0<span style="color: black;">&#93;</span><span style="color: black;">&#41;</span>
+     li<span style="color: black;">&#91;</span>0<span style="color: black;">&#93;</span>,li<span style="color: black;">&#91;</span>1<span style="color: black;">&#93;</span> = li<span style="color: black;">&#91;</span>1<span style="color: black;">&#93;</span>,li<span style="color: black;">&#91;</span>0<span style="color: black;">&#93;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">def</span> outgo<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     root.<span style="color: black;">destroy</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+fra = Frame<span style="color: black;">&#40;</span>root,width=<span style="color: #ff4500;">100</span>,height=<span style="color: #ff4500;">100</span><span style="color: black;">&#41;</span>
+but = Button<span style="color: black;">&#40;</span>root,text=<span style="color: #483d8b;">&quot;Выход&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+fra.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+but.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+root.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;&lt;Return&gt;&quot;</span>,color<span style="color: black;">&#41;</span>
+but.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;&lt;Button-1&gt;&quot;</span>,outgo<span style="color: black;">&#41;</span>
+&nbsp;
+root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div> </p>
+<p>Здесь создаются два виджета (строки 12, 13): фрейм и кнопка.</p>
+<p>Приложение реагирует на два события: нажатие клавиши Enter в пределах главного окна (строка 18) и нажатие левой кнопкой мыши по кнопке but (строка 19). В первом случае вызывается функция color, во втором — outgo.</p>
+<p>Функция color изменяет цвет фона (bg) фрейма (fra) с помощью метода configure, который предназначен для изменения значения свойств виджетов в процессе выполнения скрипта. В качестве значения опции bg подставляется первый элемент списка. Затем в списке два элемента меняются местами, чтобы при следующем нажатии Enter цвет фрейма снова изменился.</p>
+<p>В функции outgo вызывается метод destroy по отношению к главному окну. Данный метод предназначен для «разрушения» виджета (окно закроется).</p>
+<h2>Практическая работа</h2>
+<ol>
+<li>Создайте приложение, в котором меняется размер фрейма в зависимости от того, какая из трех объектов-кнопок была нажата.</li>
+<li>Напишите скрипт, генерирующий окно с меткой и текстовым полем. После ввода пользователем текста в поле и нажатия Enter, введенный текст должен отображаться в метке.</li>
+</ol>
+  </div>
+<div id="node-53" class="section-2">
+  <h1 class="book-heading">Программирование событий в Tkinter.  Урок 8</h1>
+  <div style="text-align:center;">
+<h4>Методическая разработка урока<br />
+Элективный курс: Модуль tkinter. Создание графического интерфейса пользователя с помощью языка программирования Python<br />
+Уровень: Программирование для начинающих</h4>
+</div>
+<p>Обычно, чтобы графическое приложение что-то сделало, должно случиться какое-нибудь событие, т. е. воздействие на GUI из вне.</p>
+<h2>Типы событий</h2>
+<p>Можно выделить три основных типа событий: производимые мышью, нажатиями клавиш на клавиатуре, а также события, возникающие в результате изменения других графических объектов.</p>
+<div style="text-align:center;"><img src="../../../img/tkinter/events.png" width="761" height="349" alt="Типы событий в программировании" /></div>
+<h2>Способ записи</h2>
+<p>При вызове метода bind событие передается в качестве первого аргумента.</p>
+<div style="text-align:center;"><img src="../../../img/tkinter/event.png" width="287" height="79" alt="Привязка события в методе bind (Tkinter)" /></div>
+<p>Название события заключается в кавычки, а также в знаки &lt; и >. Событие описывается с помощью зарезервированных последовательностей ключевых слов.</p>
+<h2>События, производимые мышью</h2>
+<ul>
+<li>&lt;Button-1&gt; - щелчок левой кнопкой мыши</li>
+<li>&lt;Button-2&gt; - щелчок средней кнопкой мыши</li>
+<li>&lt;Button-3&gt; - щелчок правой кнопкой мыши</li>
+<li>&lt;Double-Button-1&gt; - двойной клик левой кнопкой мыши</li>
+<li>&lt;Motion&gt; - движение мыши</li>
+<li>и т. д.</li>
+</ul>
+<p><strong>Пример:</strong> </p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+<span style="color: #ff7700;font-weight:bold;">def</span> b1<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     root.<span style="color: black;">title</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Левая кнопка мыши&quot;</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">def</span> b3<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     root.<span style="color: black;">title</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Правая кнопка мыши&quot;</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">def</span> move<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     root.<span style="color: black;">title</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Движение мышью&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+root.<span style="color: black;">minsize</span><span style="color: black;">&#40;</span>width = <span style="color: #ff4500;">500</span>, height=<span style="color: #ff4500;">400</span><span style="color: black;">&#41;</span>
+&nbsp;
+root.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'&lt;Button-1&gt;'</span>,b1<span style="color: black;">&#41;</span>
+root.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'&lt;Button-3&gt;'</span>,b3<span style="color: black;">&#41;</span>
+root.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'&lt;Motion&gt;'</span>,move<span style="color: black;">&#41;</span>
+&nbsp;
+root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>В этой программе меняется надпись в заголовке главного окна в зависимости от того двигается мышь, щелкают левой или правой кнопкой мыши.</p>
+<h2>События, производимые с помощью клавиатуры</h2>
+<ul>
+<li>Буквенные клавиши можно записывать без угловых скобок (например, 'L').</li>
+<li>Для неалфавитных клавиш существуют специальные зарезервированные слова<br />
+ * &lt;Return&gt; - нажатие клавиши Enter;<br />
+ * &lt;space&gt;- пробел;<br />
+ * и т. д.</li>
+<li>Сочетания клавиш пишутся через тире. Например:<br />
+ * &lt;Control-Shift&gt; - одновременное нажатие клавиш Ctrl и Shift.</li>
+</ul>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">def</span> exit_<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     root.<span style="color: black;">destroy</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">def</span> caption<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     t = ent.<span style="color: black;">get</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+     lbl.<span style="color: black;">configure</span><span style="color: black;">&#40;</span>text = t<span style="color: black;">&#41;</span>
+&nbsp;
+root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+ent = Entry<span style="color: black;">&#40;</span>root, width = <span style="color: #ff4500;">40</span><span style="color: black;">&#41;</span>
+lbl = Label<span style="color: black;">&#40;</span>root, width = <span style="color: #ff4500;">80</span><span style="color: black;">&#41;</span>
+&nbsp;
+ent.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+lbl.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+ent.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'&lt;Return&gt;'</span>,caption<span style="color: black;">&#41;</span>
+root.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'&lt;Control-z&gt;'</span>,exit_<span style="color: black;">&#41;</span>
+&nbsp;
+root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>При нажатии клавиши Enter в пределах текстовой строки (ent) вызывается функция caption, которая помещает символы из текстовой строки (ent) в метку (lbl). Нажатие комбинации клавиш Ctrl + z приводит к закрытию главного окна.</p>
+<h2>практическая работа</h2>
+<ol>
+<li>Напишите следующую программу. На главном окне находится несколько флажков и текстовое поле. При щелчке левой кнопкой мыши в пределах текстового поля в нем должны отображаться значения включенных флажки (появляться сообщение о том, какие флажки включены), при щелчке правой кнопкой мыши — значения выключенных флажков.</li>
+<li>Напишите скрипт, генерирующий в окне два текстовых поля и рамку. Размер рамки можно менять с помощью вводимых значений в текстовые поля (определяют длину и ширину) и нажатии клавиши пробел на клавиатуре.</li>
+</ol>
+  </div>
+<div id="node-54" class="section-2">
+  <h1 class="book-heading">Переменные Tkinter. Урок 9</h1>
+  <div style="text-align:center;">
+<h4>Методическая разработка урока<br />
+Элективный курс: Модуль tkinter. Создание графического интерфейса пользователя с помощью языка программирования Python<br />
+Уровень: Программирование для начинающих</h4>
+</div>
+<p>Библиотека Tkinter содержит специальные классы, объекты которых выполняют роль переменных для хранения значений о состоянии различных виджет. Изменение значения такой переменной ведет к изменению и свойства виджета, и наоборот: изменение свойства виджета изменяет значение ассоциированной переменной.</p>
+<p>Существует несколько таких классов Tkinter, предназначенных для обработки данных разных типов.</p>
+<ol>
+<li>StringVar() - для строк;</li>
+<li>IntVar() - целых чисел;</li>
+<li>DoubleVar() - дробных чисел;</li>
+<li>BooleanVar() - для обработки булевых значений (true и false).</li>
+</ol>
+<p><strong>Пример 1.</strong> </p>
+<p>Во втором уроке мы уже использовали переменную-объект типа IntVar() при создании группы радиокнопок:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">var=IntVar<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+var.<span style="color: #008000;">set</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">1</span><span style="color: black;">&#41;</span>
+rad0 = Radiobutton<span style="color: black;">&#40;</span>root,text=<span style="color: #483d8b;">&quot;Первая&quot;</span>,variable=var,value=<span style="color: #ff4500;">0</span><span style="color: black;">&#41;</span>
+rad1 = Radiobutton<span style="color: black;">&#40;</span>root,text=<span style="color: #483d8b;">&quot;Вторая&quot;</span>,variable=var,value=<span style="color: #ff4500;">1</span><span style="color: black;">&#41;</span>
+rad2 = Radiobutton<span style="color: black;">&#40;</span>root,text=<span style="color: #483d8b;">&quot;Третья&quot;</span>,variable=var,value=<span style="color: #ff4500;">2</span><span style="color: black;">&#41;</span></pre></div> </p>
+<p>Здесь создается объект класса IntVar и связывается с переменной var. С помощью метода set устанавливается начальное значение, равное 1. Три радиокнопки относятся к одной группе: об этом свидетельствует одинаковое значение опции (свойства) variable. Variable предназначена для связывания переменной Tkinter с радиокнопкой. Опция value определяет значение, которое будет передано переменной, если данная кнопка будет в состоянии "включено". Если в процессе выполнения скрипта значение переменной var будет изменено, то это отразится на группе кнопок. Например, это делается во второй строчке кода: включена кнопка rad1.</p>
+<p>Если метод set позволяет устанавливать значения переменных, то метод get, наоборот, позволяет получать (узнавать) значения для последующего их использования.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">def</span> display<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     v = var.<span style="color: black;">get</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+     <span style="color: #ff7700;font-weight:bold;">if</span> v == 0:
+          <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Включена первая кнопка&quot;</span><span style="color: black;">&#41;</span>
+     <span style="color: #ff7700;font-weight:bold;">elif</span> v == 1:
+          <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Включена вторая кнопка&quot;</span><span style="color: black;">&#41;</span>
+     <span style="color: #ff7700;font-weight:bold;">elif</span> v == 2:
+          <span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Включена третья кнопка&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+but = Button<span style="color: black;">&#40;</span>root,text=<span style="color: #483d8b;">&quot;Получить значение&quot;</span><span style="color: black;">&#41;</span>
+but.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'&lt;Button-1&gt;'</span>,display<span style="color: black;">&#41;</span> </pre></div></p>
+<p>При вызове функции display в переменную v “записывается“ значение, связанное в текущий момент с переменной var. Чтобы получить значение переменной var, используется метод get (вторая строчка кода).<br />
+<strong>Пример 2.</strong> </p>
+<p>Несколько сложнее обстоит дело с флажками. Поскольку состояния флажков независимы друг друга, то для каждого должна быть введена собственная ассоциированная переменная-объект.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+&nbsp;
+root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+var0=StringVar<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># значение каждого флажка ...</span>
+var1=StringVar<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># ... хранится в собственной переменной</span>
+var2=StringVar<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+<span style="color: #808080; font-style: italic;"># если флажок установлен, то в ассоциированную переменную ...</span>
+<span style="color: #808080; font-style: italic;"># ...(var0,var1 или var2) заносится значение onvalue, ...</span>
+<span style="color: #808080; font-style: italic;"># ...если флажок снят, то - offvalue.</span>
+ch0 = Checkbutton<span style="color: black;">&#40;</span>root,text=<span style="color: #483d8b;">&quot;Окружность&quot;</span>,variable=var0,
+          onvalue=<span style="color: #483d8b;">&quot;circle&quot;</span>,offvalue=<span style="color: #483d8b;">&quot;-&quot;</span><span style="color: black;">&#41;</span>
+ch1 = Checkbutton<span style="color: black;">&#40;</span>root,text=<span style="color: #483d8b;">&quot;Квадрат&quot;</span>,variable=var1,
+          onvalue=<span style="color: #483d8b;">&quot;square&quot;</span>,offvalue=<span style="color: #483d8b;">&quot;-&quot;</span><span style="color: black;">&#41;</span>
+ch2 = Checkbutton<span style="color: black;">&#40;</span>root,text=<span style="color: #483d8b;">&quot;Треугольник&quot;</span>,variable=var2,
+          onvalue=<span style="color: #483d8b;">&quot;triangle&quot;</span>,offvalue=<span style="color: #483d8b;">&quot;-&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+lis = Listbox<span style="color: black;">&#40;</span>root,height=3<span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">def</span> result<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     v0 = var0.<span style="color: black;">get</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+     v1 = var1.<span style="color: black;">get</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+     v2 = var2.<span style="color: black;">get</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+     l = <span style="color: black;">&#91;</span>v0,v1,v2<span style="color: black;">&#93;</span> <span style="color: #808080; font-style: italic;"># значения переменных заносятся в список</span>
+     lis.<span style="color: black;">delete</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">0</span>,<span style="color: #ff4500;">2</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># предыдущее содержимое удаляется из Listbox</span>
+     <span style="color: #ff7700;font-weight:bold;">for</span> v <span style="color: #ff7700;font-weight:bold;">in</span> l: <span style="color: #808080; font-style: italic;"># содержимое списка l последовательно ...</span>
+          lis.<span style="color: black;">insert</span><span style="color: black;">&#40;</span>END,v<span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;"># ...вставляется в Listbox</span>
+&nbsp;
+but = Button<span style="color: black;">&#40;</span>root,text=<span style="color: #483d8b;">&quot;Получить значения&quot;</span><span style="color: black;">&#41;</span>
+but.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'&lt;Button-1&gt;'</span>,result<span style="color: black;">&#41;</span>
+&nbsp;
+ch0.<span style="color: black;">deselect</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span><span style="color: #808080; font-style: italic;"># &quot;по умолчанию&quot; флажки сняты</span>
+ch1.<span style="color: black;">deselect</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+ch2.<span style="color: black;">deselect</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+ch0.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+ch1.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+ch2.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+but.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+lis.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div><br />
+<strong>Пример 3. </strong></p>
+<p>Помимо свойства (опции) variable, связывающей виджет с переменной-объектом Tkinter (IntVar, StringVar и др.), у многих виджет существует опция textvariable, которая определяет текст-содержимое или текст-надпись виджета. Несмотря на то, что «текстовое свойство» может быть установлено для виджета и изменено в процессе выполнения кода без использования ассоциированных переменных, иногда такой способ изменения оказывается более удобным.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+v = StringVar<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+ent1 = Entry <span style="color: black;">&#40;</span>root, textvariable = v,bg=<span style="color: #483d8b;">&quot;black&quot;</span>,fg=<span style="color: #483d8b;">&quot;white&quot;</span><span style="color: black;">&#41;</span>
+ent2 = Entry<span style="color: black;">&#40;</span>root, textvariable = v<span style="color: black;">&#41;</span>
+ent1.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+ent2.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div> </p>
+<p>Здесь содержимое одного текстового поля немедленно, отображается в другом, т.к. оба поля привязаны к одной и той же переменной v.</p>
+<h2>практическая работа</h2>
+<ol>
+<li>Напишите скрипт, как в примере с флажками; в отличии от примера значения ассоциированных переменных должны отображаться в метке (Label) через запятую.</li>
+<li>Напишите программу, в которой пользователь может определить цвет рамки (Frame) c помощью шкалы (Scale).</li>
+</ol>
+  </div>
+<div id="node-55" class="section-2">
+  <h1 class="book-heading">Объект Меню (Menu) в GUI. Урок 10</h1>
+  <div style="text-align:center;">
+<h4>Методическая разработка урока<br />
+Элективный курс: Модуль tkinter. Создание графического интерфейса пользователя с помощью языка программирования Python<br />
+Уровень: Программирование для начинающих</h4>
+</div>
+<h2>Что такое меню</h2>
+<p>Меню — это объект, который присутствует во многих пользовательских приложениях. Находится оно под строкой заголовка и представляет собой выпадающие списки под словами; каждый такой список может содержать другой вложенный в него список. Каждый пункт списка представляет собой команду, запускающую какое-либо действие или открывающую диалоговое окно.<br />
+Создание меню в Tkinter</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+m = Menu<span style="color: black;">&#40;</span>root<span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;">#создается объект Меню на главном окне</span>
+root.<span style="color: black;">config</span><span style="color: black;">&#40;</span>menu=m<span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;">#окно конфигурируется с указанием меню для него</span>
+&nbsp;
+<span style="color: #dc143c;">fm</span> = Menu<span style="color: black;">&#40;</span>m<span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;">#создается пункт меню с размещением на основном меню (m)</span>
+m.<span style="color: black;">add_cascade</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;File&quot;</span>,menu=<span style="color: #dc143c;">fm</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;">#пункту располагается на основном меню (m)</span>
+<span style="color: #dc143c;">fm</span>.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Open...&quot;</span><span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;">#формируется список команд пункта меню</span>
+<span style="color: #dc143c;">fm</span>.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;New&quot;</span><span style="color: black;">&#41;</span>
+<span style="color: #dc143c;">fm</span>.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Save...&quot;</span><span style="color: black;">&#41;</span>
+<span style="color: #dc143c;">fm</span>.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Exit&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+hm = Menu<span style="color: black;">&#40;</span>m<span style="color: black;">&#41;</span> <span style="color: #808080; font-style: italic;">#второй пункт меню</span>
+m.<span style="color: black;">add_cascade</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Help&quot;</span>,menu=hm<span style="color: black;">&#41;</span>
+hm.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Help&quot;</span><span style="color: black;">&#41;</span>
+hm.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;About&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>Метод add_cascade добавляет новый пункт в меню, который указывается как значение опции menu.</p>
+<p>Метод add_command добавляет новую команду в пункт меню. Одна из опций данного метода (в примере выше ее пока нет) — command – связывает данную команду с функцией- обработчиком.</p>
+<p>Можно создать вложенное меню. Для этого создается еще одно меню и с помощью add_cascade привязать к родительскому пункту.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">nfm = Menu<span style="color: black;">&#40;</span><span style="color: #dc143c;">fm</span><span style="color: black;">&#41;</span>
+<span style="color: #dc143c;">fm</span>.<span style="color: black;">add_cascade</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Import&quot;</span>,menu=nfm<span style="color: black;">&#41;</span>
+nfm.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Image&quot;</span><span style="color: black;">&#41;</span>
+nfm.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Text&quot;</span><span style="color: black;">&#41;</span></pre></div> </p>
+<h2>Привязка функций к меню</h2>
+<p>Каждая команда меню обычно должна быть связана со своей функцией, выполняющей те или иные действия (выражения). Связь происходит с помощью опции command метода add_command. Функция обработчик до этого должна быть определена.</p>
+<p>Для примера выше далее приводятся исправленные строки добавления команд “About”, “New” и “Exit”, а также функции, вызываемые, когда пользователь щелкает левой кнопкой мыши по соответствующим пунктам подменю.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">def</span> new_win<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>:
+     win = Toplevel<span style="color: black;">&#40;</span>root<span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">def</span> close_win<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>:
+     root.<span style="color: black;">destroy</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">def</span> about<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>:
+     win = Toplevel<span style="color: black;">&#40;</span>root<span style="color: black;">&#41;</span>
+     lab = Label<span style="color: black;">&#40;</span>win,text=<span style="color: #483d8b;">&quot;Это просто программа-тест <span style="color: #000099; font-weight: bold;">\n</span> меню в Tkinter&quot;</span><span style="color: black;">&#41;</span>
+     lab.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> 
+&nbsp;
+….
+<span style="color: #dc143c;">fm</span>.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;New&quot;</span>,command=new_win<span style="color: black;">&#41;</span>
+….
+<span style="color: #dc143c;">fm</span>.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Exit&quot;</span>,command=close_win<span style="color: black;">&#41;</span>
+&nbsp;
+….
+<span style="color: black;">hm</span>.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;About&quot;</span>,command=about<span style="color: black;">&#41;</span> </pre></div></p>
+<h2>Практическая работа</h2>
+<p>Напишите приложение с меню, содержащим два пункта: Color и Size. Пункт Color должен содержать три команды (Red, Green и Blue), меняющие цвет рамки на главном окне. Пункт Size должен содержать две команды (500x500 и 700х400), изменяющие размер рамки.</p>
+<h2>Примерный ответ к практической работе</h2>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">def</span> colorR<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>:
+     fra.<span style="color: black;">config</span><span style="color: black;">&#40;</span>bg=<span style="color: #483d8b;">&quot;Red&quot;</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">def</span> colorG<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>:
+     fra.<span style="color: black;">config</span><span style="color: black;">&#40;</span>bg=<span style="color: #483d8b;">&quot;Green&quot;</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">def</span> colorB<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>:
+     fra.<span style="color: black;">config</span><span style="color: black;">&#40;</span>bg=<span style="color: #483d8b;">&quot;Blue&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">def</span> square<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>:
+     fra.<span style="color: black;">config</span><span style="color: black;">&#40;</span>width=500<span style="color: black;">&#41;</span>
+     fra.<span style="color: black;">config</span><span style="color: black;">&#40;</span>height=500<span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">def</span> rectangle<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>:
+     fra.<span style="color: black;">config</span><span style="color: black;">&#40;</span>width=<span style="color: #ff4500;">700</span><span style="color: black;">&#41;</span>
+     fra.<span style="color: black;">config</span><span style="color: black;">&#40;</span>height=<span style="color: #ff4500;">400</span><span style="color: black;">&#41;</span>
+&nbsp;
+fra = Frame<span style="color: black;">&#40;</span>root,width=<span style="color: #ff4500;">300</span>,height=<span style="color: #ff4500;">100</span>,bg=<span style="color: #483d8b;">&quot;Black&quot;</span><span style="color: black;">&#41;</span>
+fra.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+m = Menu<span style="color: black;">&#40;</span>root<span style="color: black;">&#41;</span>
+root.<span style="color: black;">config</span><span style="color: black;">&#40;</span>menu=m<span style="color: black;">&#41;</span>
+&nbsp;
+cm = Menu<span style="color: black;">&#40;</span>m<span style="color: black;">&#41;</span>
+m.<span style="color: black;">add_cascade</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Color&quot;</span>,menu=cm<span style="color: black;">&#41;</span>
+cm.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Red&quot;</span>,command=colorR<span style="color: black;">&#41;</span>
+cm.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Green&quot;</span>,command=colorG<span style="color: black;">&#41;</span>
+cm.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Blue&quot;</span>,command=colorB<span style="color: black;">&#41;</span>
+&nbsp;
+sm = Menu<span style="color: black;">&#40;</span>m<span style="color: black;">&#41;</span>
+m.<span style="color: black;">add_cascade</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Size&quot;</span>,menu=sm<span style="color: black;">&#41;</span>
+sm.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;500x500&quot;</span>,command=square<span style="color: black;">&#41;</span>
+sm.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;700x400&quot;</span>,command=rectangle<span style="color: black;">&#41;</span>
+&nbsp;
+root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div></p>
+  </div>
+<div id="node-56" class="section-2">
+  <h1 class="book-heading">Диалоговые окна в Tkinter. Урок 11</h1>
+  <div style="text-align:center;">
+<h4>Методическая разработка урока<br />
+Элективный курс: Модуль tkinter. Создание графического интерфейса пользователя с помощью языка программирования Python<br />
+Уровень: Программирование для начинающих<br />
+Версии Python: 3.*</h4>
+</div>
+<p>Диалоговые окна, как элементы графического интерфейса, предназначены для вывода сообщений пользователю, получения от него какой-либо информации, а также управления.</p>
+<p>Диалоговые окна весьма разнообразны. В данном уроке будут рассмотрены лишь несколько.</p>
+<p>Рассмотрим, как запрограммировать с помощью Tkinter вызов диалоговых окон открытия и сохранения файлов и работу с ними. При этом требуется дополнительно импортировать "подмодуль" Tkinter - tkinter.filedialog, в котором описаны классы для окон данного типа.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+<span style="color: #ff7700;font-weight:bold;">from</span> tkinter.<span style="color: black;">filedialog</span> <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+&nbsp;
+root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+op = askopenfilename<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+sa = asksaveasfilename<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div> </p>
+<p>Здесь создаются два объекта (op и sa): один вызывает диалоговое окно "Открыть", а другой "Сохранить как...". При выполнении скрипта, они друг за другом выводятся на экран после появления главного окна. Если не создать root, то оно все-равно появится на экране, однако при попытке его закрытия в конце возникнет ошибка.</p>
+<p>Давайте теперь разместим многострочное текстовое поле на главном окне и в дальнейшем попробуем туда загружать содержимое небольших текстовых файлов. Поскольку окно сохранения файла нам пока не нужно, то закомментируем эту строчку кода или удалим. В результате должно получиться примерно так:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+<span style="color: #ff7700;font-weight:bold;">from</span> tkinter.<span style="color: black;">filedialog</span> <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+&nbsp;
+root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+txt = Text<span style="color: black;">&#40;</span>root,width=<span style="color: #ff4500;">40</span>,height=<span style="color: #ff4500;">15</span>,font=<span style="color: #483d8b;">&quot;12&quot;</span><span style="color: black;">&#41;</span>
+txt.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+op = askopenfilename<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>При запуске скрипта появляется окно с текстовым полем и сразу диалоговое окно "Открыть". Однако, если мы попытаемся открыть какой-нибудь текстовый файл, то в лучшем случае ничего не произойдет. Как же связать содержимое текстового файла с текстовым полем через диалог "Открыть"?</p>
+<p>Что если просто вставить содержимое переменной op в текстовое поле:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">txt.<span style="color: black;">insert</span><span style="color: black;">&#40;</span>END,op<span style="color: black;">&#41;</span></pre></div></p>
+<p>После запуска скрипта и попытки открытия файла в текстовом поле оказывается адрес файла. Значит содержимое файла надо прочитать каким-то методом (функцией). </p>
+<p>Метод input модуля fileinput может принимать в качестве аргумента адрес файла, читать его содержимое, формируя список строк. Далее с помощью цикла for можно извлекать строки последовательно и помещать их, например, в текстовое поле.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">.....
+<span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #dc143c;">fileinput</span>
+.....
+<span style="color: #ff7700;font-weight:bold;">for</span> i <span style="color: #ff7700;font-weight:bold;">in</span> <span style="color: #dc143c;">fileinput</span>.<span style="color: #008000;">input</span><span style="color: black;">&#40;</span>op<span style="color: black;">&#41;</span>:
+     txt.<span style="color: black;">insert</span><span style="color: black;">&#40;</span>END,i<span style="color: black;">&#41;</span>
+.....</pre></div> </p>
+<p>Обратите внимание на то, как происходит обращение к функции input модуля fileinput и его импорт. Дело в том, что в Python уже встроена своя функция input (ее назначение абсолютно иное) и во избежание "конфликта" требуется четко указать, какую именно функцию мы имеем ввиду. Поэтому вариант импорта 'from fileinput import input' здесь не подходит.</p>
+<p>Окно "Открыть" запускается сразу при выполнении скрипта. На самом деле так не должно быть. Необходимо связать запуск окна с каким-нибудь событием. Пусть это будет щелчок на пункте меню.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+<span style="color: #ff7700;font-weight:bold;">from</span> tkinter.<span style="color: black;">filedialog</span> <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+<span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #dc143c;">fileinput</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">def</span> _open<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>:
+     op = askopenfilename<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+     <span style="color: #ff7700;font-weight:bold;">for</span> l <span style="color: #ff7700;font-weight:bold;">in</span> <span style="color: #dc143c;">fileinput</span>.<span style="color: #008000;">input</span><span style="color: black;">&#40;</span>op<span style="color: black;">&#41;</span>:
+          txt.<span style="color: black;">insert</span><span style="color: black;">&#40;</span>END,l<span style="color: black;">&#41;</span>
+&nbsp;
+root = Tk<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+m = Menu<span style="color: black;">&#40;</span>root<span style="color: black;">&#41;</span>
+root.<span style="color: black;">config</span><span style="color: black;">&#40;</span>menu=m<span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #dc143c;">fm</span> = Menu<span style="color: black;">&#40;</span>m<span style="color: black;">&#41;</span>
+m.<span style="color: black;">add_cascade</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;File&quot;</span>,menu=<span style="color: #dc143c;">fm</span><span style="color: black;">&#41;</span>
+<span style="color: #dc143c;">fm</span>.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Open...&quot;</span>,command=_open<span style="color: black;">&#41;</span>
+&nbsp;
+txt = Text<span style="color: black;">&#40;</span>root,width=<span style="color: #ff4500;">40</span>,height=<span style="color: #ff4500;">15</span>,font=<span style="color: #483d8b;">&quot;12&quot;</span><span style="color: black;">&#41;</span>
+txt.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+root.<span style="color: black;">mainloop</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>Теперь попробуем сохранять текст, набранный в текстовом поле. Добавим в код пункт меню и следующую функцию:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">def</span> _save<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>:
+     sa = asksaveasfilename<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+     letter = txt.<span style="color: black;">get</span><span style="color: black;">&#40;</span>1.0,END<span style="color: black;">&#41;</span>
+     f = <span style="color: #008000;">open</span><span style="color: black;">&#40;</span>sa,<span style="color: #483d8b;">&quot;w&quot;</span><span style="color: black;">&#41;</span>
+     f.<span style="color: black;">write</span><span style="color: black;">&#40;</span>letter<span style="color: black;">&#41;</span>
+     f.<span style="color: black;">close</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span></pre></div> </p>
+<p>В переменной sa храниться адрес файла, куда будет производиться запись. В переменной letter – текст, "полученный" из текстового поля. Затем файл открывается для записи, в него записывается содержимое переменной letter, и файл закрывается (на всякий случай).</p>
+<p>Еще одна группа диалоговых окон описана в модуле tkinter.messagebox. Это достаточно простые диалоговые окна для вывода сообщений, предупреждений, получения от пользователя ответа "да" или "нет" и т. п.</p>
+<p>Дополним нашу программу пунктом Exit в подменю File и пунктом About program в подменю Help.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter.<span style="color: black;">messagebox</span> <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+….
+<span style="color: #ff7700;font-weight:bold;">def</span> close_win<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>:
+     <span style="color: #ff7700;font-weight:bold;">if</span> askyesno<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Exit&quot;</span>, <span style="color: #483d8b;">&quot;Do you want to quit?&quot;</span><span style="color: black;">&#41;</span>:
+          root.<span style="color: black;">destroy</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">def</span> about<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>:
+     showinfo<span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Editor&quot;</span>, <span style="color: #483d8b;">&quot;This is text editor.<span style="color: #000099; font-weight: bold;">\n</span>(test version)&quot;</span><span style="color: black;">&#41;</span>
+...
+<span style="color: #dc143c;">fm</span>.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Exit&quot;</span>,command=close_win<span style="color: black;">&#41;</span>
+....
+<span style="color: black;">hm</span> = Menu<span style="color: black;">&#40;</span>m<span style="color: black;">&#41;</span>
+m.<span style="color: black;">add_cascade</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;Help&quot;</span>,menu=hm<span style="color: black;">&#41;</span>
+hm.<span style="color: black;">add_command</span><span style="color: black;">&#40;</span>label=<span style="color: #483d8b;">&quot;About&quot;</span>,command=about<span style="color: black;">&#41;</span>
+... </pre></div><br />
+В функции about происходит вызов окна showinfo, позволяющее выводить сообщение для пользователя с кнопкой OK. Первый аргумент — это то, что выведется в заголовке окна, а второй — то, что будет содержаться в теле сообщения. В функции close_win вызывается окно askyesno, которое позволяет получить от пользователя два ответа (true и false). В данном случае при положительном ответе сработает ветка if и главное окно будет закрыто. В случае нажатия пользователем кнопки "No" окно просто закроется (хотя можно было запрограммировать в ветке else какое-либо действие).</p>
+<h2>Практическая работа</h2>
+<ol>
+<li>Напишите программу, описанную в уроке. </li>
+<li>Измените программу: пусть после нажатия пункта Exit пользователю выводилось не окно с вопросом "выйти или нет", а окно с вопросом "сохранить или нет". В случае положительного ответа должна вызываться функция _save и только затем завершаться приложение.</li>
+<li>Если в текстовом поле что-то содержится, то при открытии файла оно не удаляется, а содержимое файла просто дописывается. Исправьте этот недостаток (перед открытием файла содержимое текстового поля должно удаляться).</li>
+</ol>
+  </div>
+<div id="node-57" class="section-2">
+  <h1 class="book-heading">Геометрические примитивы графического элемента Canvas (холст) модуля Tkinter. Урок 12</h1>
+  <div style="text-align:center;">
+<h4>Методическая разработка урока<br />
+Элективный курс: Модуль tkinter. Создание графического интерфейса пользователя с помощью языка программирования Python<br />
+Уровень: Программирование для начинающих</h4>
+</div>
+<p>Canvas (холст) — это достаточно сложный объект библиотеки tkinter. Он позволяет располагать на самом себе другие объекты. Это могут быть как геометрические фигуры, узоры, вставленные изображения, так и другие виджеты (например, метки, кнопки, текстовые поля). И это еще не все. Отображенные на холсте объекты можно изменять и перемещать (при желании) в процессе выполнения скрипта. Учитывая все это, canvas находит широкое применение при создании GUI-приложений c использованием tkinter (создание рисунков, оформление других виджет, реализация функций графических редакторов, программируемая анимация и др.).</p>
+<p>В данном уроке будет рассмотрено создание на холсте графических примитивов (линии, прямоугольника, многоугольника, дуги (сектора), эллипса) и текста. </p>
+<p>Для того, чтобы создать объект-холст необходимо вызвать соответствующий класс модуля tkinter и установить некоторые значения свойств (опций). Например:<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">canv = Canvas<span style="color: black;">&#40;</span>root,width=<span style="color: #ff4500;">500</span>,height=<span style="color: #ff4500;">500</span>,bg=<span style="color: #483d8b;">&quot;lightblue&quot;</span>,
+          cursor=<span style="color: #483d8b;">&quot;pencil&quot;</span><span style="color: black;">&#41;</span></pre></div> </p>
+<p>Далее с помощью любого менеджера геометрии разместить на главном окне.</p>
+<p>Перед тем как создавать геометрические фигуры на холсте следует разобраться с координатами и единицами измерения расстояния. Нулевая точка (0,0) для объекта Canvas располагается в верхнем левом углу. Единицы измерения пиксели (точки экрана). Для «ориентации в пространстве» объекта Canvas рассмотрите рисунок ниже. У любой точки первое число — это расстояние от нулевого значения по оси X, второе — по оси Y.</p>
+<div style="text-align:center;"><img src="../../../img/tkinter/coords12.png" width="488" height="338" alt="Координатная ось с точкой отсчета вверху слева" /></div>
+<p>Чтобы нарисовать линию на холсте следует к объекту (в нашем случае, canv) применить метод create_line.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">canv.<span style="color: black;">create_line</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">200</span>,<span style="color: #ff4500;">50</span>,<span style="color: #ff4500;">300</span>,<span style="color: #ff4500;">50</span>,width=<span style="color: #ff4500;">3</span>,fill=<span style="color: #483d8b;">&quot;blue&quot;</span><span style="color: black;">&#41;</span>
+canv.<span style="color: black;">create_line</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">0</span>,<span style="color: #ff4500;">0</span>,<span style="color: #ff4500;">100</span>,<span style="color: #ff4500;">100</span>,width=<span style="color: #ff4500;">2</span>,arrow=LAST<span style="color: black;">&#41;</span> </pre></div></p>
+<p>Четыре числа — это пары координат начала и конца линии, т.е в примере первая линия начинается из точки (200,50), а заканчивается в точке (300,50). Вторая линия начинается в точке (0,0), заканчивается — в (100,100). Свойство fill позволяет задать цвет линии отличный от черного, а arrow – установить стрелку (в конце, начале или по обоим концам линии).</p>
+<p>Метод create_rectangle создает прямоугольник. Аналогично линии в скобках первыми аргументами прописываются четыре числа. Первые две координаты обозначают верхний левый угол прямоугольника, вторые — правый нижний. В примере ниже используется немного иной подход. Он может быть полезен, если начальные координаты объекта могут изменяться, а его размер строго регламентирован.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">x = <span style="color: #ff4500;">75</span>
+y = <span style="color: #ff4500;">110</span>
+canv.<span style="color: black;">create_rectangle</span><span style="color: black;">&#40;</span>x,y,x+<span style="color: #ff4500;">80</span>,y+<span style="color: #ff4500;">50</span>,fill=<span style="color: #483d8b;">&quot;white&quot;</span>,outline=<span style="color: #483d8b;">&quot;blue&quot;</span><span style="color: black;">&#41;</span></pre></div> </p>
+<p>Опция outline определяет цвет границы прямоугольника.</p>
+<p>Чтобы создать произвольный многоугольник, требуется задать пары координат для каждой его точки.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">canv.<span style="color: black;">create_polygon</span><span style="color: black;">&#40;</span><span style="color: black;">&#91;</span><span style="color: #ff4500;">250</span>,<span style="color: #ff4500;">100</span><span style="color: black;">&#93;</span>,<span style="color: black;">&#91;</span><span style="color: #ff4500;">200</span>,<span style="color: #ff4500;">150</span><span style="color: black;">&#93;</span>,<span style="color: black;">&#91;</span><span style="color: #ff4500;">300</span>,<span style="color: #ff4500;">150</span><span style="color: black;">&#93;</span>,fill=<span style="color: #483d8b;">&quot;yellow&quot;</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>Квадратные скобки при задании координат используются для удобочитаемости (их можно не использовать). Свойство smooth задает сглаживание.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">canv.<span style="color: black;">create_polygon</span><span style="color: black;">&#40;</span><span style="color: black;">&#91;</span><span style="color: #ff4500;">250</span>,<span style="color: #ff4500;">100</span><span style="color: black;">&#93;</span>,<span style="color: black;">&#91;</span><span style="color: #ff4500;">200</span>,<span style="color: #ff4500;">150</span><span style="color: black;">&#93;</span>,<span style="color: black;">&#91;</span><span style="color: #ff4500;">300</span>,<span style="color: #ff4500;">150</span><span style="color: black;">&#93;</span>,fill=<span style="color: #483d8b;">&quot;yellow&quot;</span><span style="color: black;">&#41;</span>
+canv.<span style="color: black;">create_polygon</span><span style="color: black;">&#40;</span><span style="color: black;">&#91;</span><span style="color: #ff4500;">300</span>,<span style="color: #ff4500;">80</span><span style="color: black;">&#93;</span>,<span style="color: black;">&#91;</span><span style="color: #ff4500;">400</span>,<span style="color: #ff4500;">80</span><span style="color: black;">&#93;</span>,<span style="color: black;">&#91;</span><span style="color: #ff4500;">450</span>,<span style="color: #ff4500;">75</span><span style="color: black;">&#93;</span>,<span style="color: black;">&#91;</span><span style="color: #ff4500;">450</span>,<span style="color: #ff4500;">200</span><span style="color: black;">&#93;</span>,
+          <span style="color: black;">&#91;</span><span style="color: #ff4500;">300</span>,<span style="color: #ff4500;">180</span><span style="color: black;">&#93;</span>,<span style="color: black;">&#91;</span><span style="color: #ff4500;">330</span>,<span style="color: #ff4500;">160</span><span style="color: black;">&#93;</span>,outline=<span style="color: #483d8b;">&quot;white&quot;</span>,smooth=<span style="color: #ff4500;">1</span><span style="color: black;">&#41;</span></pre></div> </p>
+<p>При создании эллипса задаются координаты гипотетического прямоугольника, описывающего данный эллипс.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">canv.<span style="color: black;">create_oval</span><span style="color: black;">&#40;</span><span style="color: black;">&#91;</span><span style="color: #ff4500;">20</span>,<span style="color: #ff4500;">200</span><span style="color: black;">&#93;</span>,<span style="color: black;">&#91;</span><span style="color: #ff4500;">150</span>,<span style="color: #ff4500;">300</span><span style="color: black;">&#93;</span>,fill=<span style="color: #483d8b;">&quot;gray50&quot;</span><span style="color: black;">&#41;</span></pre></div> </p>
+<p>Более сложные для понимания фигуры получаются при использовании метода create_arc. В зависимости от значения опции style можно получить сектор (по умолчанию), сегмент (CHORD) или дугу (ARC). Координаты по-прежнему задают прямоугольник, в который вписана окружность, из которой «вырезают» сектор, сегмент или дугу. От опций start и extent зависит угол фигуры.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">canv.<span style="color: black;">create_arc</span><span style="color: black;">&#40;</span><span style="color: black;">&#91;</span><span style="color: #ff4500;">160</span>,<span style="color: #ff4500;">230</span><span style="color: black;">&#93;</span>,<span style="color: black;">&#91;</span><span style="color: #ff4500;">230</span>,<span style="color: #ff4500;">330</span><span style="color: black;">&#93;</span>,start=<span style="color: #ff4500;">0</span>,extent=<span style="color: #ff4500;">140</span>,fill=<span style="color: #483d8b;">&quot;lightgreen&quot;</span><span style="color: black;">&#41;</span>
+canv.<span style="color: black;">create_arc</span><span style="color: black;">&#40;</span><span style="color: black;">&#91;</span><span style="color: #ff4500;">250</span>,<span style="color: #ff4500;">230</span><span style="color: black;">&#93;</span>,<span style="color: black;">&#91;</span><span style="color: #ff4500;">320</span>,<span style="color: #ff4500;">330</span><span style="color: black;">&#93;</span>,start=<span style="color: #ff4500;">0</span>,extent=<span style="color: #ff4500;">140</span>,
+          style=CHORD,fill=<span style="color: #483d8b;">&quot;green&quot;</span><span style="color: black;">&#41;</span>
+canv.<span style="color: black;">create_arc</span><span style="color: black;">&#40;</span><span style="color: black;">&#91;</span><span style="color: #ff4500;">340</span>,<span style="color: #ff4500;">230</span><span style="color: black;">&#93;</span>,<span style="color: black;">&#91;</span><span style="color: #ff4500;">410</span>,<span style="color: #ff4500;">330</span><span style="color: black;">&#93;</span>,start=<span style="color: #ff4500;">0</span>,extent=<span style="color: #ff4500;">140</span>,
+          style=ARC,outline=<span style="color: #483d8b;">&quot;darkgreen&quot;</span>,width=<span style="color: #ff4500;">2</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>Последний метод объекта canvas, который будет рассмотрен в этом уроке — это метод создающий текстовую надпись.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">canv.<span style="color: black;">create_text</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">20</span>,<span style="color: #ff4500;">330</span>,text=<span style="color: #483d8b;">&quot;Опыты с графическими примитивами<span style="color: #000099; font-weight: bold;">\n</span>на холсте&quot;</span>,
+          font=<span style="color: #483d8b;">&quot;Verdana 12&quot;</span>,anchor=<span style="color: #483d8b;">&quot;w&quot;</span>,justify=CENTER,fill=<span style="color: #483d8b;">&quot;red&quot;</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>Трудность здесь может возникнуть с пониманием опции anchor (якорь). По умолчанию в заданной координате располагается центр текстовой надписи. Чтобы изменить это и, например, разместить по указанной координате левую границу текста, используется якорь со значением w (от англ. west – запад). Другие значения: n, ne, e, se, s, sw, w, nw. Если букв, задающих сторону привязки две, то вторая определяет вертикальную привязку (вверх или вниз «уйдет» текст от координаты). Свойство justify определяет лишь выравнивание текста относительно себя самого. </p>
+<p>В конце следует отметить, что часто требуется «нарисовать» на холсте какие-либо повторяющиеся элементы. Для того, чтобы не загружать код, используют циклы. Например, так:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">x=10
+<span style="color: #ff7700;font-weight:bold;">while</span> x <span style="color: #66cc66;">&lt;</span> <span style="color: #ff4500;">450</span>:
+     canv.<span style="color: black;">create_rectangle</span><span style="color: black;">&#40;</span>x,<span style="color: #ff4500;">400</span>,x+<span style="color: #ff4500;">50</span>,<span style="color: #ff4500;">450</span><span style="color: black;">&#41;</span>
+     x = x + <span style="color: #ff4500;">60</span> </pre></div></p>
+<p>Если вы напишите код приведенный в данном уроке (предварительно совершив импорт модуля Tkinter и создание главного окна, а также не забыв расположить на окне холст, и в конце «сделать» mainloop), то при его выполнении увидите такую картину:</p>
+<div style="text-align:center;"><img src="../../../img/tkinter/canvas12.gif" width="350" height="336" alt="Работа с виджетом Canvas в Tkinter" /></div>
+<h2>Практическая работа</h2>
+<p>Запрограммируйте следующие изображения на виджетах-холстах:</p>
+<div style="text-align:center;"><img src="../../../img/tkinter/canvas_pract12.gif" width="737" height="236" alt="Работа с графикой в Tkinter" /></div>
+  </div>
+<div id="node-58" class="section-2">
+  <h1 class="book-heading">Canvas (холст): методы, идентификаторы и теги. Урок 13</h1>
+  <div style="text-align:center;">
+<h4>Методическая разработка урока<br />
+Элективный курс: Модуль tkinter. Создание графического интерфейса пользователя с помощью языка программирования Python<br />
+Уровень: Программирование для начинающих</h4>
+</div>
+<p>На прошлом уроке были рассмотрены методы объекта canvas, формирующие на нем геометрические примитивы и текст. Однако это лишь часть методов холста. В другую условную группу можно выделить методы, изменяющие свойства уже существующих объектов холста (например, геометрических фигур). И тут возникает вопрос: как обращаться к уже созданным фигурам? Ведь если при создании было прописано что-то вроде canvas.create_oval(30,10,130,80) и таких овалов, квадратов и др. на холсте очень много, то как к ним обращаться? </p>
+<p>Для решения этой проблемы в tkinter для объектов холста можно использовать идентификаторы и теги, которые затем передаются другим методам. У любого объекта может быть как идентификатор, так и тег. Использование идентификаторов и тегов немного различается.</p>
+<p>Рассмотрим несколько методов изменения уже существующих объектов с использованием при этом <strong>идентификаторов</strong>. Для начала создадим холст и три объекта на нем. При создании объекты "возвращают" свои идентификаторы, которые можно связать с переменными (oval, rect и trial в примере ниже) и потом использовать их для обращения к конкретному объекту.<br />
+<div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">c = Canvas<span style="color: black;">&#40;</span>width=<span style="color: #ff4500;">460</span>,height=<span style="color: #ff4500;">460</span>,bg=<span style="color: #483d8b;">'grey80'</span><span style="color: black;">&#41;</span>
+c.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+oval = c.<span style="color: black;">create_oval</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">30</span>,<span style="color: #ff4500;">10</span>,<span style="color: #ff4500;">130</span>,<span style="color: #ff4500;">80</span><span style="color: black;">&#41;</span>
+rect = c.<span style="color: black;">create_rectangle</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">180</span>,<span style="color: #ff4500;">10</span>,<span style="color: #ff4500;">280</span>,<span style="color: #ff4500;">80</span><span style="color: black;">&#41;</span>
+trian = c.<span style="color: black;">create_polygon</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">330</span>,<span style="color: #ff4500;">80</span>,<span style="color: #ff4500;">380</span>,<span style="color: #ff4500;">10</span>,<span style="color: #ff4500;">430</span>,<span style="color: #ff4500;">80</span>, fill=<span style="color: #483d8b;">'grey80'</span>, outline=<span style="color: #483d8b;">&quot;black&quot;</span><span style="color: black;">&#41;</span></pre></div> </p>
+<p>Если вы выполните данный скрипт, то увидите на холсте три фигуры: овал, прямоугольник и треугольник.</p>
+<p>Далее можно использовать методы-"модификаторы" указывая в качестве первого аргумента идентификатор объекта. Метод move перемещает объект на по оси X и Y на расстояние указанное в качестве второго и третьего аргументов. Следует понимать, что это не координаты, а смещение, т. е. в примере ниже прямоугольник опустится вниз на 150 пикселей. Метод itemconfig изменяет указанные свойства объектов, coords изменяет координаты (им можно менять и размер объекта).</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">c.<span style="color: black;">move</span><span style="color: black;">&#40;</span>rect,<span style="color: #ff4500;">0</span>,<span style="color: #ff4500;">150</span><span style="color: black;">&#41;</span>
+c.<span style="color: black;">itemconfig</span><span style="color: black;">&#40;</span>trian,outline=<span style="color: #483d8b;">&quot;red&quot;</span>,width=<span style="color: #ff4500;">3</span><span style="color: black;">&#41;</span>
+c.<span style="color: black;">coords</span><span style="color: black;">&#40;</span>oval,<span style="color: #ff4500;">300</span>,<span style="color: #ff4500;">200</span>,<span style="color: #ff4500;">450</span>,<span style="color: #ff4500;">450</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>Если запустить скрипт, содержащий две приведенные части кода (друг за другом), то мы сразу увидим уже изменившуюся картину на холсте: прямоугольник опустится, треугольник приобретет красный контур, а эллипс сместится и сильно увеличится в размерах. Обычно в программах изменения должны наступать при каком-нибудь внешнем воздействии. Пусть по щелчку левой кнопкой мыши прямоугольник передвигается на два пикселя вниз (он будет это делать при каждом щелчке мышью):</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">def</span> mooove<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     c.<span style="color: black;">move</span><span style="color: black;">&#40;</span>rect,<span style="color: #ff4500;">0</span>,<span style="color: #ff4500;">2</span><span style="color: black;">&#41;</span>
+...
+<span style="color: black;">c</span>.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'&lt;Button-1&gt;'</span>,mooove<span style="color: black;">&#41;</span></pre></div> </p>
+<p>Теперь рассмотрим как работают теги. В отличие от идентификаторов, которые являются уникальными для каждого объекта, один и тот же тег может присваиваться разным объектам. Дальнейшее обращение к такому тегу позволит изменить все объекты, в которых он был указан. В примере ниже эллипс и линия содержат один и тот же тег, а функция color изменяет цвет всех объектов с тегом group1. Обратите внимание, что в отличие от имени идентификатора (переменная), имя тега заключается в кавычки (строковое значение).</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">oval = c.<span style="color: black;">create_oval</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">30</span>,<span style="color: #ff4500;">10</span>,<span style="color: #ff4500;">130</span>,<span style="color: #ff4500;">80</span>,tag=<span style="color: #483d8b;">&quot;group1&quot;</span><span style="color: black;">&#41;</span>
+c.<span style="color: black;">create_line</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">10</span>,<span style="color: #ff4500;">100</span>,<span style="color: #ff4500;">450</span>,<span style="color: #ff4500;">100</span>,tag=<span style="color: #483d8b;">&quot;group1&quot;</span><span style="color: black;">&#41;</span>
+…
+<span style="color: #ff7700;font-weight:bold;">def</span> color<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     c.<span style="color: black;">itemconfig</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'group1'</span>,fill=<span style="color: #483d8b;">&quot;red&quot;</span>,width=<span style="color: #ff4500;">3</span><span style="color: black;">&#41;</span>
+…
+c.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'&lt;Button-3&gt;'</span>,color<span style="color: black;">&#41;</span> </pre></div></p>
+<p>Еще один метод, который стоит рассмотреть, это delete, который удаляет объект по указанному идентификатору или тегу. В tkinter существуют зарезервированные теги: например, all обозначает все объекты холста. Так в примере ниже функция clean просто очищает холст. </p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">def</span> clean<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     c.<span style="color: black;">delete</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'all'</span><span style="color: black;">&#41;</span>
+...
+<span style="color: black;">c</span>.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'&lt;Button-2&gt;'</span>,clean<span style="color: black;">&#41;</span> </pre></div></p>
+<p>Метод tag_bind позволяет привязать событие (например, щелчок кнопкой мыши) к определенному объекту. Таким образом, можно реализовать обращение к различным областям холста с помощью одного и того же события. Пример ниже это наглядно иллюстрирует: изменения на холсте зависят от того, где произведен щелчок мышью.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">from</span> tkinter <span style="color: #ff7700;font-weight:bold;">import</span> <span style="color: #66cc66;">*</span>
+&nbsp;
+c = Canvas<span style="color: black;">&#40;</span>width=<span style="color: #ff4500;">460</span>,height=<span style="color: #ff4500;">100</span>,bg=<span style="color: #483d8b;">'grey80'</span><span style="color: black;">&#41;</span>
+c.<span style="color: black;">pack</span><span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>
+&nbsp;
+oval = c.<span style="color: black;">create_oval</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">30</span>,<span style="color: #ff4500;">10</span>,<span style="color: #ff4500;">130</span>,<span style="color: #ff4500;">80</span>,fill=<span style="color: #483d8b;">&quot;orange&quot;</span><span style="color: black;">&#41;</span>
+c.<span style="color: black;">create_rectangle</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">180</span>,<span style="color: #ff4500;">10</span>,<span style="color: #ff4500;">280</span>,<span style="color: #ff4500;">80</span>,tag=<span style="color: #483d8b;">&quot;rect&quot;</span>,fill=<span style="color: #483d8b;">&quot;lightgreen&quot;</span><span style="color: black;">&#41;</span>
+trian = c.<span style="color: black;">create_polygon</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">330</span>,<span style="color: #ff4500;">80</span>,<span style="color: #ff4500;">380</span>,<span style="color: #ff4500;">10</span>,<span style="color: #ff4500;">430</span>,<span style="color: #ff4500;">80</span>,fill=<span style="color: #483d8b;">'white'</span>,outline=<span style="color: #483d8b;">&quot;black&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #ff7700;font-weight:bold;">def</span> oval_func<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     c.<span style="color: black;">delete</span><span style="color: black;">&#40;</span>oval<span style="color: black;">&#41;</span>
+     c.<span style="color: black;">create_text</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">30</span>,<span style="color: #ff4500;">10</span>,text=<span style="color: #483d8b;">&quot;Здесь был круг&quot;</span>,anchor=<span style="color: #483d8b;">&quot;w&quot;</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">def</span> rect_func<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     c.<span style="color: black;">delete</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;rect&quot;</span><span style="color: black;">&#41;</span>
+     c.<span style="color: black;">create_text</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">180</span>,<span style="color: #ff4500;">10</span>,text=<span style="color: #483d8b;">&quot;Здесь был<span style="color: #000099; font-weight: bold;">\n</span>прямоугольник&quot;</span>,anchor=<span style="color: #483d8b;">&quot;nw&quot;</span><span style="color: black;">&#41;</span>
+<span style="color: #ff7700;font-weight:bold;">def</span> triangle<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     c.<span style="color: black;">create_polygon</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">350</span>,<span style="color: #ff4500;">70</span>,<span style="color: #ff4500;">380</span>,<span style="color: #ff4500;">20</span>,<span style="color: #ff4500;">410</span>,<span style="color: #ff4500;">70</span>,fill=<span style="color: #483d8b;">'yellow'</span>,outline=<span style="color: #483d8b;">&quot;black&quot;</span><span style="color: black;">&#41;</span>
+&nbsp;
+c.<span style="color: black;">tag_bind</span><span style="color: black;">&#40;</span>oval,<span style="color: #483d8b;">'&lt;Button-1&gt;'</span>,oval_func<span style="color: black;">&#41;</span>
+c.<span style="color: black;">tag_bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;rect&quot;</span>,<span style="color: #483d8b;">'&lt;Button-1&gt;'</span>,rect_func<span style="color: black;">&#41;</span>
+c.<span style="color: black;">tag_bind</span><span style="color: black;">&#40;</span>trian,<span style="color: #483d8b;">'&lt;Button-1&gt;'</span>,triangle<span style="color: black;">&#41;</span>
+&nbsp;
+mainloop<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span> </pre></div></p>
+<h2>Практическая работа</h2>
+<ol>
+<li>Спишите скрипты, рассмотренные в данном уроке. Выполните их. Объясните увиденное.</li>
+<li>Подумайте как можно реализовать движение (анимацию) той или иной геометрическое фигуры по холсту. Подсказка: попробуйте использовать цикл while, в теле которого с помощью метода delete удаляется старая фигура, а с помощью move рисуется такая же на новом месте.</li>
+</ol>
+  </div>
+<div id="node-59" class="section-2">
+  <h1 class="book-heading">Особенности работы с виджетом Text модуля Tkinter. Урок 14</h1>
+  <div style="text-align:center;">
+<h4>Методическая разработка урока<br />
+Элективный курс: Модуль tkinter. Создание графического интерфейса пользователя с помощью языка программирования Python<br />
+Уровень: Программирование для начинающих</h4>
+</div>
+<p>Графический элемент Text предоставляет большие возможности для работы с текстовой информацией. Помимо разнообразных операций с текстом и его форматированием в экземпляр объекта Text можно вставлять другие виджеты (следует отметить, что такая же возможность существует и для Canvas). В данном уроке рассматриваются лишь некоторые возможности виджета Text на примере создания окна с текстовым полем, содержащим форматированный текст, кнопку и возможность добавления экземпляров холста.</p>
+<div style="text-align:center;"><img src="../../../img/tkinter/text_tk.gif" width="461" height="292" alt="Примет текстового поля, созданного с помощью библиотеки Tkinter" /></div>
+<p>1. Для начала создадим текстовое поле, установив при этом некоторые из его свойств:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #808080; font-style: italic;">#текстовое поле и его первоначальные настройки</span>
+tx = Text<span style="color: black;">&#40;</span>font=<span style="color: black;">&#40;</span><span style="color: #483d8b;">'times'</span>,<span style="color: #ff4500;">12</span><span style="color: black;">&#41;</span>,width=<span style="color: #ff4500;">50</span>,height=<span style="color: #ff4500;">15</span>,wrap=WORD<span style="color: black;">&#41;</span>
+tx.<span style="color: black;">pack</span><span style="color: black;">&#40;</span>expand=YES,fill=BOTH<span style="color: black;">&#41;</span> </pre></div></p>
+<p>2. Теперь допустим нам нужно добавить какой-нибудь текст. Сделать это можно с помощью метода insert, передав ему два обязательных аргумента: место, куда вставить, и объект, который следует вставить. Объектом может быть строка, переменная, ссылающаяся на строку или какой-либо другой объект. Место вставки может указываться несколькими способами. Один из них — это индексы. Они записываются в виде 'x.y', где x – это строка, а y – столбец. При этом нумерация строк начинается с единицы, а столбцов с нуля. Например, первый символ в первой строке имеет индекс '1.0', а десятый символ в пятой строке — '5.9'.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">tx.<span style="color: black;">insert</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">1.0</span>,<span style="color: #483d8b;">'Дзэн Питона<span style="color: #000099; font-weight: bold;">\n</span><span style="color: #000099; font-weight: bold;">\</span>
+Если интерпретатору Питона дать команду<span style="color: #000099; font-weight: bold;">\n</span><span style="color: #000099; font-weight: bold;">\</span>
+import this (&quot;импортировать это&quot;),<span style="color: #000099; font-weight: bold;">\n</span><span style="color: #000099; font-weight: bold;">\</span>
+то выведется так называемый &quot;Дзен Питона&quot;.<span style="color: #000099; font-weight: bold;">\n</span> Некоторые выражения:<span style="color: #000099; font-weight: bold;">\n</span><span style="color: #000099; font-weight: bold;">\</span>
+* Если реализацию сложно объяснить — это плохая идея.<span style="color: #000099; font-weight: bold;">\n</span><span style="color: #000099; font-weight: bold;">\</span>
+* Ошибки никогда не должны замалчиваться.<span style="color: #000099; font-weight: bold;">\n</span><span style="color: #000099; font-weight: bold;">\</span>
+* Явное лучше неявного.<span style="color: #000099; font-weight: bold;">\n</span><span style="color: #000099; font-weight: bold;">\n</span>'</span><span style="color: black;">&#41;</span> </pre></div></p>
+<p>Комбинация символов '\n' создает новую строку (т.е. при интерпретации последующий текст начнется с новой строки). Одиночный символ '\' никак не влияет на отображение текста при выполнении кода, его следует вставлять при переносе текста при написании скрипта.</p>
+<p>Когда содержимого текстового поля нет вообще, то единственный доступный индекс — '1.0'. В заполненном текстовом поле вставлять можно в любое место (где есть содержимое). </p>
+<p>Если выполнить скрипт, содержащий только данный код (+ импорт модуля Tkinter, + создание главного окна, + mainloop() в конце), то мы увидим текстовое поле с восемью строчками текста. Текст не оформлен.</p>
+<p>3. Теперь отформатируем разные области текста по-разному. Для этого сначала зададим теги для нужных нам областей, а затем для каждого тега установим настройки шрифта и др.</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #808080; font-style: italic;">#установка тегов для областей текста</span>
+tx.<span style="color: black;">tag_add</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'title'</span>,<span style="color: #483d8b;">'1.0'</span>,<span style="color: #483d8b;">'1.end'</span><span style="color: black;">&#41;</span>
+tx.<span style="color: black;">tag_add</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'special'</span>,<span style="color: #483d8b;">'6.0'</span>,<span style="color: #483d8b;">'8.end'</span><span style="color: black;">&#41;</span>
+tx.<span style="color: black;">tag_add</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'special'</span>,<span style="color: #483d8b;">'3.0'</span>,<span style="color: #483d8b;">'3.11'</span><span style="color: black;">&#41;</span>
+&nbsp;
+<span style="color: #808080; font-style: italic;">#конфигурирование тегов</span>
+tx.<span style="color: black;">tag_config</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'title'</span>,foreground=<span style="color: #483d8b;">'red'</span>,
+          font=<span style="color: black;">&#40;</span><span style="color: #483d8b;">'times'</span>,<span style="color: #ff4500;">14</span>,<span style="color: #483d8b;">'underline'</span><span style="color: black;">&#41;</span>,justify=CENTER<span style="color: black;">&#41;</span>
+tx.<span style="color: black;">tag_config</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'special'</span>,background=<span style="color: #483d8b;">'grey85'</span>,font=<span style="color: black;">&#40;</span><span style="color: #483d8b;">'Dejavu'</span>,<span style="color: #ff4500;">10</span>,<span style="color: #483d8b;">'bold'</span><span style="color: black;">&#41;</span><span style="color: black;">&#41;</span></pre></div> </p>
+<p>Добавление тега осуществляется с помощью метода tag_add. Первый атрибут — имя тега (произвольное), далее с помощью индексов указывается к какой области текстового поля он прикрепляется (начальный символ и конечный). Вариант записи как '1.end' говорит о том, что нужно взять текст до конца указанной строки. Разные области текста могут быть помечены одинаковым тегом. </p>
+<p>Метод tag_config применяет те или иные свойства к тегу, указанному в качестве первого аргумента.</p>
+<p>4. В многострочное текстовое поле можно добавлять не только текст, но и другие объекты. Например, вставим в поле кнопку (ну и функцию заодно).</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">def</span> erase<span style="color: black;">&#40;</span><span style="color: black;">&#41;</span>:
+     tx.<span style="color: black;">delete</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'1.0'</span>,END<span style="color: black;">&#41;</span>
+...
+<span style="color: #808080; font-style: italic;">#добавление кнопки</span>
+bt = Button<span style="color: black;">&#40;</span>tx,text=<span style="color: #483d8b;">'Стереть'</span>,command=erase<span style="color: black;">&#41;</span>
+tx.<span style="color: black;">window_create</span><span style="color: black;">&#40;</span>END,window=bt<span style="color: black;">&#41;</span> </pre></div></p>
+<p>Кнопка — это виджет. Виджеты добавляются в текстовое поле с помощью метода window_create, где в качестве первой опции указывается место добавления, а второй (window) — в качестве значения присваивается переменная, связанная с объектом.</p>
+<p>При щелчке ЛКМ (левой кнопкой мыши) по кнопке будет вызываться функция erase, в которой с помощью метода delete удаляется все содержимое поля (от '1.0' до END).</p>
+<p>5. А вот более интересный пример добавления виджета в поле Text:</p>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">def</span> smiley<span style="color: black;">&#40;</span>event<span style="color: black;">&#41;</span>:
+     cv = Canvas<span style="color: black;">&#40;</span>height=<span style="color: #ff4500;">30</span>,width=<span style="color: #ff4500;">30</span><span style="color: black;">&#41;</span>
+     cv.<span style="color: black;">create_oval</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">1</span>,<span style="color: #ff4500;">1</span>,<span style="color: #ff4500;">29</span>,<span style="color: #ff4500;">29</span>,fill=<span style="color: #483d8b;">&quot;yellow&quot;</span><span style="color: black;">&#41;</span>
+     cv.<span style="color: black;">create_oval</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">9</span>,<span style="color: #ff4500;">10</span>,<span style="color: #ff4500;">12</span>,<span style="color: #ff4500;">12</span><span style="color: black;">&#41;</span>
+     cv.<span style="color: black;">create_oval</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">19</span>,<span style="color: #ff4500;">10</span>,<span style="color: #ff4500;">22</span>,<span style="color: #ff4500;">12</span><span style="color: black;">&#41;</span>
+     cv.<span style="color: black;">create_polygon</span><span style="color: black;">&#40;</span><span style="color: #ff4500;">9</span>,<span style="color: #ff4500;">20</span>,<span style="color: #ff4500;">15</span>,<span style="color: #ff4500;">24</span>,<span style="color: #ff4500;">22</span>,<span style="color: #ff4500;">20</span><span style="color: black;">&#41;</span>
+     tx.<span style="color: black;">window_create</span><span style="color: black;">&#40;</span>CURRENT,window=cv<span style="color: black;">&#41;</span>
+…
+<span style="color: #808080; font-style: italic;">#ЛКМ -&gt; смайлик</span>
+tx.<span style="color: black;">bind</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">'&lt;Button-1&gt;'</span>,smiley<span style="color: black;">&#41;</span></pre></div> </p>
+<p>Здесь при щелчке ЛКМ в любом месте текстового поля будет вызываться функция smiley. В теле данной функции создается объект холста, который в конце с помощью метода window_create добавляется на объект tx. Место вставки указано как CURRENT, т. е. "текущее" - это там, где был произведен щелчок мышью.</p>
+<h2>Практическая работа:</h2>
+<ol>
+<li>Напишите скрипт, описанный в данном уроке. Выполните его.</li>
+<li>Измените функцию erase таким образом, чтобы удалялся не весь текст, а только третья строка.</li>
+<li>Привяжите оставшуюся область текста к третьему тегу и с помощью метода tag_config измените шрифт.</li>
+<li>Добавьте еще какой-нибудь виджет в текстовое поле.</li>
+</ol>
+  </div>
+</div>
+    
+  </body>
+</html>

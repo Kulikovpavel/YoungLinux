@@ -1,0 +1,169 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Урок 21. Библиотеки</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-381" class="section-2">
+  <h1 class="book-heading">Урок 21. Библиотеки</h1>
+  <p class="right">Особенности языка С. Учебное пособие</p>
+<p>Библиотеки позволяют использовать разработанный ранее программный код в различных программах. Таким образом, программист может не разрабатывать часть кода для своей программы, а воспользоваться тем, что входит в состав библиотек. Обычно код библиотек отличается качеством, позволяет писать более ясный код, понятный большинству программистов.</p>
+<p>В языке программирования <span class="blue">C</span> код библиотек представляет собой функции, размещенные в файлах, которые скомпилированы в объектные файлы, а те, в свою очередь, объединены в библиотеки. В одной библиотеке объединяются функции, решающие определенный тип задач. Например, существует библиотека математических функций.</p>
+<p>У каждой библиотеки должен быть свой заголовочный файл, в котором должны быть описаны прототипы (объявления) всех функций, содержащихся в этой библиотеке. С помощью заголовочных файлов вы "сообщаете" вашему программному коду, какие библиотечные функции есть и как их использовать. </p>
+<p>При компиляции программы библиотеки подключаются линковщиком, который вызывается gcc. Если программе требуются только стандартные библиотеки, то дополнительных параметров линковщику передавать не надо (есть исключения). Он "знает", где стандартные библиотеки находятся, и подключит их автоматически. Во всех остальных случаях при компиляции программы требуется указать имя библиотеки и ее местоположение.</p>
+<p>Библиотеки бывают двух видов — статические и динамические. Код первых при компиляции полностью входит в состав исполняемого файла, что делает программу легко переносимой. Код динамических библиотек не входит в исполняемый файл, последний содержит лишь ссылку на библиотеку. Если динамическая библиотека будет удалена или перемещена в другое место, то программа работать не будет. С другой стороны, использование динамических библиотек позволяет сократить размер исполняемого файла. Также если в памяти находится две программы, использующие одну и туже динамическую библиотеку, то последняя будет загружена в память лишь единожды.</p>
+<p>Далее будет описан пример, в котором создается библиотека, после чего используется при создании программы.</p>
+<h3>Пример создания библиотеки</h3>
+<p>Допустим, мы хотим создать код, который в дальнейшем планируем использовать в нескольких проектах. Следовательно, нам требуется создать библиотеку. Исходный код для библиотеки было решено разместить в двух файлах исходного кода.<br />
+Также на данный момент у нас есть план первого проекта, использующего эту библиотеку. Сам проект также будет включать два файла.</p>
+<p>В итоге, когда все будет сделано, схема каталогов и файлов будет выглядеть так:</p>
+<p><img src="../../../img/c/sheme.png" width="691" height="403" alt="Файловая структура библиотеки  и программы" /></p>
+<p>Пусть каталоги library и project находятся в одном общем каталоге, например, домашнем каталоге пользователя. Каталог library содержит каталог source с файлами исходных кодов библиотеки. Также в library будут находиться заголовочный файл (содержащий описания функций библиотеки), статическая (libmy1.a) и динамическая (libmy2.so) библиотеки. Каталог project будет содержать файлы исходных кодов проекта и заголовочный файл с описанием функций проекта. Также после компиляции с подключением библиотеки здесь будет располагаться исполняемый файл проекта.<br />
+В операционных системах GNU/Linux имена файлов библиотек должны иметь префикс "lib", статические библиотеки - расширение *.a, динамические - *.so.</p>
+<p>Для компиляции проекта достаточно иметь только одну библиотеку: статическую или динамическую. В образовательных целях мы получим обе и сначала скомпилируем проект со статической библиотекой, потом — с динамической. Статическая и динамическая "разновидности" одной библиотеки по-идее должны называться одинаково (различаются только расширения). Поскольку у нас обе библиотеки будут находиться в одном каталоге, то чтобы быть уверенными, что при компиляции проекта мы используем ту, которую хотим, их названия различны (libmy1 и libmy2).</p>
+<h4>Исходный код библиотеки</h4>
+<p>Файл figure.c:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #993333;">void</span> rect <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> sign<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> width<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> height<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">,</span> j<span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> width<span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span> putchar<span style="color: #009900;">&#40;</span>sign<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	putchar<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\n</span>'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> height<span style="color: #339933;">-</span><span style="color: #0000dd;">2</span><span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>j<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> j <span style="color: #339933;">&lt;</span> width<span style="color: #339933;">;</span> j<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+			<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>j<span style="color: #339933;">==</span>0 <span style="color: #339933;">||</span> j<span style="color: #339933;">==</span>width<span style="color: #339933;">-</span>1<span style="color: #009900;">&#41;</span> putchar<span style="color: #009900;">&#40;</span>sign<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+			<span style="color: #b1b100;">else</span> putchar<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">' '</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>		
+		<span style="color: #009900;">&#125;</span>
+		putchar<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\n</span>'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #009900;">&#125;</span>
+&nbsp;
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> width<span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span> putchar<span style="color: #009900;">&#40;</span>sign<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	putchar<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\n</span>'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span>
+&nbsp;
+<span style="color: #993333;">void</span> diagonals <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> sign<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> width<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">,</span> j<span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i <span style="color: #339933;">&lt;</span> width<span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>j<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> j <span style="color: #339933;">&lt;</span> width<span style="color: #339933;">;</span> j<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+			<span style="color: #b1b100;">if</span> <span style="color: #009900;">&#40;</span>i <span style="color: #339933;">==</span> j <span style="color: #339933;">||</span> i<span style="color: #339933;">+</span>j <span style="color: #339933;">==</span> width<span style="color: #339933;">-</span>1<span style="color: #009900;">&#41;</span> putchar<span style="color: #009900;">&#40;</span>sign<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+			<span style="color: #b1b100;">else</span> putchar<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">' '</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>		
+		<span style="color: #009900;">&#125;</span>
+		putchar<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\n</span>'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #009900;">&#125;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<p>В файле figure.c содержатся две функции — <span class="geshifilter"><code class="c geshifilter-c">rect<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> и <span class="geshifilter"><code class="c geshifilter-c">diagonals<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>. Первая принимает в качестве аргументов символ и два числа и "рисует" на экране с помощью указанного символа прямоугольник заданной ширины и высоты. Вторая функция выводит на экране две диагонали квадрата ("рисует" крестик).</p>
+<p>Файл text.c:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #993333;">void</span> text <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> <span style="color: #339933;">*</span>ch<span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #b1b100;">while</span> <span style="color: #009900;">&#40;</span><span style="color: #339933;">*</span>ch<span style="color: #339933;">++</span> <span style="color: #339933;">!=</span> <span style="color: #ff0000;">'<span style="color: #006699; font-weight: bold;">\0</span>'</span><span style="color: #009900;">&#41;</span> putchar<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">'*'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	putchar<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">'<span style="color: #000099; font-weight: bold;">\n</span>'</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<p>В файле text.c определена единственная функция, принимающая указатель на символ строки. Функция выводит на экране звездочки в количестве, соответствующем длине указанной строки.</p>
+<p>Файл mylib.h:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #993333;">void</span> rect <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> sign<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> width<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> height<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #993333;">void</span> diagonals <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> sign<span style="color: #339933;">,</span> <span style="color: #993333;">int</span> width<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #993333;">void</span> text <span style="color: #009900;">&#40;</span><span style="color: #993333;">char</span> <span style="color: #339933;">*</span>ch<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>Заголовочный файл можно создать в каталоге source, но мы лучше сохраним его там, где будут библиотеки. В данном случае это на уровень выше (каталог library). Тем самым как бы подчеркивается, что файлы исходных кодов после создания из них библиотеки вообще не нужны пользователям библиотек, они нужны лишь разработчику библиотеки. А вот заголовочный файл библиотеки требуется для ее правильного использования.</p>
+<h4>Создание статической библиотеки</h4>
+<p>Статическую библиотеку создать проще, поэтому начнем с нее. Она создается из обычных объектных файлов путем их архивации с помощью утилиты ar.</p>
+<p>Все действия, которые описаны ниже выполняются в каталоге library (т.е. туда надо перейти командой cd). Просмотр содержимого каталога выполняется с помощью команды ls или ls -l.</p>
+<p>Получаем объектные файлы:</p>
+<pre>gcc -c ./source/*.c</pre><p>
+В итоге в каталоге library должно наблюдаться следующее:</p>
+<pre>figures.o  mylib.h  source  text.o</pre><p>
+Далее используем утилиту ar для создания статической библиотеки:</p>
+<pre>ar r libmy1.a *.o</pre><p>Параметр r позволяет вставить файлы в архив, если архива нет, то он создается. Далее указывается имя архива, после чего перечисляются файлы, из которых архив создается.</p>
+<p>Объектные файлы нам не нужны, поэтому их можно удалить:</p>
+<pre>rm *.o</pre><p>
+В итоге содержимое каталога library должно выглядеть так:</p>
+<pre>libmy1.a  mylib.h  source</pre><p>, где libmy1.a — это статическая библиотека.</p>
+<h4>Создание динамической библиотеки</h4>
+<p>Объектные файлы для динамической библиотеки компилируются особым образом. Они должны содержать так называемый позиционно-независимый код (position independent code). Наличие такого кода позволяет библиотеке подключаться к программе, когда последняя загружается в память. Это связано с тем, что библиотека и программа не являются единой программой, а значит как угодно могут располагаться в памяти относительно друг друга. Компиляция объектных файлов для динамической библиотеки должна выполняться с опцией -fPIC компилятора gcc:</p>
+<pre>gcc -c -fPIC source/*.c</pre><p>
+В отличие от статической библиотеки динамическую создают при помощи gcc указав опцию -shared:</p>
+<pre>gcc -shared -o libmy2.so *.o</pre><p>
+Использованные объектные файлы можно удалить:</p>
+<pre>rm *.o</pre><p>
+В итоге содержимое каталога library:</p>
+<pre>libmy1.a  libmy2.so  mylib.h  source</pre><h3>Использование библиотеки в программе</h3>
+<h4>Исходный код программы</h4>
+<p>Теперь в каталоге project (который у нас находится на одном уровне файловой иерархии с library) создадим файлы проекта, который будет использовать созданную библиотеку. Поскольку сама программа будет состоять не из одного файла, то придется здесь также создать заголовочный файл.</p>
+<p>Файл data.c:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+<span style="color: #339933;">#include &quot;../library/mylib.h&quot;</span>
+&nbsp;
+<span style="color: #993333;">void</span> data <span style="color: #009900;">&#40;</span><span style="color: #993333;">void</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	<span style="color: #993333;">char</span> strs<span style="color: #009900;">&#91;</span>3<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#91;</span>30<span style="color: #009900;">&#93;</span><span style="color: #339933;">;</span>
+	<span style="color: #993333;">char</span> <span style="color: #339933;">*</span>prompts<span style="color: #009900;">&#91;</span><span style="color: #0000dd;">3</span><span style="color: #009900;">&#93;</span> <span style="color: #339933;">=</span> <span style="color: #009900;">&#123;</span><span style="color: #ff0000;">&quot;Ваше имя: &quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;Местонахождение: &quot;</span><span style="color: #339933;">,</span> <span style="color: #ff0000;">&quot;Пунк прибытия: &quot;</span><span style="color: #009900;">&#125;</span><span style="color: #339933;">;</span>
+	<span style="color: #993333;">int</span> i<span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i<span style="color: #339933;">&lt;</span><span style="color: #0000dd;">3</span><span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s&quot;</span><span style="color: #339933;">,</span> prompts<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		gets<span style="color: #009900;">&#40;</span>strs<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #009900;">&#125;</span>
+&nbsp;
+	diagonals<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">'~'</span><span style="color: #339933;">,</span> 7<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+&nbsp;
+	<span style="color: #b1b100;">for</span> <span style="color: #009900;">&#40;</span>i<span style="color: #339933;">=</span><span style="color: #0000dd;">0</span><span style="color: #339933;">;</span> i<span style="color: #339933;">&lt;</span><span style="color: #0000dd;">3</span><span style="color: #339933;">;</span> i<span style="color: #339933;">++</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+		<span style="color: #000066;">printf</span><span style="color: #009900;">&#40;</span><span style="color: #ff0000;">&quot;%s&quot;</span><span style="color: #339933;">,</span> prompts<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+		text<span style="color: #009900;">&#40;</span>strs<span style="color: #009900;">&#91;</span>i<span style="color: #009900;">&#93;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	<span style="color: #009900;">&#125;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<p>Функция <span class="geshifilter"><code class="c geshifilter-c">data<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> запрашивает у пользователя данные, помещая их в массив <span class="monoi">strs</span>. Далее вызывает библиотечную функцию <span class="geshifilter"><code class="c geshifilter-c">diagonals<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>, которая выводит на экране "крестик". После этого на каждой итерации цикла вызывается библиотечная функция <span class="geshifilter"><code class="c geshifilter-c">text<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span>, которой передается очередной элемент массива; функция <span class="geshifilter"><code class="c geshifilter-c">text<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> выводит на экране звездочки в количестве равному длине переданной через указатель строки.</p>
+<p>Обратите внимание на то, как подключается заголовочный файл библиотеки: через относительный адрес. Две точки обозначают переход в каталог на уровень выше, т.е. родительский по отношению к project, после чего путь продолжается во вложенный в родительский каталог library. Можно было бы указать абсолютный путь, например, "/home/sv/c/les_21/library/mylib.h". Однако при перемещении каталогов библиотеки и программы на другой компьютер или в другой каталог адрес был бы уже не верным. В случае с относительным адресом требуется лишь сохранять расположение каталогов project и library относительно друг друга.</p>
+<p>Файл main.c:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #339933;">#include &lt;stdio.h&gt;</span>
+<span style="color: #339933;">#include &quot;../library/mylib.h&quot;</span>
+<span style="color: #339933;">#include &quot;project.h&quot;</span>
+&nbsp;
+main <span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span> <span style="color: #009900;">&#123;</span>
+	rect<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">'-'</span><span style="color: #339933;">,</span>75<span style="color: #339933;">,</span>4<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	data<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+	rect<span style="color: #009900;">&#40;</span><span style="color: #ff0000;">'+'</span><span style="color: #339933;">,</span>75<span style="color: #339933;">,</span>3<span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span>
+<span style="color: #009900;">&#125;</span></pre></div></p>
+<p>Здесь два раза вызывается библиотечная функция <span class="geshifilter"><code class="c geshifilter-c">rect<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> и один раз функция <span class="geshifilter"><code class="c geshifilter-c">data<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> из другого файла проекта. Чтобы сообщить функции <span class="geshifilter"><code class="c geshifilter-c">main<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> прототип <span class="geshifilter"><code class="c geshifilter-c">data<span style="color: #009900;">&#40;</span><span style="color: #009900;">&#41;</span></code></span> также подключается заголовочный файл проекта.</p>
+<p>Файл project.h содержит всего одну строчку:<br />
+<div class="geshifilter"><pre class="c geshifilter-c" style="font-family:monospace;"><span style="color: #993333;">void</span> data <span style="color: #009900;">&#40;</span><span style="color: #993333;">void</span><span style="color: #009900;">&#41;</span><span style="color: #339933;">;</span></pre></div></p>
+<p>Из обоих файлов проекта с исходным кодом надо получить объектные файлы для объединения их потом с файлом библиотеки. Сначала мы получим исполняемый файл, содержащий статическую библиотеку, потом — связанный с динамической библиотекой. Однако с какой бы библиотекой мы не компоновали объектные файлы проекта, компилируются они как для статической, так и динамической библиотеки одинаково:</p>
+<pre>gcc -c *.c</pre><p>
+При этом не забудьте сделать каталог project текущим!</p>
+<h4>Компиляция проекта со статической библиотекой</h4>
+<p>Теперь в каталоге project есть два объектных файла: main.o и data.o. Их надо скомпилировать в исполняемый файл project, объединив со статической библиотекой libmy1.a. Делается это с помощью такой команды:</p>
+<pre>gcc -o project *.o -L../library -lmy1</pre><p>
+Начало команды должно быть понятно: опция -o указывает на то, что компилируется исполняемый файл project из объектных файлов.</p>
+<p>Помимо объектных файлов проекта в компиляции участвует и библиотека. Об этом свидетельствует вторая часть команды: -L../library -lmy1. Здесь опция -L указывает на адрес каталога, где находится библиотека, он и следует сразу за ней. После опции -l записывается имя библиотеки, при этом префикс lib и суффикс (неважно .a или .so) усекаются. Обратите внимание, что после данных опций пробел не ставится.</p>
+<p>Опцию -L можно не указывать, если библиотека располагается в стандартных для данной системы каталогах для библиотек. Например, в GNU/Linux это /lib/, /urs/lib/ и др.</p>
+<p>Запустив исполняемый файл project и выполнив программу, мы увидим на экране примерно следующее:</p>
+<p><img src="../../../img/c/project.png" width="610" height="336" alt="Результат выполнения программы" /></p>
+<p>Посмотрим размер файла project:</p>
+<pre>
+sv@seven:~/c/les_21/project$ ls -l project 
+-rwxrwxr-x 1 sv sv 8698 2012-04-03 10:21 project 
+</pre><p>
+Его размер равен 8698 байт.</p>
+<h4>Компиляция проекта с динамической библиотекой</h4>
+<p>Теперь удалим исполняемый файл и получим его уже связанным с динамической библиотекой. Команда компиляции с динамической библиотекой выглядит так:</p>
+<pre>gcc -o project *.o -L../library -lmy2 -Wl,-rpath,../library/</pre><p>
+Здесь в отличии от команды компиляции со статической библиотеки добавлены опции для линковщика: -Wl,-rpath,../library/. -Wl - это обращение к линковщику, -rpath - опция линковщика, ../library/ - значение опции. Получается, что в команде мы два раза указываем местоположение библиотеки: один раз с опцией -L, а второй раз с опцией -rpath. Видимо для того, чтобы понять, почему так следует делать, потребуется более основательно изучить процесс компиляции и компоновки программ на языке <span class="blue">C</span>.</p>
+<p>Следует заметить, что если вы скомпилируете программу, используя приведенную команду, то исполняемый файл будет запускаться из командной строки только в том случае, если текущий каталог project. Стоит сменить каталог, будет возникать ошибка из-за того, что динамическая библиотека не будет найдена. Но если скомпилировать программу так:</p>
+<pre>gcc -o project *.o -L../library -lmy2 -Wl,-rpath,/home/sv/c/les_21/library</pre><p>
+, т.е. указать для линковщика абсолютный адрес, то программа в данной системе будет запускаться из любого каталога. </p>
+<p>Размер исполняемого файла проекта, связанного с динамической библиотекой, получился равным 8604 байта. Это немного меньше, чем при компиляции проекта со статической библиотекой. Если посмотреть на размеры библиотек:</p>
+<pre>
+sv@seven:~/c/les_21/library$ ls -l libmy* 
+-rw-rw-r-- 1 sv sv 3624 2012-04-02 10:54 libmy1.a 
+-rwxrwxr-x 1 sv sv 7871 2012-04-02 11:16 libmy2.so
+</pre><p>
+, то видно, что динамическая больше статической, хотя исполняемый файл проекта со статической библиотекой больше. Это доказывает, что в исполняемом файле, связанном с динамической библиотекой, присутствует лишь ссылка на нее.</p>
+<p><span class="blue"><strong>Задание</strong><br />
+Придумайте и реализуйте проект на языке программирования C, в котором бы использовалась вами же написанная библиотека.</span></p>
+  </div>
+    </div>
+  </body>
+</html>

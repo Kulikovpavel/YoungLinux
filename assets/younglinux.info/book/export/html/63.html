@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="ru" xml:lang="ru">
+  <head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Вычисление факториала на языке программирования Python</title>
+    <base href="" />
+    <link type="text/css" rel="stylesheet" href="http://younglinux.info/misc/print.css" />
+      </head>
+  <body>
+              <div class="section-1">
+          
+    <div id="node-63" class="section-2">
+  <h1 class="book-heading">Вычисление факториала на языке программирования Python</h1>
+  <p><strong>Факториалом числа</strong> называют произведение всех натуральных чисел до него включительно. Например, факториал числа 5 равен произведению 1*2*3*4*5 = 120. Формулу нахождения факториала можно записать следующим образом: <strong>n! = 1 * 2 * … * n</strong>, где n – это число, а n! – факториал этого числа.<br />
+Можно записать немного по-другому: <strong>n! = 1 * … * (n-2) * (n-1) * n</strong>, т.е. каждое предыдущее число меньше на единицу, чем последующее. Нахождение факториала числа по первой формуле можно реализовать с помощью цикла while, а по второй формуле – с помощью рекурсии.</p>
+<h2>Исходный код на Python с использованием цикла</h2>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;">n = <span style="color: #008000;">input</span><span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;Факториал числа &quot;</span><span style="color: black;">&#41;</span> 
+n = <span style="color: #008000;">int</span><span style="color: black;">&#40;</span>n<span style="color: black;">&#41;</span> 
+fac = 1 
+i = 0 
+<span style="color: #ff7700;font-weight:bold;">while</span> i <span style="color: #66cc66;">&lt;</span> n:
+     i += 1
+     fac = fac <span style="color: #66cc66;">*</span> i 
+<span style="color: #ff7700;font-weight:bold;">print</span> <span style="color: black;">&#40;</span><span style="color: #483d8b;">&quot;равен&quot;</span>,fac<span style="color: black;">&#41;</span></pre></div><br />
+Предположим, что в переменная <span class="monoi">n</span> была связана с числом 5. Т.е. надо найти 5!.</p>
+<p>Первых проход по телу цикла <strong>while</strong> свяжет переменную <span class="monoi">fac</span> с произведением 1 * 1. Второй - 1 * 2, затем 2 * 3, 6 * 4, 24 * 5. Шестой раз цикл <strong>while</strong> выполняться не будет, т.к. значение переменной <span class="monoi">i</span> будет равно 5 и выражение i &lt; n вернет <strong>false</strong>.</p>
+<h2>Исходный код на Python с использованием рекурсии</h2>
+<p><div class="geshifilter"><pre class="python geshifilter-python" style="font-family:monospace;"><span style="color: #ff7700;font-weight:bold;">def</span> fac<span style="color: black;">&#40;</span>n<span style="color: black;">&#41;</span>:
+     <span style="color: #ff7700;font-weight:bold;">if</span> n == 0:
+          <span style="color: #ff7700;font-weight:bold;">return</span> 1
+     <span style="color: #ff7700;font-weight:bold;">return</span> fac<span style="color: black;">&#40;</span>n-<span style="color: #ff4500;">1</span><span style="color: black;">&#41;</span> <span style="color: #66cc66;">*</span> n</pre></div></p>
+<p>0 шаг. Вызов функции: fac(5)<br />
+1. fac(5) возвращает fac(4) * 5<br />
+2. fac(4) => fac(3) * 4<br />
+3. fac(3) => fac(2) * 3<br />
+4. fac(2) => fac(1) * 2<br />
+5. fac(1) => 1<br />
+6. 1 * 2 - возврат в вызов fac(2)<br />
+7. 2 * 3 - fac(3)<br />
+8. 6 * 4 - fac(4)<br />
+9. 24 * 5 – fac(5)<br />
+10. Возврат в основную ветку программы значения 120.</p>
+  </div>
+    </div>
+  </body>
+</html>
