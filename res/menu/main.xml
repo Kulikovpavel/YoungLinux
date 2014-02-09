@@ -18,4 +18,9 @@
         android:orderInCategory="103"
         app:showAsAction="never" />
 
+    <item android:id="@+id/action_penguins_page"
+        android:title="@string/action_penguins_page"
+        android:orderInCategory="104"
+        app:showAsAction="never" />
+
 </menu>

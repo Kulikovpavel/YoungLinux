@@ -8,5 +8,6 @@
     <string name="action_homepage">Лаборатория юного линуксоида, сайт - источник</string>
     <string name="action_next">Далее</string>
     <string name="action_prev">Назад</string>
+    <string name="action_penguins_page">Коллекция пингвинов :)</string>
 
 </resources>

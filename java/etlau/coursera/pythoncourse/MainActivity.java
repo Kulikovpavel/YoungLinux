@@ -5,10 +5,7 @@ import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,9 +13,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.ArrayAdapter;
-import android.widget.TextView;
-
-import java.util.ArrayList;
 
 public class MainActivity extends ActionBarActivity implements ActionBar.OnNavigationListener {
 
@@ -27,6 +21,8 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
      * current dropdown position.
      */
     private static final String STATE_SELECTED_NAVIGATION_ITEM = "selected_navigation_item";
+    private static ActionBar actionBar;
+    private static boolean isBackStackNeeded = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,7 +30,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         setContentView(R.layout.activity_main);
 
         // Set up the action bar to show a dropdown list.
-        final ActionBar actionBar = getSupportActionBar();
+        actionBar = getSupportActionBar();
         actionBar.setDisplayShowTitleEnabled(false);
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_LIST);
 
@@ -45,10 +41,14 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
                 // Specify a SpinnerAdapter to populate the dropdown list.
                 new ArrayAdapter<String>(
                         actionBar.getThemedContext(),
-                        android.R.layout.simple_spinner_dropdown_item,
+                        android.R.layout.simple_list_item_2,
                         android.R.id.text1,
                         getResources().getStringArray(R.array.titles)),
                 this);
+
+        actionBar.setSelectedNavigationItem(savedInstanceState != null
+                ? savedInstanceState.getInt(STATE_SELECTED_NAVIGATION_ITEM)
+                : 0);
     }
 
     @Override
@@ -67,7 +67,6 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
                 getSupportActionBar().getSelectedNavigationIndex());
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         
@@ -85,6 +84,10 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
         if (id == R.id.action_homepage) {
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("http://younglinux.info"));
             startActivity(browserIntent);
+        } else if (id == R.id.action_penguins_page) {
+            // thanks to Creative, Serious and Playful Science of Android Apps by Lawrence Angrave class
+            Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://openclipart.org/collection/collection-detail/Moini/7245"));
+            startActivity(browserIntent);
         } else if (id == R.id.action_next) {
             ActionBar actionBar = getSupportActionBar();
             int maxElem = actionBar.getNavigationItemCount();
@@ -100,11 +103,17 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
 
     @Override
     public boolean onNavigationItemSelected(int position, long id) {
-        // When the given dropdown item is selected, show its contents in the
-        // container view.
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
-                .commit();
+        if (isBackStackNeeded) {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                    .addToBackStack("")
+                    .commit();
+        } else {
+            getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
+                    .commit();
+        }
+        isBackStackNeeded = true;
         return true;
     }
 
@@ -138,7 +147,7 @@ public class MainActivity extends ActionBarActivity implements ActionBar.OnNavig
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.frame_main, container, false);
             WebView webView = (WebView) rootView.findViewById(R.id.section_label);
-//            webView.loadUrl(Integer.toString(getArguments().getInt(ARG_SECTION_NUMBER)));
+            webView.getSettings().setBuiltInZoomControls(true);
             String current = getResources().getStringArray(R.array.titles)[getArguments().getInt(ARG_SECTION_NUMBER) - 1];
             String filename = current.substring(0, current.indexOf('.'));
             webView.loadUrl(String.format("file:///android_asset/younglinux.info/book/export/html/%s.html", filename));
